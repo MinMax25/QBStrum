@@ -22,6 +22,7 @@ namespace MinMax
 	using namespace ParameterFramework;
 
 	using PFContainer = ParameterFramework::PFContainer;
+
 #pragma region Implements
 
 	void MyVSTProcessor::sendNoteEvent(const NoteEvent& e)
