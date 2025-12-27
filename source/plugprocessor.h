@@ -53,8 +53,6 @@ namespace MinMax
 
 		void PLUGIN_API processParameter();
 
-		void PLUGIN_API setParameterValue(ParamID tag, ParamValue value);
-
 		void PLUGIN_API articulationChanged(int oldArticulation, int newArticulation);
 
 		void PLUGIN_API processEvent();

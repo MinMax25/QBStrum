@@ -3,12 +3,14 @@
 //------------------------------------------------------------------------
 
 #include <pluginterfaces/vst/ivstparameterchanges.h>
-#include <base/source/fstreamer.h>
 #include <vstgui/vstgui_uidescription.h>
 #include <pluginterfaces/base/ibstream.h>
 
 #include "plugprocessor.h"
 #include "plugcids.h"
+
+#include "parameterframework.h"
+#include "myparameters.h"
 
 #if DEBUG
 #include "debug_log.h"
@@ -19,6 +21,7 @@ namespace MinMax
 	using namespace Steinberg;
 	using namespace ParameterFramework;
 
+	using PFContainer = ParameterFramework::PFContainer;
 #pragma region Implements
 
 	void MyVSTProcessor::sendNoteEvent(const NoteEvent& e)
@@ -222,12 +225,8 @@ namespace MinMax
 
 			if (!(queue->getPoint(valueChangeCount - 1, sampleOffset, value) == kResultTrue)) continue;
 
-			setParameterValue(tag, value);
+			paramStorage.setPlain(tag, value);
 		}
-	}
-
-	void PLUGIN_API MyVSTProcessor::setParameterValue(ParamID tag, ParamValue value)
-	{
 	}
 
 	void PLUGIN_API MyVSTProcessor::articulationChanged(int oldArticulation, int newArticulation)
