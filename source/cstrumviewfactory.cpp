@@ -7,8 +7,8 @@
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 
 #include "plugdefine.h"
-#include "CNoteLabel.h"
-#include "CNoteEdit.h"
+#include "cnotelabel.h"
+#include "cnoteedit.h"
 #include "myparameters.h"
 
 namespace MinMax

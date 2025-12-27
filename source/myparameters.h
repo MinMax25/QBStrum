@@ -1,9 +1,8 @@
 #pragma once
 
 #include <pluginterfaces/base/fstrdefs.h>
-#include <vstgui/plugin-bindings/vst3editor.h>
 #include "parameterframework.h"	
-#include "ChordMap.h"
+#include "chordmap.h"
 
 namespace MinMax
 {

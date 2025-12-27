@@ -7,16 +7,15 @@
 #include <public.sdk/source/vst/vstaudioeffect.h>
 #include <public.sdk/source/vst/utility/ringbuffer.h>
 #include <pluginterfaces/base/ftypes.h>
-#include <array>
 
 #include "plugdefine.h"
 
 #include "parameterframework.h"
 #include "myparameters.h"
 
-#include "EventScheduler.h"
+#include "eventscheduler.h"
 #include "chordmap.h"
-#include "NoteEvent.h"
+#include "noteevent.h"
 
 namespace MinMax
 {

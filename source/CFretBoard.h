@@ -3,7 +3,7 @@
 #include <vstgui/vstgui.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
-#include "ChordMap.h"
+#include "chordmap.h"
 
 namespace MinMax
 {

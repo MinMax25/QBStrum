@@ -7,11 +7,11 @@
 #include <pluginterfaces/vst/ivstcomponent.h>
 #include <base/source/fstreamer.h>
 #include <pluginterfaces/base/ibstream.h>
+#include <vstgui/plugin-bindings/vst3editor.h>
 
 #include "plugdefine.h"
 #include "plugcontroller.h"
 #include "chordmap.h"
-
 #include "parameterframework.h"
 #include "myparameters.h"
 

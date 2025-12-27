@@ -7,7 +7,7 @@
 #include <vstgui/vstgui_uidescription.h>
 
 #include "myparameters.h"
-#include "CFretBoard.h"
+#include "cfretboard.h"
 #include "chordmap.h"
 
 namespace MinMax

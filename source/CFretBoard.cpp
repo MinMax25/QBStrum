@@ -3,7 +3,7 @@
 //------------------------------------------------------------------------
 
 #include "plugdefine.h"
-#include "CFretBoard.h"
+#include "cfretboard.h"
 #include "chordmap.h"
 #include "myparameters.h"
 

@@ -4,7 +4,6 @@
 
 #pragma once
 
-#include <vstgui/plugin-bindings/vst3editor.h>
 #include "ParameterFramework.h"
 
 namespace MinMax

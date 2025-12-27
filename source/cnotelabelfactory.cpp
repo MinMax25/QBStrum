@@ -6,7 +6,7 @@
 #include <vstgui/vstgui_uidescription.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 
-#include "CNoteLabel.h"
+#include "cnotelabel.h"
 
 namespace MinMax
 {

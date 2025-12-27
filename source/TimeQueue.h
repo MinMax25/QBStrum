@@ -1,11 +1,9 @@
 #pragma once
 
-#include "ScheduledNote.h"
-
-#include "plugdefine.h"
-
 #include <array>
 #include <Windows.h>
+
+#include "schedulednote.h"
 
 namespace MinMax
 {
