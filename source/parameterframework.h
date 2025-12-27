@@ -93,7 +93,7 @@ namespace ParameterFramework
     {
         SYS_BYPASS = ParameterInfo::kIsBypass | ParameterInfo::kCanAutomate,
         AUTOMATE = ParameterInfo::kCanAutomate,
-        HIDDEN = ParameterInfo::kCanAutomate,
+        HIDDEN = ParameterInfo::kIsHidden,
     };
 
 #pragma endregion
