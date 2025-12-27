@@ -288,9 +288,8 @@ namespace MinMax
 
 	void PLUGIN_API MyVSTProcessor::routingProcess(ParamID paramid, Event event)
 	{
-		/*
 		// ストラム処理振分け
-		switch (static_cast<PARAM>(paramid))
+		switch (paramid)
 		{
 		case PARAM::ALL_NOTES_OFF:
 			trigAllNotesOff();
@@ -302,19 +301,19 @@ namespace MinMax
 			trigBrush(event, true);
 			break;
 		case PARAM::UP_HIGH:
-			trigStrum(event, true, false, stringsUpHigh);
+			trigStrum(event, true, false, paramStorage.getPlain(PARAM::STRINGS_UP_HIGH));
 			break;
 		case PARAM::UP:
 			trigStrum(event, true, false, STRING_COUNT);
 			break;
 		case PARAM::DOWN_HIGH:
-			trigStrum(event, true, true, stringsDownHigh);
+			trigStrum(event, true, true, paramStorage.getPlain(PARAM::STRINGS_DOWN_HIGH));
 			break;
 		case PARAM::DOWN:
 			trigStrum(event, false, true, STRING_COUNT);
 			break;
 		case PARAM::DOWN_LOW:
-			trigStrum(event, false, true, stringsDownLow);
+			trigStrum(event, false, true, paramStorage.getPlain(PARAM::STRINGS_DOWN_LOW));
 			break;
 		case PARAM::MUTE_1:
 			trigMute(PARAM::MUTE_1, event);
@@ -343,7 +342,6 @@ namespace MinMax
 		default:
 			break;
 		}
-		*/
 	}
 
 	void MyVSTProcessor::trigAllNotesOff()
@@ -354,6 +352,7 @@ namespace MinMax
 	void MyVSTProcessor::trigBrush(Event event, bool isDown)
 	{
 		/*
+		*/
 		const int BRUSH_PER_MS = 1;
 		const float BRUSH_DECAY = 0.98f;
 
@@ -375,7 +374,7 @@ namespace MinMax
 		int strcnt = 0;
 
 		// 音価はms指定のパラメータ
-		uint64 offTime = baseOnTime + samplesPerMs * brushTime;
+		uint64 offTime = baseOnTime + samplesPerMs * paramStorage.getPlain(PARAM::BRUSH_TIME); // brushTime;
 
 		for (auto& i : strnum)
 		{
@@ -383,20 +382,18 @@ namespace MinMax
 
 			uint64 onTime = baseOnTime + offsetSamples;
 
-			int pitch = chordMap.getTunings()[i] + fretpos[i] + (transpose - 12);
+			int pitch = chordMap.getTunings()[i] + fretpos[i] + paramStorage.getPlain(PARAM::TRANSPOSE);
 			float velocity = baseVelocity * std::pow(BRUSH_DECAY, strcnt);
 
-			int channel = channelSepalate ? i % 16 : 0;
+			int channel = paramStorage.getPlain(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
 
 			strcnt++;
 		}
-		*/
 	}
 
 	void MyVSTProcessor::trigStrum(Event event, bool isAbove, bool isDown, int maxStrings)
 	{
-		/*
 		trigFretNoise(event);
 
 		// コード情報を取得する
@@ -411,7 +408,7 @@ namespace MinMax
 
 		// 音価はビート数指定のパラメータ
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
-		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * strumLength));
+		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * paramStorage.getPlain(PARAM::STRUM_LENGTH)));
 		uint64 offTime = baseOnTime + lengthSamples;
 
 		// 発音弦のカウンタ
@@ -421,25 +418,23 @@ namespace MinMax
 		{
 			double delayMs =
 				(strnum.size() > 1)
-				? (strumSpeed / double(STRING_COUNT)) * strcnt
+				? (paramStorage.getPlain(PARAM::SPEED) / double(STRING_COUNT)) * strcnt
 				: 0.0;
 
 			uint64 onTime = baseOnTime + static_cast<uint64>(delayMs * samplesPerMs);
 
-			int pitch = chordMap.getTunings()[i] + fretpos[i] + (transpose - 12);
-			float velocity = baseVelocity * std::pow(strumDecay / 100.0f, strcnt);
+			int pitch = chordMap.getTunings()[i] + fretpos[i] + paramStorage.getPlain(PARAM::TRANSPOSE);
+			float velocity = baseVelocity * std::pow(paramStorage.getPlain(PARAM::DECAY) / 100.0f, strcnt);
 
-			int channel = channelSepalate ? i % 16 : 0;
+			int channel = paramStorage.getPlain(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
 
 			++strcnt;
 		}
-		*/
 	}
 
 	void MyVSTProcessor::trigMute(PARAM trigger, Event event)
 	{
-		/*
 		const double NOTE_LENGTH = 40.0;
 
 		// 現在鳴っている音をすべて消す
@@ -449,9 +444,9 @@ namespace MinMax
 
 		// ミュート用ノート選択
 		int muteNote =
-			(trigger == PARAM_TRIGGER::MUTE_1)
-			? mute1Note
-			: mute2Note;
+			(trigger == PARAM::MUTE_1)
+			? paramStorage.getPlain(PARAM::MUTE_NOTE_1)
+			: paramStorage.getPlain(PARAM::MUTE_NOTE_2);
 
 		float velocity = std::clamp(event.noteOn.velocity, 0.01f, 1.0f);
 
@@ -460,13 +455,11 @@ namespace MinMax
 
 		uint64 offTime = onTime + static_cast<uint64>(NOTE_LENGTH * scheduler.getSamplesPerMs());
 
-		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, muteChannel);
-		*/
+		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, paramStorage.getPlain(PARAM::MUTE_CHANNEL));
 	}
 
 	void MyVSTProcessor::trigArpeggio(int stringindex, Event event)
 	{
-		/*
 		trigFretNoise(event);
 
 		auto& fretpos = chordMap.getFretPositions(chord);
@@ -481,20 +474,18 @@ namespace MinMax
 		uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
-		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * arpLength));
+		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * paramStorage.getPlain(PARAM::ARP_LENGTH)));
 		uint64 offTime = onTime + lengthSamples;
 
-		int pitch = chordMap.getTunings()[stringindex] + fretpos[stringindex] + (transpose - 12);
+		int pitch = chordMap.getTunings()[stringindex] + fretpos[stringindex] + paramStorage.getPlain(PARAM::TRANSPOSE);
 		float velocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
-		int channel = channelSepalate ? stringindex % 16 : 0;
+		int channel = paramStorage.getPlain(PARAM::CHANNEL_SEPALATE) ? stringindex % 16 : 0;
 		scheduler.addNoteOn(onTime, offTime, stringindex, pitch, velocity, channel);
-		*/
 	}
 
 	void MyVSTProcessor::trigFretNoise(Event event)
 	{
-		/*
 		constexpr double FRET_NOISE_LENGTH = 40.0;
 
 		float distance = 0.0f;
@@ -516,19 +507,25 @@ namespace MinMax
 			lastChord.position = chord.position;
 		}
 
-		if (fnoiseNoteNear == 0 && fnoiseNoteFar == 0) return;
+		if (paramStorage.getPlain(PARAM::FNOISE_NOTE_NEAR) == 0 && paramStorage.getPlain(PARAM::FNOISE_NOTE_FAR) == 0) return;
 
 		int pitch = 0;
 
-		if (distance < fnoiseDistNear) return;
+		if (distance < paramStorage.getPlain(PARAM::FNOISE_NOTE_NEAR)) return;
 
-		if (distance < fnoiseDistFar)
+		if (distance < paramStorage.getPlain(PARAM::FNOISE_NOTE_FAR))
 		{
-			pitch = fnoiseNoteNear == 0 ? fnoiseDistFar : fnoiseNoteNear;
+			pitch =
+				paramStorage.getPlain(PARAM::FNOISE_NOTE_NEAR) == 0 
+				? paramStorage.getPlain(PARAM::FNOISE_NOTE_FAR) 
+				: paramStorage.getPlain(PARAM::FNOISE_NOTE_NEAR);
 		}
 		else
 		{
-			pitch = fnoiseNoteFar == 0 ? fnoiseNoteNear : fnoiseNoteFar;
+			pitch = 
+				paramStorage.getPlain(PARAM::FNOISE_NOTE_FAR) == 0 
+				? paramStorage.getPlain(PARAM::FNOISE_NOTE_NEAR) 
+				: paramStorage.getPlain(PARAM::FNOISE_NOTE_FAR);
 		}
 
 		if (pitch == 0) return;
@@ -536,13 +533,11 @@ namespace MinMax
 		uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 		uint64 offTime = onTime + static_cast<uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
 
-		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, fnoiseChannel);
-		*/
+		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, paramStorage.getPlain(PARAM::FNOISE_CHANNEL));
 	}
 
 	ParamID MyVSTProcessor::getParamIdByPitch(Event event)
 	{
-		/*
 		// キースイッチからパラメータID取得
 		int ksw = -1;
 
@@ -559,6 +554,7 @@ namespace MinMax
 			return ksw;
 		}
 
+		/*debug
 		auto it = std::find(trigKeySW.begin(), trigKeySW.end(), ksw);
 		if (it == trigKeySW.end()) return ksw;
 
@@ -616,7 +612,6 @@ namespace MinMax
 
 	tresult PLUGIN_API MyVSTProcessor::notifyStrumTrigger(IMessage* message)
 	{
-		/*
 		Event event{};
 		const void* msgData;
 		uint32 msgSize;
@@ -634,6 +629,7 @@ namespace MinMax
 		int pitch = -1;
 
 		int index = 0;
+		/*debug
 		for (const auto& def : TriggerDef)
 		{
 			if (def.value == note->value)
@@ -643,6 +639,7 @@ namespace MinMax
 			}
 			++index;
 		}
+		*/
 
 		if (pitch < 0) return kResultOk;
 
@@ -652,7 +649,7 @@ namespace MinMax
 		if (note->OnOff)
 		{
 			event.noteOn.pitch = pitch;
-			event.noteOn.velocity = note->velocity / (float)NOTE_COUNT;
+			event.noteOn.velocity = note->velocity / (float)128;
 		}
 		else
 		{
@@ -663,8 +660,6 @@ namespace MinMax
 		// プラグインプロセッサのノートバッファに追加
 		InnerEvents.push(event);
 
-		return kResultOk;
-		*/
 		return kResultOk;
 	}
 
