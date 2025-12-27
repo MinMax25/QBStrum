@@ -5,9 +5,14 @@
 #include <pluginterfaces/vst/ivstparameterchanges.h>
 #include <base/source/fstreamer.h>
 #include <vstgui/vstgui_uidescription.h>
+#include <pluginterfaces/base/ibstream.h>
 
 #include "plugprocessor.h"
 #include "plugcids.h"
+
+#if DEBUG
+#include "debug_log.h"
+#endif
 
 namespace MinMax
 {
@@ -77,6 +82,9 @@ namespace MinMax
 		addEventInput(STR16("Event In"), 1);
 		addEventOutput(STR16("Event Out"), 16);
 
+		initParameters();
+		paramStorage.initialize();
+
 		return kResultOk;
 	}
 
@@ -116,17 +124,39 @@ namespace MinMax
 
 	tresult PLUGIN_API MyVSTProcessor::setState(IBStream* state)
 	{
-		if (!state) return kResultFalse;
-		IBStreamer streamer(state, kLittleEndian);
+		if (!state) return kInvalidArgument;
+
+		auto& paramStorage = this->paramStorage; // ProcessorParamStorage
+
+		for (const auto& def : PFContainer::get().getDefs())
+		{
+			double plain = 0.0;
+			if (state->read(&plain, sizeof(double), nullptr) != kResultOk)
+				return kResultFalse;
+
+			// 内部は正規化値で保持したい場合はここで変換
+			paramStorage.setPlain(def.tag, plain);
+		}
 
 		return kResultOk;
 	}
 
 	tresult PLUGIN_API MyVSTProcessor::getState(IBStream* state)
 	{
-		if (!state) return kResultFalse;
-		IBStreamer streamer(state, kLittleEndian);
+		if (!state) return kInvalidArgument;
 
+		auto& paramStorage = this->paramStorage;
+
+		for (const auto& def : PFContainer::get().getDefs())
+		{
+			double plain = paramStorage.getPlain(def.tag);
+
+#if DEBUG
+			DebugLog("[Processor::getState] tag=%u plain=%f", def.tag, plain);
+#endif
+			if (state->write(&plain, sizeof(double), nullptr) != kResultOk)
+				return kResultFalse;
+		}
 
 		return kResultOk;
 	}

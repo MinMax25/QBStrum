@@ -6,6 +6,7 @@
 #include <pluginterfaces/vst/ivstmidicontrollers.h>
 #include <pluginterfaces/vst/ivstcomponent.h>
 #include <base/source/fstreamer.h>
+#include <pluginterfaces/base/ibstream.h>
 
 #include "plugdefine.h"
 #include "plugcontroller.h"
@@ -13,6 +14,10 @@
 
 #include "parameterframework.h"
 #include "myparameters.h"
+
+#if DEBUG
+#include "debug_log.h"
+#endif
 
 namespace MinMax
 {
@@ -28,8 +33,22 @@ namespace MinMax
 		}
 
 		// ユニット登録
+		addUnit(new Unit(STR16("Chord"), UNIT::CHORD));
+		addUnit(new Unit(STR16("Strum"), UNIT::STRUM));
+		addUnit(new Unit(STR16("Trigger"), UNIT::TRIGGER));
+		addUnit(new Unit(STR16("Articulation"), UNIT::ARTICULATION));
 
 		// パラメータ登録
+		auto& container = ParameterFramework::PFContainer::get();
+
+		for (auto& def : container.getDefs())
+		{
+			auto param = container.createParameter(def);
+			if (param)
+			{
+				parameters.addParameter(param.release());
+			}
+		}
 
 		return result;
 	}
@@ -41,10 +60,30 @@ namespace MinMax
 
 	tresult PLUGIN_API MyVSTController::setComponentState(IBStream* state)
 	{
-		if (!state) return kResultFalse;
-		IBStreamer streamer(state, kLittleEndian);
+		if (!state) return kInvalidArgument;
 
-		return kResultTrue;
+		const auto& defs = PFContainer::get().getDefs();
+
+		for (const auto& def : defs)
+		{
+			double plain = 0.0;
+			if (state->read(&plain, sizeof(double), nullptr) != kResultOk)
+				return kResultFalse;
+
+			// 正規化値に変換
+			ParamValue normalized = plainParamToNormalized(def.tag, plain);
+#if DEBUG
+			DebugLog(
+				"[Controller::setComponentState] tag=%u plain=%f norm=%f",
+				def.tag, plain, normalized
+			);
+
+#endif
+			// EditControllerに値をセット
+			setParamNormalized(def.tag, normalized);
+		}
+
+		return kResultOk;
 	}
 
 	tresult PLUGIN_API MyVSTController::setState(IBStream* state)

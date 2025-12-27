@@ -25,6 +25,7 @@ namespace MinMax
 		, public IScheduledEventListener
 	{
 		using RingBuff =OneReaderOneWriter::RingBuffer<Event>;
+		using ProcessorParamStorage = ParameterFramework::ProcessorParamStorage;
 
 	public:
 		MyVSTProcessor();
@@ -96,6 +97,8 @@ namespace MinMax
 		ChordMap& chordMap = ChordMap::Instance();
 
 		ProcessData* processData{};
+
+		ProcessorParamStorage paramStorage;
 
 		bool isPlaying = false;
 

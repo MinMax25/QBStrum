@@ -9,6 +9,7 @@
 #include "plugdefine.h"
 #include "CNoteLabel.h"
 #include "CNoteEdit.h"
+#include "myparameters.h"
 
 namespace MinMax
 {
@@ -95,7 +96,7 @@ namespace MinMax
 
 				// ピッチ・ノート入力
                 CNoteEdit* txtONote = new CNoteEdit(CRect(CPoint(0, 0), CPoint(40, 15)), description->getController(), -1);
-                txtONote->setTag(def.value);
+                txtONote->setTag(def.tag);
                 txtONote->setBackColor(kWhiteCColor);
                 txtONote->setFontColor(kBlackCColor);
                 txtONote->setFont(kNormalFontSmall);
@@ -105,12 +106,12 @@ namespace MinMax
                 CNoteLabel* labONote = new CNoteLabel(CRect(CPoint(0, 0), CPoint(40, 15)));
                 labONote->setListener(description->getController());
                 labONote->setFont(kNormalFontSmall);
-                labONote->setTag(def.value);
+                labONote->setTag(def.tag);
                 rcvONote->addView(labONote);
 
 				// ノート送信ボタン
                 CNoteButton* btnONote = new CNoteButton([this](CControl* p, CPoint where, bool onoff) { onNoteButtonClicked(p, where, onoff); }, CRect(CPoint(0, 0), CPoint(64, 15)));
-                btnONote->setTag(def.value);
+                btnONote->setTag(def.tag);
                 btnONote->setWantsFocus(false);
                 btnONote->setStyle(CTextButton::kKickStyle);
                 btnONote->setRoundRadius(2);

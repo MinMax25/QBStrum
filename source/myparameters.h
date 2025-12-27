@@ -198,6 +198,10 @@ namespace MinMax
 
 	} };
 
+	inline const std::vector<ParamDef> TriggerDef =
+	{
+	};
+
 	inline const void initParameters()
 	{
 		static RangeResolver rangeResolver;
