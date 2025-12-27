@@ -197,9 +197,27 @@ namespace MinMax
 
 	} };
 
-	inline const std::vector<ParamDef> TriggerDef =
-	{
-	};
+	inline const std::array<ParamDef, 16> TriggerDef =
+	{ {
+
+{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 75, 0, 0 },
+{ PARAM::BRUSH_UP, STR16("Brush Up"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 68, 0, 0 },
+{ PARAM::BRUSH_DOWN, STR16("Brush Down"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 67, 0, 0 },
+{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 66, 0, 0 },
+{ PARAM::UP, STR16("Up"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 65, 0, 0 },
+{ PARAM::DOWN_HIGH, STR16("Down High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 64, 0, 0 },
+{ PARAM::DOWN, STR16("Down"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 63, 0, 0 },
+{ PARAM::DOWN_LOW, STR16("Down Low"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 62, 0, 0 },
+{ PARAM::MUTE_1, STR16("Mute 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 61, 0, 0 },
+{ PARAM::MUTE_2, STR16("Mute 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 60, 0, 0 },
+{ PARAM::ARPEGGIO_1, STR16("String 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 57, 0, 0 },
+{ PARAM::ARPEGGIO_2, STR16("String 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 55, 0, 0 },
+{ PARAM::ARPEGGIO_3, STR16("String 3"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 53, 0, 0 },
+{ PARAM::ARPEGGIO_4, STR16("String 4"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 52, 0, 0 },
+{ PARAM::ARPEGGIO_5, STR16("String 5"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 50, 0, 0 },
+{ PARAM::ARPEGGIO_6, STR16("String 6"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 48, 0, 0 },
+
+	} };
 
 	inline const void initParameters()
 	{
