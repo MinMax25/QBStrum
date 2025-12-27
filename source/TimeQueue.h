@@ -18,7 +18,7 @@ namespace MinMax
     class TimeQueue
     {
     public:
-        static constexpr size_t Capacity = MAX_SCHEDULED_NOTES;
+        static constexpr size_t Capacity = 64;
 
         // --- èÛë‘ ---
         bool empty() const noexcept

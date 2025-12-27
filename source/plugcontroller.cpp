@@ -9,13 +9,14 @@
 
 #include "plugdefine.h"
 #include "plugcontroller.h"
-#include "ChordMap.h"
+#include "chordmap.h"
+
+#include "parameterframework.h"
+#include "myparameters.h"
 
 namespace MinMax
 {
 	using namespace Steinberg;
-
-	using ParamDefRepository = ParameterFramework::ParamDefRepository;
 
 	tresult PLUGIN_API MyVSTController::initialize(FUnknown* context)
 	{
@@ -27,22 +28,8 @@ namespace MinMax
 		}
 
 		// ユニット登録
-		for (auto& item : UnitDef)
-		{
-			addUnit(new Unit(String(item.name), item.value));
-		}
 
 		// パラメータ登録
-		paramDefs = &ParamDefRepository::Instance().getDefs();
-
-		for (auto& param : paramDefs->getAllParams())
-		{
-			auto p = param->createVstParameter();
-			if (p != nullptr)
-			{
-				parameters.addParameter(p);
-			}
-		}
 
 		return result;
 	}
@@ -57,14 +44,6 @@ namespace MinMax
 		if (!state) return kResultFalse;
 		IBStreamer streamer(state, kLittleEndian);
 
-		for (auto& paramDef : paramDefs->getAllParams())
-		{
-			if (!paramDef->readCtrl(streamer, *this))
-			{
-				return kResultFalse;
-			}
-		}
-
 		return kResultTrue;
 	}
 
@@ -75,9 +54,9 @@ namespace MinMax
 
 		bool Bypass;
 		if (streamer.readBool(Bypass) == false) return kResultFalse;
-		beginEdit(static_cast<int>(PARAM_TAG::BYPASS));
-		performEdit(static_cast<int>(PARAM_TAG::BYPASS), Bypass ? 1 : 0);
-		endEdit(static_cast<int>(PARAM_TAG::BYPASS));
+		beginEdit(static_cast<int>(PARAM::BYPASS));
+		performEdit(static_cast<int>(PARAM::BYPASS), Bypass ? 1 : 0);
+		endEdit(static_cast<int>(PARAM::BYPASS));
 
 		return kResultTrue;
 	}
@@ -87,7 +66,7 @@ namespace MinMax
 		if (!state) return kResultFalse;
 		IBStreamer streamer(state, kLittleEndian);
 
-		bool bypass = getParamNormalized(static_cast<int>(PARAM_TAG::BYPASS)) > 0.5;
+		bool bypass = getParamNormalized(static_cast<int>(PARAM::BYPASS)) > 0.5;
 		streamer.writeBool(bypass);
 
 		return kResultTrue;
@@ -114,55 +93,55 @@ namespace MinMax
 		switch (midiControllerNumber)
 		{
 		case kCtrlNRPNSelectLSB:
-			value = static_cast<CtrlNumber>(PARAM_CHORD::ROOT);
+			value = static_cast<CtrlNumber>(PARAM::CHORD_ROOT);
 			return kResultTrue;
 
 		case kCtrlDataEntryMSB:
-			value = static_cast<CtrlNumber>(PARAM_CHORD::TYPE);
+			value = static_cast<CtrlNumber>(PARAM::CHORD_TYPE);
 			return kResultTrue;
 
 		case kCtrlDataEntryLSB:
-			value = static_cast<CtrlNumber>(PARAM_CHORD::FRET_POSITION);
+			value = static_cast<CtrlNumber>(PARAM::FRET_POSITION);
 			return kResultTrue;
 
 		case 20:
-			value = static_cast<CtrlNumber>(PARAM_STRUM::SPEED);
+			value = static_cast<CtrlNumber>(PARAM::SPEED);
 			return kResultTrue;
 
 		case 21:
-			value = static_cast<CtrlNumber>(PARAM_STRUM::DECAY);
+			value = static_cast<CtrlNumber>(PARAM::DECAY);
 			return kResultTrue;
 
 		case 22:
-			value = static_cast<CtrlNumber>(PARAM_STRUM::STRUM_LENGTH);
+			value = static_cast<CtrlNumber>(PARAM::STRUM_LENGTH);
 			return kResultTrue;
 
 		case kCtrlReleaseTime:
-			value = static_cast<CtrlNumber>(PARAM_STRUM::BRUSH_TIME);
+			value = static_cast<CtrlNumber>(PARAM::BRUSH_TIME);
 			return kResultTrue;
 
 		case 23:
-			value = static_cast<CtrlNumber>(PARAM_STRUM::ARP_LENGTH);
+			value = static_cast<CtrlNumber>(PARAM::ARP_LENGTH);
 			return kResultTrue;
 
 		case 24:
-			value = static_cast<CtrlNumber>(PARAM_STRUM::STRINGS_UP_HIGH);
+			value = static_cast<CtrlNumber>(PARAM::STRINGS_UP_HIGH);
 			return kResultTrue;
 
 		case 25:
-			value = static_cast<CtrlNumber>(PARAM_STRUM::STRINGS_DOWN_HIGH);
+			value = static_cast<CtrlNumber>(PARAM::STRINGS_DOWN_HIGH);
 			return kResultTrue;
 
 		case 26:
-			value = static_cast<CtrlNumber>(PARAM_STRUM::STRINGS_DOWN_LOW);
+			value = static_cast<CtrlNumber>(PARAM::STRINGS_DOWN_LOW);
 			return kResultTrue;
 
 		case kCtrlSoundVariation:
-			value = static_cast<CtrlNumber>(PARAM_TAG::SELECTED_ARTICULATION);
+			value = static_cast<CtrlNumber>(PARAM::SELECTED_ARTICULATION);
 			return kResultTrue;
 
 		case 27:
-			value = static_cast<CtrlNumber>(PARAM_TAG::TRANSPOSE);
+			value = static_cast<CtrlNumber>(PARAM::TRANSPOSE);
 			return kResultTrue;
 		}
 
@@ -200,22 +179,22 @@ namespace MinMax
 		const CChord* chord = reinterpret_cast<const CChord*>(data);
 
 		ParamValue rootNorm = (ParamValue)chord->root / (ChordMap::Instance().getChordRootCount() - 1);
-		beginEdit(static_cast<int>(PARAM_CHORD::ROOT));
-		setParamNormalized(static_cast<int>(PARAM_CHORD::ROOT), rootNorm);
-		performEdit(static_cast<int>(PARAM_CHORD::ROOT), rootNorm);
-		endEdit(static_cast<int>(PARAM_CHORD::ROOT));
+		beginEdit(static_cast<int>(PARAM::CHORD_ROOT));
+		setParamNormalized(static_cast<int>(PARAM::CHORD_ROOT), rootNorm);
+		performEdit(static_cast<int>(PARAM::CHORD_ROOT), rootNorm);
+		endEdit(static_cast<int>(PARAM::CHORD_ROOT));
 
 		ParamValue typeNorm = (ParamValue)chord->type / (ChordMap::Instance().getChordTypeCount() - 1);
-		beginEdit(static_cast<int>(PARAM_CHORD::TYPE));
-		setParamNormalized(static_cast<int>(PARAM_CHORD::TYPE), typeNorm);
-		performEdit(static_cast<int>(PARAM_CHORD::TYPE), typeNorm);
-		endEdit(static_cast<int>(PARAM_CHORD::TYPE));
+		beginEdit(static_cast<int>(PARAM::CHORD_TYPE));
+		setParamNormalized(static_cast<int>(PARAM::CHORD_TYPE), typeNorm);
+		performEdit(static_cast<int>(PARAM::CHORD_TYPE), typeNorm);
+		endEdit(static_cast<int>(PARAM::CHORD_TYPE));
 
 		ParamValue posNorm = (ParamValue)chord->position / (ChordMap::Instance().getFretPosCount() - 1);
-		beginEdit(static_cast<int>(PARAM_CHORD::FRET_POSITION));
-		setParamNormalized(static_cast<int>(PARAM_CHORD::FRET_POSITION), posNorm);
-		performEdit(static_cast<int>(PARAM_CHORD::FRET_POSITION), posNorm);
-		endEdit(static_cast<int>(PARAM_CHORD::FRET_POSITION));
+		beginEdit(static_cast<int>(PARAM::FRET_POSITION));
+		setParamNormalized(static_cast<int>(PARAM::FRET_POSITION), posNorm);
+		performEdit(static_cast<int>(PARAM::FRET_POSITION), posNorm);
+		endEdit(static_cast<int>(PARAM::FRET_POSITION));
 
 		return kResultOk;
 	}

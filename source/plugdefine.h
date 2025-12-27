@@ -12,6 +12,7 @@ namespace MinMax
 	using String = Steinberg::String;
 	using Event = Steinberg::Vst::Event;
 
+	/*
 	inline constexpr int NOTE_COUNT = 128;
 
 	inline constexpr int STRING_COUNT = 6;
@@ -34,6 +35,7 @@ namespace MinMax
 	inline constexpr int MAX_SCHEDULED_NOTES = 128;
 
 	inline constexpr int SPECIAL_NOTES = -1;
+	*/
 
 	// メッセージ識別子
 	inline constexpr auto MSG_SOUND_CHECK = "SoundCheck";
@@ -189,7 +191,7 @@ namespace MinMax
 	*/
 
 	// 音程名変換辞書
-	inline const std::array<char*, NOTE_COUNT> NoteNames =
+	inline const std::array<char*, 128> NoteNames =
 	{
 		"C-2","C#-2","D-2","D#-2","E-2","F-2","F#-2","G-2","G#-2","A-2","A#-2","B-2",
 		"C-1","C#-1","D-1","D#-1","E-1","F-1","F#-1","G-1","G#-1","A-1","A#-1","B-1",

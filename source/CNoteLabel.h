@@ -17,6 +17,7 @@ namespace MinMax
     class CNoteLabel
         : public CTextLabel
     {
+        static constexpr int NOTE_COUNT = 128;
     public:
         CNoteLabel(const CRect& size)
             : CTextLabel(size)

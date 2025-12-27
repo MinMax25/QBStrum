@@ -21,7 +21,7 @@ namespace MinMax
     public:
 
         int root;
-        int valueType;
+        int type;
         int position;
     };
 
@@ -175,7 +175,7 @@ namespace MinMax
 
         std::vector<int> getFretPositions(CChord chord) const
         {
-            return ChordRoots[chord.root].ChordTypes[chord.valueType].Voicings[chord.position].Frets;
+            return ChordRoots[chord.root].ChordTypes[chord.type].Voicings[chord.position].Frets;
 		}
 
         std::vector<int> getTunings()

@@ -543,6 +543,7 @@ namespace MinMax
 
 		return TriggerDef[index].value;
 		*/
+		return kResultOk;
 	}
 
 	vector<int> MyVSTProcessor::getTargetStrings(vector<int> fretPos, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
@@ -641,6 +642,7 @@ namespace MinMax
 
 		return kResultOk;
 		*/
+		return kResultOk;
 	}
 
 	void PLUGIN_API MyVSTProcessor::processAudio(Vst::ProcessData& data)

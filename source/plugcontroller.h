@@ -13,8 +13,6 @@ namespace MinMax
 		: public Steinberg::Vst::EditControllerEx1
 		, public IMidiMapping
 	{
-		using ExParamContainer = ParameterFramework::ExParamContainer;
-
 	public:
 		MyVSTController() = default;
 
@@ -49,7 +47,5 @@ namespace MinMax
 			DELEGATE_REFCOUNT(EditControllerEx1)
 
 	protected:
-
-		const ExParamContainer* paramDefs = nullptr;
 	};
 }

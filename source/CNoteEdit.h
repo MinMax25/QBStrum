@@ -15,6 +15,7 @@ namespace MinMax
     class CNoteEdit
         : public CTextEdit
     {
+        static constexpr int NOTE_COUNT = 128;
     public:
 
         CNoteEdit(const CRect& size, IControlListener* listener, int32_t tag, UTF8StringPtr txt = nullptr, CBitmap* background = nullptr, const int32_t style = 0)

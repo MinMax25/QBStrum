@@ -6,9 +6,9 @@
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/vstgui_uidescription.h>
 
-#include "plugdefine.h"
+#include "myparameters.h"
 #include "CFretBoard.h"
-#include "ChordMap.h"
+#include "chordmap.h"
 
 namespace MinMax
 {
@@ -50,22 +50,22 @@ namespace MinMax
             fretBoard->numStrings = STRING_COUNT;
             addView(fretBoard);
 
-            rootMenu = new CFretOptionMenu(CRect(1, 1, 79, 18), description->getController(), static_cast<int32_t>(PARAM_CHORD::ROOT), fretBoard);
+            rootMenu = new CFretOptionMenu(CRect(1, 1, 79, 18), description->getController(), static_cast<int32_t>(PARAM::CHORD_ROOT), fretBoard);
             rootMenu->setFontColor(kWhiteCColor);
             rootMenu->setBackColor(kBlackCColor);
-            rootMenu->setTag(static_cast<int32_t>(PARAM_CHORD::ROOT));
+            rootMenu->setTag(static_cast<int32_t>(PARAM::CHORD_ROOT));
             addView(rootMenu);
 
-            typeMenu = new CFretOptionMenu(CRect(81, 1, 159, 18), description->getController(), static_cast<int32_t>(PARAM_CHORD::TYPE), fretBoard);
+            typeMenu = new CFretOptionMenu(CRect(81, 1, 159, 18), description->getController(), static_cast<int32_t>(PARAM::CHORD_TYPE), fretBoard);
             typeMenu->setFontColor(kWhiteCColor);
             typeMenu->setBackColor(kBlackCColor);
-            typeMenu->setTag(static_cast<int32_t>(PARAM_CHORD::TYPE));
+            typeMenu->setTag(static_cast<int32_t>(PARAM::CHORD_TYPE));
             addView(typeMenu);
 
-            posMenu = new CFretOptionMenu(CRect(161, 1, 239, 18), description->getController(), static_cast<int32_t>(PARAM_CHORD::FRET_POSITION), fretBoard);
+            posMenu = new CFretOptionMenu(CRect(161, 1, 239, 18), description->getController(), static_cast<int32_t>(PARAM::FRET_POSITION), fretBoard);
             posMenu->setFontColor(kWhiteCColor);
             posMenu->setBackColor(kBlackCColor);
-            posMenu->setTag(static_cast<int32_t>(PARAM_CHORD::FRET_POSITION));
+            posMenu->setTag(static_cast<int32_t>(PARAM::FRET_POSITION));
             addView(posMenu);
         }
 

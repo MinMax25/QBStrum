@@ -4,7 +4,8 @@
 
 #include "plugdefine.h"
 #include "CFretBoard.h"
-#include "ChordMap.h"
+#include "chordmap.h"
+#include "myparameters.h"
 
 namespace MinMax
 {
@@ -216,15 +217,15 @@ namespace MinMax
 
     void CFretBoard::setValue(ParamID tag, int idx)
     {
-        if (tag == static_cast<int32>(PARAM_CHORD::ROOT))
+        if (tag == static_cast<int32>(PARAM::CHORD_ROOT))
         {
             chord.root = idx;
         }
-        else if (tag == static_cast<int32>(PARAM_CHORD::TYPE))
+        else if (tag == static_cast<int32>(PARAM::CHORD_TYPE))
         {
             chord.type = idx;
         }
-        else if (tag == static_cast<int32>(PARAM_CHORD::FRET_POSITION))
+        else if (tag == static_cast<int32>(PARAM::FRET_POSITION))
         {
             chord.position = idx;
         }

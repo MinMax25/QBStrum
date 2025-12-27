@@ -16,6 +16,8 @@
 
 namespace MinMax
 {
+	inline constexpr int SPECIAL_NOTES = -1;
+
 	struct IScheduledEventListener
 	{
 		virtual ~IScheduledEventListener() = default;
