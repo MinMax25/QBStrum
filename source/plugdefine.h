@@ -48,6 +48,7 @@ namespace MinMax
 		int velocity;
 	};
 
+	/*
 	// パラメータ定義アイテム
 	struct ParamItem
 	{
@@ -185,6 +186,7 @@ namespace MinMax
 			{ static_cast<ParamID>(PARAM_ARTICULATION::SLIDE), "Slide" },
 		}
 	};
+	*/
 
 	// 音程名変換辞書
 	inline const std::array<char*, NOTE_COUNT> NoteNames =

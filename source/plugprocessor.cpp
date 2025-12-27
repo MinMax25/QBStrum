@@ -57,8 +57,6 @@ namespace MinMax
 
 		setControllerClass(kMyVSTControllerUID);
 
-		bypass = false;
-
 		// コード一覧読込
 		const char* STR_USERPROFILE = "USERPROFILE";
 		const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum/Standard 6Strings.json";
@@ -78,9 +76,6 @@ namespace MinMax
 		addAudioOutput(STR16("Stereo Out"), Steinberg::Vst::SpeakerArr::kStereo);
 		addEventInput(STR16("Event In"), 1);
 		addEventOutput(STR16("Event Out"), 16);
-
-		const auto& defs = ParamDefRepository::Instance().getDefs();
-		paramValues.initialize(defs);
 
 		return kResultOk;
 	}
@@ -124,48 +119,6 @@ namespace MinMax
 		if (!state) return kResultFalse;
 		IBStreamer streamer(state, kLittleEndian);
 
-		//
-		streamer.readBool(bypass);
-		
-		streamer.readBool(channelSepalate);
-		streamer.readInt32(transpose);
-		streamer.readInt32(selectedArticulation);
-
-		// Chord
-		streamer.readInt32(chord.root);
-		streamer.readInt32(chord.type);
-		streamer.readInt32(chord.position);
-
-		// Strum
-		streamer.readInt32(muteChannel);
-		streamer.readInt32(mute1Note);
-		streamer.readInt32(mute2Note);
-		streamer.readDouble(strumSpeed);
-		streamer.readDouble(strumDecay);
-		streamer.readDouble(strumLength);
-		streamer.readDouble(brushTime);
-		streamer.readDouble(arpLength);
-		streamer.readInt32(fnoiseChannel);
-		streamer.readInt32(fnoiseNoteNear);
-		streamer.readInt32(fnoiseNoteFar);
-		streamer.readInt32(fnoiseDistNear);
-		streamer.readInt32(fnoiseDistFar);
-		streamer.readInt32(stringsUpHigh);
-		streamer.readInt32(stringsDownHigh);
-		streamer.readInt32(stringsDownLow);
-
-		// Trigger
-		for (size_t i = 0; i < TriggerDef.size(); i++)
-		{
-			streamer.readInt32(trigKeySW[i]);
-		}
-
-		// Articulations
-		for (size_t i = 0; i < PARAM_ARTICULATION_COUNT; i++)
-		{
-			streamer.readInt32(Articulations[i]);
-		}
-
 		return kResultOk;
 	}
 
@@ -174,47 +127,6 @@ namespace MinMax
 		if (!state) return kResultFalse;
 		IBStreamer streamer(state, kLittleEndian);
 
-		//
-		streamer.writeBool(bypass);
-		
-		streamer.writeBool(channelSepalate);
-		streamer.writeInt32(transpose);
-		streamer.writeInt32(selectedArticulation);
-
-		// Chord
-		streamer.writeInt32(chord.root);
-		streamer.writeInt32(chord.type);
-		streamer.writeInt32(chord.position);
-
-		// Strum
-		streamer.writeInt32(muteChannel);
-		streamer.writeInt32(mute1Note);
-		streamer.writeInt32(mute2Note);
-		streamer.writeDouble(strumSpeed);
-		streamer.writeDouble(strumDecay);
-		streamer.writeDouble(strumLength);
-		streamer.writeDouble(brushTime);
-		streamer.writeDouble(arpLength);
-		streamer.writeInt32(fnoiseChannel);
-		streamer.writeInt32(fnoiseNoteNear);
-		streamer.writeInt32(fnoiseNoteFar);
-		streamer.writeInt32(fnoiseDistNear);
-		streamer.writeInt32(fnoiseDistFar);
-		streamer.writeInt32(stringsUpHigh);
-		streamer.writeInt32(stringsDownHigh);
-		streamer.writeInt32(stringsDownLow);
-
-		// Trigger
-		for (size_t i = 0; i < PARAM_TRIGGER_COUNT; i++)
-		{
-			streamer.writeInt32(trigKeySW[i]);
-		}
-
-		// Articulations
-		for (size_t i = 0; i < PARAM_ARTICULATION_COUNT; i++)
-		{
-			streamer.writeInt32(Articulations[i]);
-		}
 
 		return kResultOk;
 	}
@@ -292,131 +204,10 @@ namespace MinMax
 
 	void PLUGIN_API MyVSTProcessor::setParameterValue(ParamID tag, ParamValue value)
 	{
-		if (tag == static_cast<ParamID>(PARAM_TAG::BYPASS))
-		{
-			bypass = static_cast<bool>(value > 0.5f);
-		}
-		else if (tag == static_cast<ParamID>(PARAM_CHORD::ROOT))
-		{
-			chord.root = static_cast<int>(lround((chordMap.getChordRootCount() - 1) * value));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_CHORD::TYPE))
-		{
-			chord.type = static_cast<int>(lround((chordMap.getChordTypeCount() - 1) * value));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_CHORD::FRET_POSITION))
-		{
-			chord.position = static_cast<int>(lround((chordMap.getFretPosCount() - 1) * value));
-			if (isPlaying)
-			{
-				notifyChordChanged();
-			}
-		}
-		else if (tag == static_cast<ParamID>(PARAM_TAG::TRANSPOSE))
-		{
-			transpose = static_cast<int>(lround(value * 24));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_TAG::CHANNEL_SEPALATE))
-		{
-			channelSepalate = static_cast<bool>(lround(value * 0.5));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_TAG::SELECTED_ARTICULATION))
-		{
-			int newValue = static_cast<int>(round(value * (PARAM_ARTICULATION_COUNT - 1)));
-			if (newValue != selectedArticulation)
-			{
-				articulationChanged(selectedArticulation, newValue);
-				selectedArticulation = newValue;
-			}
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::MUTE_CHANNEL))
-		{
-			muteChannel = static_cast<int>(lround((16 - 1) * value));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::MUTE_NOTE_1))
-		{
-			mute1Note = static_cast<int>(lround(value * (NOTE_COUNT - 1)));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::MUTE_NOTE_2))
-		{
-			mute2Note = static_cast<int>(lround(value * (NOTE_COUNT - 1)));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::SPEED))
-		{
-			strumSpeed = static_cast<int>(lround(value * (STRUM_SPEED_MAX - STRUM_SPEED_MIN) + STRUM_SPEED_MIN));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::DECAY))
-		{
-			strumDecay = static_cast<int>(lround(value * (STRUM_DECAY_MAX - STRUM_DECAY_MIN) + STRUM_DECAY_MIN));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::STRUM_LENGTH))
-		{
-			strumLength = static_cast<int>(lround(value * (NOTE_LENGTH_MAX - NOTE_LENGTH_MIN) + NOTE_LENGTH_MIN));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::BRUSH_TIME))
-		{
-			brushTime = static_cast<int>(lround(value * (BRUSH_TIME_MAX - BRUSH_TIME_MIN) + BRUSH_TIME_MIN));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::ARP_LENGTH))
-		{
-			arpLength = static_cast<int>(lround(value * (NOTE_LENGTH_MAX - NOTE_LENGTH_MIN) + NOTE_LENGTH_MIN));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::FNOISE_CHANNEL))
-		{
-			fnoiseChannel = static_cast<int>(lround((16 - 1) * value));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::FNOISE_NOTE_NEAR))
-		{
-			fnoiseNoteNear = static_cast<int>(lround(value * (NOTE_COUNT - 1)));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::FNOISE_NOTE_FAR))
-		{
-			fnoiseNoteFar = static_cast<int>(lround(value * (NOTE_COUNT - 1)));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::FNOISE_DIST_NEAR))
-		{
-			fnoiseDistNear = static_cast<int>(lround(value * (FRET_DISTANCE_MAX - FRET_DISTANCE_MIN) + FRET_DISTANCE_MIN));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::FNOISE_DIST_FAR))
-		{
-			fnoiseDistFar = static_cast<int>(lround(value * (FRET_DISTANCE_MAX - FRET_DISTANCE_MIN) + FRET_DISTANCE_MIN));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::STRINGS_UP_HIGH))
-		{
-			stringsUpHigh = static_cast<int>(lround((value * 4) + 1));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::STRINGS_DOWN_HIGH))
-		{
-			stringsDownHigh = static_cast<int>(lround((value * 4) + 1));
-		}
-		else if (tag == static_cast<ParamID>(PARAM_STRUM::STRINGS_DOWN_LOW))
-		{
-			stringsDownLow = static_cast<int>(lround((value * 4) + 1));
-		}
-		else if (static_cast<ParamID>(PARAM_TRIGGER::ALL_NOTES_OFF) <= tag &&
-			tag <= static_cast<ParamID>(PARAM_TRIGGER::ARPEGGIO_6))
-		{
-			int index = tag - static_cast<ParamID>(PARAM_TRIGGER::ALL_NOTES_OFF);
-			trigKeySW[index] = static_cast<int>(lround(value * (NOTE_COUNT - 1)));
-		}
 	}
 
 	void PLUGIN_API MyVSTProcessor::articulationChanged(int oldArticulation, int newArticulation)
 	{
-		constexpr int SPECIAL_NOTES_SAMPLES = 1;
-
-		if (newArticulation < 0 || newArticulation >= PARAM_ARTICULATION_COUNT) return;
-
-		int sw = Articulations[newArticulation];
-		if (sw == 0) return;
-
-		uint64 onTime = scheduler.getCurrentSampleTime();
-		uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
-
-		for (int i = 0; i < (channelSepalate ? STRING_COUNT : 1); i++)
-		{
-			scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, sw, 127, i);
-		}
 	}
 
 	void PLUGIN_API MyVSTProcessor::processEvent()
@@ -474,62 +265,62 @@ namespace MinMax
 
 	void PLUGIN_API MyVSTProcessor::routingProcess(ParamID paramid, Event event)
 	{
-		using namespace MinMax;
-
+		/*
 		// ストラム処理振分け
-		switch (static_cast<PARAM_TRIGGER>(paramid))
+		switch (static_cast<PARAM>(paramid))
 		{
-		case PARAM_TRIGGER::ALL_NOTES_OFF:
+		case PARAM::ALL_NOTES_OFF:
 			trigAllNotesOff();
 			break;
-		case PARAM_TRIGGER::BRUSH_UP:
+		case PARAM::BRUSH_UP:
 			trigBrush(event, false);
 			break;
-		case PARAM_TRIGGER::BRUSH_DOWN:
+		case PARAM::BRUSH_DOWN:
 			trigBrush(event, true);
 			break;
-		case PARAM_TRIGGER::UP_HIGH:
+		case PARAM::UP_HIGH:
 			trigStrum(event, true, false, stringsUpHigh);
 			break;
-		case PARAM_TRIGGER::UP:
+		case PARAM::UP:
 			trigStrum(event, true, false, STRING_COUNT);
 			break;
-		case PARAM_TRIGGER::DOWN_HIGH:
+		case PARAM::DOWN_HIGH:
 			trigStrum(event, true, true, stringsDownHigh);
 			break;
-		case PARAM_TRIGGER::DOWN:
+		case PARAM::DOWN:
 			trigStrum(event, false, true, STRING_COUNT);
 			break;
-		case PARAM_TRIGGER::DOWN_LOW:
+		case PARAM::DOWN_LOW:
 			trigStrum(event, false, true, stringsDownLow);
 			break;
-		case PARAM_TRIGGER::MUTE_1:
-			trigMute(PARAM_TRIGGER::MUTE_1, event);
+		case PARAM::MUTE_1:
+			trigMute(PARAM::MUTE_1, event);
 			break;
-		case PARAM_TRIGGER::MUTE_2:
-			trigMute(PARAM_TRIGGER::MUTE_2, event);
+		case PARAM::MUTE_2:
+			trigMute(PARAM::MUTE_2, event);
 			break;
-		case PARAM_TRIGGER::ARPEGGIO_1:
+		case PARAM::ARPEGGIO_1:
 			trigArpeggio(0, event);
 			break;
-		case PARAM_TRIGGER::ARPEGGIO_2:
+		case PARAM::ARPEGGIO_2:
 			trigArpeggio(1, event);
 			break;
-		case PARAM_TRIGGER::ARPEGGIO_3:
+		case PARAM::ARPEGGIO_3:
 			trigArpeggio(2, event);
 			break;
-		case PARAM_TRIGGER::ARPEGGIO_4:
+		case PARAM::ARPEGGIO_4:
 			trigArpeggio(3, event);
 			break;
-		case PARAM_TRIGGER::ARPEGGIO_5:
+		case PARAM::ARPEGGIO_5:
 			trigArpeggio(4, event);
 			break;
-		case PARAM_TRIGGER::ARPEGGIO_6:
+		case PARAM::ARPEGGIO_6:
 			trigArpeggio(5, event);
 			break;
 		default:
 			break;
 		}
+		*/
 	}
 
 	void MyVSTProcessor::trigAllNotesOff()
@@ -539,6 +330,7 @@ namespace MinMax
 
 	void MyVSTProcessor::trigBrush(Event event, bool isDown)
 	{
+		/*
 		const int BRUSH_PER_MS = 1;
 		const float BRUSH_DECAY = 0.98f;
 
@@ -576,10 +368,12 @@ namespace MinMax
 
 			strcnt++;
 		}
+		*/
 	}
 
 	void MyVSTProcessor::trigStrum(Event event, bool isAbove, bool isDown, int maxStrings)
 	{
+		/*
 		trigFretNoise(event);
 
 		// コード情報を取得する
@@ -617,10 +411,12 @@ namespace MinMax
 
 			++strcnt;
 		}
+		*/
 	}
 
-	void MyVSTProcessor::trigMute(PARAM_TRIGGER trigger, Event event)
+	void MyVSTProcessor::trigMute(PARAM trigger, Event event)
 	{
+		/*
 		const double NOTE_LENGTH = 40.0;
 
 		// 現在鳴っている音をすべて消す
@@ -642,10 +438,12 @@ namespace MinMax
 		uint64 offTime = onTime + static_cast<uint64>(NOTE_LENGTH * scheduler.getSamplesPerMs());
 
 		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, muteChannel);
+		*/
 	}
 
 	void MyVSTProcessor::trigArpeggio(int stringindex, Event event)
 	{
+		/*
 		trigFretNoise(event);
 
 		auto& fretpos = chordMap.getFretPositions(chord);
@@ -668,10 +466,12 @@ namespace MinMax
 
 		int channel = channelSepalate ? stringindex % 16 : 0;
 		scheduler.addNoteOn(onTime, offTime, stringindex, pitch, velocity, channel);
+		*/
 	}
 
 	void MyVSTProcessor::trigFretNoise(Event event)
 	{
+		/*
 		constexpr double FRET_NOISE_LENGTH = 40.0;
 
 		float distance = 0.0f;
@@ -714,10 +514,12 @@ namespace MinMax
 		uint64 offTime = onTime + static_cast<uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
 
 		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, fnoiseChannel);
+		*/
 	}
 
 	ParamID MyVSTProcessor::getParamIdByPitch(Event event)
 	{
+		/*
 		// キースイッチからパラメータID取得
 		int ksw = -1;
 
@@ -740,6 +542,7 @@ namespace MinMax
 		int index = std::distance(trigKeySW.begin(), it);
 
 		return TriggerDef[index].value;
+		*/
 	}
 
 	vector<int> MyVSTProcessor::getTargetStrings(vector<int> fretPos, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
@@ -789,6 +592,7 @@ namespace MinMax
 
 	tresult PLUGIN_API MyVSTProcessor::notifyStrumTrigger(IMessage* message)
 	{
+		/*
 		Event event{};
 		const void* msgData;
 		uint32 msgSize;
@@ -836,10 +640,12 @@ namespace MinMax
 		InnerEvents.push(event);
 
 		return kResultOk;
+		*/
 	}
 
 	void PLUGIN_API MyVSTProcessor::processAudio(Vst::ProcessData& data)
 	{
+		/*
 		if (data.numSamples > 0)
 		{
 			int32 minBus = std::min(data.numInputs, data.numOutputs);
@@ -872,5 +678,6 @@ namespace MinMax
 				data.outputs[i].silenceFlags = ((uint64)1 << data.outputs[i].numChannels) - 1;
 			}
 		}
+		*/
 	}
 }
