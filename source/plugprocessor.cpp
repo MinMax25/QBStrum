@@ -61,12 +61,6 @@ namespace MinMax
 		processData = nullptr;
 
 		setControllerClass(kMyVSTControllerUID);
-
-		// コード一覧読込
-		const char* STR_USERPROFILE = "USERPROFILE";
-		const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum/Standard 6Strings.json";
-		std::filesystem::path path = std::filesystem::path(getenv(STR_USERPROFILE)).append(PRESET_ROOT).make_preferred();
-		ChordMap::initFromPreset(path);
 	}
 
 	MyVSTProcessor::~MyVSTProcessor()
