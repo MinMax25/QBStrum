@@ -205,8 +205,7 @@ namespace ParameterFramework
 
                 auto options = optionProvider->getOptionNames(*def.rangeKind);
                 if (options.empty())
-                {
-                    // 最低限ダミーを1つ
+                {   // 最低限ダミーを1つ
                     options.push_back("-");
                 }
 
@@ -320,9 +319,7 @@ namespace ParameterFramework
         
         bool resolveRange(const ParamDef& def, ValueRange& out) const
         {
-            if (!rangeResolver || !def.rangeKind)
-                return false;
-
+            if (!rangeResolver || !def.rangeKind) return false;
             return rangeResolver->resolve(*def.rangeKind, out);
         }
 
@@ -336,7 +333,6 @@ namespace ParameterFramework
 
 #pragma region Value Storage
  
-    // パラメータキャッシュ値管理
     class ProcessorParamStorage
     {
     public:
@@ -350,10 +346,9 @@ namespace ParameterFramework
 
             for (const auto& def : paramTable)
             {
-                // パラメータインスタンスを生成（virtual 呼び出し用）
+                // 正規化処理はパラメータメソッドを利用
                 std::unique_ptr<Parameter> p = ParamHelper::get().createParameter(def);
                 if (!p) continue;
-
                 paramInstances.emplace(def.tag, std::move(p));
 
                 // 正規化値初期化
@@ -420,6 +415,13 @@ namespace ParameterFramework
             }
         }
 
+        ParamValue getNormalized(ParamID id, double plain) const
+        {
+            auto* p = findParameter(id);
+            if (!p) return 0.0;
+            return p->toNormalized(plain);
+        }
+
     private:
         struct ParamEntry
         {
@@ -435,13 +437,6 @@ namespace ParameterFramework
         {
             auto it = paramInstances.find(id);
             return it != paramInstances.end() ? it->second.get() : nullptr;
-        }
-
-        ParamValue getNormalized(ParamID id, double plain) const
-        {
-            auto* p = findParameter(id);
-            if (!p) return 0.0;
-            return p->toNormalized(plain);
         }
     };
 
