@@ -79,7 +79,7 @@ namespace MinMax
             int yOffSet = 22;
             for (int i = 0; i < 6; i++)
             {
-                CNoteEdit* noteEdit = new CNoteEdit(CRect(10, 1 + yOffSet, 49, 15 + yOffSet), nullptr, 999);
+                CNoteEdit* noteEdit = new CNoteEdit(CRect(10, 1 + yOffSet, 49, 15 + yOffSet), editor, 999);
                 noteEdit->setBackColor(kWhiteCColor);
                 noteEdit->setFontColor(kBlackCColor);
                 noteEdit->setFont(kNormalFontSmaller);
