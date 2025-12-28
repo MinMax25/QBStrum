@@ -253,22 +253,22 @@ namespace MinMax
 		static RangeResolver rangeResolver;
 		static OptionProvider optionProvider;
 
-		auto& container = ParameterFramework::ParamHelper::get();
-		if (container.isInitialized()) return;
+		auto& helper = ParameterFramework::ParamHelper::get();
+		if (helper.isInitialized()) return;
 
 		const char* STR_USERPROFILE = "USERPROFILE";
 		const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum/Standard 6Strings.json";
 		std::filesystem::path path = std::filesystem::path(getenv(STR_USERPROFILE)).append(PRESET_ROOT).make_preferred();
 		ChordMap::initFromPreset(path);
 
-		container.setKindResolver(&rangeResolver);
-		container.setOptionProvider(&optionProvider);
+		helper.setKindResolver(&rangeResolver);
+		helper.setOptionProvider(&optionProvider);
 
 		for (const auto& def : paramTable)
 		{
-			container.addDef(def);
+			helper.addDef(def);
 		}
 
-		container.setInitialized();
+		helper.setInitialized();
 	}
 }

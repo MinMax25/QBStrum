@@ -372,13 +372,13 @@ namespace ParameterFramework
     public:
         ProcessorParamStorage() = default;
 
-        void initialize()
+        template <size_t N>
+        void initialize(const std::array<ParamDef, N>& paramTable)
         {
-            const auto& defs = ParamHelper::get().getDefs();
             storage.clear();
             paramInstances.clear();
 
-            for (const auto& def : defs)
+            for (const auto& def : paramTable)
             {
                 // パラメータインスタンスを生成（virtual 呼び出し用）
                 std::unique_ptr<Parameter> p = ParamHelper::get().createParameter(def);

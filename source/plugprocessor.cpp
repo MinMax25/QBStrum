@@ -82,7 +82,7 @@ namespace MinMax
 		addEventInput(STR16("Event In"), 1);
 		addEventOutput(STR16("Event Out"), 16);
 
-		paramStorage.initialize();
+		paramStorage.initialize(paramTable);
 
 		return kResultOk;
 	}
