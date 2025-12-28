@@ -77,8 +77,12 @@ namespace MinMax
             fretBoard->numStrings = STRING_COUNT;
             addView(fretBoard);
 
+            CTextLabel* label = new CTextLabel(CRect(300, 1, 399, 18));
+            label->setText("Select Choard");
+            addView(label);
+
             // 階層化メニューを右に追加
-            COptionMenu* hierMenu = new COptionMenu(CRect(340, 1, 380, 18), editor, 999);
+            COptionMenu* hierMenu = new COptionMenu(CRect(400, 1, 440, 18), editor, 999);
             menuListener = std::make_unique<ChordSelectorListner>(fretBoard);
 
             hierMenu->setFontColor(kWhiteCColor);
