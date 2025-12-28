@@ -47,63 +47,50 @@ namespace MinMax
 
 	protected:
 
+		// IScheduledEventListenerの実装
 		void PLUGIN_API sendNoteEvent(const NoteEvent& ev) override;
 
+		// 追加メソッド
 		void PLUGIN_API processContext();
-
 		void PLUGIN_API processParameter();
-
 		void PLUGIN_API articulationChanged(int oldArticulation, int newArticulation);
-
 		void PLUGIN_API processEvent();
-
 		void PLUGIN_API processInnerEvent();
-
 		void PLUGIN_API routingProcess(ParamID parmid, Event event);
-
 		void PLUGIN_API trigAllNotesOff();
-
 		void PLUGIN_API trigBrush(Event event, bool isDown);
-
 		void PLUGIN_API trigStrum(Event event, bool isAbove, bool isDown, int maxStrings);
-
 		void PLUGIN_API trigMute(PARAM trigger, Event event);
-
 		void PLUGIN_API trigArpeggio(int stringindex, Event event);
-
 		void PLUGIN_API trigFretNoise(Event event);
-
 		ParamID PLUGIN_API getParamIdByPitch(Event event);
-
 		vector<int> PLUGIN_API getTargetStrings(vector<int> fretPos, bool isAbove, bool isDown, int maxStrings);
-
 		void PLUGIN_API notifyChordChanged();
-
 		tresult PLUGIN_API notify(IMessage* message) SMTG_OVERRIDE;
-
 		tresult PLUGIN_API notifyStrumTrigger(IMessage* message);
-
 		void PLUGIN_API processAudio(Vst::ProcessData& data);
 
-		/***
-		 * 
-		 */
-
+		// ストラムイベントスケジューラー
 		EventScheduler& scheduler = EventScheduler::Instance();
 
+		// コードマップ
 		ChordMap& chordMap = ChordMap::Instance();
 
+		// プロセスデータの写し
 		ProcessData* processData{};
 
+		// パラメータキャッシュ値
 		ProcessorParamStorage paramStorage;
 
-		bool isPlaying = false;
-
+		// コード変更監視用
 		CChord chord{};
-
 		CChord lastChord{};
 
+		// コード変更時の平均フレットポジションの移動距離
 		float distance = 0.0f;
+
+		// DAWの再生ステータス
+		bool isPlaying = false;
 
 		// 内部MIDIイベントバッファ
 		RingBuff InnerEvents{ 32 };

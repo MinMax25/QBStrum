@@ -231,6 +231,26 @@ namespace MinMax
 		return outCount > 0;
 	}
 
+	// アーティキュレーション系パラメータ取得
+	constexpr size_t PARAM_ARTICULATION_COUNT = 7;
+	static_assert(PARAM_ARTICULATION_COUNT <= paramTable.size(), "Articulation param count mismatch");
+
+	inline bool getArticulationParams(std::array<const ParamDef*, PARAM_ARTICULATION_COUNT>& outResult, size_t& outCount)
+	{
+		outCount = 0;
+
+		for (const auto& param : paramTable)
+		{
+			if (param.unitID == UNIT::ARTICULATION)
+			{
+				assert(outCount < outResult.size());
+				outResult[outCount++] = &param;
+			}
+		}
+
+		return outCount > 0;
+	}
+
 	// パラメータコンテナ初期化
 	inline const void initParameters()
 	{

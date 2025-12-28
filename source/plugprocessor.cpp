@@ -232,6 +232,20 @@ namespace MinMax
 
 	void PLUGIN_API MyVSTProcessor::articulationChanged(int oldArticulation, int newArticulation)
 	{
+		constexpr int SPECIAL_NOTES_SAMPLES = 1;
+
+		if (newArticulation < 0 || newArticulation >= PARAM_ARTICULATION_COUNT) return;
+
+		//int sw = Articulations[newArticulation];
+		//if (sw == 0) return;
+
+		//uint64 onTime = scheduler.getCurrentSampleTime();
+		//uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
+
+		//for (int i = 0; i < (channelSepalate ? STRING_COUNT : 1); i++)
+		//{
+		//	scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, sw, 127, i);
+		//}
 	}
 
 	void PLUGIN_API MyVSTProcessor::processEvent()
