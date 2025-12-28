@@ -21,8 +21,9 @@ namespace MinMax
         : public OptionMenuListenerAdapter
     {
     public:
-        ChordSelectorListner(CFretBoard* fretborad)
+        ChordSelectorListner(CFretBoard* fretborad, VST3Editor* editor)
             : fretBoard(fretborad)
+            , editor(editor)
         {
         }
 
@@ -62,11 +63,21 @@ namespace MinMax
                 }
                 if (finish) break;
             }
+ 
+            if (finish)
+            {
+                editor->getController()->beginEdit(1104);
+                ParamValue norm = editor->getController()->plainParamToNormalized(1104, chordNumber);
+                editor->getController()->setParamNormalized(1104, norm);
+                editor->getController()->endEdit(1104);
+            }
+
             return finish;
         }
 
     private:
         CFretBoard* fretBoard = nullptr;
+        VST3Editor* editor = nullptr;
     };
 
     class CFretBoardView
@@ -84,14 +95,17 @@ namespace MinMax
             int yOffSet = 22;
             for (int i = 0; i < 6; i++)
             {
-                CNoteEdit* noteEdit = new CNoteEdit(CRect(10, 1 + yOffSet, 49, 15 + yOffSet), editor, 999);
+                CNoteEdit* noteEdit = new CNoteEdit(CRect(10, 1 + yOffSet, 49, 15 + yOffSet), editor, -1);
                 noteEdit->setBackColor(kWhiteCColor);
                 noteEdit->setFontColor(kBlackCColor);
                 noteEdit->setFont(kNormalFontSmaller);
+                noteEdit->setTag(1202);
                 addView(noteEdit);
 
                 CNoteLabel* noteLabel = new CNoteLabel(CRect(50, 1 + yOffSet, 89, 15 + yOffSet));
                 noteLabel->setFont(kNormalFontSmaller);
+                noteLabel->setListener(editor);
+                noteLabel->setTag(1202);
                 addView(noteLabel);
 
                 yOffSet += 24;
@@ -107,8 +121,8 @@ namespace MinMax
             addView(labHierMenu);
 
             // 階層化メニューを右に追加
-            COptionMenu* hierMenu = new COptionMenu(CRect(400, 1, 439, 18), editor, 999);
-            menuListener = std::make_unique<ChordSelectorListner>(fretBoard);
+            COptionMenu* hierMenu = new COptionMenu(CRect(400, 1, 439, 18), nullptr, -1);
+            menuListener = std::make_unique<ChordSelectorListner>(fretBoard, editor);
 
             hierMenu->setFontColor(kWhiteCColor);
             hierMenu->setBackColor(kGreyCColor);
@@ -141,9 +155,10 @@ namespace MinMax
 
             addView(hierMenu);
 
-            CTextLabel* labChord = new CTextLabel(CRect(440, 1, 539, 18));
+            CParamDisplay* labChord = new CParamDisplay(CRect(440, 1, 539, 18));
             labChord->setFont(kNormalFontSmall);
-            labChord->setText("C M7 (1)");
+            labChord->setListener(editor);
+            labChord->setTag(1104);
             addView(labChord);
         }
 

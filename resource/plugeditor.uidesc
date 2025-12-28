@@ -45,6 +45,7 @@
 			"ARTICULATION_SLIDE": "1407",
 			"BRUSH_TIME": "1207",
 			"CHANNEL_SEPALATE": "1001",
+			"CHORD_NUMBER": "1104",
 			"CHORD_POSITION": "1103",
 			"CHORD_ROOT": "1101",
 			"CHORD_TYPE": "1102",
@@ -94,7 +95,7 @@
 				"SelectedRow": "16"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "28"
+				"SelectedRow": "10"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
