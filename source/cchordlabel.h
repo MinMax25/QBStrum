@@ -1,7 +1,8 @@
 #pragma once
 
-#include <vstgui/lib/controls/ctextlabel.h>
 #include "chordmap.h"
+#include <vstgui/lib/controls/ctextlabel.h>
+#include <vstgui/lib/cdrawcontext.h>
 
 namespace MinMax
 {

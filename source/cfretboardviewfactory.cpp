@@ -4,19 +4,20 @@
 
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
-#include <vstgui/vstgui_uidescription.h>
 #include <vstgui/lib/controls/ioptionmenulistener.h>
+#include <vstgui/lib/controls/ctextlabel.h>
+#include <vstgui/vstgui_uidescription.h>
 #include <string>
 
-#include "cfretboard.h"
 #include "chordmap.h"
-#include "cnoteedit.h"
-#include "cnotelabel.h"
-
-#include "debug_log.h"
+#include "cfretboard.h"
+#include "cchordlabel.h"
 
 namespace MinMax
 {
+    using namespace Steinberg;
+    using namespace Steinberg::Vst;
+
     class ChordSelectorListner
         : public OptionMenuListenerAdapter
     {
@@ -25,6 +26,11 @@ namespace MinMax
             : fretBoard(fretborad)
             , editor(editor)
         {
+            if (fretBoard)
+            {
+                CChord chord{};
+                fretBoard->setValue(chord);
+            }
         }
 
         bool onOptionMenuSetPopupResult(COptionMenu* menu, COptionMenu* selectedMenu, int32_t selectedIndex) override
@@ -105,7 +111,7 @@ namespace MinMax
             addView(labHierMenu);
 
             // 階層化メニューを右に追加
-            COptionMenu* hierMenu = new COptionMenu(CRect(400, 1, 439, 18), nullptr, -1);
+            COptionMenu* hierMenu = new COptionMenu(CRect(400, 1, 429, 18), nullptr, -1);
             menuListener = std::make_unique<ChordSelectorListner>(fretBoard, editor);
 
             hierMenu->setFontColor(kWhiteCColor);
@@ -139,8 +145,10 @@ namespace MinMax
 
             addView(hierMenu);
 
-            CTextLabel* labChord = new CTextLabel(CRect(440, 1, 539, 18));
+            CChordLabel* labChord = new CChordLabel(CRect(430, 1, 549, 18));
             labChord->setFont(kNormalFontSmall);
+            labChord->setListener(editor);
+            labChord->setTag(1104);
             addView(labChord);
         }
 
