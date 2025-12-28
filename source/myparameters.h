@@ -115,7 +115,7 @@ namespace MinMax
 			case RANGE::OPTION_FRET:		 out = { 0, 1, true }; return true;
 			case RANGE::NONE:                out = { 0, 1, true }; return true;
 			case RANGE::PITCH:               out = { 0, 127, false }; return true;
-			case RANGE::MIDI_CHANNEL:        out = { 1, 16, false }; return true;
+			case RANGE::MIDI_CHANNEL:        out = { 0, 15, false }; return true;
 			case RANGE::TRANSPOSE_RANGE:     out = { -12, 12, false }; return true;
 			case RANGE::FRET_DISTANCE:       out = { 1, 6, false }; return true;
 			case RANGE::STRUM_STRINGS_RANGE: out = { 1, 5, false }; return true;
@@ -169,7 +169,7 @@ namespace MinMax
 		{ PARAM::CHORD_ROOT, STR16("Root"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::OPTION_ROOT, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
 		{ PARAM::CHORD_TYPE, STR16("Type"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::OPTION_TYPE, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
 		{ PARAM::FRET_POSITION, STR16("Fret Position"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::OPTION_FRET, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
-		{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 3, 0, 0 },
+		{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
 		{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 103, 0, 0 },
 		{ PARAM::MUTE_NOTE_2, STR16("Mite Note 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 102, 0, 0 },
 		{ PARAM::SPEED, STR16("Strum Speed"), STR16("ms"), VALUE::Real, SCALE::Exponential, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 1, 1000, 26, 1, 0 },

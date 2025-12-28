@@ -695,7 +695,6 @@ namespace MinMax
 
 	void PLUGIN_API MyVSTProcessor::processAudio(Vst::ProcessData& data)
 	{
-		/*
 		if (data.numSamples > 0)
 		{
 			int32 minBus = std::min(data.numInputs, data.numOutputs);
@@ -728,6 +727,5 @@ namespace MinMax
 				data.outputs[i].silenceFlags = ((uint64)1 << data.outputs[i].numChannels) - 1;
 			}
 		}
-		*/
 	}
 }
