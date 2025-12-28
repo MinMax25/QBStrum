@@ -15,6 +15,15 @@ namespace MinMax
     using std::vector;
 
     inline constexpr int STRING_COUNT = 6;
+    
+    struct FlatChordEntry
+    {
+        int root = 0;
+        int type = 0;
+        int position = 0;
+
+        std::string displayName{}; // "Cmaj", "Am7" ‚È‚Ç
+    };
 
     class CChord
     {
@@ -232,11 +241,33 @@ namespace MinMax
             return result;
         }
 
+        const FlatChordEntry& getByIndex(int index) const
+        {
+            return flatChords.at(index);
+        }
+
+        int getFlatCount() const
+        {
+            return static_cast<int>(flatChords.size());
+        }
+
+        int toIndex(const CChord& chord) const
+        {
+            return indexTable[chord.root][chord.type][chord.position];
+        }
+
+        size_t getCount() const
+        {
+            return flatChords.size();
+        }
+
     protected:
 
         string Name;
         vector<int> Tunings;
         vector<ParamChordRoot> ChordRoots;
+        vector<FlatChordEntry> flatChords;
+        vector<vector<vector<int>>> indexTable;
 
         int chordRootCount = 0;
         int chordTypeCount = 0;
@@ -247,6 +278,40 @@ namespace MinMax
         ChordMap& operator=(const ChordMap&) = delete;
         ChordMap(ChordMap&&) = default;
         ChordMap& operator=(ChordMap&&) = default;
+
+        void buildFlatTable()
+        {
+            flatChords.clear();
+            indexTable.clear();
+
+            indexTable.resize(ChordRoots.size());
+
+            int index = 0;
+
+            for (int r = 0; r < (int)ChordRoots.size(); ++r)
+            {
+                indexTable[r].resize(ChordRoots[r].ChordTypes.size());
+
+                for (int t = 0; t < (int)ChordRoots[r].ChordTypes.size(); ++t)
+                {
+                    auto& types = ChordRoots[r].ChordTypes[t];
+                    indexTable[r][t].resize(types.Voicings.size());
+
+                    for (int p = 0; p < (int)types.Voicings.size(); ++p)
+                    {
+                        FlatChordEntry e;
+                        e.root = r;
+                        e.type = t;
+                        e.position = p;
+                        e.displayName =
+                            ChordRoots[r].Name + " " + types.Name + " (" + std::to_string(p + 1) + ")";
+
+                        flatChords.push_back(e);
+                        indexTable[r][t][p] = index++;
+                    }
+                }
+            }
+        }
 
         bool Deserialize(const rapidjson::Value& v)
         {
@@ -297,6 +362,7 @@ namespace MinMax
 
             ChordMap map;
             map.Deserialize(doc);
+            map.buildFlatTable();
 
             string filename = path.filename().string();
             size_t dot = filename.find_last_of('.');
