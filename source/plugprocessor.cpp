@@ -284,7 +284,8 @@ namespace MinMax
 			// ピッチからパラメータＩＤ取得
 			if (event.type == Event::kNoteOnEvent)
 			{
-				if (ParamID tag = getParamIdByPitch(event) > 0)
+				ParamID tag = getParamIdByPitch(event);
+				if (tag > 0)
 				{
 					routingProcess(tag, event);
 				}
@@ -382,8 +383,6 @@ namespace MinMax
 
 	void MyVSTProcessor::trigBrush(Event event, bool isDown)
 	{
-		/*
-		*/
 		const int BRUSH_PER_MS = 1;
 		const float BRUSH_DECAY = 0.98f;
 
