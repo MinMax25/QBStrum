@@ -70,15 +70,21 @@ namespace MinMax
             setBackgroundColor(kGreyCColor);
 
 			// ストラムパラメータグリッド
-            CRowColumnView* grdStrum = new CRowColumnView(CRect(CPoint(10, 5), CPoint(410, 15 * TriggerDef.size())));
+            CRowColumnView* grdStrum = new CRowColumnView(CRect(CPoint(10, 5), CPoint(410, 15 * PARAM_TRIGGER_COUNT)));
             grdStrum->setAutosizeFlags(kAutosizeAll);
             grdStrum->setBackgroundColor(kTransparentCColor);
             grdStrum->setStyle(CRowColumnView::kRowStyle);
             addView(grdStrum);
 
-            for (auto& def : TriggerDef)
+            std::array<const ParamDef*, MinMax::PARAM_TRIGGER_COUNT> triggerParams;
+            size_t triggerCount = 0;
+            getTriggerParams(triggerParams, triggerCount);
+
+            for (size_t i = 0; i < triggerCount; ++i)
             {
-				// ストラムパラメータ行
+                const ParamDef* def = triggerParams[i];
+                
+                // ストラムパラメータ行
                 CRowColumnView* rcvONote = new CRowColumnView(CRect(CPoint(0, 0), CPoint(400, 15)));
                 rcvONote->setAutosizeFlags(kAutosizeNone);
                 rcvONote->setBackgroundColor(kTransparentCColor);
@@ -91,12 +97,12 @@ namespace MinMax
                 labStrumTitle->setFontColor(kWhiteCColor);
                 labStrumTitle->setHoriAlign(CHoriTxtAlign::kLeftText);
                 labStrumTitle->setFont(kNormalFontSmall);
-                labStrumTitle->setText(String(def.name).text8());
+                labStrumTitle->setText(String(def->name).text8());
                 rcvONote->addView(labStrumTitle);
 
 				// ピッチ・ノート入力
                 CNoteEdit* txtONote = new CNoteEdit(CRect(CPoint(0, 0), CPoint(40, 15)), description->getController(), -1);
-                txtONote->setTag(def.tag);
+                txtONote->setTag(def->tag);
                 txtONote->setBackColor(kWhiteCColor);
                 txtONote->setFontColor(kBlackCColor);
                 txtONote->setFont(kNormalFontSmall);
@@ -106,12 +112,12 @@ namespace MinMax
                 CNoteLabel* labONote = new CNoteLabel(CRect(CPoint(0, 0), CPoint(40, 15)));
                 labONote->setListener(description->getController());
                 labONote->setFont(kNormalFontSmall);
-                labONote->setTag(def.tag);
+                labONote->setTag(def->tag);
                 rcvONote->addView(labONote);
 
 				// ノート送信ボタン
                 CNoteButton* btnONote = new CNoteButton([this](CControl* p, CPoint where, bool onoff) { onNoteButtonClicked(p, where, onoff); }, CRect(CPoint(0, 0), CPoint(64, 15)));
-                btnONote->setTag(def.tag);
+                btnONote->setTag(def->tag);
                 btnONote->setWantsFocus(false);
                 btnONote->setStyle(CTextButton::kKickStyle);
                 btnONote->setRoundRadius(2);
@@ -173,7 +179,7 @@ namespace MinMax
 
         CView* create(const UIAttributes& attributes, const IUIDescription* description) const override
         {
-            return new CStrumView(attributes, description, CRect(CPoint(0, 0), CPoint(305, 5 * 2 + 15 * TriggerDef.size())));
+            return new CStrumView(attributes, description, CRect(CPoint(0, 0), CPoint(305, 5 * 2 + 15 * PARAM_TRIGGER_COUNT)));
         }
     };
 

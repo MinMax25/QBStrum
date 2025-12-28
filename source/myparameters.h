@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cassert>
 #include <pluginterfaces/base/fstrdefs.h>
 #include "parameterframework.h"	
 #include "chordmap.h"
@@ -12,6 +13,7 @@ namespace MinMax
 
 	using PFContainer = ParameterFramework::PFContainer;
 
+	// ユニット識別子
 	enum UNIT
 	{
 		SYSTEM = 0,
@@ -21,6 +23,7 @@ namespace MinMax
 		ARTICULATION,
 	};
 
+	// 共通レンジ識別子
 	enum RANGE
 	{
 		NONE,
@@ -36,6 +39,7 @@ namespace MinMax
 		ARTICULATION_RANGE,
 	};
 
+	// パラメータ識別子
 	enum PARAM
 	{
 		// SYSTEM
@@ -97,6 +101,7 @@ namespace MinMax
 		SLIDE,
 	};
 
+	// 共通レンジ定義取得
 	class RangeResolver
 		: public ParameterFramework::IRangeResolver
 	{
@@ -121,6 +126,7 @@ namespace MinMax
 		}
 	};
 
+	// オプションリスト取得
 	class OptionProvider
 		: public ParameterFramework::IOptionProvider
 	{
@@ -145,7 +151,15 @@ namespace MinMax
 		}
 	};
 
-	inline const std::array<ParamDef, 46> paramTable =
+	/***
+	 * Parameter設定
+	*/
+	
+	// 全パラメータ数
+	inline constexpr size_t PARAM_MAX = 46;
+
+	// 全パラメータ定義
+	inline const std::array<ParamDef, PARAM_MAX> paramTable =
 	{ {
 
 		{ PARAM::BYPASS, STR16("Bypass"), STR16(""), VALUE::Bool, SCALE::Linear, std::nullopt, FLAG::SYS_BYPASS, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
@@ -196,29 +210,28 @@ namespace MinMax
 		{ PARAM::SLIDE, STR16("Slide"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 33, 0, 0 },
 
 	} };
+	
+	// トリガー系パラメータ取得
+	constexpr size_t PARAM_TRIGGER_COUNT = 16;
+	static_assert(PARAM_TRIGGER_COUNT <= paramTable.size(), "Trigger param count mismatch");
 
-	inline const std::array<ParamDef, 16> TriggerDef =
-	{ {
+	inline bool getTriggerParams(std::array<const ParamDef*, PARAM_TRIGGER_COUNT>& outResult, size_t& outCount)
+	{
+		outCount = 0;
 
-		{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 75, 0, 0 },
-		{ PARAM::BRUSH_UP, STR16("Brush Up"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 68, 0, 0 },
-		{ PARAM::BRUSH_DOWN, STR16("Brush Down"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 67, 0, 0 },
-		{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 66, 0, 0 },
-		{ PARAM::UP, STR16("Up"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 65, 0, 0 },
-		{ PARAM::DOWN_HIGH, STR16("Down High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 64, 0, 0 },
-		{ PARAM::DOWN, STR16("Down"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 63, 0, 0 },
-		{ PARAM::DOWN_LOW, STR16("Down Low"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 62, 0, 0 },
-		{ PARAM::MUTE_1, STR16("Mute 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 61, 0, 0 },
-		{ PARAM::MUTE_2, STR16("Mute 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 60, 0, 0 },
-		{ PARAM::ARPEGGIO_1, STR16("String 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 57, 0, 0 },
-		{ PARAM::ARPEGGIO_2, STR16("String 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 55, 0, 0 },
-		{ PARAM::ARPEGGIO_3, STR16("String 3"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 53, 0, 0 },
-		{ PARAM::ARPEGGIO_4, STR16("String 4"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 52, 0, 0 },
-		{ PARAM::ARPEGGIO_5, STR16("String 5"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 50, 0, 0 },
-		{ PARAM::ARPEGGIO_6, STR16("String 6"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 48, 0, 0 },
+		for (const auto& param : paramTable)
+		{
+			if (param.unitID == UNIT::TRIGGER)
+			{
+				assert(outCount < outResult.size());
+				outResult[outCount++] = &param;
+			}
+		}
 
-	} };
+		return outCount > 0;
+	}
 
+	// パラメータコンテナ初期化
 	inline const void initParameters()
 	{
 		static RangeResolver rangeResolver;
