@@ -173,7 +173,7 @@ namespace MinMax
 		{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 103, 0, 0 },
 		{ PARAM::MUTE_NOTE_2, STR16("Mute Note 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 102, 0, 0 },
 		{ PARAM::SPEED, STR16("Strum Speed"), STR16("ms"), VALUE::Real, SCALE::Exponential, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 1, 1000, 26, 1, 0 },
-		{ PARAM::DECAY, STR16("Strum Decay"), STR16("%"), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 85, 100, 96, 1, 0 },
+		{ PARAM::DECAY, STR16("Strum Decay"), STR16("%"), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 70, 100, 96, 1, 0 },
 		{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::BEAT_LENGTH, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 4, 0, 0 },
 		{ PARAM::BRUSH_TIME, STR16("Brush Time"), STR16("ms"), VALUE::Real, SCALE::Exponential, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 20, 300, 30, 1, 0 },
 		{ PARAM::ARP_LENGTH, STR16("Arpegio Length"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::BEAT_LENGTH, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 2, 0, 0 },

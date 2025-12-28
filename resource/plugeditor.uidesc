@@ -86,12 +86,12 @@
 				"SplitViewSize_1_1": "0.6354679802955665035568699750001542270184",
 				"SplitViewSize_2_0": "0.5864527629233511341055873344885185360909",
 				"SplitViewSize_2_1": "0.4105763517528223660590924737334717065096",
-				"TabSwitchValue": "1",
+				"TabSwitchValue": "0",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "9"
+				"SelectedRow": "16"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "28"
