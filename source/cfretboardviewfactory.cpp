@@ -66,10 +66,13 @@ namespace MinMax
  
             if (finish)
             {
-                editor->getController()->beginEdit(1104);
-                ParamValue norm = editor->getController()->plainParamToNormalized(1104, chordNumber);
-                editor->getController()->setParamNormalized(1104, norm);
-                editor->getController()->endEdit(1104);
+                EditController* controller = dynamic_cast<EditController*>(editor->getController());
+                if (!controller) return false;
+                controller->beginEdit(1104);
+                ParamValue norm = controller->plainParamToNormalized(1104, chordNumber);
+                controller->setParamNormalized(1104, norm);
+                controller->performEdit(1104, norm);
+                controller->endEdit(1104);
             }
 
             return finish;
@@ -91,25 +94,6 @@ namespace MinMax
             editor->addRef();
 
             setBackgroundColor(kGreyCColor);
-
-            int yOffSet = 22;
-            for (int i = 0; i < 6; i++)
-            {
-                CNoteEdit* noteEdit = new CNoteEdit(CRect(10, 1 + yOffSet, 49, 15 + yOffSet), editor, -1);
-                noteEdit->setBackColor(kWhiteCColor);
-                noteEdit->setFontColor(kBlackCColor);
-                noteEdit->setFont(kNormalFontSmaller);
-                noteEdit->setTag(1202);
-                addView(noteEdit);
-
-                CNoteLabel* noteLabel = new CNoteLabel(CRect(50, 1 + yOffSet, 89, 15 + yOffSet));
-                noteLabel->setFont(kNormalFontSmaller);
-                noteLabel->setListener(editor);
-                noteLabel->setTag(1202);
-                addView(noteLabel);
-
-                yOffSet += 24;
-            }
 
             CFretBoard* fretBoard = new CFretBoard(CRect(0, 20, 1120, size.getHeight() + 20));
             fretBoard->numStrings = STRING_COUNT;
@@ -155,10 +139,8 @@ namespace MinMax
 
             addView(hierMenu);
 
-            CParamDisplay* labChord = new CParamDisplay(CRect(440, 1, 539, 18));
+            CTextLabel* labChord = new CTextLabel(CRect(440, 1, 539, 18));
             labChord->setFont(kNormalFontSmall);
-            labChord->setListener(editor);
-            labChord->setTag(1104);
             addView(labChord);
         }
 
