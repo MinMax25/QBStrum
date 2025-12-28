@@ -45,9 +45,9 @@ namespace MinMax
                         chord.root = r;
                         chord.type = t;
                         chord.position = selectedIndex;
-
+#if DEBUG
                         DebugLog(chord.toString().c_str());
-
+#endif
                         fretBoard->setValue(chord);
 
                         return true;
@@ -57,6 +57,7 @@ namespace MinMax
 
             return false;
         }
+
     private:
         CFretBoard* fretBoard = nullptr;
     };
@@ -77,12 +78,13 @@ namespace MinMax
             fretBoard->numStrings = STRING_COUNT;
             addView(fretBoard);
 
-            CTextLabel* label = new CTextLabel(CRect(300, 1, 399, 18));
-            label->setText("Select Choard");
-            addView(label);
+            CTextLabel* labHierMenu = new CTextLabel(CRect(300, 1, 399, 18));
+            labHierMenu->setFont(kNormalFontSmall);
+            labHierMenu->setText("Select Choard");
+            addView(labHierMenu);
 
             // 階層化メニューを右に追加
-            COptionMenu* hierMenu = new COptionMenu(CRect(400, 1, 440, 18), editor, 999);
+            COptionMenu* hierMenu = new COptionMenu(CRect(400, 1, 439, 18), editor, 999);
             menuListener = std::make_unique<ChordSelectorListner>(fretBoard);
 
             hierMenu->setFontColor(kWhiteCColor);
@@ -115,6 +117,11 @@ namespace MinMax
             }
 
             addView(hierMenu);
+
+            CTextLabel* labChord = new CTextLabel(CRect(440, 1, 539, 18));
+            labChord->setFont(kNormalFontSmall);
+            labChord->setText("C M7 (1)");
+            addView(labChord);
         }
 
         CFretBoardView(const CFretBoardView& other)
