@@ -9,26 +9,50 @@
 #include "myparameters.h"
 #include "cfretboard.h"
 #include "chordmap.h"
+#include <vstgui/lib/controls/ioptionmenulistener.h>
 
 namespace MinMax
 {
-    class CFretOptionMenu
-        : public COptionMenu
+    class CFretMenuListener
+        : public OptionMenuListenerAdapter
     {
     public:
-        CFretOptionMenu(const CRect& size, IControlListener* listener, int32_t tag, CFretBoard* fretBoard)
-            : COptionMenu(size, listener, tag)
-            , fretBoard(fretBoard)
+        CFretMenuListener(CFretBoard* fretborad)
+            : fretBoard(fretborad)
         {
         }
 
-        void valueChanged() override
+        bool onOptionMenuSetPopupResult(COptionMenu* menu, COptionMenu* selectedMenu, int32_t selectedIndex) override
         {
-            if (fretBoard == nullptr) return;
-            COptionMenu::valueChanged();
-            fretBoard->setValue(getTag(), getCurrentIndex());
-        }
+            if (!menu || !selectedMenu) return false;
 
+            CChord chord;
+
+            for (int r = 0; r < menu->getNbEntries(); ++r)
+            {
+                COptionMenu* typeMenu = menu->getSubMenu(r);
+                if (!typeMenu) continue;
+
+                for (int t = 0; t < typeMenu->getNbEntries(); ++t)
+                {
+                    COptionMenu* posMenu = typeMenu->getSubMenu(t);
+                    if (!posMenu) continue;
+
+                    if (posMenu == selectedMenu)
+                    {
+                        chord.root = r;
+                        chord.type = t;
+                        chord.position = selectedIndex;
+
+                        fretBoard->setValue(chord);
+
+                        return true;
+                    }
+                }
+            }
+
+            return false;
+        }
     private:
         CFretBoard* fretBoard = nullptr;
     };
@@ -50,23 +74,39 @@ namespace MinMax
             fretBoard->numStrings = STRING_COUNT;
             addView(fretBoard);
 
-            rootMenu = new CFretOptionMenu(CRect(1, 1, 79, 18), description->getController(), static_cast<int32_t>(PARAM::CHORD_ROOT), fretBoard);
-            rootMenu->setFontColor(kWhiteCColor);
-            rootMenu->setBackColor(kBlackCColor);
-            rootMenu->setTag(static_cast<int32_t>(PARAM::CHORD_ROOT));
-            addView(rootMenu);
+            // 階層化メニューを右に追加
+            COptionMenu* hierMenu = new COptionMenu(CRect(300, 1, 380, 18), editor, 999);
+            CFretMenuListener* listener = new CFretMenuListener(fretBoard);
+            hierMenu->setFontColor(kWhiteCColor);
+            hierMenu->setBackColor(kBlackCColor);
+            hierMenu->registerOptionMenuListener(listener);
 
-            typeMenu = new CFretOptionMenu(CRect(81, 1, 159, 18), description->getController(), static_cast<int32_t>(PARAM::CHORD_TYPE), fretBoard);
-            typeMenu->setFontColor(kWhiteCColor);
-            typeMenu->setBackColor(kBlackCColor);
-            typeMenu->setTag(static_cast<int32_t>(PARAM::CHORD_TYPE));
-            addView(typeMenu);
+            // ChordMap から階層データを追加
+            const auto& chordMap = ChordMap::Instance();
+            auto rootNames = chordMap.getRootNames();
 
-            posMenu = new CFretOptionMenu(CRect(161, 1, 239, 18), description->getController(), static_cast<int32_t>(PARAM::FRET_POSITION), fretBoard);
-            posMenu->setFontColor(kWhiteCColor);
-            posMenu->setBackColor(kBlackCColor);
-            posMenu->setTag(static_cast<int32_t>(PARAM::FRET_POSITION));
-            addView(posMenu);
+            for (int r = 0; r < (int)rootNames.size(); ++r)
+            {
+                COptionMenu* typeMenuSub = new COptionMenu(CRect(0, 0, 150, 20), editor, 999);
+
+                auto chordNames = chordMap.getChordNames(r);
+                for (int t = 0; t < (int)chordNames.size(); ++t)
+                {
+                    COptionMenu* posMenuSub = new COptionMenu(CRect(0, 0, 150, 20), editor, 999);
+
+                    auto posNames = chordMap.getFretPosNames(r, t);
+                    for (auto& posName : posNames)
+                    {
+                        posMenuSub->addEntry(posName.c_str());
+                    }
+
+                    typeMenuSub->addEntry(posMenuSub, chordNames[t].c_str());
+                }
+
+                hierMenu->addEntry(typeMenuSub, rootNames[r].c_str());
+            }
+
+            addView(hierMenu);
         }
 
         ~CFretBoardView()
@@ -76,11 +116,6 @@ namespace MinMax
                 editor->release();
             }
         }
-
-
-        CFretOptionMenu* rootMenu = nullptr;
-        CFretOptionMenu* typeMenu = nullptr;
-        CFretOptionMenu* posMenu = nullptr;
 
         CLASS_METHODS(CFretBoardView, CViewContainer)
 

@@ -17,7 +17,8 @@ namespace MinMax
 
         void draw(CDrawContext* pContext) override;
 
-        void setValue(ParamID tag, int idx);
+        void setValue(CChord chord);
+
         // 弦数
         int numStrings = 6;
 

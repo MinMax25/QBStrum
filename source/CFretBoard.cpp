@@ -5,7 +5,6 @@
 #include "plugdefine.h"
 #include "cfretboard.h"
 #include "chordmap.h"
-#include "myparameters.h"
 
 namespace MinMax
 {
@@ -215,20 +214,11 @@ namespace MinMax
         setDirty(false);
     }
 
-    void CFretBoard::setValue(ParamID tag, int idx)
+    void CFretBoard::setValue(CChord c)
     {
-        if (tag == static_cast<int32>(PARAM::CHORD_ROOT))
-        {
-            chord.root = idx;
-        }
-        else if (tag == static_cast<int32>(PARAM::CHORD_TYPE))
-        {
-            chord.type = idx;
-        }
-        else if (tag == static_cast<int32>(PARAM::FRET_POSITION))
-        {
-            chord.position = idx;
-        }
+        chord.root = c.root;
+        chord.type = c.type;
+        chord.position = c.position;
 
         pressedFrets = ChordMap::Instance().getFretPositions(chord);
 
