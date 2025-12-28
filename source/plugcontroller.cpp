@@ -62,23 +62,14 @@ namespace MinMax
 	{
 		if (!state) return kInvalidArgument;
 
-		const auto& defs = PFContainer::get().getDefs();
-
-		for (const auto& def : defs)
+		for (const auto& def : paramTable)
 		{
 			double plain = 0.0;
-			if (state->read(&plain, sizeof(double), nullptr) != kResultOk)
-				return kResultFalse;
+			if (state->read(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
 
 			// 正規化値に変換
 			ParamValue normalized = plainParamToNormalized(def.tag, plain);
-#if DEBUG
-			DebugLog(
-				"[Controller::setComponentState] tag=%u plain=%f norm=%f",
-				def.tag, plain, normalized
-			);
 
-#endif
 			// EditControllerに値をセット
 			setParamNormalized(def.tag, normalized);
 		}

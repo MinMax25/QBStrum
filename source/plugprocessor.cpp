@@ -65,6 +65,8 @@ namespace MinMax
 		processData = nullptr;
 
 		setControllerClass(kMyVSTControllerUID);
+
+		initParameters();
 	}
 
 	MyVSTProcessor::~MyVSTProcessor()
@@ -80,7 +82,6 @@ namespace MinMax
 		addEventInput(STR16("Event In"), 1);
 		addEventOutput(STR16("Event Out"), 16);
 
-		initParameters();
 		paramStorage.initialize();
 
 		return kResultOk;
@@ -124,9 +125,7 @@ namespace MinMax
 	{
 		if (!state) return kInvalidArgument;
 
-		auto& paramStorage = this->paramStorage; // ProcessorParamStorage
-
-		for (const auto& def : PFContainer::get().getDefs())
+		for (const auto& def : paramTable)
 		{
 			double plain = 0.0;
 			if (state->read(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
@@ -140,9 +139,7 @@ namespace MinMax
 	{
 		if (!state) return kInvalidArgument;
 
-		auto& paramStorage = this->paramStorage;
-
-		for (const auto& def : PFContainer::get().getDefs())
+		for (const auto& def : paramTable)
 		{
 			double plain = paramStorage.get(def.tag);
 			if (state->write(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;

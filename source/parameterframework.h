@@ -175,7 +175,10 @@ namespace ParameterFramework
             defs.push_back(def);
         }
 
-        const std::vector<ParamDef>& getDefs() const { return defs; }
+        const std::vector<ParamDef>& getDefs() const 
+        {
+            return defs;
+        }
 
         std::unique_ptr<Parameter> createParameter(const ParamDef& def)
         {
@@ -341,7 +344,15 @@ namespace ParameterFramework
             return rangeResolver->resolve(*def.rangeKind, out);
         }
 
+        bool isInitialized()
+        {
+            return isInitialized_;
+        }
+
+        void setInitialized() { isInitialized_ = true; }
+
     private:
+        bool isInitialized_ = false;
 
         // Resolver
         const IRangeResolver* rangeResolver = nullptr;
