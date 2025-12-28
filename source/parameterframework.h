@@ -105,7 +105,7 @@ namespace ParameterFramework
 
 #pragma endregion
 
-#pragma region Helper
+#pragma region Parameter Helper
 
     struct ValueRange
     {
