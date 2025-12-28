@@ -409,10 +409,7 @@ namespace ParameterFramework
 
         void set(ParamID id, double val)
         {
-            auto* p = findParameter(id);
-            if (!p) return;
-
-            ParamValue normalized = p->toNormalized(val);
+            ParamValue normalized = getNormalized(id, val);
             setNormalized(id, normalized);
         }
 
@@ -426,6 +423,21 @@ namespace ParameterFramework
         {
             for (auto& [id, entry] : storage)
                 entry.changed = false;
+        }
+
+        void setNormalized(ParamID id, ParamValue val)
+        {
+            auto it = storage.find(id);
+            if (it == storage.end()) return;
+
+            val = std::clamp(val, 0.0, 1.0);
+
+            if (std::abs(it->second.current - val) > 1e-6)
+            {
+                it->second.previous = it->second.current;
+                it->second.current = val;
+                it->second.changed = true;
+            }
         }
 
     private:
@@ -450,21 +462,6 @@ namespace ParameterFramework
             auto* p = findParameter(id);
             if (!p) return 0.0;
             return p->toNormalized(plain);
-        }
-
-        void setNormalized(ParamID id, ParamValue val)
-        {
-            auto it = storage.find(id);
-            if (it == storage.end()) return;
-
-            val = std::clamp(val, 0.0, 1.0);
-
-            if (std::abs(it->second.current - val) > 1e-6)
-            {
-                it->second.previous = it->second.current;
-                it->second.current = val;
-                it->second.changed = true;
-            }
         }
     };
 

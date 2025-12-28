@@ -227,7 +227,7 @@ namespace MinMax
 			if (!(queue->getPoint(valueChangeCount - 1, sampleOffset, value) == kResultTrue)) continue;
 
 			// パラメータ値をキャッシュ
-			paramStorage.set(tag, value);
+			paramStorage.setNormalized(tag, value);
 
 			switch (tag)
 			{
