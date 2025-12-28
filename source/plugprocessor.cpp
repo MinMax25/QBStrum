@@ -21,7 +21,7 @@ namespace MinMax
 	using namespace Steinberg;
 	using namespace ParameterFramework;
 
-	using PFContainer = ParameterFramework::PFContainer;
+	using ParamHelper = ParameterFramework::ParamHelper;
 
 #pragma region Implements
 

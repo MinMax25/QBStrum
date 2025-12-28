@@ -11,7 +11,7 @@ namespace MinMax
 	using namespace Steinberg::Vst;
 	using namespace ParameterFramework;
 
-	using PFContainer = ParameterFramework::PFContainer;
+	using ParamHelper = ParameterFramework::ParamHelper;
 
 	// ユニット識別子
 	enum UNIT
@@ -253,7 +253,7 @@ namespace MinMax
 		static RangeResolver rangeResolver;
 		static OptionProvider optionProvider;
 
-		auto& container = ParameterFramework::PFContainer::get();
+		auto& container = ParameterFramework::ParamHelper::get();
 		if (container.isInitialized()) return;
 
 		const char* STR_USERPROFILE = "USERPROFILE";

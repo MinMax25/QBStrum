@@ -39,7 +39,7 @@ namespace MinMax
 		addUnit(new Unit(STR16("Articulation"), UNIT::ARTICULATION));
 
 		// パラメータ登録
-		auto& container = ParameterFramework::PFContainer::get();
+		auto& container = ParameterFramework::ParamHelper::get();
 
 		for (auto& def : paramTable)
 		{

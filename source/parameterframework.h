@@ -157,12 +157,12 @@ namespace ParameterFramework
         int32 defaultIndex = 0;
     };
 
-    class PFContainer
+    class ParamHelper
     {
     public:
-        static PFContainer& get()
+        static ParamHelper& get()
         {
-            static PFContainer instance;
+            static ParamHelper instance;
             return instance;
         }
 
@@ -374,14 +374,14 @@ namespace ParameterFramework
 
         void initialize()
         {
-            const auto& defs = PFContainer::get().getDefs();
+            const auto& defs = ParamHelper::get().getDefs();
             storage.clear();
             paramInstances.clear();
 
             for (const auto& def : defs)
             {
                 // パラメータインスタンスを生成（virtual 呼び出し用）
-                std::unique_ptr<Parameter> p = PFContainer::get().createParameter(def);
+                std::unique_ptr<Parameter> p = ParamHelper::get().createParameter(def);
                 if (!p) continue;
 
                 paramInstances.emplace(def.tag, std::move(p));
