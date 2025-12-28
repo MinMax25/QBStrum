@@ -1,5 +1,6 @@
 #pragma once
 
+#include <assert.h>
 #include <optional>
 #include <memory>
 #include <vector>
@@ -37,14 +38,14 @@ namespace ParameterFramework
             setPrecision(0);
         }
 
-        void toString(ParamValue valueNormalized, String128 string) const
+        void toString(ParamValue valueNormalized, String128 string) const override
         {
             UString128 wrapper;
             wrapper.printFloat(toPlain(valueNormalized), precision);
             wrapper.copyTo(string, 128);
         }
 
-        bool fromString(const TChar* string, ParamValue& valueNormalized) const
+        bool fromString(const TChar* string, ParamValue& valueNormalized) const override
         {
             UString wrapper((TChar*)string, strlen16(string));
             ParamValue plainValue;
@@ -56,17 +57,23 @@ namespace ParameterFramework
             return false;
         }
 
-        ParamValue toPlain(ParamValue valueNormalized) const
+        ParamValue toNormalized(ParamValue plainValue) const override
         {
-            valueNormalized = std::clamp(valueNormalized, 0.0, 1.0);
-            return ((max - min) * std::pow(valueNormalized, 3.0)) + min;
-        }
+            assert(max != min && "ExpParameter: max and min cannot be equal");
+            if (max == min) return 0.0; // 安全回避
 
-        ParamValue toNormalized(ParamValue plainValue) const
-        {
             ParamValue norm = (plainValue - min) / (max - min);
             norm = std::clamp(norm, 0.0, 1.0);
             return std::pow(norm, 1.0 / 3.0);
+        }
+
+        ParamValue toPlain(ParamValue valueNormalized) const override
+        {
+            assert(max != min && "ExpParameter: max and min cannot be equal");
+            if (max == min) return 0.0; // 安全回避
+
+            valueNormalized = std::clamp(valueNormalized, 0.0, 1.0);
+            return ((max - min) * std::pow(valueNormalized, 3.0)) + min;
         }
 
         OBJ_METHODS(ExpParameter, Parameter)
@@ -325,6 +332,14 @@ namespace ParameterFramework
 
             return param;
         }
+        
+        bool resolveRange(const ParamDef& def, ValueRange& out) const
+        {
+            if (!rangeResolver || !def.rangeKind)
+                return false;
+
+            return rangeResolver->resolve(*def.rangeKind, out);
+        }
 
     private:
 
@@ -340,9 +355,11 @@ namespace ParameterFramework
 
 #pragma region Value Storage
 
+    /*
     struct ParamEntry
-    {
-        ParamValue normalized = 0.0;
+    {   // 正規化値コンテナ
+        ParamValue current = 0.0;
+        ParamValue previous = 0.0;
         bool changed = false;
     };
 
@@ -357,41 +374,18 @@ namespace ParameterFramework
         {
             const auto& defs = PFContainer::get().getDefs();
             storage.clear();
+
             for (const auto& def : defs)
             {
                 ParamEntry entry{};
-                entry.normalized = def.scaleType == SCALE::Exponential
-                    ? ExpParameter(def.name, def.tag, def.units,
-                        def.minValue, def.maxValue,
-                        def.flags, def.unitID)
-                    .toNormalized(def.defaultValue)
-                    : (def.defaultValue - def.minValue) / (def.maxValue - def.minValue);
 
+                ParamValue initialNorm = plainToNormalized(def, def.defaultValue);
+
+                entry.current = initialNorm;
+                entry.previous = initialNorm;
                 entry.changed = false;
+
                 storage.emplace(def.tag, entry);
-            }
-        }
-
-        const std::unordered_map<ParamID, ParamEntry>& getAll() const { return storage; }
-
-        // 正規化値の取得/設定
-        ParamValue getNormalized(ParamID id) const
-        {
-            auto it = storage.find(id);
-            return (it != storage.end()) ? it->second.normalized : 0.0;
-        }
-
-        void setNormalized(ParamID id, ParamValue val)
-        {
-            auto it = storage.find(id);
-            if (it != storage.end())
-            {
-                val = std::clamp(val, 0.0, 1.0);
-                if (std::abs(it->second.normalized - val) > 1e-6)
-                {
-                    it->second.normalized = val;
-                    it->second.changed = true;
-                }
             }
         }
 
@@ -401,15 +395,21 @@ namespace ParameterFramework
             auto it = storage.find(id);
             if (it == storage.end()) return 0.0;
 
-            const auto& def = findDef(id);
+            const auto* def = findDef(id);
             if (!def) return 0.0;
 
-            return def->scaleType == SCALE::Exponential
-                ? ExpParameter(def->name, def->tag, def->units,
-                    def->minValue, def->maxValue,
-                    def->flags, def->unitID)
-                .toPlain(it->second.normalized)
-                : it->second.normalized * (def->maxValue - def->minValue) + def->minValue;
+            return normalizedToPlain(*def, it->second.current);
+        }
+
+        double getPreviousPlain(ParamID id) const
+        {
+            auto it = storage.find(id);
+            if (it == storage.end()) return 0.0;
+
+            const auto* def = findDef(id);
+            if (!def) return 0.0;
+
+            return normalizedToPlain(*def, it->second.previous);
         }
 
         void setPlain(ParamID id, double val)
@@ -417,13 +417,7 @@ namespace ParameterFramework
             const auto* def = findDef(id);
             if (!def) return;
 
-            double normalized = def->scaleType == SCALE::Exponential
-                ? ExpParameter(def->name, def->tag, def->units,
-                    def->minValue, def->maxValue,
-                    def->flags, def->unitID)
-                .toNormalized(val)
-                : (val - def->minValue) / (def->maxValue - def->minValue);
-
+            ParamValue normalized = plainToNormalized(*def, val);
             setNormalized(id, normalized);
         }
 
@@ -441,15 +435,164 @@ namespace ParameterFramework
 
     private:
 
+        // パラメータキャッシュ値
         std::unordered_map<ParamID, ParamEntry> storage;
 
+        // ID指定によりパラメータ定義取得
         const ParamDef* findDef(ParamID id) const
         {
             const auto& defs = PFContainer::get().getDefs();
-
             auto it = std::find_if(defs.begin(), defs.end(), [id](const ParamDef& d) { return d.tag == id; });
-
             return (it != defs.end()) ? &(*it) : nullptr;
+        }
+
+        // プレーン値から正規化値へ変換
+        double normalizedToPlain(const ParamDef& def, ParamValue norm) const
+        {
+            double min = def.minValue;
+            double max = def.maxValue;
+            ValueRange rs;
+            if (PFContainer::get().resolveRange(def, rs)) { min = rs.minValue; max = rs.maxValue; }
+            assert(max != min && "ProcessorParamStorage: max and min cannot be equal in normalizedToPlain");
+            if (max == min) return min;
+
+            if (def.scaleType == SCALE::Exponential)
+                return ExpParameter(def.name, def.tag, def.units, min, max, def.flags, def.unitID).toPlain(norm);
+            else
+                return norm * (max - min) + min;
+        }
+
+        // 正規化値の取得
+        ParamValue plainToNormalized(const ParamDef& def, double plain) const
+        {
+            double min = def.minValue;
+            double max = def.maxValue;
+
+            ValueRange rs;
+            if (PFContainer::get().resolveRange(def, rs))
+            {
+                min = rs.minValue;
+                max = rs.maxValue;
+            }
+            assert(max != min && "ProcessorParamStorage: max and min cannot be equal");
+            if (max == min) return 0.0; // 安全回避
+
+            double range = max - min;
+            if (range <= 0.0) return 0.0;
+
+            if (def.scaleType == SCALE::Exponential)
+            {
+                return ExpParameter(def.name, def.tag, def.units, min, max, def.flags, def.unitID).toNormalized(plain);
+            }
+            else
+            {
+                return (plain - min) / range;
+            }
+        }
+
+        // 正規化値の設定
+        void setNormalized(ParamID id, ParamValue val)
+        {
+            auto it = storage.find(id);
+            if (it == storage.end()) return;
+
+            val = std::clamp(val, 0.0, 1.0);
+
+            if (std::abs(it->second.current - val) > 1e-6)
+            {
+                it->second.previous = it->second.current;
+                it->second.current = val;
+                it->second.changed = true;
+            }
+        }
+    };
+    */
+
+    class ProcessorParamStorage
+    {
+    public:
+        ProcessorParamStorage() = default;
+
+        void initialize()
+        {
+            const auto& defs = PFContainer::get().getDefs();
+            storage.clear();
+            paramInstances.clear();
+
+            for (const auto& def : defs)
+            {
+                // パラメータインスタンスを生成（virtual 呼び出し用）
+                std::unique_ptr<Parameter> p = PFContainer::get().createParameter(def);
+                if (!p) continue;
+
+                paramInstances.emplace(def.tag, std::move(p));
+
+                // 正規化値初期化
+                ParamEntry entry{};
+                entry.current = entry.previous = getNormalized(def.tag, def.defaultValue);
+                entry.changed = false;
+
+                storage.emplace(def.tag, entry);
+            }
+        }
+
+        double getPlain(ParamID id) const
+        {
+            auto it = storage.find(id);
+            if (it == storage.end()) return 0.0;
+
+            auto* p = findParameter(id);
+            if (!p) return 0.0;
+
+            return p->toPlain(it->second.current);
+        }
+
+        void setPlain(ParamID id, double val)
+        {
+            auto* p = findParameter(id);
+            if (!p) return;
+
+            ParamValue normalized = p->toNormalized(val);
+            setNormalized(id, normalized);
+        }
+
+    private:
+        struct ParamEntry
+        {
+            ParamValue current = 0.0;
+            ParamValue previous = 0.0;
+            bool changed = false;
+        };
+
+        std::unordered_map<ParamID, ParamEntry> storage;
+        std::unordered_map<ParamID, std::unique_ptr<Parameter>> paramInstances;
+
+        Parameter* findParameter(ParamID id) const
+        {
+            auto it = paramInstances.find(id);
+            return it != paramInstances.end() ? it->second.get() : nullptr;
+        }
+
+        ParamValue getNormalized(ParamID id, double plain) const
+        {
+            auto* p = findParameter(id);
+            if (!p) return 0.0;
+            return p->toNormalized(plain);
+        }
+
+        void setNormalized(ParamID id, ParamValue val)
+        {
+            auto it = storage.find(id);
+            if (it == storage.end()) return;
+
+            val = std::clamp(val, 0.0, 1.0);
+
+            if (std::abs(it->second.current - val) > 1e-6)
+            {
+                it->second.previous = it->second.current;
+                it->second.current = val;
+                it->second.changed = true;
+            }
         }
     };
 
