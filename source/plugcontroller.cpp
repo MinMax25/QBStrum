@@ -41,7 +41,7 @@ namespace MinMax
 		// パラメータ登録
 		auto& container = ParameterFramework::PFContainer::get();
 
-		for (auto& def : container.getDefs())
+		for (auto& def : paramTable)
 		{
 			auto param = container.createParameter(def);
 			if (param)
