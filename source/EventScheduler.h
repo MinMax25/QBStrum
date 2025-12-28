@@ -539,9 +539,9 @@ namespace MinMax
 		void sendNoteEventCommon(bool on, uint32 sampleOffset, const ScheduledNote& note, float velocity)
 		{
 			NoteEvent e{};
-			e.on = on;
+			e.eventType = NoteEventType::On;
 			e.channel = note.channel;
-			e.noteid = note.noteId;
+			e.noteId = note.noteId;
 			e.sampleOffset = sampleOffset;
 			e.pitch = note.pitch;
 			e.velocity = velocity;

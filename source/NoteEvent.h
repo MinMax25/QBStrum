@@ -17,9 +17,6 @@ namespace MinMax
     class NoteEvent
     {
     public:
-        bool on;    // debug 削除候補
-        int noteid; // debug 削除候補
-
         NoteEventType eventType;
 
         int channel;

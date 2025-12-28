@@ -36,11 +36,11 @@ namespace MinMax
 		event.busIndex = 0;
 		event.sampleOffset = e.sampleOffset;
 
-		if (e.on)
+		if (e.eventType == NoteEventType::On)
 		{
 			event.type = Event::kNoteOnEvent;
 			event.noteOn.channel = e.channel;
-			event.noteOn.noteId = e.noteid;
+			event.noteOn.noteId = e.noteId;
 			event.noteOn.pitch = e.pitch;
 			event.noteOn.velocity = e.velocity;
 		}
@@ -48,7 +48,7 @@ namespace MinMax
 		{
 			event.type = Event::kNoteOffEvent;
 			event.noteOff.channel = e.channel;
-			event.noteOff.noteId = e.noteid;
+			event.noteOff.noteId = e.noteId;
 			event.noteOff.pitch = e.pitch;
 			event.noteOff.velocity = 0.0f;
 		}
@@ -247,18 +247,28 @@ namespace MinMax
 		}
 	}
 
-	//debug
 	void PLUGIN_API MyVSTProcessor::articulationChanged()
 	{
 		constexpr int SPECIAL_NOTES_SAMPLES = 1;
 
 		double newArtic = paramStorage.get(PARAM::SELECTED_ARTICULATION);
-		double oldArtic = paramStorage.getPrevious(PARAM::SELECTED_ARTICULATION);
 
-		/*
-		if (newArticulation < 0 || newArticulation >= (int)PARAM_ARTICULATION_COUNT) return;
+		std::array<const ParamDef*, PARAM_ARTICULATION_COUNT> artics;
+		size_t articCount = 0;
+		getArticulationParams(artics, articCount);
 
-		int keySW = Articulations[newArticulation];
+		int keySW = 0;
+
+		for (size_t i = 0; i < articCount; ++i)
+		{
+			const ParamDef* def = artics[i];
+
+			if (i == newArtic)
+			{
+				keySW = paramStorage.get(def->tag);
+				break;
+			}
+		}
 		if (keySW == 0) return;
 
 		uint64 onTime = scheduler.getCurrentSampleTime();
@@ -268,7 +278,6 @@ namespace MinMax
 		{
 			scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, keySW, 127, i);
 		}
-		*/
 	}
 
 	void PLUGIN_API MyVSTProcessor::processEvent()
@@ -583,7 +592,7 @@ namespace MinMax
 			return 0;
 		}
 
-		std::array<const ParamDef*, MinMax::PARAM_TRIGGER_COUNT> triggerParams;
+		std::array<const ParamDef*, PARAM_TRIGGER_COUNT> triggerParams;
 		size_t triggerCount = 0;
 		getTriggerParams(triggerParams, triggerCount);
 
