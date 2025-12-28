@@ -20,9 +20,9 @@ namespace MinMax
     {
     public:
 
-        int root;
-        int type;
-        int position;
+        int root = 0;
+        int type = 0;
+        int position = 0;
 
         std::string toString() const
         {

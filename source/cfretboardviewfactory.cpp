@@ -32,6 +32,9 @@ namespace MinMax
 
             CChord chord;
 
+            bool finish = false;
+            int number = 0; // 先頭からの位置インデックス
+
             for (int r = 0; r < menu->getNbEntries(); ++r)
             {
                 COptionMenu* typeMenu = menu->getSubMenu(r);
@@ -47,17 +50,19 @@ namespace MinMax
                         chord.root = r;
                         chord.type = t;
                         chord.position = selectedIndex;
-#if DEBUG
-                        DebugLog(chord.toString().c_str());
-#endif
+
                         fretBoard->setValue(chord);
 
-                        return true;
-                    }
-                }
-            }
+                        number += selectedIndex;
 
-            return false;
+                        finish = true;
+                    }
+                    if (finish) break;
+                    number += posMenu->getNbEntries();
+                }
+                if (finish) break;
+            }
+            return finish;
         }
 
     private:
