@@ -129,10 +129,7 @@ namespace MinMax
 		for (const auto& def : PFContainer::get().getDefs())
 		{
 			double plain = 0.0;
-			if (state->read(&plain, sizeof(double), nullptr) != kResultOk)
-				return kResultFalse;
-
-			// 内部は正規化値で保持したい場合はここで変換
+			if (state->read(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
 			paramStorage.set(def.tag, plain);
 		}
 
@@ -148,12 +145,7 @@ namespace MinMax
 		for (const auto& def : PFContainer::get().getDefs())
 		{
 			double plain = paramStorage.get(def.tag);
-
-#if DEBUG
-			DebugLog("[Processor::getState] tag=%u plain=%f", def.tag, plain);
-#endif
-			if (state->write(&plain, sizeof(double), nullptr) != kResultOk)
-				return kResultFalse;
+			if (state->write(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
 		}
 
 		return kResultOk;
