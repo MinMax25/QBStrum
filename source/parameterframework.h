@@ -354,160 +354,9 @@ namespace ParameterFramework
 #pragma endregion
 
 #pragma region Value Storage
-
-    /*
-    struct ParamEntry
-    {   // 正規化値コンテナ
-        ParamValue current = 0.0;
-        ParamValue previous = 0.0;
-        bool changed = false;
-    };
-
-    class ProcessorParamStorage
-    {
-    public:
-
-        ProcessorParamStorage() = default;
-
-        // PFContainer の定義で初期化
-        void initialize()
-        {
-            const auto& defs = PFContainer::get().getDefs();
-            storage.clear();
-
-            for (const auto& def : defs)
-            {
-                ParamEntry entry{};
-
-                ParamValue initialNorm = plainToNormalized(def, def.defaultValue);
-
-                entry.current = initialNorm;
-                entry.previous = initialNorm;
-                entry.changed = false;
-
-                storage.emplace(def.tag, entry);
-            }
-        }
-
-        // プレーン値の取得/設定
-        double getPlain(ParamID id) const
-        {
-            auto it = storage.find(id);
-            if (it == storage.end()) return 0.0;
-
-            const auto* def = findDef(id);
-            if (!def) return 0.0;
-
-            return normalizedToPlain(*def, it->second.current);
-        }
-
-        double getPreviousPlain(ParamID id) const
-        {
-            auto it = storage.find(id);
-            if (it == storage.end()) return 0.0;
-
-            const auto* def = findDef(id);
-            if (!def) return 0.0;
-
-            return normalizedToPlain(*def, it->second.previous);
-        }
-
-        void setPlain(ParamID id, double val)
-        {
-            const auto* def = findDef(id);
-            if (!def) return;
-
-            ParamValue normalized = plainToNormalized(*def, val);
-            setNormalized(id, normalized);
-        }
-
-        bool isChanged(ParamID id) const
-        {
-            auto it = storage.find(id);
-            return (it != storage.end()) ? it->second.changed : false;
-        }
-
-        void clearChangedFlags()
-        {
-            for (auto& [id, entry] : storage)
-                entry.changed = false;
-        }
-
-    private:
-
-        // パラメータキャッシュ値
-        std::unordered_map<ParamID, ParamEntry> storage;
-
-        // ID指定によりパラメータ定義取得
-        const ParamDef* findDef(ParamID id) const
-        {
-            const auto& defs = PFContainer::get().getDefs();
-            auto it = std::find_if(defs.begin(), defs.end(), [id](const ParamDef& d) { return d.tag == id; });
-            return (it != defs.end()) ? &(*it) : nullptr;
-        }
-
-        // プレーン値から正規化値へ変換
-        double normalizedToPlain(const ParamDef& def, ParamValue norm) const
-        {
-            double min = def.minValue;
-            double max = def.maxValue;
-            ValueRange rs;
-            if (PFContainer::get().resolveRange(def, rs)) { min = rs.minValue; max = rs.maxValue; }
-            assert(max != min && "ProcessorParamStorage: max and min cannot be equal in normalizedToPlain");
-            if (max == min) return min;
-
-            if (def.scaleType == SCALE::Exponential)
-                return ExpParameter(def.name, def.tag, def.units, min, max, def.flags, def.unitID).toPlain(norm);
-            else
-                return norm * (max - min) + min;
-        }
-
-        // 正規化値の取得
-        ParamValue plainToNormalized(const ParamDef& def, double plain) const
-        {
-            double min = def.minValue;
-            double max = def.maxValue;
-
-            ValueRange rs;
-            if (PFContainer::get().resolveRange(def, rs))
-            {
-                min = rs.minValue;
-                max = rs.maxValue;
-            }
-            assert(max != min && "ProcessorParamStorage: max and min cannot be equal");
-            if (max == min) return 0.0; // 安全回避
-
-            double range = max - min;
-            if (range <= 0.0) return 0.0;
-
-            if (def.scaleType == SCALE::Exponential)
-            {
-                return ExpParameter(def.name, def.tag, def.units, min, max, def.flags, def.unitID).toNormalized(plain);
-            }
-            else
-            {
-                return (plain - min) / range;
-            }
-        }
-
-        // 正規化値の設定
-        void setNormalized(ParamID id, ParamValue val)
-        {
-            auto it = storage.find(id);
-            if (it == storage.end()) return;
-
-            val = std::clamp(val, 0.0, 1.0);
-
-            if (std::abs(it->second.current - val) > 1e-6)
-            {
-                it->second.previous = it->second.current;
-                it->second.current = val;
-                it->second.changed = true;
-            }
-        }
-    };
-    */
-
+ 
+    // パラメータキャッシュ値管理
+    // ・扱う値はプレーン値のみ
     class ProcessorParamStorage
     {
     public:
@@ -536,7 +385,7 @@ namespace ParameterFramework
             }
         }
 
-        double getPlain(ParamID id) const
+        double get(ParamID id) const
         {
             auto it = storage.find(id);
             if (it == storage.end()) return 0.0;
@@ -547,7 +396,18 @@ namespace ParameterFramework
             return p->toPlain(it->second.current);
         }
 
-        void setPlain(ParamID id, double val)
+        double getPrevious(ParamID id) const
+        {
+            auto it = storage.find(id);
+            if (it == storage.end()) return 0.0;
+
+            auto* p = findParameter(id);
+            if (!p) return 0.0;
+
+            return p->toPlain(it->second.previous);
+        }
+
+        void set(ParamID id, double val)
         {
             auto* p = findParameter(id);
             if (!p) return;
