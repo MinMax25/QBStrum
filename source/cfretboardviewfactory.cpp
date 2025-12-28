@@ -60,7 +60,6 @@ namespace MinMax
         : public CViewContainer
     {
     public:
-
         CFretBoardView(const UIAttributes& attributes, const IUIDescription* description, const CRect& size)
             : CViewContainer(size)
         {
@@ -75,10 +74,11 @@ namespace MinMax
 
             // 階層化メニューを右に追加
             COptionMenu* hierMenu = new COptionMenu(CRect(300, 1, 380, 18), editor, 999);
-            CFretMenuListener* listener = new CFretMenuListener(fretBoard);
+            menuListener = std::make_unique<CFretMenuListener>(fretBoard);
+
             hierMenu->setFontColor(kWhiteCColor);
             hierMenu->setBackColor(kBlackCColor);
-            hierMenu->registerOptionMenuListener(listener);
+            hierMenu->registerOptionMenuListener(menuListener.get());
 
             // ChordMap から階層データを追加
             const auto& chordMap = ChordMap::Instance();
@@ -108,12 +108,20 @@ namespace MinMax
             addView(hierMenu);
         }
 
+        CFretBoardView(const CFretBoardView& other)
+            : CViewContainer(other)
+            , editor(other.editor)
+        {
+            if (editor) editor->addRef();
+            menuListener.reset();
+            hierMenu = nullptr;
+        }
+
         ~CFretBoardView()
         {
-            if (editor)
-            {
-                editor->release();
-            }
+            if (hierMenu && menuListener) hierMenu->unregisterOptionMenuListener(menuListener.get());
+            menuListener.reset();
+            if (editor) editor->release();
         }
 
         CLASS_METHODS(CFretBoardView, CViewContainer)
@@ -121,6 +129,8 @@ namespace MinMax
     private:
 
         VST3Editor* editor{};
+        std::unique_ptr<CFretMenuListener> menuListener;
+        COptionMenu* hierMenu = nullptr;
     };
 
     class CFretBoardViewFactory
