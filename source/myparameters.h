@@ -247,14 +247,13 @@ namespace MinMax
 		return getParamsByUnit(outResult, outCount, UNIT::ARTICULATION);
 	}
 
-	// パラメータコンテナ初期化
+	// パラメータヘルパー初期化
 	inline const void initParameters()
 	{
 		static RangeResolver rangeResolver;
 		static OptionProvider optionProvider;
 
 		auto& helper = ParameterFramework::ParamHelper::get();
-		if (helper.isInitialized()) return;
 
 		const char* STR_USERPROFILE = "USERPROFILE";
 		const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum/Standard 6Strings.json";
@@ -263,6 +262,5 @@ namespace MinMax
 
 		helper.setKindResolver(&rangeResolver);
 		helper.setOptionProvider(&optionProvider);
-		helper.setInitialized();
 	}
 }

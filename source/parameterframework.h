@@ -334,16 +334,7 @@ namespace ParameterFramework
             return rangeResolver->resolve(*def.rangeKind, out);
         }
 
-        bool isInitialized()
-        {
-            return isInitialized_;
-        }
-
-        void setInitialized() { isInitialized_ = true; }
-
     private:
-        bool isInitialized_ = false;
-
         // Resolver
         const IRangeResolver* rangeResolver = nullptr;
         const IOptionProvider* optionProvider = nullptr;
