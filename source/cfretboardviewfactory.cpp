@@ -10,6 +10,8 @@
 
 #include "cfretboard.h"
 #include "chordmap.h"
+#include "cnoteedit.h"
+#include "cnotelabel.h"
 
 #include "debug_log.h"
 
@@ -74,11 +76,27 @@ namespace MinMax
 
             setBackgroundColor(kGreyCColor);
 
+            int yOffSet = 22;
+            for (int i = 0; i < 6; i++)
+            {
+                CNoteEdit* noteEdit = new CNoteEdit(CRect(10, 1 + yOffSet, 49, 15 + yOffSet), nullptr, 999);
+                noteEdit->setBackColor(kWhiteCColor);
+                noteEdit->setFontColor(kBlackCColor);
+                noteEdit->setFont(kNormalFontSmaller);
+                addView(noteEdit);
+
+                CNoteLabel* noteLabel = new CNoteLabel(CRect(50, 1 + yOffSet, 89, 15 + yOffSet));
+                noteLabel->setFont(kNormalFontSmaller);
+                addView(noteLabel);
+
+                yOffSet += 24;
+            }
+
             CFretBoard* fretBoard = new CFretBoard(CRect(0, 20, 1120, size.getHeight() + 20));
             fretBoard->numStrings = STRING_COUNT;
             addView(fretBoard);
 
-            CTextLabel* labHierMenu = new CTextLabel(CRect(300, 1, 399, 18));
+             CTextLabel* labHierMenu = new CTextLabel(CRect(300, 1, 399, 18));
             labHierMenu->setFont(kNormalFontSmall);
             labHierMenu->setText("Select Choard");
             addView(labHierMenu);
