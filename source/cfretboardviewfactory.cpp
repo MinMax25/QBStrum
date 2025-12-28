@@ -6,7 +6,6 @@
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/vstgui_uidescription.h>
 
-#include "myparameters.h"
 #include "cfretboard.h"
 #include "chordmap.h"
 #include <vstgui/lib/controls/ioptionmenulistener.h>

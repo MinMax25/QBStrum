@@ -4,6 +4,7 @@
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
 #include "chordmap.h"
+#include "myparameters.h"
 
 namespace MinMax
 {

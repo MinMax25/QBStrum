@@ -4,7 +4,7 @@
 
 #pragma once
 
-#include "ParameterFramework.h"
+#include <public.sdk/source/vst/vsteditcontroller.h>
 
 namespace MinMax
 {
