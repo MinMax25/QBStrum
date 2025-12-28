@@ -1,10 +1,9 @@
 ﻿#pragma once
 
 #include <vstgui/vstgui.h>
-#include <public.sdk/source/vst/vsteditcontroller.h>
 
 #include "chordmap.h"
-#include "myparameters.h"
+#include <public.sdk/source/vst/vsteditcontroller.h>
 
 namespace MinMax
 {
@@ -14,7 +13,7 @@ namespace MinMax
         : public CControl
     {
     public:
-        CFretBoard(const CRect& size, EditControllerEx1* controller = nullptr);
+        CFretBoard(const CRect& size, Steinberg::Vst::EditControllerEx1* controller = nullptr);
 
         void draw(CDrawContext* pContext) override;
 
