@@ -33,7 +33,7 @@ namespace MinMax
             CChord chord;
 
             bool finish = false;
-            int number = 0; // 先頭からの位置インデックス
+            int chordNumber = 0; // 先頭からの位置インデックス
 
             for (int r = 0; r < menu->getNbEntries(); ++r)
             {
@@ -53,12 +53,12 @@ namespace MinMax
 
                         fretBoard->setValue(chord);
 
-                        number += selectedIndex;
+                        chordNumber += selectedIndex;
 
                         finish = true;
                     }
                     if (finish) break;
-                    number += posMenu->getNbEntries();
+                    chordNumber += posMenu->getNbEntries();
                 }
                 if (finish) break;
             }
