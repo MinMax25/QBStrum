@@ -23,6 +23,13 @@ namespace MinMax
         int root;
         int type;
         int position;
+
+        std::string toString() const
+        {
+            return "[Chord root:" + std::to_string(root) +
+                " type:" + std::to_string(type) +
+                " pos:" + std::to_string(position) + "]";
+        }
     };
 
     class Voicing

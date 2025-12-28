@@ -5,18 +5,21 @@
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/vstgui_uidescription.h>
+#include <vstgui/lib/controls/ioptionmenulistener.h>
+#include <string>
 
 #include "cfretboard.h"
 #include "chordmap.h"
-#include <vstgui/lib/controls/ioptionmenulistener.h>
+
+#include "debug_log.h"
 
 namespace MinMax
 {
-    class CFretMenuListener
+    class ChordSelectorListner
         : public OptionMenuListenerAdapter
     {
     public:
-        CFretMenuListener(CFretBoard* fretborad)
+        ChordSelectorListner(CFretBoard* fretborad)
             : fretBoard(fretborad)
         {
         }
@@ -42,6 +45,8 @@ namespace MinMax
                         chord.root = r;
                         chord.type = t;
                         chord.position = selectedIndex;
+
+                        DebugLog(chord.toString().c_str());
 
                         fretBoard->setValue(chord);
 
@@ -73,11 +78,11 @@ namespace MinMax
             addView(fretBoard);
 
             // 階層化メニューを右に追加
-            COptionMenu* hierMenu = new COptionMenu(CRect(300, 1, 380, 18), editor, 999);
-            menuListener = std::make_unique<CFretMenuListener>(fretBoard);
+            COptionMenu* hierMenu = new COptionMenu(CRect(340, 1, 380, 18), editor, 999);
+            menuListener = std::make_unique<ChordSelectorListner>(fretBoard);
 
             hierMenu->setFontColor(kWhiteCColor);
-            hierMenu->setBackColor(kBlackCColor);
+            hierMenu->setBackColor(kGreyCColor);
             hierMenu->registerOptionMenuListener(menuListener.get());
 
             // ChordMap から階層データを追加
@@ -129,7 +134,7 @@ namespace MinMax
     private:
 
         VST3Editor* editor{};
-        std::unique_ptr<CFretMenuListener> menuListener;
+        std::unique_ptr<ChordSelectorListner> menuListener;
         COptionMenu* hierMenu = nullptr;
     };
 
