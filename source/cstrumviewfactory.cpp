@@ -146,8 +146,8 @@ namespace MinMax
 
                 ParamID tag = pControl->getTag();
 
-                note.value = tag;
-                note.OnOff = onoff;
+                note.tag = tag;
+                note.isOn = onoff;
 
 				int vel = (223 - where.x) * 2;
                 if (vel > 127) vel = 127;

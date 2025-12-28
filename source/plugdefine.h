@@ -20,8 +20,8 @@ namespace MinMax
 	// ノートメッセージ値
 	struct CNoteMsg
 	{
-		ParamID value;
-		bool OnOff;
+		ParamID tag;
+		bool isOn;
 		int velocity;
 	};
 

@@ -252,6 +252,9 @@ namespace MinMax
 	{
 		constexpr int SPECIAL_NOTES_SAMPLES = 1;
 
+		double newArtic = paramStorage.get(PARAM::SELECTED_ARTICULATION);
+		double oldArtic = paramStorage.getPrevious(PARAM::SELECTED_ARTICULATION);
+
 		/*
 		if (newArticulation < 0 || newArticulation >= (int)PARAM_ARTICULATION_COUNT) return;
 
@@ -281,17 +284,12 @@ namespace MinMax
 			if (processData->inputEvents->getEvent(i, event) != kResultOk) continue;
 
 			// ピッチからパラメータＩＤ取得
-			ParamID paramid = getParamIdByPitch(event);
-			if (paramid < 0) continue;
-
-			switch (event.type)
+			if (event.type == Event::kNoteOnEvent)
 			{
-			case Event::kNoteOnEvent:
-				routingProcess(getParamIdByPitch(event), event);
-				break;
-
-			default:
-				break;
+				if (ParamID tag = getParamIdByPitch(event) > 0)
+				{
+					routingProcess(tag, event);
+				}
 			}
 		}
 	}
@@ -571,34 +569,34 @@ namespace MinMax
 		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, paramStorage.get(PARAM::FNOISE_CHANNEL));
 	}
 
-	//debug
 	ParamID MyVSTProcessor::getParamIdByPitch(Event event)
 	{
-		// キースイッチからパラメータID取得
+		// ピッチからパラメータID取得
 		int pitch = -1;
 
 		if (event.type == Event::kNoteOnEvent)
 		{
 			pitch = event.noteOn.pitch;
 		}
-		else if (event.type == Event::kNoteOffEvent)
-		{
-			pitch = event.noteOff.pitch;
-		}
 		else
 		{
-			return pitch;
+			return 0;
 		}
 
-		/*
-		auto it = std::find(trigKeySW.begin(), trigKeySW.end(), pitch);
-		if (it == trigKeySW.end()) return pitch;
+		std::array<const ParamDef*, MinMax::PARAM_TRIGGER_COUNT> triggerParams;
+		size_t triggerCount = 0;
+		getTriggerParams(triggerParams, triggerCount);
 
-		int index = std::distance(trigKeySW.begin(), it);
+		for (size_t i = 0; i < triggerCount; ++i)
+		{
+			const ParamDef* def = triggerParams[i];
 
-		return TriggerDef[index].value;
-		*/
-		return kResultOk;
+			if (paramStorage.get(def->tag) == pitch)
+			{
+				return def->tag;
+			}
+		}
+		return 0;
 	}
 
 	vector<int> MyVSTProcessor::getTargetStrings(vector<int> fretPos, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
@@ -662,27 +660,14 @@ namespace MinMax
 
 		const auto note = reinterpret_cast<const CNoteMsg*>(msgData);
 
-		int pitch = -1;
+		int pitch = paramStorage.get(note->tag);
 
-		int index = 0;
-		/*debug
-		for (const auto& def : TriggerDef)
-		{
-			if (def.value == note->value)
-			{
-				pitch = trigKeySW[index];
-				break;
-			}
-			++index;
-		}
-		*/
-
-		if (pitch < 0) return kResultOk;
+		if (pitch <= 0) return kResultOk;
 
 		event.flags = Event::EventFlags::kIsLive;
-		event.type = note->OnOff ? Event::EventTypes::kNoteOnEvent : Event::EventTypes::kNoteOffEvent;
+		event.type = note->isOn ? Event::EventTypes::kNoteOnEvent : Event::EventTypes::kNoteOffEvent;
 
-		if (note->OnOff)
+		if (note->isOn)
 		{
 			event.noteOn.pitch = pitch;
 			event.noteOn.velocity = note->velocity / (float)128;
