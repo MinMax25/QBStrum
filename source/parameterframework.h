@@ -356,7 +356,6 @@ namespace ParameterFramework
 #pragma region Value Storage
  
     // パラメータキャッシュ値管理
-    // ・扱う値はプレーン値のみ
     class ProcessorParamStorage
     {
     public:
