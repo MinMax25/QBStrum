@@ -105,15 +105,13 @@ namespace ParameterFramework
 
 #pragma endregion
 
-#pragma region Container
+#pragma region Helper
 
     struct ValueRange
     {
         double minValue = 0.0;
         double maxValue = 1.0;
-
-        // true の場合、この Int は index として扱われる
-        bool isEnumerated = false;
+        bool hasOption = false;
     };
 
     struct IRangeResolver
@@ -125,9 +123,6 @@ namespace ParameterFramework
     struct IOptionProvider
     {
         virtual ~IOptionProvider() = default;
-
-        // 必ず1つ以上返すこと
-        // 未定義の場合はダミー要素を1つ返す
         virtual OptionList getOptionNames(int32 rangeKind) const = 0;
     };
 
@@ -145,12 +140,9 @@ namespace ParameterFramework
         
         UnitID unitID;
 
-        // minValue, maxValue, defaultValueはすべてplain値
-        // rangeKindの値が存在する場合は上書きされる
         double minValue = 0.0;
         double maxValue = 1.0;
 
-        //
         double defaultValue = 0.0;
         int32 precision = 0;
  
@@ -181,7 +173,7 @@ namespace ParameterFramework
 
             double min = def.minValue;
             double max = def.maxValue;
-            bool isEnumerated = false;
+            bool hasOption = false;
 
             OptionList options;
 
@@ -190,7 +182,7 @@ namespace ParameterFramework
             {
                 min = rs.minValue;
                 max = rs.maxValue;
-                isEnumerated = rs.isEnumerated;
+                hasOption = rs.hasOption;
             }
 
             if (defaultValue < min || defaultValue > max)
@@ -200,7 +192,7 @@ namespace ParameterFramework
 
             std::unique_ptr<Parameter> param;
 
-            if (isEnumerated && def.type != VALUE::Bool)
+            if (hasOption && def.type != VALUE::Bool)
             {   // Bool は enumerated を想定しない
                 auto p =
                     std::make_unique<StringListParameter>(
