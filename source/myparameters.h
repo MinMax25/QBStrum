@@ -263,12 +263,6 @@ namespace MinMax
 
 		helper.setKindResolver(&rangeResolver);
 		helper.setOptionProvider(&optionProvider);
-
-		for (const auto& def : paramTable)
-		{
-			helper.addDef(def);
-		}
-
 		helper.setInitialized();
 	}
 }

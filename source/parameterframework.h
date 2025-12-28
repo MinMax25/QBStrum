@@ -170,16 +170,6 @@ namespace ParameterFramework
 
         void setOptionProvider(const IOptionProvider* p) { optionProvider = p; }
 
-        void addDef(ParamDef def)
-        {
-            defs.push_back(def);
-        }
-
-        const std::vector<ParamDef>& getDefs() const 
-        {
-            return defs;
-        }
-
         std::unique_ptr<Parameter> createParameter(const ParamDef& def)
         {
             if (!rangeResolver || !optionProvider) return nullptr;
@@ -357,9 +347,6 @@ namespace ParameterFramework
         // Resolver
         const IRangeResolver* rangeResolver = nullptr;
         const IOptionProvider* optionProvider = nullptr;
-
-        //
-        std::vector<ParamDef> defs{};
     };
 
 #pragma endregion
