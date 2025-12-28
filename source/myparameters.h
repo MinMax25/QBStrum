@@ -210,18 +210,16 @@ namespace MinMax
 		{ PARAM::SLIDE, STR16("Slide"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 33, 0, 0 },
 
 	} };
-	
-	// トリガー系パラメータ取得
-	constexpr size_t PARAM_TRIGGER_COUNT = 16;
-	static_assert(PARAM_TRIGGER_COUNT <= paramTable.size(), "Trigger param count mismatch");
 
-	inline bool getTriggerParams(std::array<const ParamDef*, PARAM_TRIGGER_COUNT>& outResult, size_t& outCount)
+	// ユニット指定によるパラメータ定義取り出し
+	template<size_t N>
+	inline bool getParamsByUnit(std::array<const ParamDef*, N>& outResult, size_t& outCount, UNIT targetUnit)
 	{
 		outCount = 0;
 
 		for (const auto& param : paramTable)
 		{
-			if (param.unitID == UNIT::TRIGGER)
+			if (param.unitID == targetUnit)
 			{
 				assert(outCount < outResult.size());
 				outResult[outCount++] = &param;
@@ -231,24 +229,22 @@ namespace MinMax
 		return outCount > 0;
 	}
 
-	// アーティキュレーション系パラメータ取得
+	// トリガー系
+	constexpr size_t PARAM_TRIGGER_COUNT = 16;
+	static_assert(PARAM_TRIGGER_COUNT <= paramTable.size(), "Trigger param count mismatch");
+
+	inline bool getTriggerParams(std::array<const ParamDef*, PARAM_TRIGGER_COUNT>& outResult, size_t& outCount)
+	{
+		return getParamsByUnit(outResult, outCount, UNIT::TRIGGER);
+	}
+
+	// アーティキュレーション系
 	constexpr size_t PARAM_ARTICULATION_COUNT = 7;
 	static_assert(PARAM_ARTICULATION_COUNT <= paramTable.size(), "Articulation param count mismatch");
 
 	inline bool getArticulationParams(std::array<const ParamDef*, PARAM_ARTICULATION_COUNT>& outResult, size_t& outCount)
 	{
-		outCount = 0;
-
-		for (const auto& param : paramTable)
-		{
-			if (param.unitID == UNIT::ARTICULATION)
-			{
-				assert(outCount < outResult.size());
-				outResult[outCount++] = &param;
-			}
-		}
-
-		return outCount > 0;
+		return getParamsByUnit(outResult, outCount, UNIT::ARTICULATION);
 	}
 
 	// パラメータコンテナ初期化

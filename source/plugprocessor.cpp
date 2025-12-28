@@ -226,26 +226,46 @@ namespace MinMax
 
 			if (!(queue->getPoint(valueChangeCount - 1, sampleOffset, value) == kResultTrue)) continue;
 
+			// パラメータ値をキャッシュ
 			paramStorage.set(tag, value);
+
+			switch (tag)
+			{
+			case PARAM::SELECTED_ARTICULATION:
+				if (paramStorage.isChanged(tag))
+				{
+					articulationChanged();
+				}
+				break;
+			case PARAM::FRET_POSITION:
+				if (isPlaying)
+				{
+					notifyChordChanged();
+				}
+				break;
+			}
 		}
 	}
 
-	void PLUGIN_API MyVSTProcessor::articulationChanged(int oldArticulation, int newArticulation)
+	//debug
+	void PLUGIN_API MyVSTProcessor::articulationChanged()
 	{
 		constexpr int SPECIAL_NOTES_SAMPLES = 1;
 
-		if (newArticulation < 0 || newArticulation >= PARAM_ARTICULATION_COUNT) return;
+		/*
+		if (newArticulation < 0 || newArticulation >= (int)PARAM_ARTICULATION_COUNT) return;
 
-		//int sw = Articulations[newArticulation];
-		//if (sw == 0) return;
+		int keySW = Articulations[newArticulation];
+		if (keySW == 0) return;
 
-		//uint64 onTime = scheduler.getCurrentSampleTime();
-		//uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
+		uint64 onTime = scheduler.getCurrentSampleTime();
+		uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
 
-		//for (int i = 0; i < (channelSepalate ? STRING_COUNT : 1); i++)
-		//{
-		//	scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, sw, 127, i);
-		//}
+		for (int i = 0; i < (paramStorage.get(PARAM::CHANNEL_SEPALATE) ? STRING_COUNT : 1); i++)
+		{
+			scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, keySW, 127, i);
+		}
+		*/
 	}
 
 	void PLUGIN_API MyVSTProcessor::processEvent()
@@ -551,27 +571,28 @@ namespace MinMax
 		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, paramStorage.get(PARAM::FNOISE_CHANNEL));
 	}
 
+	//debug
 	ParamID MyVSTProcessor::getParamIdByPitch(Event event)
 	{
 		// キースイッチからパラメータID取得
-		int ksw = -1;
+		int pitch = -1;
 
 		if (event.type == Event::kNoteOnEvent)
 		{
-			ksw = event.noteOn.pitch;
+			pitch = event.noteOn.pitch;
 		}
 		else if (event.type == Event::kNoteOffEvent)
 		{
-			ksw = event.noteOff.pitch;
+			pitch = event.noteOff.pitch;
 		}
 		else
 		{
-			return ksw;
+			return pitch;
 		}
 
-		/*debug
-		auto it = std::find(trigKeySW.begin(), trigKeySW.end(), ksw);
-		if (it == trigKeySW.end()) return ksw;
+		/*
+		auto it = std::find(trigKeySW.begin(), trigKeySW.end(), pitch);
+		if (it == trigKeySW.end()) return pitch;
 
 		int index = std::distance(trigKeySW.begin(), it);
 
