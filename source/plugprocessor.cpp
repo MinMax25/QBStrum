@@ -226,19 +226,19 @@ namespace MinMax
 					articulationChanged();
 				}
 				break;
-			case PARAM::CHORD_ROOT:
-				chord.root = paramStorage.get(tag);
-				break;
-			case PARAM::CHORD_TYPE:
-				chord.type = paramStorage.get(tag);
-				break;
 			case PARAM::FRET_POSITION:
+				chord.root = paramStorage.get(tag);
+				chord.type = paramStorage.get(tag);
 				chord.position = paramStorage.get(tag);
 				if (isPlaying)
 				{
 					notifyChordChanged();
 				}
 				break;
+			case PARAM::CHORD_NUMBER:
+			{
+				break;
+			}
 			}
 		}
 	}
