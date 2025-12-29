@@ -15,15 +15,6 @@ namespace MinMax
     using std::vector;
 
     inline constexpr int STRING_COUNT = 6;
-    
-    struct FlatChordEntry
-    {
-        int root = 0;
-        int type = 0;
-        int position = 0;
-
-        std::string displayName{}; // "Cmaj", "Am7" ‚È‚Ç
-    };
 
     class CChord
     {
@@ -41,111 +32,122 @@ namespace MinMax
         }
     };
 
-    class Voicing
-    {
-    public:
-
-        int Id = 0;
-        string Name;
-        vector<int> Frets;
-
-        bool Deserialize(const rapidjson::Value& v)
-        {
-            if (!v.IsObject()) return false;
-
-            if (v.HasMember("Id"))
-            {
-                Id = v["Id"].GetInt();
-            }
-
-            if (v.HasMember("Name"))
-            {
-                Name = v["Name"].GetString();
-            }
-
-            if (v.HasMember("Frets") && v["Frets"].IsArray())
-            {
-                for (auto& f : v["Frets"].GetArray())
-                {
-                    Frets.push_back(f.GetInt());
-                }
-            }
-            return true;
-        }
-    };
-
-    class ParamChordType
-    {
-    public:
-
-        int Id = 0;
-        string Name;
-        vector<Voicing> Voicings;
-
-        bool Deserialize(const rapidjson::Value& v)
-        {
-            if (!v.IsObject()) return false;
-
-            if (v.HasMember("Id"))
-            {
-                Id = v["Id"].GetInt();
-            }
-
-            if (v.HasMember("Name"))
-            {
-                Name = v["Name"].GetString();
-            }
-
-            if (v.HasMember("Voicings") && v["Voicings"].IsArray())
-            {
-                for (auto& item : v["Voicings"].GetArray())
-                {
-                    Voicing vc;
-                    vc.Deserialize(item);
-                    Voicings.push_back(vc);
-                }
-            }
-            return true;
-        }
-    };
-
-    class ParamChordRoot
-    {
-    public:
-
-        int Id = 0;
-        string Name;
-        vector<ParamChordType> ChordTypes;
-
-        bool Deserialize(const rapidjson::Value& v)
-        {
-            if (!v.IsObject()) return false;
-
-            if (v.HasMember("Id"))
-            {
-                Id = v["Id"].GetInt();
-            }
-
-            if (v.HasMember("Name"))
-            {
-                Name = v["Name"].GetString();
-            }
-
-            if (v.HasMember("ChordTypes") && v["ChordTypes"].IsArray())
-            {
-                for (auto& item : v["ChordTypes"].GetArray())
-                {
-                    ParamChordType c;
-                    c.Deserialize(item);
-                    ChordTypes.push_back(c);
-                }
-            }
-            return true;
-        }
-    };
-
     class ChordMap
     {
+    private:
+
+        struct FlatChordEntry
+        {
+            int root = 0;
+            int type = 0;
+            int position = 0;
+
+            std::string displayName{};
+        };
+
+        class Voicing
+        {
+        public:
+
+            int Id = 0;
+            string Name;
+            vector<int> Frets;
+
+            bool Deserialize(const rapidjson::Value& v)
+            {
+                if (!v.IsObject()) return false;
+
+                if (v.HasMember("Id"))
+                {
+                    Id = v["Id"].GetInt();
+                }
+
+                if (v.HasMember("Name"))
+                {
+                    Name = v["Name"].GetString();
+                }
+
+                if (v.HasMember("Frets") && v["Frets"].IsArray())
+                {
+                    for (auto& f : v["Frets"].GetArray())
+                    {
+                        Frets.push_back(f.GetInt());
+                    }
+                }
+                return true;
+            }
+        };
+
+        class ParamChordType
+        {
+        public:
+
+            int Id = 0;
+            string Name;
+            vector<Voicing> Voicings;
+
+            bool Deserialize(const rapidjson::Value& v)
+            {
+                if (!v.IsObject()) return false;
+
+                if (v.HasMember("Id"))
+                {
+                    Id = v["Id"].GetInt();
+                }
+
+                if (v.HasMember("Name"))
+                {
+                    Name = v["Name"].GetString();
+                }
+
+                if (v.HasMember("Voicings") && v["Voicings"].IsArray())
+                {
+                    for (auto& item : v["Voicings"].GetArray())
+                    {
+                        Voicing vc;
+                        vc.Deserialize(item);
+                        Voicings.push_back(vc);
+                    }
+                }
+                return true;
+            }
+        };
+
+        class ParamChordRoot
+        {
+        public:
+
+            int Id = 0;
+            string Name;
+            vector<ParamChordType> ChordTypes;
+
+            bool Deserialize(const rapidjson::Value& v)
+            {
+                if (!v.IsObject()) return false;
+
+                if (v.HasMember("Id"))
+                {
+                    Id = v["Id"].GetInt();
+                }
+
+                if (v.HasMember("Name"))
+                {
+                    Name = v["Name"].GetString();
+                }
+
+                if (v.HasMember("ChordTypes") && v["ChordTypes"].IsArray())
+                {
+                    for (auto& item : v["ChordTypes"].GetArray())
+                    {
+                        ParamChordType c;
+                        c.Deserialize(item);
+                        ChordTypes.push_back(c);
+                    }
+                }
+                return true;
+            }
+        };
+
     public:
 
         static ChordMap& Instance()
