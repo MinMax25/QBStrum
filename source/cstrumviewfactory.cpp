@@ -183,5 +183,5 @@ namespace MinMax
         }
     };
 
-    CStrumViewFactory __gCKitViewFactory;
+    CStrumViewFactory __gCStrumViewFactory;
 }

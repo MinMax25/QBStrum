@@ -77,9 +77,9 @@ namespace MinMax
 
         CView* create(const UIAttributes& attributes, const IUIDescription* description) const override
         {
-            return new CChordSelecter(attributes, description, CRect(CPoint(0, 0), CPoint(305, 5 * 2 + 15 * PARAM_TRIGGER_COUNT)));
+            return new CChordSelecter(attributes, description, CRect(CPoint(0, 0), CPoint(200, 15)));
         }
     };
 
-    CChordSelecterFactory __gCKitViewFactory;
+    CChordSelecterFactory __gCCChordSelecterFactory;
 }
