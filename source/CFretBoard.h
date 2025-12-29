@@ -1,10 +1,11 @@
 ﻿#pragma once
 
 #include <vstgui/vstgui.h>
+#include <public.sdk/source/vst/vsteditcontroller.h>
+
+#include "plugdefine.h"
 
 #include "chordmap.h"
-#include <public.sdk/source/vst/vsteditcontroller.h>
-#include "plugdefine.h"
 #include "cfretboard.h"
 
 namespace MinMax
@@ -14,21 +15,6 @@ namespace MinMax
     class CFretBoard
         : public CControl
     {
-    private:
-
-        class CChord
-        {
-        public:
-
-            int lsb = 0;
-            int msb = 0;
-
-            std::string toString() const
-            {
-                return "[Chord lsb:" + std::to_string(lsb) + " msb:" + std::to_string(msb) + "]";
-            }
-        };
-
     public:
         CFretBoard(const CRect& size)
             : CControl(size)
@@ -184,9 +170,9 @@ namespace MinMax
                 pContext->setFillColor(pressedColor);
                 pContext->setFrameColor(pressedColor);
 
-                for (unsigned int stringIndex = 0; stringIndex < pressedFrets.size(); ++stringIndex)
+                for (unsigned int stringIndex = 0; stringIndex < pressedFrets.size; ++stringIndex)
                 {
-                    int fret = pressedFrets[stringIndex];
+                    int fret = pressedFrets.data[stringIndex];
 
                     double y = boardSize.top + outerMargin + stringSpacing * stringIndex;
 
@@ -223,7 +209,9 @@ namespace MinMax
                         + fretSpacing * 0.5;
 
                     const double s = 8.0;
+
                     std::vector<CPoint> pts;
+
                     pts.emplace_back(x, y - s);
                     pts.emplace_back(x + s, y);
                     pts.emplace_back(x, y + s);
@@ -236,20 +224,13 @@ namespace MinMax
             setDirty(false);
         }
 
-        void setValue(CChord c)
-        {
-            invalid();
-        }
-
         // 弦数
         int numStrings = 6;
 
         // 押さえているフレット
-        std::vector<int> pressedFrets;
+        StringSet pressedFrets;
 
     private:
-
-        CChord chord{};
 
         CLASS_METHODS(CFretBoard, CControl)
     };

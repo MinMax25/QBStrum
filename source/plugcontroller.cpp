@@ -11,13 +11,8 @@
 
 #include "plugdefine.h"
 #include "plugcontroller.h"
-#include "chordmap.h"
 #include "parameterframework.h"
 #include "myparameters.h"
-
-#if DEBUG
-#include "debug_log.h"
-#endif
 
 namespace MinMax
 {
