@@ -617,9 +617,7 @@ namespace MinMax
 	void MyVSTProcessor::notifyChordNumberChanged(int chordNumber)
 	{
 		FUnknownPtr<IMessage> msg = allocateMessage();
-
-		if (!msg)
-			return;
+		if (!msg) return;
 
 		msg->setMessageID(MSG_CHORD_CHANGED);
 		msg->getAttributes()->setBinary(MSG_CHORD_VALUE, &chordNumber, sizeof(int));
