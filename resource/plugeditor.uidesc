@@ -79,19 +79,19 @@
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
-				"EditorSize": "0, 0, 1476, 828",
+				"EditorSize": "0, 0, 1340, 828",
 				"SplitViewSize_0_0": "0.8379052369077306661182547031785361468792",
 				"SplitViewSize_0_1": "0.1371571072319202055922460203873924911022",
 				"SplitViewSize_1_0": "0.357855361596010002056544863080489449203",
 				"SplitViewSize_1_1": "0.6371571072319202055922460203873924911022",
-				"SplitViewSize_2_0": "0.4376693766937669316519077256089076399803",
-				"SplitViewSize_2_1": "0.5589430894308943242876352996972855180502",
-				"TabSwitchValue": "1",
+				"SplitViewSize_2_0": "0.720895522388059650786829024582402780652",
+				"SplitViewSize_2_1": "0.2753731343283581933789605500351171940565",
+				"TabSwitchValue": "0",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "16"
+				"SelectedRow": "29"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "12"
@@ -3083,101 +3083,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"CKnob": {
+					"UI:FretBoard View": {
 						"attributes": {
-							"angle-range": "270",
-							"angle-start": "135",
-							"circle-drawing": "false",
-							"class": "CKnob",
-							"control-tag": "CHORD_LSB",
-							"corona-color": "~ RedCColor",
-							"corona-dash-dot": "true",
-							"corona-dash-dot-lengths": "1.26,0.1",
-							"corona-drawing": "true",
-							"corona-from-center": "false",
-							"corona-inset": "12",
-							"corona-inverted": "false",
-							"corona-line-cap-butt": "true",
-							"corona-outline": "true",
-							"corona-outline-width-add": "2",
-							"handle-color": "~ WhiteCColor",
-							"handle-line-width": "8",
-							"handle-shadow-color": "~ BlackCColor",
-							"knob-range": "200",
+							"background-color": "Dark",
+							"background-color-draw-style": "filled and stroked",
+							"class": "UI:FretBoard View",
+							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "310, 365",
-							"size": "70, 70",
-							"skip-handle-drawing": "true",
+							"origin": "10, 395",
+							"size": "810, 180",
 							"transparent": "false",
-							"value-inset": "3",
-							"wants-focus": "true",
-							"wheel-inc-value": "0.1",
-							"zoom-factor": "1.5"
-						}
-					},
-					"CKnob": {
-						"attributes": {
-							"angle-range": "270",
-							"angle-start": "135",
-							"circle-drawing": "false",
-							"class": "CKnob",
-							"control-tag": "CHORD_MSB",
-							"corona-color": "~ RedCColor",
-							"corona-dash-dot": "true",
-							"corona-dash-dot-lengths": "1.26,0.1",
-							"corona-drawing": "true",
-							"corona-from-center": "false",
-							"corona-inset": "12",
-							"corona-inverted": "false",
-							"corona-line-cap-butt": "true",
-							"corona-outline": "true",
-							"corona-outline-width-add": "2",
-							"handle-color": "~ WhiteCColor",
-							"handle-line-width": "8",
-							"handle-shadow-color": "~ BlackCColor",
-							"knob-range": "200",
-							"opacity": "1",
-							"origin": "395, 365",
-							"size": "70, 70",
-							"skip-handle-drawing": "true",
-							"transparent": "false",
-							"value-inset": "3",
-							"wants-focus": "true",
-							"wheel-inc-value": "0.1",
-							"zoom-factor": "1.5"
-						}
-					},
-					"CParamDisplay": {
-						"attributes": {
-							"back-color": "~ BlackCColor",
-							"background-offset": "0, 0",
-							"class": "CParamDisplay",
-							"control-tag": "CHORD_NUM",
-							"font": "~ NormalFont",
-							"font-antialias": "true",
-							"font-color": "~ WhiteCColor",
-							"frame-color": "~ BlackCColor",
-							"frame-width": "1",
-							"opacity": "1",
-							"origin": "537, 390",
-							"round-rect-radius": "6",
-							"shadow-color": "~ RedCColor",
-							"size": "100, 20",
-							"style-3D-in": "false",
-							"style-3D-out": "false",
-							"style-no-draw": "false",
-							"style-no-frame": "false",
-							"style-no-text": "false",
-							"style-round-rect": "false",
-							"style-shadow-text": "false",
-							"text-alignment": "center",
-							"text-inset": "0, 0",
-							"text-rotation": "0",
-							"text-shadow-offset": "1, 1",
-							"transparent": "false",
-							"value-precision": "2",
-							"wants-focus": "false",
-							"wheel-inc-value": "0.1"
+							"wants-focus": "false"
 						}
 					}
 				}

@@ -108,7 +108,7 @@ namespace MinMax
 			{
 			case RANGE::MIDI_DATA:           out = { 0, 127, false }; return true;
 			case RANGE::PITCH:               out = { 0, 127, false }; return true;
-			case RANGE::MIDI_CHANNEL:        out = { 0, 15, false }; return true;
+			case RANGE::MIDI_CHANNEL:        out = { 1, 16, false }; return true;
 			case RANGE::TRANSPOSE_RANGE:     out = { -12, 12, false }; return true;
 			case RANGE::FRET_DISTANCE:       out = { 1, 6, false }; return true;
 			case RANGE::STRUM_STRINGS_RANGE: out = { 1, 5, false }; return true;
@@ -151,18 +151,18 @@ namespace MinMax
 		{ PARAM::CHANNEL_SEPALATE, STR16("Channel Sepalate"), STR16(""), VALUE::Bool, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::TRANSPOSE_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::ARTICULATION_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
-		{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
-		{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
-		{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::CHORD, 0, 1999, 0, 0, 0 },
+		{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
+		{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
+		{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::HIDDEN, UNIT::CHORD, 0, 1999, 0, 0, 0 },
 		{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 1, 0, 0 },
 		{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 103, 0, 0 },
 		{ PARAM::MUTE_NOTE_2, STR16("Mite Note 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 102, 0, 0 },
 		{ PARAM::SPEED, STR16("Strum Speed"), STR16("ms"), VALUE::Real, SCALE::Exponential, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 1, 1000, 26, 1, 0 },
 		{ PARAM::DECAY, STR16("Strum Decay"), STR16("%"), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 85, 100, 96, 1, 0 },
-		{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::BEAT_LENGTH, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 4, 0, 0 },
+		{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), VALUE::Int, SCALE::Linear, RANGE::BEAT_LENGTH, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 4, 0, 0 },
 		{ PARAM::BRUSH_TIME, STR16("Brush Time"), STR16("ms"), VALUE::Real, SCALE::Exponential, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 20, 300, 30, 1, 0 },
-		{ PARAM::ARP_LENGTH, STR16("Arpegio Length"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::BEAT_LENGTH, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 2, 0, 0 },
-		{ PARAM::FNOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 1, 0, 0 },
+		{ PARAM::ARP_LENGTH, STR16("Arpegio Length"), STR16("beat"), VALUE::Int, SCALE::Linear, RANGE::BEAT_LENGTH, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 2, 0, 0 },
+		{ PARAM::FNOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
 		{ PARAM::FNOISE_NOTE_NEAR, STR16("Fret Noise Note Near"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 120, 0, 0 },
 		{ PARAM::FNOISE_NOTE_FAR, STR16("Fret Noise Note Far"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 123, 0, 0 },
 		{ PARAM::FNOISE_DIST_NEAR, STR16("Fret Noise Distance Near"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::FRET_DISTANCE, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
