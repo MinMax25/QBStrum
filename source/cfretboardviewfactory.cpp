@@ -140,11 +140,11 @@ namespace MinMax
 
             addView(hierMenu);
 
-            CChordLabel* labChord = new CChordLabel(CRect(430, 1, 549, 18));
+ /*           CChordLabel* labChord = new CChordLabel(CRect(430, 1, 549, 18));
             labChord->setFont(kNormalFontSmall);
             labChord->setListener(editor);
             labChord->setTag(1104);
-            addView(labChord);
+            addView(labChord);*/
         }
 
         CFretBoardView(const CFretBoardView&) = delete;
