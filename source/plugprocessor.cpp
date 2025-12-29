@@ -226,16 +226,11 @@ namespace MinMax
 					articulationChanged();
 				}
 				break;
-			case PARAM::FRET_POSITION:
-				chord.root = paramStorage.get(PARAM::CHORD_ROOT);
-				chord.type = paramStorage.get(PARAM::CHORD_TYPE);
-				chord.position = paramStorage.get(tag);
+			case PARAM::CHORD_LSB:
 				notifyChordChanged();
 				break;
 			case PARAM::CHORD_NUMBER:
-			{
 				break;
-			}
 			}
 		}
 	}
@@ -525,7 +520,7 @@ namespace MinMax
 		float distance = 0.0f;
 
 		// コード変更
-		if (lastChord.root != chord.root || lastChord.type != chord.type || lastChord.position != chord.position)
+		if (lastChord.lsb != chord.lsb || lastChord.msb != chord.msb)
 		{
 			distance =
 				std::abs(
@@ -536,9 +531,8 @@ namespace MinMax
 			trigAllNotesOff();
 
 			// 現在のコードを記録
-			lastChord.root = chord.root;
-			lastChord.type = chord.type;
-			lastChord.position = chord.position;
+			lastChord.lsb = chord.lsb;
+			lastChord.msb = chord.msb;
 		}
 
 		if (paramStorage.get(PARAM::FNOISE_NOTE_NEAR) == 0 && paramStorage.get(PARAM::FNOISE_NOTE_FAR) == 0) return;

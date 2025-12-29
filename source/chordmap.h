@@ -20,15 +20,12 @@ namespace MinMax
     {
     public:
 
-        int root = 0;
-        int type = 0;
-        int position = 0;
+        int lsb = 0;
+        int msb = 0;
 
         std::string toString() const
         {
-            return "[Chord root:" + std::to_string(root) +
-                " type:" + std::to_string(type) +
-                " pos:" + std::to_string(position) + "]";
+            return "[Chord lsb:" + std::to_string(lsb) + " msb:" + std::to_string(msb) + "]";
         }
     };
 
@@ -161,74 +158,19 @@ namespace MinMax
             Instance() = LoadPreset(path);
         }
 
-        std::vector<string> getRootNames() const
-        {
-            std::vector<string> names;
-            for (const auto& item : ChordRoots)
-            {
-                names.push_back(item.Name);
-            }
-            return names;
-		}
-
-        std::vector<string> getChordNames(int rootIdx) const
-        {
-            std::vector<string> names;
-            for (const auto& item : ChordRoots[rootIdx].ChordTypes)
-            {
-                names.push_back(item.Name);
-            }
-            return names;
-		}
-
-        std::vector<string> getFretPosNames(int rootId, int chordId) const
-        {
-            std::vector<string> names;
-			for (const auto& item : ChordRoots[rootId].ChordTypes[chordId].Voicings)
-            {
-                names.push_back(item.Name);
-            }
-            return names;
-        }
 
         std::vector<int> getFretPositions(CChord chord) const
         {
-            return ChordRoots[chord.root].ChordTypes[chord.type].Voicings[chord.position].Frets;
-		}
-
+            return { };
+        }
         std::vector<int> getTunings()
         {
             return Tunings;
         }
 
-        int getChordRootCount()
-        {
-            return chordRootCount;
-        }
-
-        int getChordTypeCount()
-        {
-            return chordTypeCount;
-        }
-
-        int getFretPosCount()
-        {
-            return fretPosCount;
-        }
-
         float getPositionAverage(CChord chord)
         {
-            float result = 0.0f;
-
-            auto& v = getFretPositions(chord);
-            int count = std::count_if(v.begin(), v.end(), [](int x) { return x >= 0; });
-            int sum = std::accumulate(v.begin(), v.end(), 0, [](int acc, int x) { return acc + (x >= 0 ? x : 0); });
-            if (count > 0)
-            {
-                result = sum / (float)count;
-            }
-
-            return result;
+            return 0;
         }
 
         const FlatChordEntry& getByIndex(int index) const
@@ -241,12 +183,6 @@ namespace MinMax
             return static_cast<int>(flatChords.size());
         }
 
-        //çÌèúåÛï‚
-        int toIndex(const CChord& chord) const
-        {
-            return indexTable[chord.root][chord.type][chord.position];
-        }
-
     protected:
 
         string Name;
@@ -254,10 +190,6 @@ namespace MinMax
         vector<ParamChordRoot> ChordRoots;
         vector<FlatChordEntry> flatChords;
         vector<vector<vector<int>>> indexTable;
-
-        int chordRootCount = 0;
-        int chordTypeCount = 0;
-        int fretPosCount = 0;
 
         ChordMap() = default;
         ChordMap(const ChordMap&) = delete;
@@ -353,10 +285,6 @@ namespace MinMax
             string filename = path.filename().string();
             size_t dot = filename.find_last_of('.');
             map.Name = filename.substr(0, dot);
-
-            map.chordRootCount = (int)map.getRootNames().size();
-            map.chordTypeCount = (int)map.getChordNames(0).size();
-            map.fretPosCount = (int)map.getFretPosNames(0, 0).size();
 
             return map;
         }

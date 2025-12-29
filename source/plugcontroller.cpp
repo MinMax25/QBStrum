@@ -104,11 +104,11 @@ namespace MinMax
 
 	IPlugView* PLUGIN_API MyVSTController::createView(FIDString name)
 	{
-		if (FIDStringsEqual(name, Vst::ViewType::kEditor))
-		{
-			auto* view = new VSTGUI::VST3Editor(this, "view", "plugeditor.uidesc");
-			return view;
-		}
+		//if (FIDStringsEqual(name, Vst::ViewType::kEditor))
+		//{
+		//	auto* view = new VSTGUI::VST3Editor(this, "view", "plugeditor.uidesc");
+		//	return view;
+		//}
 		return nullptr;
 	}
 
@@ -123,16 +123,11 @@ namespace MinMax
 		switch (midiControllerNumber)
 		{
 		case kCtrlNRPNSelectLSB:
-			value = static_cast<CtrlNumber>(PARAM::CHORD_ROOT);
+			value = static_cast<CtrlNumber>(PARAM::CHORD_LSB);
 			return kResultTrue;
 
-		case kCtrlDataEntryMSB:
-			value = static_cast<CtrlNumber>(PARAM::CHORD_TYPE);
-			return kResultTrue;
-
-		case kCtrlDataEntryLSB:
-		case 14:
-			value = static_cast<CtrlNumber>(PARAM::FRET_POSITION);
+		case kCtrlNRPNSelectMSB:
+			value = static_cast<CtrlNumber>(PARAM::CHORD_MSB);
 			return kResultTrue;
 
 		case 20:
@@ -206,26 +201,6 @@ namespace MinMax
 		uint32 size = 0;
 
 		if (attr->getBinary(MSG_CHORD_VALUE, data, size) != kResultTrue) return kResultFalse;
-
-		const CChord* chord = reinterpret_cast<const CChord*>(data);
-
-		ParamValue rootNorm = (ParamValue)chord->root / (ChordMap::Instance().getChordRootCount() - 1);
-		beginEdit(static_cast<int>(PARAM::CHORD_ROOT));
-		setParamNormalized(static_cast<int>(PARAM::CHORD_ROOT), rootNorm);
-		performEdit(static_cast<int>(PARAM::CHORD_ROOT), rootNorm);
-		endEdit(static_cast<int>(PARAM::CHORD_ROOT));
-
-		ParamValue typeNorm = (ParamValue)chord->type / (ChordMap::Instance().getChordTypeCount() - 1);
-		beginEdit(static_cast<int>(PARAM::CHORD_TYPE));
-		setParamNormalized(static_cast<int>(PARAM::CHORD_TYPE), typeNorm);
-		performEdit(static_cast<int>(PARAM::CHORD_TYPE), typeNorm);
-		endEdit(static_cast<int>(PARAM::CHORD_TYPE));
-
-		ParamValue posNorm = (ParamValue)chord->position / (ChordMap::Instance().getFretPosCount() - 1);
-		beginEdit(static_cast<int>(PARAM::FRET_POSITION));
-		setParamNormalized(static_cast<int>(PARAM::FRET_POSITION), posNorm);
-		performEdit(static_cast<int>(PARAM::FRET_POSITION), posNorm);
-		endEdit(static_cast<int>(PARAM::FRET_POSITION));
 
 		return kResultOk;
 	}

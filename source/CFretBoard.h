@@ -223,12 +223,6 @@ namespace MinMax
 
         void setValue(CChord c)
         {
-            chord.root = c.root;
-            chord.type = c.type;
-            chord.position = c.position;
-
-            pressedFrets = ChordMap::Instance().getFretPositions(chord);
-
             invalid();
         }
 

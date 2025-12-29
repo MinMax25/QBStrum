@@ -48,9 +48,8 @@ namespace MinMax
 		SELECTED_ARTICULATION,
 
 		// CHORD
-		CHORD_ROOT = 1101,	// DAW受信用
-		CHORD_TYPE,			// DAW受信用
-		FRET_POSITION,		// DAW受信用
+		CHORD_LSB = 1101,	// DAW受信用
+		CHORD_MSB,			// DAW受信用
 		CHORD_NUMBER,
 
 		// STRUM
@@ -142,7 +141,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 47;
+	inline constexpr size_t PARAM_MAX = 46;
 
 	// 全パラメータ定義
 	inline const std::array<ParamDef, PARAM_MAX> paramTable =
@@ -152,9 +151,8 @@ namespace MinMax
 		{ PARAM::CHANNEL_SEPALATE, STR16("Channel Sepalate"), STR16(""), VALUE::Bool, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::TRANSPOSE_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::ARTICULATION_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
-		{ PARAM::CHORD_ROOT, STR16("Root"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
-		{ PARAM::CHORD_TYPE, STR16("Type"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
-		{ PARAM::FRET_POSITION, STR16("Fret Position"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
+		{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
+		{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::AUTOMATE, UNIT::CHORD, 0, 1, 0, 0, 0 },
 		{ PARAM::CHORD_NUMBER, STR16("Chord Number"), STR16(""), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::CHORD, 0, 1999, 0, 0, 0 },
 		{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 1, 0, 0 },
 		{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 103, 0, 0 },
