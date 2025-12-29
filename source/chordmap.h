@@ -189,7 +189,9 @@ namespace MinMax
     protected:
 
         string Name;
+        
         StringSet Tunings{};
+
         vector<ParamChordRoot> ChordRoots;
         vector<FlatChordEntry> flatChords;
         vector<vector<vector<int>>> indexTable;
