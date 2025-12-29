@@ -161,7 +161,9 @@ namespace MinMax
             auto& s = getByIndex(chordNumber);
             auto& v = ChordRoots[s.root].ChordTypes[s.type].Voicings[s.position].Frets;
 
-            for (int i = 0; i < STRING_COUNT; i++)
+            result.size = STRING_COUNT;
+
+            for (size_t i = 0; i < result.size; i++)
             {
                 result.data[i] = v[i];
             }
