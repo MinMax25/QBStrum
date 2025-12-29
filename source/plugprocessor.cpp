@@ -395,7 +395,7 @@ namespace MinMax
 		trigFretNoise(event);
 
 		// コード情報を取得する
-		auto& fretpos = chordMap.getFretPositions(paramStorage.get(PARAM::CHORD_NUM));
+		auto& fretpos = chordMap.getChordVoicing(paramStorage.get(PARAM::CHORD_NUM));
 		auto& strnum = getTargetStrings(fretpos, false, isDown, STRING_COUNT);
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
@@ -432,7 +432,7 @@ namespace MinMax
 		trigFretNoise(event);
 
 		// コード情報を取得する
-		auto& fretpos = chordMap.getFretPositions(paramStorage.get(PARAM::CHORD_NUM));
+		auto& fretpos = chordMap.getChordVoicing(paramStorage.get(PARAM::CHORD_NUM));
 		auto& strnum = getTargetStrings(fretpos, isAbove, isDown, maxStrings);
 		
 		uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
@@ -499,7 +499,7 @@ namespace MinMax
 	{
 		trigFretNoise(event);
 
-		auto& fretpos = chordMap.getFretPositions(paramStorage.get(PARAM::CHORD_NUM));
+		auto& fretpos = chordMap.getChordVoicing(paramStorage.get(PARAM::CHORD_NUM));
 
 		// 弦が鳴らせない場合
 		if (stringindex < 0 || stringindex >= STRING_COUNT || fretpos.data[stringindex] < 0)
@@ -603,6 +603,13 @@ namespace MinMax
 
 	StringSet MyVSTProcessor::getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
 	{
+		//
+		// 鳴らす弦の番号を昇順に返す
+		// fretPos        : コードフォーム
+		// isDown = true  : ６弦方向から
+		// isDown = false : １弦方向から
+		// maxStrings     : 弦数
+
 		StringSet result{};
 		return result;
 	}

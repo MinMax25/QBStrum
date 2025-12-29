@@ -151,7 +151,7 @@ namespace MinMax
             Instance() = LoadPreset(path);
         }
 
-        StringSet getFretPositions(int chordNumber) const
+        StringSet getChordVoicing(int chordNumber) const
         {
             StringSet result{};
 
