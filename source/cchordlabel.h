@@ -18,7 +18,7 @@ namespace MinMax
 
         void draw(CDrawContext* context) override
         {
-            int index = std::stoi(getText().getString());
+            size_t index = std::stoi(getText().getString());
 
             const auto& map = ChordMap::Instance();
 

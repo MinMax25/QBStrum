@@ -26,10 +26,11 @@ namespace MinMax
 	// ‹¤’ÊƒŒƒ“ƒWŽ¯•ÊŽq
 	enum RANGE
 	{
-		NONE,
+		//NONE,
 		OPTION_ROOT,
 		OPTION_TYPE,
 		OPTION_FRET,
+		MIDI_DATA,
 		PITCH,
 		MIDI_CHANNEL,
 		TRANSPOSE_RANGE,
@@ -74,7 +75,6 @@ namespace MinMax
 		STRINGS_DOWN_HIGH,
 		STRINGS_DOWN_LOW,
 
-		// TRIGGER
 		ALL_NOTES_OFF = 1301,
 		BRUSH_UP,
 		BRUSH_DOWN,
@@ -111,10 +111,7 @@ namespace MinMax
 		{
 			switch (static_cast<RANGE>(id))
 			{
-			case RANGE::OPTION_ROOT:		 out = { 0, 1, true }; return true;
-			case RANGE::OPTION_TYPE:		 out = { 0, 1, true }; return true;
-			case RANGE::OPTION_FRET:		 out = { 0, 1, true }; return true;
-			case RANGE::NONE:                out = { 0, 1, true }; return true;
+			case RANGE::MIDI_DATA:           out = { 0, 127, false }; return true;
 			case RANGE::PITCH:               out = { 0, 127, false }; return true;
 			case RANGE::MIDI_CHANNEL:        out = { 0, 15, false }; return true;
 			case RANGE::TRANSPOSE_RANGE:     out = { -12, 12, false }; return true;
@@ -167,10 +164,10 @@ namespace MinMax
 		{ PARAM::CHANNEL_SEPALATE, STR16("Channel Sepalate"), STR16(""), VALUE::Bool, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::TRANSPOSE_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::ARTICULATION_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
-		{ PARAM::CHORD_ROOT, STR16("Root"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::OPTION_ROOT, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
-		{ PARAM::CHORD_TYPE, STR16("Type"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::OPTION_TYPE, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
-		{ PARAM::FRET_POSITION, STR16("Fret Position"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::OPTION_FRET, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
-		{ PARAM::CHORD_NUMBER, STR16("Chord Number"), STR16(""), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::CHORD, 0, 1999, 0, 0, 0 },
+		{ PARAM::CHORD_ROOT, STR16("Root"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
+		{ PARAM::CHORD_TYPE, STR16("Type"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
+		{ PARAM::FRET_POSITION, STR16("Fret Position"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
+		{ PARAM::CHORD_NUMBER, STR16("Chord Number"), STR16(""), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::HIDDEN, UNIT::CHORD, 0, 1999, 0, 0, 0 },
 		{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 1, 0, 0 },
 		{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 103, 0, 0 },
 		{ PARAM::MUTE_NOTE_2, STR16("Mite Note 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 102, 0, 0 },
