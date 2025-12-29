@@ -104,11 +104,11 @@ namespace MinMax
 
 	IPlugView* PLUGIN_API MyVSTController::createView(FIDString name)
 	{
-		//if (FIDStringsEqual(name, Vst::ViewType::kEditor))
-		//{
-		//	auto* view = new VSTGUI::VST3Editor(this, "view", "plugeditor.uidesc");
-		//	return view;
-		//}
+		if (FIDStringsEqual(name, Vst::ViewType::kEditor))
+		{
+			auto* view = new VSTGUI::VST3Editor(this, "view", "plugeditor.uidesc");
+			return view;
+		}
 		return nullptr;
 	}
 

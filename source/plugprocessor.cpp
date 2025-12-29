@@ -228,6 +228,7 @@ namespace MinMax
 				}
 				break;
 			}
+			case PARAM::CHORD_LSB:
 			case PARAM::CHORD_MSB:
 			{
 				ParamValue num = paramStorage.get(PARAM::CHORD_MSB) * 128 + paramStorage.get(PARAM::CHORD_LSB);
@@ -408,6 +409,7 @@ namespace MinMax
 		// 音価はms指定のパラメータ
 		uint64 offTime = baseOnTime + samplesPerMs * paramStorage.get(PARAM::BRUSH_TIME); // brushTime;
 
+		/*
 		for (auto& i : strnum)
 		{
 			uint64 offsetSamples = samplesPerMs * (BRUSH_PER_MS * strcnt);
@@ -422,6 +424,7 @@ namespace MinMax
 
 			strcnt++;
 		}
+		*/
 	}
 
 	void MyVSTProcessor::trigStrum(Event event, bool isAbove, bool isDown, int maxStrings)
@@ -446,6 +449,7 @@ namespace MinMax
 		// 発音弦のカウンタ
 		int strcnt = 0;
 
+		/*
 		for (auto& i : strnum)
 		{
 			double delayMs =
@@ -463,6 +467,7 @@ namespace MinMax
 
 			++strcnt;
 		}
+		*/
 	}
 
 	void MyVSTProcessor::trigMute(PARAM trigger, Event event)
@@ -497,7 +502,7 @@ namespace MinMax
 		auto& fretpos = chordMap.getFretPositions(paramStorage.get(PARAM::CHORD_NUM));
 
 		// 弦が鳴らせない場合
-		if (stringindex < 0 || stringindex >= STRING_COUNT || fretpos[stringindex] < 0)
+		if (stringindex < 0 || stringindex >= STRING_COUNT || fretpos.data[stringindex] < 0)
 		{
 			return;
 		}
@@ -509,7 +514,7 @@ namespace MinMax
 		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * paramStorage.get(PARAM::ARP_LENGTH)));
 		uint64 offTime = onTime + lengthSamples;
 
-		int pitch = chordMap.getTunings()[stringindex] + fretpos[stringindex] + paramStorage.get(PARAM::TRANSPOSE);
+		int pitch = chordMap.getTunings().data[stringindex] + fretpos.data[stringindex] + paramStorage.get(PARAM::TRANSPOSE);
 		float velocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
 		int channel = paramStorage.get(PARAM::CHANNEL_SEPALATE) ? stringindex % 16 : 0;
@@ -596,34 +601,19 @@ namespace MinMax
 		return 0;
 	}
 
-	vector<int> MyVSTProcessor::getTargetStrings(vector<int> fretPos, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
+	StringSet MyVSTProcessor::getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
 	{
-		std::vector<int> result{};
-
-		int cnt = 0;
-
-		for (int i = 0; i < STRING_COUNT; i++)
-		{
-			int s = isAbove ? i : STRING_COUNT - i - 1;
-			if (fretPos[s] < 0) continue;
-
-			result.push_back(s);
-			++cnt;
-
-			if (cnt >= maxStrings) break;
-		}
-
-		if (isAbove && isDown)
-		{
-			std::reverse(result.begin(), result.end());
-		}
-
+		StringSet result{};
 		return result;
 	}
 
 	void MyVSTProcessor::notifyChordNumberChanged(int chordNumber)
 	{
 		FUnknownPtr<IMessage> msg = allocateMessage();
+
+		if (!msg)
+			return;
+
 		msg->setMessageID(MSG_CHORD_CHANGED);
 		msg->getAttributes()->setBinary(MSG_CHORD_VALUE, &chordNumber, sizeof(int));
 		sendMessage(msg);

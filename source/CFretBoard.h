@@ -14,6 +14,21 @@ namespace MinMax
     class CFretBoard
         : public CControl
     {
+    private:
+
+        class CChord
+        {
+        public:
+
+            int lsb = 0;
+            int msb = 0;
+
+            std::string toString() const
+            {
+                return "[Chord lsb:" + std::to_string(lsb) + " msb:" + std::to_string(msb) + "]";
+            }
+        };
+
     public:
         CFretBoard(const CRect& size)
             : CControl(size)

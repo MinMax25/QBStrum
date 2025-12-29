@@ -64,7 +64,7 @@ namespace MinMax
 		void PLUGIN_API trigArpeggio(int stringindex, Event event);
 		void PLUGIN_API trigFretNoise(Event event);
 		ParamID PLUGIN_API getParamIdByPitch(Event event);
-		vector<int> PLUGIN_API getTargetStrings(vector<int> fretPos, bool isAbove, bool isDown, int maxStrings);
+		StringSet PLUGIN_API getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings);
 		void PLUGIN_API notifyChordNumberChanged(int chordNumber);
 		tresult PLUGIN_API notify(IMessage* message) SMTG_OVERRIDE;
 		tresult PLUGIN_API notifyStrumTrigger(IMessage* message);

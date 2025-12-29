@@ -388,18 +388,6 @@ namespace ParameterFramework
             setNormalized(id, normalized);
         }
 
-        bool isChanged(ParamID id) const
-        {
-            auto it = storage.find(id);
-            return (it != storage.end()) ? it->second.changed : false;
-        }
-
-        void clearChangedFlags()
-        {
-            for (auto& [id, entry] : storage)
-                entry.changed = false;
-        }
-
         void setNormalized(ParamID id, ParamValue val)
         {
             auto it = storage.find(id);
@@ -420,6 +408,18 @@ namespace ParameterFramework
             auto* p = findParameter(id);
             if (!p) return 0.0;
             return p->toNormalized(plain);
+        }
+
+        bool isChanged(ParamID id) const
+        {
+            auto it = storage.find(id);
+            return (it != storage.end()) ? it->second.changed : false;
+        }
+
+        void clearChangedFlags()
+        {
+            for (auto& [id, entry] : storage)
+                entry.changed = false;
         }
 
     private:

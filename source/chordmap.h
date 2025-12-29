@@ -15,18 +15,11 @@ namespace MinMax
     using std::vector;
 
     inline constexpr int STRING_COUNT = 6;
-
-    class CChord
+    
+    struct StringSet
     {
-    public:
-
-        int lsb = 0;
-        int msb = 0;
-
-        std::string toString() const
-        {
-            return "[Chord lsb:" + std::to_string(lsb) + " msb:" + std::to_string(msb) + "]";
-        }
+        std::array<int, STRING_COUNT> data{};
+        int size = 0; 
     };
 
     class ChordMap
@@ -159,11 +152,12 @@ namespace MinMax
         }
 
 
-        std::vector<int> getFretPositions(int chordNumber) const
+        StringSet getFretPositions(int chordNumber) const
         {
             return { };
         }
-        std::vector<int> getTunings()
+
+        StringSet getTunings()
         {
             return Tunings;
         }
@@ -186,7 +180,7 @@ namespace MinMax
     protected:
 
         string Name;
-        vector<int> Tunings;
+        StringSet Tunings{};
         vector<ParamChordRoot> ChordRoots;
         vector<FlatChordEntry> flatChords;
         vector<vector<vector<int>>> indexTable;
@@ -242,9 +236,11 @@ namespace MinMax
 
             if (v.HasMember("Notes") && v["Notes"].IsArray())
             {
+                int i = 0;
                 for (auto& item : v["Notes"].GetArray())
                 {
-                    Tunings.push_back(item.GetInt());
+                    if (i > STRING_COUNT) break;
+                    Tunings.data[i++] = item.GetInt();
                 }
             }
 
