@@ -7,7 +7,7 @@
 #include <stdexcept>
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
-#include <numeric>
+#include <array>
 
 namespace MinMax
 {
@@ -151,10 +151,19 @@ namespace MinMax
             Instance() = LoadPreset(path);
         }
 
-
         StringSet getFretPositions(int chordNumber) const
         {
-            return { };
+            StringSet result{};
+
+            auto& s = getByIndex(chordNumber);
+            auto& v = ChordRoots[s.root].ChordTypes[s.type].Voicings[s.position].Frets;
+
+            for (int i = 0; i < STRING_COUNT; i++)
+            {
+                result.data[i] = v[i];
+            }
+
+            return result;
         }
 
         StringSet getTunings()
