@@ -86,7 +86,7 @@ namespace MinMax
             CChordLabel* chordLabel = new CChordLabel(CRect(41, 1, 180, 18));
             chordLabel->setFont(kNormalFontSmall);
             chordLabel->setListener(description->getController());
-            chordLabel->setTag(PARAM::CHORD_NUMBER);
+            chordLabel->setTag(PARAM::CHORD_NUM);
             addView(chordLabel);
         }
 

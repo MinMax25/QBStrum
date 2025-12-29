@@ -159,7 +159,7 @@ namespace MinMax
         }
 
 
-        std::vector<int> getFretPositions(CChord chord) const
+        std::vector<int> getFretPositions(int chordNumber) const
         {
             return { };
         }
@@ -168,7 +168,7 @@ namespace MinMax
             return Tunings;
         }
 
-        float getPositionAverage(CChord chord)
+        float getPositionAverage(int chordNumber)
         {
             return 0;
         }

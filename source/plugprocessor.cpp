@@ -221,18 +221,19 @@ namespace MinMax
 			switch (tag)
 			{
 			case PARAM::SELECTED_ARTICULATION:
+			{
 				if (paramStorage.isChanged(tag))
 				{
 					articulationChanged();
 				}
 				break;
-			case PARAM::CHORD_LSB:
-				chord.lsb = paramStorage.get(PARAM::CHORD_LSB);
-				chord.msb = paramStorage.get(PARAM::CHORD_MSB);
-				notifyChordChanged();
+			}
+			case PARAM::CHORD_MSB:
+			{
+				ParamValue num = paramStorage.get(PARAM::CHORD_MSB) * 128 + paramStorage.get(PARAM::CHORD_LSB);
+				notifyChordNumberChanged(num);
 				break;
-			case PARAM::CHORD_NUMBER:
-				break;
+			}
 			}
 		}
 	}
@@ -393,7 +394,7 @@ namespace MinMax
 		trigFretNoise(event);
 
 		// コード情報を取得する
-		auto& fretpos = chordMap.getFretPositions(chord);
+		auto& fretpos = chordMap.getFretPositions(paramStorage.get(PARAM::CHORD_NUM));
 		auto& strnum = getTargetStrings(fretpos, false, isDown, STRING_COUNT);
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
@@ -428,7 +429,7 @@ namespace MinMax
 		trigFretNoise(event);
 
 		// コード情報を取得する
-		auto& fretpos = chordMap.getFretPositions(chord);
+		auto& fretpos = chordMap.getFretPositions(paramStorage.get(PARAM::CHORD_NUM));
 		auto& strnum = getTargetStrings(fretpos, isAbove, isDown, maxStrings);
 		
 		uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
@@ -493,7 +494,7 @@ namespace MinMax
 	{
 		trigFretNoise(event);
 
-		auto& fretpos = chordMap.getFretPositions(chord);
+		auto& fretpos = chordMap.getFretPositions(paramStorage.get(PARAM::CHORD_NUM));
 
 		// 弦が鳴らせない場合
 		if (stringindex < 0 || stringindex >= STRING_COUNT || fretpos[stringindex] < 0)
@@ -522,19 +523,18 @@ namespace MinMax
 		float distance = 0.0f;
 
 		// コード変更
-		if (lastChord.lsb != chord.lsb || lastChord.msb != chord.msb)
+		if (lastChordNum != paramStorage.get(PARAM::CHORD_NUM))
 		{
 			distance =
 				std::abs(
-					chordMap.getPositionAverage(lastChord) -
-					chordMap.getPositionAverage(chord));
+					chordMap.getPositionAverage(lastChordNum) -
+					chordMap.getPositionAverage(paramStorage.get(PARAM::CHORD_NUM)));
 
 			// コード変更時は全消音
 			trigAllNotesOff();
 
 			// 現在のコードを記録
-			lastChord.lsb = chord.lsb;
-			lastChord.msb = chord.msb;
+			lastChordNum = paramStorage.get(PARAM::CHORD_NUM);
 		}
 
 		if (paramStorage.get(PARAM::FNOISE_NOTE_NEAR) == 0 && paramStorage.get(PARAM::FNOISE_NOTE_FAR) == 0) return;
@@ -621,11 +621,11 @@ namespace MinMax
 		return result;
 	}
 
-	void MyVSTProcessor::notifyChordChanged()
+	void MyVSTProcessor::notifyChordNumberChanged(int chordNumber)
 	{
 		FUnknownPtr<IMessage> msg = allocateMessage();
 		msg->setMessageID(MSG_CHORD_CHANGED);
-		msg->getAttributes()->setBinary(MSG_CHORD_VALUE, &chord, sizeof(CChord));
+		msg->getAttributes()->setBinary(MSG_CHORD_VALUE, &chordNumber, sizeof(int));
 		sendMessage(msg);
 	}
 

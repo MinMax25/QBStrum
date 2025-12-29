@@ -65,7 +65,7 @@ namespace MinMax
 		void PLUGIN_API trigFretNoise(Event event);
 		ParamID PLUGIN_API getParamIdByPitch(Event event);
 		vector<int> PLUGIN_API getTargetStrings(vector<int> fretPos, bool isAbove, bool isDown, int maxStrings);
-		void PLUGIN_API notifyChordChanged();
+		void PLUGIN_API notifyChordNumberChanged(int chordNumber);
 		tresult PLUGIN_API notify(IMessage* message) SMTG_OVERRIDE;
 		tresult PLUGIN_API notifyStrumTrigger(IMessage* message);
 		void PLUGIN_API processAudio(Vst::ProcessData& data);
@@ -83,8 +83,7 @@ namespace MinMax
 		ProcessorParamStorage paramStorage;
 
 		// コード変更監視用
-		CChord chord{};
-		CChord lastChord{};
+		double lastChordNum = 0;
 
 		// コード変更時の平均フレットポジションの移動距離
 		float distance = 0.0f;
