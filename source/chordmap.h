@@ -19,7 +19,7 @@ namespace MinMax
     struct StringSet
     {
         std::array<int, STRING_COUNT> data{};
-        int size = 0; 
+        size_t size = 0; 
     };
 
     class ChordMap
