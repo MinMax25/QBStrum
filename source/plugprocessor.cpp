@@ -6,15 +6,11 @@
 #include <vstgui/vstgui_uidescription.h>
 #include <pluginterfaces/base/ibstream.h>
 
-#include "plugprocessor.h"
 #include "plugcids.h"
 
+#include "plugprocessor.h"
 #include "parameterframework.h"
 #include "myparameters.h"
-
-#if DEBUG
-#include "debug_log.h"
-#endif
 
 namespace MinMax
 {
