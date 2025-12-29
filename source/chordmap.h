@@ -26,8 +26,10 @@ namespace MinMax
     {
     private:
 
-        struct FlatChordEntry
+        class FlatChordEntry
         {
+        public:
+
             int root = 0;
             int type = 0;
             int position = 0;
@@ -148,6 +150,9 @@ namespace MinMax
 
         static void initFromPreset(const std::filesystem::path& path)
         {
+            //
+            // コードマップ定義ファイルを読み込む
+
             Instance() = LoadPreset(path);
         }
 
@@ -181,16 +186,35 @@ namespace MinMax
 
         float getPositionAverage(int chordNumber)
         {
-            return 0;
+            //
+            // コードボイシングの平均フレット位置を取得する
+
+            auto& v = getChordVoicing(chordNumber);
+
+            int sum = 0;
+
+            for (size_t i = 0; i < v.size; i++)
+            {
+                if (v.data[i] < 0) continue;
+                sum += v.data[i];
+            }
+
+            return sum / float(v.size);
         }
 
         const FlatChordEntry& getByIndex(int index) const
         {
-            return flatChords.at(index);
+            //
+            // インデックス指定によるコード情報を取得する
+
+            return flatChords.at((index < 0 || index > getFlatCount()) ? 0 : index);
         }
 
         int getFlatCount() const
         {
+            //
+            // 登録されているコードの数を取得する
+
             return static_cast<int>(flatChords.size());
         }
 
@@ -255,10 +279,12 @@ namespace MinMax
 
             if (v.HasMember("Notes") && v["Notes"].IsArray())
             {
-                int i = 0;
+                Tunings.size = STRING_COUNT;
+
+                size_t i = 0;
                 for (auto& item : v["Notes"].GetArray())
                 {
-                    if (i > STRING_COUNT) break;
+                    if (i > Tunings.size) break;
                     Tunings.data[i++] = item.GetInt();
                 }
             }
