@@ -14,11 +14,6 @@
 
 namespace MinMax
 {
-	using namespace Steinberg;
-	using namespace ParameterFramework;
-
-	using ParamHelper = ParameterFramework::ParamHelper;
-
 #pragma region Implements
 
 	void MyVSTProcessor::sendNoteEvent(const NoteEvent& e)
