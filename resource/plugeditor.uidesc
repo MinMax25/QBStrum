@@ -45,10 +45,9 @@
 			"ARTICULATION_SLIDE": "1407",
 			"BRUSH_TIME": "1207",
 			"CHANNEL_SEPALATE": "1001",
-			"CHORD_NUMBER": "1104",
-			"CHORD_POSITION": "1103",
-			"CHORD_ROOT": "1101",
-			"CHORD_TYPE": "1102",
+			"CHORD_LSB": "1101",
+			"CHORD_MSB": "1102",
+			"CHORD_NUMBER": "1103",
 			"FNOISE_CHANNEL": "1209",
 			"FNOISE_DIST_FAR": "1213",
 			"FNOISE_DIST_NEAR": "1212",
@@ -80,22 +79,22 @@
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
-				"EditorSize": "0, 0, 1583, 828",
-				"SplitViewSize_0_0": "0.8379052369077306661182547031785361468792",
-				"SplitViewSize_0_1": "0.1371571072319202055922460203873924911022",
-				"SplitViewSize_1_0": "0.357855361596010002056544863080489449203",
-				"SplitViewSize_1_1": "0.6371571072319202055922460203873924911022",
-				"SplitViewSize_2_0": "0.5603284902084649798936766273982357233763",
-				"SplitViewSize_2_1": "0.4365129500947567686708339351753238588572",
+				"EditorSize": "0, 0, 1920, 976",
+				"SplitViewSize_0_0": "0.8631578947368421239616509410552680492401",
+				"SplitViewSize_0_1": "0.1157894736842105254392976121380343101919",
+				"SplitViewSize_1_0": "0.3800000000000000044408920985006261616945",
+				"SplitViewSize_1_1": "0.6157894736842105531948732277669478207827",
+				"SplitViewSize_2_0": "0.5427083333333333481363069950020872056484",
+				"SplitViewSize_2_1": "0.4546875000000000222044604925031308084726",
 				"TabSwitchValue": "0",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "28"
+				"SelectedRow": "8"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "10"
+				"SelectedRow": "9"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -3082,6 +3081,102 @@
 							"value-precision": "2",
 							"wants-focus": "false",
 							"wheel-inc-value": "0.1"
+						}
+					},
+					"CKnob": {
+						"attributes": {
+							"angle-range": "270",
+							"angle-start": "135",
+							"circle-drawing": "false",
+							"class": "CKnob",
+							"control-tag": "CHORD_LSB",
+							"corona-color": "~ RedCColor",
+							"corona-dash-dot": "true",
+							"corona-dash-dot-lengths": "1.26,0.1",
+							"corona-drawing": "true",
+							"corona-from-center": "false",
+							"corona-inset": "12",
+							"corona-inverted": "false",
+							"corona-line-cap-butt": "true",
+							"corona-outline": "true",
+							"corona-outline-width-add": "2",
+							"handle-color": "~ WhiteCColor",
+							"handle-line-width": "8",
+							"handle-shadow-color": "~ BlackCColor",
+							"knob-range": "200",
+							"opacity": "1",
+							"origin": "310, 365",
+							"size": "70, 70",
+							"skip-handle-drawing": "true",
+							"transparent": "false",
+							"value-inset": "3",
+							"wants-focus": "true",
+							"wheel-inc-value": "0.1",
+							"zoom-factor": "1.5"
+						}
+					},
+					"CKnob": {
+						"attributes": {
+							"angle-range": "270",
+							"angle-start": "135",
+							"circle-drawing": "false",
+							"class": "CKnob",
+							"control-tag": "CHORD_MSB",
+							"corona-color": "~ RedCColor",
+							"corona-dash-dot": "true",
+							"corona-dash-dot-lengths": "1.26,0.1",
+							"corona-drawing": "true",
+							"corona-from-center": "false",
+							"corona-inset": "12",
+							"corona-inverted": "false",
+							"corona-line-cap-butt": "true",
+							"corona-outline": "true",
+							"corona-outline-width-add": "2",
+							"handle-color": "~ WhiteCColor",
+							"handle-line-width": "8",
+							"handle-shadow-color": "~ BlackCColor",
+							"knob-range": "200",
+							"opacity": "1",
+							"origin": "395, 365",
+							"size": "70, 70",
+							"skip-handle-drawing": "true",
+							"transparent": "false",
+							"value-inset": "3",
+							"wants-focus": "true",
+							"wheel-inc-value": "0.1",
+							"zoom-factor": "1.5"
+						}
+					},
+					"CKnob": {
+						"attributes": {
+							"angle-range": "270",
+							"angle-start": "135",
+							"circle-drawing": "false",
+							"class": "CKnob",
+							"control-tag": "CHORD_NUMBER",
+							"corona-color": "~ RedCColor",
+							"corona-dash-dot": "true",
+							"corona-dash-dot-lengths": "1.26,0.1",
+							"corona-drawing": "true",
+							"corona-from-center": "false",
+							"corona-inset": "12",
+							"corona-inverted": "false",
+							"corona-line-cap-butt": "true",
+							"corona-outline": "true",
+							"corona-outline-width-add": "2",
+							"handle-color": "~ WhiteCColor",
+							"handle-line-width": "8",
+							"handle-shadow-color": "~ BlackCColor",
+							"knob-range": "200",
+							"opacity": "1",
+							"origin": "560, 365",
+							"size": "70, 70",
+							"skip-handle-drawing": "true",
+							"transparent": "false",
+							"value-inset": "3",
+							"wants-focus": "true",
+							"wheel-inc-value": "0.1",
+							"zoom-factor": "1.5"
 						}
 					}
 				}
