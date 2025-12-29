@@ -23,7 +23,7 @@ namespace MinMax
             const auto& map = ChordMap::Instance();
 
             UTF8String name =
-                (index >= 0 && index < (int)map.getCount())
+                (index >= 0 && index < map.getFlatCount())
                 ? map.getByIndex(index).displayName.c_str()
                 : "---";
 

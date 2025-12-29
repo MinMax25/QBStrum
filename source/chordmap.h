@@ -201,18 +201,6 @@ namespace MinMax
             return Tunings;
         }
 
-        int revWhenIsDown(int i, bool isDown)
-        {
-            if (isDown)
-            {
-                return STRING_COUNT - i - 1;
-            }
-            else
-            {
-                return i;
-            }
-        }
-
         int getChordRootCount()
         {
             return chordRootCount;
@@ -253,14 +241,10 @@ namespace MinMax
             return static_cast<int>(flatChords.size());
         }
 
+        //çÌèúåÛï‚
         int toIndex(const CChord& chord) const
         {
             return indexTable[chord.root][chord.type][chord.position];
-        }
-
-        size_t getCount() const
-        {
-            return flatChords.size();
         }
 
     protected:
