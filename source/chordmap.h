@@ -153,6 +153,9 @@ namespace MinMax
 
         StringSet getChordVoicing(int chordNumber) const
         {
+            //
+            // コードボイシングを取得する
+
             StringSet result{};
 
             auto& s = getByIndex(chordNumber);
@@ -168,6 +171,9 @@ namespace MinMax
 
         StringSet getTunings()
         {
+            //
+            // 開放弦のピッチを取得する
+
             return Tunings;
         }
 

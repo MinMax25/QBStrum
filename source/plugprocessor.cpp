@@ -604,7 +604,7 @@ namespace MinMax
 	StringSet MyVSTProcessor::getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
 	{
 		//
-		// 鳴らす弦の番号を昇順に返す
+		// 鳴らす弦の番号を昇順に取得する
 		// fretPos        : コードフォーム
 		// isDown = true  : ６弦方向から
 		// isDown = false : １弦方向から
