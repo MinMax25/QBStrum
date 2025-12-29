@@ -236,6 +236,9 @@ namespace MinMax
 
         void buildFlatTable()
         {
+            //
+            // 階層化されているコードマップを直列に並べ替える
+
             flatChords.clear();
             indexTable.clear();
 
