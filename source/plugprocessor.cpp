@@ -400,14 +400,15 @@ namespace MinMax
 		// 音価はms指定のパラメータ
 		uint64 offTime = baseOnTime + samplesPerMs * paramStorage.get(PARAM::BRUSH_TIME); // brushTime;
 
-		/*
-		for (auto& i : strnum)
+		for (size_t s = 0; s < strnum.size; s++)
 		{
+			int i = strnum.data[s];
+
 			uint64 offsetSamples = samplesPerMs * (BRUSH_PER_MS * strcnt);
 
 			uint64 onTime = baseOnTime + offsetSamples;
 
-			int pitch = chordMap.getTunings()[i] + fretpos[i] + paramStorage.get(PARAM::TRANSPOSE);
+			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + paramStorage.get(PARAM::TRANSPOSE);
 			float velocity = baseVelocity * std::pow(BRUSH_DECAY, strcnt);
 
 			int channel = paramStorage.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
@@ -415,7 +416,6 @@ namespace MinMax
 
 			strcnt++;
 		}
-		*/
 	}
 
 	void MyVSTProcessor::trigStrum(Event event, bool isAbove, bool isDown, int maxStrings)
@@ -440,17 +440,18 @@ namespace MinMax
 		// 発音弦のカウンタ
 		int strcnt = 0;
 
-		/*
-		for (auto& i : strnum)
+		for (size_t s = 0; s < strnum.size; s++)
 		{
+			int i = strnum.data[s];
+
 			double delayMs =
-				(strnum.size() > 1)
+				(strnum.size > 1)
 				? (paramStorage.get(PARAM::SPEED) / double(STRING_COUNT)) * strcnt
 				: 0.0;
 
 			uint64 onTime = baseOnTime + static_cast<uint64>(delayMs * samplesPerMs);
 
-			int pitch = chordMap.getTunings()[i] + fretpos[i] + paramStorage.get(PARAM::TRANSPOSE);
+			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + paramStorage.get(PARAM::TRANSPOSE);
 			float velocity = baseVelocity * std::pow(paramStorage.get(PARAM::DECAY) / 100.0f, strcnt);
 
 			int channel = paramStorage.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
@@ -458,7 +459,6 @@ namespace MinMax
 
 			++strcnt;
 		}
-		*/
 	}
 
 	void MyVSTProcessor::trigMute(PARAM trigger, Event event)
@@ -602,6 +602,33 @@ namespace MinMax
 		// maxStrings     : 弦数
 
 		StringSet result{};
+
+		std::vector<int> values{};
+
+		int cnt = 0;
+
+		for (int i = 0; i < STRING_COUNT; i++)
+		{
+			int s = isAbove ? i : STRING_COUNT - i - 1;
+			if (fretPos.data[s] < 0) continue;
+
+			values.push_back(s);
+			++cnt;
+
+			if (cnt >= maxStrings) break;
+		}
+
+		if (isAbove && isDown)
+		{
+			std::reverse(values.begin(), values.end());
+		}
+
+		for (size_t i = 0; i < values.size(); i++)
+		{
+			result.data[i] = values[i];
+			result.size++;
+		}
+
 		return result;
 	}
 
