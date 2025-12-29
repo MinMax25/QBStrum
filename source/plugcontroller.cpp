@@ -131,6 +131,7 @@ namespace MinMax
 			return kResultTrue;
 
 		case kCtrlDataEntryLSB:
+		case 14:
 			value = static_cast<CtrlNumber>(PARAM::FRET_POSITION);
 			return kResultTrue;
 

@@ -227,8 +227,8 @@ namespace MinMax
 				}
 				break;
 			case PARAM::FRET_POSITION:
-				chord.root = paramStorage.get(tag);
-				chord.type = paramStorage.get(tag);
+				chord.root = paramStorage.get(PARAM::CHORD_ROOT);
+				chord.type = paramStorage.get(PARAM::CHORD_TYPE);
 				chord.position = paramStorage.get(tag);
 				if (isPlaying)
 				{
@@ -237,6 +237,7 @@ namespace MinMax
 				break;
 			case PARAM::CHORD_NUMBER:
 			{
+				int a = paramStorage.get(PARAM::CHORD_NUMBER);
 				break;
 			}
 			}

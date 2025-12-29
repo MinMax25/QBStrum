@@ -26,10 +26,6 @@ namespace MinMax
 	// 共通レンジ識別子
 	enum RANGE
 	{
-		//NONE,
-		//OPTION_ROOT,
-		//OPTION_TYPE,
-		//OPTION_FRET,
 		MIDI_DATA,
 		PITCH,
 		MIDI_CHANNEL,
@@ -52,9 +48,9 @@ namespace MinMax
 		SELECTED_ARTICULATION,
 
 		// CHORD
-		CHORD_ROOT = 1101,
-		CHORD_TYPE,
-		FRET_POSITION,
+		CHORD_ROOT = 1101,	// DAW受信用
+		CHORD_TYPE,			// DAW受信用
+		FRET_POSITION,		// DAW受信用
 		CHORD_NUMBER,
 
 		// STRUM
