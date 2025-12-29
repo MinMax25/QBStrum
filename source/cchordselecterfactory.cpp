@@ -6,8 +6,8 @@
 #include <vstgui/vstgui_uidescription.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 
-#include "plugdefine.h"
 #include "myparameters.h"
+#include "cchordlabel.h"
 
 namespace MinMax
 {
@@ -60,11 +60,11 @@ namespace MinMax
             {
                 EditController* controller = dynamic_cast<EditController*>(editor->getController());
                 if (!controller) return false;
-                controller->beginEdit(1104);
-                ParamValue norm = controller->plainParamToNormalized(1104, chordNumber);
-                controller->setParamNormalized(1104, norm);
-                controller->performEdit(1104, norm);
-                controller->endEdit(1104);
+                controller->beginEdit(PARAM::CHORD_NUMBER);
+                ParamValue norm = controller->plainParamToNormalized(PARAM::CHORD_NUMBER, chordNumber);
+                controller->setParamNormalized(PARAM::CHORD_NUMBER, norm);
+                controller->performEdit(PARAM::CHORD_NUMBER, norm);
+                controller->endEdit(PARAM::CHORD_NUMBER);
             }
 
             return finish;
@@ -85,8 +85,10 @@ namespace MinMax
             editor = static_cast<VST3Editor*>(description->getController());
             if (editor) editor->addRef();
 
+            setBackgroundColor(kGreyCColor);
+
             // äKëwâªÉÅÉjÉÖÅ[
-            hierMenu = new COptionMenu(CRect(0, 1, 39, 18), nullptr, -1);
+            hierMenu = new COptionMenu(CRect(1, 1, 39, 18), nullptr, -1);
             menuListener = std::make_unique<ChordSelectorListner>(editor);
 
             hierMenu->setFontColor(kWhiteCColor);
@@ -120,6 +122,12 @@ namespace MinMax
 
             addView(hierMenu);
 
+            //
+            CChordLabel* chordLabel = new CChordLabel(CRect(41, 1, 180, 18));
+            chordLabel->setFont(kNormalFontSmaller);
+            chordLabel->setListener(description->getController());
+            chordLabel->setTag(PARAM::CHORD_NUMBER);
+            addView(chordLabel);
         }
 
         ~CChordSelecter()
@@ -149,7 +157,7 @@ namespace MinMax
 
         CView* create(const UIAttributes& attributes, const IUIDescription* description) const override
         {
-            return new CChordSelecter(attributes, description, CRect(CPoint(0, 0), CPoint(200, 20)));
+            return new CChordSelecter(attributes, description, CRect(CPoint(0, 0), CPoint(180, 20)));
         }
     };
 
