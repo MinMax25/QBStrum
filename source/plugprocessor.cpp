@@ -230,14 +230,10 @@ namespace MinMax
 				chord.root = paramStorage.get(PARAM::CHORD_ROOT);
 				chord.type = paramStorage.get(PARAM::CHORD_TYPE);
 				chord.position = paramStorage.get(tag);
-				if (isPlaying)
-				{
-					notifyChordChanged();
-				}
+				notifyChordChanged();
 				break;
 			case PARAM::CHORD_NUMBER:
 			{
-				int a = paramStorage.get(PARAM::CHORD_NUMBER);
 				break;
 			}
 			}
