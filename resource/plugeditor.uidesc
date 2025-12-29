@@ -80,19 +80,19 @@
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
-				"EditorSize": "0, 0, 1920, 976",
-				"SplitViewSize_0_0": "0.8631578947368421239616509410552680492401",
-				"SplitViewSize_0_1": "0.1157894736842105254392976121380343101919",
-				"SplitViewSize_1_0": "0.3800000000000000044408920985006261616945",
-				"SplitViewSize_1_1": "0.6157894736842105531948732277669478207827",
-				"SplitViewSize_2_0": "0.6374999999999999555910790149937383830547",
-				"SplitViewSize_2_1": "0.3598958333333333592385372412536526098847",
+				"EditorSize": "0, 0, 1583, 828",
+				"SplitViewSize_0_0": "0.8379052369077306661182547031785361468792",
+				"SplitViewSize_0_1": "0.1371571072319202055922460203873924911022",
+				"SplitViewSize_1_0": "0.357855361596010002056544863080489449203",
+				"SplitViewSize_1_1": "0.6371571072319202055922460203873924911022",
+				"SplitViewSize_2_0": "0.5603284902084649798936766273982357233763",
+				"SplitViewSize_2_1": "0.4365129500947567686708339351753238588572",
 				"TabSwitchValue": "0",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "16"
+				"SelectedRow": "28"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "10"
@@ -291,19 +291,6 @@
 							"value-precision": "2",
 							"wants-focus": "false",
 							"wheel-inc-value": "0.1"
-						}
-					},
-					"UI:FretBoard View": {
-						"attributes": {
-							"background-color": "Dark",
-							"background-color-draw-style": "filled and stroked",
-							"class": "UI:FretBoard View",
-							"mouse-enabled": "true",
-							"opacity": "1",
-							"origin": "10, 395",
-							"size": "810, 180",
-							"transparent": "false",
-							"wants-focus": "false"
 						}
 					},
 					"CKickButton": {
