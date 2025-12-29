@@ -197,6 +197,14 @@ namespace MinMax
 
 		if (attr->getBinary(MSG_CHORD_VALUE, data, size) != kResultTrue) return kResultFalse;
 
+		const int* chord = reinterpret_cast<const int*>(data);
+
+		beginEdit(static_cast<int>(PARAM::CHORD_NUM));
+		ParamValue norm = plainParamToNormalized(PARAM::CHORD_NUM, *chord);
+		setParamNormalized(static_cast<int>(PARAM::CHORD_NUM), norm);
+		performEdit(static_cast<int>(PARAM::CHORD_NUM), norm);
+		endEdit(static_cast<int>(PARAM::CHORD_NUM));
+
 		return kResultOk;
 	}
 }

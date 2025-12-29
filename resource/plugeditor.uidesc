@@ -47,7 +47,7 @@
 			"CHANNEL_SEPALATE": "1001",
 			"CHORD_LSB": "1101",
 			"CHORD_MSB": "1102",
-			"CHORD_NUMBER": "1103",
+			"CHORD_NUM": "1103",
 			"FNOISE_CHANNEL": "1209",
 			"FNOISE_DIST_FAR": "1213",
 			"FNOISE_DIST_NEAR": "1212",
@@ -79,22 +79,22 @@
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
-				"EditorSize": "0, 0, 1920, 976",
-				"SplitViewSize_0_0": "0.8631578947368421239616509410552680492401",
-				"SplitViewSize_0_1": "0.1157894736842105254392976121380343101919",
-				"SplitViewSize_1_0": "0.3800000000000000044408920985006261616945",
-				"SplitViewSize_1_1": "0.6157894736842105531948732277669478207827",
-				"SplitViewSize_2_0": "0.5427083333333333481363069950020872056484",
-				"SplitViewSize_2_1": "0.4546875000000000222044604925031308084726",
-				"TabSwitchValue": "0",
+				"EditorSize": "0, 0, 1476, 828",
+				"SplitViewSize_0_0": "0.8379052369077306661182547031785361468792",
+				"SplitViewSize_0_1": "0.1371571072319202055922460203873924911022",
+				"SplitViewSize_1_0": "0.357855361596010002056544863080489449203",
+				"SplitViewSize_1_1": "0.6371571072319202055922460203873924911022",
+				"SplitViewSize_2_0": "0.4376693766937669316519077256089076399803",
+				"SplitViewSize_2_1": "0.5589430894308943242876352996972855180502",
+				"TabSwitchValue": "1",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "8"
+				"SelectedRow": "16"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "9"
+				"SelectedRow": "12"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -3147,36 +3147,37 @@
 							"zoom-factor": "1.5"
 						}
 					},
-					"CKnob": {
+					"CParamDisplay": {
 						"attributes": {
-							"angle-range": "270",
-							"angle-start": "135",
-							"circle-drawing": "false",
-							"class": "CKnob",
-							"control-tag": "CHORD_NUMBER",
-							"corona-color": "~ RedCColor",
-							"corona-dash-dot": "true",
-							"corona-dash-dot-lengths": "1.26,0.1",
-							"corona-drawing": "true",
-							"corona-from-center": "false",
-							"corona-inset": "12",
-							"corona-inverted": "false",
-							"corona-line-cap-butt": "true",
-							"corona-outline": "true",
-							"corona-outline-width-add": "2",
-							"handle-color": "~ WhiteCColor",
-							"handle-line-width": "8",
-							"handle-shadow-color": "~ BlackCColor",
-							"knob-range": "200",
+							"back-color": "~ BlackCColor",
+							"background-offset": "0, 0",
+							"class": "CParamDisplay",
+							"control-tag": "CHORD_NUM",
+							"font": "~ NormalFont",
+							"font-antialias": "true",
+							"font-color": "~ WhiteCColor",
+							"frame-color": "~ BlackCColor",
+							"frame-width": "1",
 							"opacity": "1",
-							"origin": "560, 365",
-							"size": "70, 70",
-							"skip-handle-drawing": "true",
+							"origin": "537, 390",
+							"round-rect-radius": "6",
+							"shadow-color": "~ RedCColor",
+							"size": "100, 20",
+							"style-3D-in": "false",
+							"style-3D-out": "false",
+							"style-no-draw": "false",
+							"style-no-frame": "false",
+							"style-no-text": "false",
+							"style-round-rect": "false",
+							"style-shadow-text": "false",
+							"text-alignment": "center",
+							"text-inset": "0, 0",
+							"text-rotation": "0",
+							"text-shadow-offset": "1, 1",
 							"transparent": "false",
-							"value-inset": "3",
-							"wants-focus": "true",
-							"wheel-inc-value": "0.1",
-							"zoom-factor": "1.5"
+							"value-precision": "2",
+							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
 						}
 					}
 				}

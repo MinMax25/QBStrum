@@ -219,7 +219,6 @@ namespace MinMax
 				}
 				break;
 			}
-			case PARAM::CHORD_LSB:
 			case PARAM::CHORD_MSB:
 			{
 				ParamValue num = paramStorage.get(PARAM::CHORD_MSB) * 128 + paramStorage.get(PARAM::CHORD_LSB);
