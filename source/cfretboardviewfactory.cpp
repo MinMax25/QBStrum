@@ -97,7 +97,7 @@ namespace MinMax
             : CViewContainer(size)
         {
             editor = dynamic_cast<VST3Editor*>(description->getController());
-            editor->addRef();
+            //if (editor) editor->addRef();
 
             setBackgroundColor(kGreyCColor);
 
@@ -110,8 +110,8 @@ namespace MinMax
             labHierMenu->setText("Select Choard");
             addView(labHierMenu);
 
-            // 階層化メニューを右に追加
-            COptionMenu* hierMenu = new COptionMenu(CRect(400, 1, 429, 18), nullptr, -1);
+            // 階層化メニュー
+            hierMenu = new COptionMenu(CRect(400, 1, 429, 18), nullptr, -1);
             menuListener = std::make_unique<ChordSelectorListner>(fretBoard, editor);
 
             hierMenu->setFontColor(kWhiteCColor);
@@ -124,12 +124,14 @@ namespace MinMax
 
             for (int r = 0; r < (int)rootNames.size(); ++r)
             {
-                COptionMenu* typeMenuSub = new COptionMenu(CRect(0, 0, 150, 20), editor, 999);
+                COptionMenu* typeMenuSub = new COptionMenu(CRect(0, 0, 150, 20), nullptr, -1);
+                ownedSubMenus.emplace_back(typeMenuSub);
 
                 auto chordNames = chordMap.getChordNames(r);
                 for (int t = 0; t < (int)chordNames.size(); ++t)
                 {
-                    COptionMenu* posMenuSub = new COptionMenu(CRect(0, 0, 150, 20), editor, 999);
+                    COptionMenu* posMenuSub = new COptionMenu(CRect(0, 0, 150, 20), nullptr, -1);
+                    ownedSubMenus.emplace_back(posMenuSub);
 
                     auto posNames = chordMap.getFretPosNames(r, t);
                     for (auto& posName : posNames)
@@ -152,29 +154,30 @@ namespace MinMax
             addView(labChord);
         }
 
-        CFretBoardView(const CFretBoardView& other)
-            : CViewContainer(other)
-            , editor(other.editor)
-        {
-            if (editor) editor->addRef();
-            menuListener.reset();
-            hierMenu = nullptr;
-        }
+        CFretBoardView(const CFretBoardView&) = delete;
 
         ~CFretBoardView()
         {
-            if (hierMenu && menuListener) hierMenu->unregisterOptionMenuListener(menuListener.get());
             menuListener.reset();
-            if (editor) editor->release();
         }
 
-        CLASS_METHODS(CFretBoardView, CViewContainer)
+        bool removed(CView* parent) override
+        {
+            if (hierMenu && menuListener)
+            {
+                hierMenu->unregisterOptionMenuListener(menuListener.get());
+            }
+            return CViewContainer::removed(parent);
+        }
+
+        //CLASS_METHODS(CFretBoardView, CViewContainer)
 
     private:
 
-        VST3Editor* editor{};
+        VST3Editor* editor = nullptr;;
         std::unique_ptr<ChordSelectorListner> menuListener;
         COptionMenu* hierMenu = nullptr;
+        std::vector<SharedPointer<COptionMenu>> ownedSubMenus;
     };
 
     class CFretBoardViewFactory
