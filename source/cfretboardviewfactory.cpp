@@ -105,11 +105,6 @@ namespace MinMax
             fretBoard->numStrings = STRING_COUNT;
             addView(fretBoard);
 
-             CTextLabel* labHierMenu = new CTextLabel(CRect(300, 1, 399, 18));
-            labHierMenu->setFont(kNormalFontSmall);
-            labHierMenu->setText("Select Choard");
-            addView(labHierMenu);
-
             // 階層化メニュー
             hierMenu = new COptionMenu(CRect(400, 1, 429, 18), nullptr, -1);
             menuListener = std::make_unique<ChordSelectorListner>(fretBoard, editor);
@@ -125,13 +120,11 @@ namespace MinMax
             for (int r = 0; r < (int)rootNames.size(); ++r)
             {
                 COptionMenu* typeMenuSub = new COptionMenu(CRect(0, 0, 150, 20), nullptr, -1);
-                ownedSubMenus.emplace_back(typeMenuSub);
 
                 auto chordNames = chordMap.getChordNames(r);
                 for (int t = 0; t < (int)chordNames.size(); ++t)
                 {
                     COptionMenu* posMenuSub = new COptionMenu(CRect(0, 0, 150, 20), nullptr, -1);
-                    ownedSubMenus.emplace_back(posMenuSub);
 
                     auto posNames = chordMap.getFretPosNames(r, t);
                     for (auto& posName : posNames)
@@ -177,7 +170,6 @@ namespace MinMax
         VST3Editor* editor = nullptr;;
         std::unique_ptr<ChordSelectorListner> menuListener;
         COptionMenu* hierMenu = nullptr;
-        std::vector<SharedPointer<COptionMenu>> ownedSubMenus;
     };
 
     class CFretBoardViewFactory

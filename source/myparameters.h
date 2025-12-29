@@ -27,9 +27,9 @@ namespace MinMax
 	enum RANGE
 	{
 		//NONE,
-		OPTION_ROOT,
-		OPTION_TYPE,
-		OPTION_FRET,
+		//OPTION_ROOT,
+		//OPTION_TYPE,
+		//OPTION_FRET,
 		MIDI_DATA,
 		PITCH,
 		MIDI_CHANNEL,
@@ -131,18 +131,10 @@ namespace MinMax
 	public:
 		OptionList getOptionNames(int32 rangeKind) const override
 		{
-			auto& map = ChordMap::Instance();
-
 			switch (rangeKind)
 			{
 			case RANGE::ARTICULATION_RANGE:
 				return { "Open 1", "Open 2", "Hammer/Legato", "Mute", "Dead", "Harmonics", "Slide" };
-			case RANGE::OPTION_ROOT:
-				return map.getRootNames();
-			case RANGE::OPTION_TYPE:
-				return map.getChordNames(0);
-			case RANGE::OPTION_FRET:
-				return map.getFretPosNames(0, 0);
 			default:
 				return { };
 			}
