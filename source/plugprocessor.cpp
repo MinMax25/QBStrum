@@ -227,6 +227,8 @@ namespace MinMax
 				}
 				break;
 			case PARAM::CHORD_LSB:
+				chord.lsb = paramStorage.get(PARAM::CHORD_LSB);
+				chord.msb = paramStorage.get(PARAM::CHORD_MSB);
 				notifyChordChanged();
 				break;
 			case PARAM::CHORD_NUMBER:
