@@ -85,7 +85,10 @@ namespace MinMax
             editor = static_cast<VST3Editor*>(description->getController());
             if (editor) editor->addRef();
 
-            setBackgroundColor(kGreyCColor);
+
+            CColor ccc;
+            description->getColor(u8"Dark", ccc);
+            setBackgroundColor(ccc);
 
             // ŠK‘w‰»ƒƒjƒ…[
             hierMenu = new COptionMenu(CRect(1, 1, 39, 18), nullptr, -1);
@@ -124,7 +127,7 @@ namespace MinMax
 
             //
             CChordLabel* chordLabel = new CChordLabel(CRect(41, 1, 180, 18));
-            chordLabel->setFont(kNormalFontSmaller);
+            chordLabel->setFont(kNormalFontSmall);
             chordLabel->setListener(description->getController());
             chordLabel->setTag(PARAM::CHORD_NUMBER);
             addView(chordLabel);
@@ -157,7 +160,7 @@ namespace MinMax
 
         CView* create(const UIAttributes& attributes, const IUIDescription* description) const override
         {
-            return new CChordSelecter(attributes, description, CRect(CPoint(0, 0), CPoint(180, 20)));
+            return new CChordSelecter(attributes, description, CRect(CPoint(0, 0), CPoint(182, 20)));
         }
     };
 

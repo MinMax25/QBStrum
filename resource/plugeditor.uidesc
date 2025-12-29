@@ -3083,6 +3083,19 @@
 							"wants-focus": "false",
 							"wheel-inc-value": "0.1"
 						}
+					},
+					"UI:Chord Selecter View": {
+						"attributes": {
+							"background-color": "Dark",
+							"background-color-draw-style": "filled and stroked",
+							"class": "UI:Chord Selecter View",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "270, 365",
+							"size": "182, 20",
+							"transparent": "false",
+							"wants-focus": "false"
+						}
 					}
 				}
 			}
