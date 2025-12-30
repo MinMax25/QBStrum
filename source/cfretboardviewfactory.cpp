@@ -4,10 +4,10 @@
 
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
+#include <vstgui/lib/vstguibase.h>
 #include <vstgui/vstgui_uidescription.h>
 
 #include "cfretboard.h"
-#include <vstgui/lib/vstguibase.h>
 
 namespace MinMax
 {
