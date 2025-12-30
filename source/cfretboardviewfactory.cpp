@@ -32,7 +32,6 @@ namespace MinMax
             setBackgroundColor(kGreyCColor);
 
             CFretBoard* fretBoard = new CFretBoard(CRect(0, 20, 1120, size.getHeight() + 20));
-            fretBoard->numStrings = STRING_COUNT;
             addView(fretBoard);
         }
 

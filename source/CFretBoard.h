@@ -46,7 +46,7 @@ namespace MinMax
             double outerMargin = 10.0;
 
             double usableHeight = boardSize.getHeight() - outerMargin * 2.0;
-            double stringSpacing = usableHeight / (numStrings - 1);
+            double stringSpacing = usableHeight / (STRING_COUNT - 1);
             double fretSpacing = boardSize.getWidth() / numFrets;
 
             // ------------------------
@@ -55,7 +55,7 @@ namespace MinMax
             pContext->setFrameColor(stringColor);
             pContext->setLineWidth(2.0);
 
-            for (int i = 0; i < numStrings; ++i)
+            for (int i = 0; i < STRING_COUNT; ++i)
             {
                 double y = boardSize.top + outerMargin + stringSpacing * i;
                 pContext->drawLine(CPoint(boardSize.left, y), CPoint(boardSize.right, y));
@@ -223,9 +223,6 @@ namespace MinMax
 
             setDirty(false);
         }
-
-        // 弦数
-        int numStrings = 6;
 
         // 押さえているフレット
         StringSet pressedFrets;
