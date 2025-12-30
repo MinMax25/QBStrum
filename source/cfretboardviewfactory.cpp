@@ -12,6 +12,37 @@
 
 namespace MinMax
 {
+    class CEditModeButton
+        : public VSTGUI::CTextButton
+    {
+    public:
+        CEditModeButton(const VSTGUI::CRect& size, std::function<void(CControl*)> _func)
+            : CTextButton(size)
+            , func(_func)
+        {
+            setTag(9001);
+            setTitle(u8"Edit");
+        }
+
+        void valueChanged() override
+        {
+            if (!getValue()) return;
+
+            state = !state;
+            setTitle(state ? u8"Save" : u8"Edit");
+            func(this);
+        }
+
+        bool getState()
+        {
+            return state;
+        }
+
+    protected:
+        std::function<void(CControl*)> func;
+        bool state = false;
+    };
+
     class CFretBoard
         : public VSTGUI::CControl
     {
@@ -233,12 +264,68 @@ namespace MinMax
             invalid();
         }
 
+        VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
+        {
+            const VSTGUI::CRect& r = getViewSize();
+            VSTGUI::CRect boardSize(r.left, r.top, r.right, r.bottom - 20);
+
+            double outerMargin = 10.0;
+            double usableHeight = boardSize.getHeight() - outerMargin * 2.0;
+            double stringSpacing = usableHeight / (STRING_COUNT - 1);
+            double fretSpacing = boardSize.getWidth() / (30 - (-1) + 1);
+
+            int stringIndex =
+                int((where.y - (boardSize.top + outerMargin)) / stringSpacing + 0.5);
+
+            if (stringIndex < 0 || stringIndex >= STRING_COUNT)
+                return VSTGUI::kMouseEventNotHandled;
+
+            int fret = int((where.x - boardSize.left) / fretSpacing) - 1;
+
+            if (fret < -1 || fret > 18)
+                return VSTGUI::kMouseEventNotHandled;
+
+            int& current = pressedFrets.data[stringIndex];
+
+            // ---- ナット左 ----
+            if (fret < 0)
+            {
+                current = (current == -1) ? 0 : -1;
+            }
+            else
+            {
+                int newValue = fret + 1;
+
+                if (current == newValue)
+                {
+                    // 押弦 → 開放 → ミュート → 押弦
+                    if (current > 0)
+                        current = 0;
+                    else if (current == 0)
+                        current = -1;
+                    else
+                        current = newValue;
+                }
+                else
+                {
+                    // 別フレットをクリック
+                    current = newValue;
+                }
+            }
+
+            invalid();
+            return VSTGUI::kMouseEventHandled;
+        }
+
     private:
+
+        CLASS_METHODS(CFretBoard, CControl)
 
         // 押さえているフレット
         StringSet pressedFrets;
 
-        CLASS_METHODS(CFretBoard, CControl)
+        //
+        bool isEditing = false;
     };
 
     class CFretBoardView
@@ -253,8 +340,21 @@ namespace MinMax
 
             setBackgroundColor(VSTGUI::kGreyCColor);
 
+            // --- FretBoard ---
             CFretBoard* fretBoard = new CFretBoard(VSTGUI::CRect(0, 20, 1120, size.getHeight() + 20), editor, PARAM::CHORD_NUM);
             addView(fretBoard);
+
+            // --- Edit / Save Button ---
+            editButton =
+                new CEditModeButton(
+                    VSTGUI::CRect(10, 1, 60, 18),
+                    [this](VSTGUI::CControl* p) 
+                    {
+                        valueChanged(p);
+                    }
+                );
+            editButton->setFont(VSTGUI::kNormalFontSmall);
+            addView(editButton);
         }
 
         ~CFretBoardView()
@@ -262,11 +362,18 @@ namespace MinMax
             if (editor) editor->release();
         }
 
+        void valueChanged(VSTGUI::CControl* pControl)
+        {
+            if (pControl->getTag() != 9001) return;
+        }
+
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
     private:
 
         VSTGUI::VST3Editor* editor = nullptr;;
+
+        CEditModeButton* editButton = nullptr;
     };
 
     class CFretBoardViewFactory

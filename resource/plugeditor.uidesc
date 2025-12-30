@@ -91,7 +91,7 @@
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "15"
+				"SelectedRow": "21"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "12"
@@ -3088,10 +3088,10 @@
 							"menu-check-style": "false",
 							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "50, 386",
+							"origin": "270, 356",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "170, 18",
+							"size": "105, 17",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
