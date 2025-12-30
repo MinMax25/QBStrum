@@ -4,6 +4,7 @@
 
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
+#include <vstgui/uidescription/iuidescription.h>
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/vstgui_uidescription.h>
 
@@ -11,22 +12,19 @@
 
 namespace MinMax
 {
-    using namespace Steinberg;
-    using namespace Steinberg::Vst;
-
     class CFretBoardView
-        : public CViewContainer
+        : public VSTGUI::CViewContainer
     {
     public:
-        CFretBoardView(const UIAttributes& attributes, const IUIDescription* description, const CRect& size)
+        CFretBoardView(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description, const VSTGUI::CRect& size)
             : CViewContainer(size)
         {
-            editor = dynamic_cast<VST3Editor*>(description->getController());
+            editor = dynamic_cast<VSTGUI::VST3Editor*>(description->getController());
             if (editor) editor->addRef();
 
-            setBackgroundColor(kGreyCColor);
+            setBackgroundColor(VSTGUI::kGreyCColor);
 
-            CFretBoard* fretBoard = new CFretBoard(CRect(0, 20, 1120, size.getHeight() + 20));
+            CFretBoard* fretBoard = new CFretBoard(VSTGUI::CRect(0, 20, 1120, size.getHeight() + 20));
             addView(fretBoard);
         }
 
@@ -39,23 +37,23 @@ namespace MinMax
 
     private:
 
-        VST3Editor* editor = nullptr;;
+        VSTGUI::VST3Editor* editor = nullptr;;
     };
 
     class CFretBoardViewFactory
-        : public ViewCreatorAdapter
+        : public VSTGUI::ViewCreatorAdapter
     {
     public:
 
-        CFretBoardViewFactory() { UIViewFactory::registerViewCreator(*this); }
+        CFretBoardViewFactory() { VSTGUI::UIViewFactory::registerViewCreator(*this); }
 
-        IdStringPtr getViewName() const override { return "UI:FretBoard View"; }
+        VSTGUI::IdStringPtr getViewName() const override { return "UI:FretBoard View"; }
 
-        IdStringPtr getBaseViewName() const override { return UIViewCreator::kCViewContainer; }
+        VSTGUI::IdStringPtr getBaseViewName() const override { return VSTGUI::UIViewCreator::kCViewContainer; }
 
-        CView* create(const UIAttributes& attributes, const IUIDescription* description) const override
+        VSTGUI::CView* create(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description) const override
         {
-            return new CFretBoardView(attributes, description, CRect(CPoint(0, 0), CPoint(660, 160)));
+            return new CFretBoardView(attributes, description, VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(660, 160)));
         }
     };
 

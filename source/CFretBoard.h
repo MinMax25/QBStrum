@@ -4,25 +4,24 @@
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
 #include "plugdefine.h"
-
 #include "chordmap.h"
 #include "cfretboard.h"
 
 namespace MinMax
 {
-    using namespace VSTGUI;
-
     class CFretBoard
-        : public CControl
+        : public VSTGUI::CControl
     {
     public:
-        CFretBoard(const CRect& size)
+        CFretBoard(const VSTGUI::CRect& size)
             : CControl(size)
         {
         }
 
-        void draw(CDrawContext* pContext)
+        void draw(VSTGUI::CDrawContext* pContext)
         {
+            using namespace VSTGUI;
+
             const CRect& r = getViewSize();
 
             const CRect& boardSize = CRect(r.left + 100, r.top, r.right + 100, r.bottom - 20);
