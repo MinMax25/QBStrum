@@ -4,14 +4,9 @@
 
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
-#include <vstgui/lib/controls/ioptionmenulistener.h>
-#include <vstgui/lib/controls/ctextlabel.h>
 #include <vstgui/vstgui_uidescription.h>
-#include <string>
 
-#include "chordmap.h"
 #include "cfretboard.h"
-#include "cchordlabel.h"
 #include <vstgui/lib/vstguibase.h>
 
 namespace MinMax
