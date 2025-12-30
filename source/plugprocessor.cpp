@@ -482,7 +482,7 @@ namespace MinMax
 
 		uint64 offTime = onTime + static_cast<uint64>(NOTE_LENGTH * scheduler.getSamplesPerMs());
 
-		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, paramStorage.get(PARAM::MUTE_CHANNEL));
+		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, paramStorage.get(PARAM::MUTE_CHANNEL) - 1);
 	}
 
 	void MyVSTProcessor::trigArpeggio(int stringindex, Event event)
@@ -558,7 +558,7 @@ namespace MinMax
 		uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 		uint64 offTime = onTime + static_cast<uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
 
-		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, paramStorage.get(PARAM::FNOISE_CHANNEL));
+		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, paramStorage.get(PARAM::FNOISE_CHANNEL) - 1);
 	}
 
 	ParamID MyVSTProcessor::getParamIdByPitch(Event event)
