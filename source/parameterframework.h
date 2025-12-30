@@ -422,7 +422,15 @@ namespace ParameterFramework
                 entry.changed = false;
         }
 
+        void clearChangedFlags(ParamID id)
+        {
+            auto it = storage.find(id);
+            if (it == storage.end()) return;
+            it->second.changed = false;
+        }
+
     private:
+
         struct ParamEntry
         {
             ParamValue current = 0.0;

@@ -223,6 +223,7 @@ namespace MinMax
 			{
 				ParamValue num = paramStorage.get(PARAM::CHORD_MSB) * 128 + paramStorage.get(PARAM::CHORD_LSB);
 				notifyChordNumberChanged(num);
+				paramStorage.set(PARAM::CHORD_NUM, num);
 				break;
 			}
 			}
@@ -260,6 +261,8 @@ namespace MinMax
 		{
 			scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, keySW, 127, i);
 		}
+
+		paramStorage.clearChangedFlags(PARAM::SELECTED_ARTICULATION);
 	}
 
 	void PLUGIN_API MyVSTProcessor::processEvent()
