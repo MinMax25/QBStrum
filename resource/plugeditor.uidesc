@@ -91,7 +91,7 @@
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "29"
+				"SelectedRow": "28"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "12"
@@ -3092,6 +3092,19 @@
 							"opacity": "1",
 							"origin": "10, 395",
 							"size": "810, 180",
+							"transparent": "false",
+							"wants-focus": "false"
+						}
+					},
+					"UI:Chord Selecter View": {
+						"attributes": {
+							"background-color": "Dark",
+							"background-color-draw-style": "filled and stroked",
+							"class": "UI:Chord Selecter View",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "640, 370",
+							"size": "182, 20",
 							"transparent": "false",
 							"wants-focus": "false"
 						}

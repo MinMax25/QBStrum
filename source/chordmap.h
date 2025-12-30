@@ -15,11 +15,11 @@ namespace MinMax
     using std::vector;
 
     inline constexpr int STRING_COUNT = 6;
-    
+
     struct StringSet
     {
         std::array<int, STRING_COUNT> data{};
-        size_t size = 0; 
+        size_t size = 0;
     };
 
     class ChordMap
@@ -32,7 +32,11 @@ namespace MinMax
 
             int root = 0;
             int type = 0;
-            int position = 0;
+            int pos = 0;
+
+            std::string rootName{};
+            std::string typeName{};
+            std::string posName{};
 
             std::string displayName{};
         };
@@ -164,7 +168,7 @@ namespace MinMax
             StringSet result{};
 
             auto& s = getByIndex(chordNumber);
-            auto& v = ChordRoots[s.root].ChordTypes[s.type].Voicings[s.position].Frets;
+            auto& v = ChordRoots[s.root].ChordTypes[s.type].Voicings[s.pos].Frets;
 
             result.size = STRING_COUNT;
 
@@ -218,10 +222,40 @@ namespace MinMax
             return static_cast<int>(flatChords.size());
         }
 
+        // ChordMap.h ‚É’Ç‰Á
+        int getRootCount() const { return (int)ChordRoots.size(); }
+
+        const string& getRootName(int r) const { return ChordRoots[r].Name; }
+
+        int getTypeCount(int r) const
+        {
+            return (int)ChordRoots[r].ChordTypes.size();
+        }
+
+        const string& getTypeName(int r, int t) const
+        {
+            return ChordRoots[r].ChordTypes[t].Name;
+        }
+
+        int getVoicingCount(int r, int t) const
+        {
+            return (int)ChordRoots[r].ChordTypes[t].Voicings.size();
+        }
+
+        const string& getVoicingName(int r, int t, int v) const
+        {
+            return ChordRoots[r].ChordTypes[t].Voicings[v].Name;
+        }
+
+        int getFlatIndex(int r, int t, int v) const
+        {
+            return indexTable[r][t][v];
+        }
+
     protected:
 
         string Name;
-        
+
         StringSet Tunings{};
 
         vector<ParamChordRoot> ChordRoots;
@@ -260,7 +294,10 @@ namespace MinMax
                         FlatChordEntry e;
                         e.root = r;
                         e.type = t;
-                        e.position = p;
+                        e.pos = p;
+                        e.rootName = ChordRoots[r].Name;
+                        e.typeName = ChordRoots[r].ChordTypes[t].Name;
+                        e.posName = ChordRoots[r].ChordTypes[t].Voicings[p].Name;
                         e.displayName =
                             ChordRoots[r].Name + " " + types.Name + " (" + std::to_string(p + 1) + ")";
 
