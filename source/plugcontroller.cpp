@@ -126,11 +126,11 @@ namespace MinMax
 			return kResultTrue;
 
 		case 20:
-			value = static_cast<CtrlNumber>(PARAM::SPEED);
+			value = static_cast<CtrlNumber>(PARAM::STRUM_SPEED);
 			return kResultTrue;
 
 		case 21:
-			value = static_cast<CtrlNumber>(PARAM::DECAY);
+			value = static_cast<CtrlNumber>(PARAM::STRUM_DECAY);
 			return kResultTrue;
 
 		case 22:

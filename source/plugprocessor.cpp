@@ -448,13 +448,13 @@ namespace MinMax
 
 			double delayMs =
 				(strnum.size > 1)
-				? (prm.get(PARAM::SPEED) / double(STRING_COUNT)) * strcnt
+				? (prm.get(PARAM::STRUM_SPEED) / double(STRING_COUNT)) * strcnt
 				: 0.0;
 
 			uint64 onTime = baseOnTime + static_cast<uint64>(delayMs * samplesPerMs);
 
 			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + prm.get(PARAM::TRANSPOSE);
-			float velocity = baseVelocity * std::pow(prm.get(PARAM::DECAY) / 100.0f, strcnt);
+			float velocity = baseVelocity * std::pow(prm.get(PARAM::STRUM_DECAY) / 100.0f, strcnt);
 
 			int channel = prm.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
