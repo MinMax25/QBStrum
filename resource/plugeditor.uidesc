@@ -112,7 +112,7 @@
 					"mouse-enabled": "true",
 					"opacity": "1",
 					"origin": "0, 0",
-					"size": "830, 595",
+					"size": "750, 595",
 					"transparent": "false",
 					"wants-focus": "false"
 				},
@@ -273,7 +273,7 @@
 							"origin": "10, 10",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "810, 65",
+							"size": "730, 65",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -1327,7 +1327,7 @@
 							"min-value": "0",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "750, 575",
+							"origin": "670, 575",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "70, 15",
@@ -2636,7 +2636,7 @@
 							"font-color": "~ WhiteCColor",
 							"frame-width": "1",
 							"opacity": "1",
-							"origin": "650, 205",
+							"origin": "275, 370",
 							"round-rect-radius": "0",
 							"size": "90, 20",
 							"title": "Sepalate Channel",
@@ -3091,7 +3091,7 @@
 							"mouse-enabled": "true",
 							"opacity": "1",
 							"origin": "10, 395",
-							"size": "810, 180",
+							"size": "730, 180",
 							"transparent": "false",
 							"wants-focus": "false"
 						}
@@ -3103,7 +3103,7 @@
 							"class": "UI:Chord Selecter View",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "640, 370",
+							"origin": "555, 370",
 							"size": "182, 20",
 							"transparent": "false",
 							"wants-focus": "false"

@@ -24,7 +24,7 @@ namespace MinMax
 
             const CRect& r = getViewSize();
 
-            const CRect& boardSize = CRect(r.left + 100, r.top, r.right + 100, r.bottom - 20);
+            const CRect& boardSize = CRect(r.left, r.top, r.right, r.bottom - 20);
 
             // 背景
             CColor bg(60, 40, 20, 255);
