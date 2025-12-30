@@ -5,31 +5,54 @@
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/vstgui_uidescription.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
-#include <memory>
 
 #include "myparameters.h"
 #include "cchordlabel.h"
 #include <map>
 
-#include "debug_log.h"
-#include <utility>
 #include <vstgui/lib/vstguibase.h>
 
 namespace MinMax
 {
     using namespace VSTGUI;
 
+    class ChordOptionMenu : public COptionMenu
+    {
+    public:
+        ChordOptionMenu(const CRect& size, VST3Editor* editor, int32_t tag)
+            : COptionMenu(size, editor, tag)
+            , editor(editor), tag(tag)
+        {
+        }
+
+        void valueChanged() override
+        {
+            if (!lastMenu || !editor) return;
+
+            int value = lastMenu->getCurrent()->getTag();
+            editor->getController()->beginEdit(tag);
+            ParamValue norm = editor->getController()->plainParamToNormalized(tag, value);
+            editor->getController()->setParamNormalized(tag, norm);
+            editor->getController()->performEdit(tag, norm);
+            editor->getController()->endEdit(tag);
+        }
+
+    protected:
+        VST3Editor* editor{};
+        ParamID tag;
+    };
+
     class CChordSelecter
         : public CViewContainer
     {
     private:
 
-        COptionMenu* createChordOptionMenu()
+        ChordOptionMenu* createChordOptionMenu(const CRect& size, IControlListener* listener, int32_t tag)
         {
             auto& chordMap = ChordMap::Instance();
 
             // トップレベル OptionMenu
-            auto* rootMenu = new COptionMenu(CRect(0, 0, 0, 0), nullptr, -1);
+            auto* rootMenu = new ChordOptionMenu(size, editor, tag);
 
             for (int r = 0; r < chordMap.getRootCount(); ++r)
             {
@@ -50,19 +73,20 @@ namespace MinMax
                     {
                         int flatIndex = chordMap.getFlatIndex(r, t, v);
 
-                        auto* voicingItem = new CMenuItem(
-                            chordMap.getVoicingName(r, t, v).c_str(),
-                            flatIndex
-                        );
+                        auto* voicingItem = new CMenuItem(chordMap.getVoicingName(r, t, v).c_str(), flatIndex);
 
                         voicingMenu->addEntry(voicingItem);
                     }
 
                     typeItem->setSubmenu(voicingMenu);
+                    voicingMenu->forget();
+
                     typeMenu->addEntry(typeItem);
                 }
 
                 rootItem->setSubmenu(typeMenu);
+                typeMenu->forget();
+
                 rootMenu->addEntry(rootItem);
             }
 
@@ -81,17 +105,15 @@ namespace MinMax
             description->getColor(u8"Dark", backGroundColor);
             setBackgroundColor(backGroundColor);
 
-            // 階層化メニュー
-            auto* hierMenu = createChordOptionMenu();
-            hierMenu->setViewSize(CRect(1, 1, 40, 18));
-            hierMenu->setBackColor(kGreyCColor);
-
-            addView(hierMenu);
+            // 階層化コードメニュー
+            chordMenu = createChordOptionMenu(CRect(1, 1, 40, 18), editor, PARAM::CHORD_NUM);
+            chordMenu->setBackColor(kGreyCColor);
+            addView(chordMenu);
 
             //
             CChordLabel* chordLabel = new CChordLabel(CRect(41, 1, 180, 18));
             chordLabel->setFont(kNormalFontSmall);
-            chordLabel->setListener(description->getController());
+            chordLabel->setListener(editor);
             chordLabel->setTag(PARAM::CHORD_NUM);
             addView(chordLabel);
         }
@@ -104,7 +126,8 @@ namespace MinMax
         CLASS_METHODS(CChordSelecter, CViewContainer)
 
     protected:
-
+        ChordOptionMenu* chordMenu{};
+        bool updatingFromParam = false;
         VST3Editor* editor{};
     };
 
