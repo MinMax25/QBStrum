@@ -3,9 +3,7 @@
 #include <vstgui/vstgui.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
-#include "plugdefine.h"
 #include "chordmap.h"
-#include "cfretboard.h"
 
 namespace MinMax
 {
@@ -13,12 +11,14 @@ namespace MinMax
         : public VSTGUI::CControl
     {
     public:
-        CFretBoard(const VSTGUI::CRect& size)
+        CFretBoard(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, ParamID tag)
             : CControl(size)
         {
+            setListener(listener);
+            setTag(tag);
         }
 
-        void draw(VSTGUI::CDrawContext* pContext)
+        void draw(VSTGUI::CDrawContext* pContext) override
         {
             using namespace VSTGUI;
 
@@ -219,14 +219,19 @@ namespace MinMax
                     pContext->drawPolygon(pts, VSTGUI::kDrawFilled);
                 }
             }
-
-            setDirty(false);
         }
+
+        void valueChanged() override
+        {
+            auto value = getValue();
+            pressedFrets = ChordMap::Instance().getVoicing((int)value);
+            invalid();
+        }
+
+    private:
 
         // 押さえているフレット
         StringSet pressedFrets;
-
-    private:
 
         CLASS_METHODS(CFretBoard, CControl)
     };

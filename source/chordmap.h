@@ -246,6 +246,22 @@ namespace MinMax
             return ChordRoots[r].ChordTypes[t].Voicings[v].Name;
         }
 
+        const StringSet& getVoicing(int chordNumber)
+        {
+            StringSet result{};
+
+            auto& f = getByIndex(chordNumber);
+            auto& v = ChordRoots[f.root].ChordTypes[f.type].Voicings[f.pos].Frets;
+
+            for (int i = 0; i < v.size(); i++)
+            {
+                result.data[i] = v[i];
+                result.size++;
+            }
+
+            return result;
+        }
+
         int getFlatIndex(int r, int t, int v) const
         {
             return indexTable[r][t][v];

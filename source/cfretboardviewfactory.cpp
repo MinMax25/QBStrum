@@ -8,6 +8,7 @@
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/vstgui_uidescription.h>
 
+#include "myparameters.h"
 #include "cfretboard.h"
 
 namespace MinMax
@@ -24,7 +25,7 @@ namespace MinMax
 
             setBackgroundColor(VSTGUI::kGreyCColor);
 
-            CFretBoard* fretBoard = new CFretBoard(VSTGUI::CRect(0, 20, 1120, size.getHeight() + 20));
+            CFretBoard* fretBoard = new CFretBoard(VSTGUI::CRect(0, 20, 1120, size.getHeight() + 20), editor, PARAM::CHORD_NUM);
             addView(fretBoard);
         }
 
