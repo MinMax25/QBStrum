@@ -222,7 +222,6 @@ namespace MinMax
             return static_cast<int>(flatChords.size());
         }
 
-        // ChordMap.h ‚É’Ç‰Á
         int getRootCount() const { return (int)ChordRoots.size(); }
 
         const string& getRootName(int r) const { return ChordRoots[r].Name; }
