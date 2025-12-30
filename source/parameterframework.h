@@ -416,12 +416,6 @@ namespace ParameterFramework
             return (it != storage.end()) ? it->second.changed : false;
         }
 
-        void clearChangedFlags()
-        {
-            for (auto& [id, entry] : storage)
-                entry.changed = false;
-        }
-
         void clearChangedFlags(ParamID id)
         {
             auto it = storage.find(id);

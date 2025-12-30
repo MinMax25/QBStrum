@@ -80,7 +80,7 @@ namespace MinMax
 		ProcessData* processData{};
 
 		// パラメータキャッシュ値
-		ProcessorParamStorage paramStorage;
+		ProcessorParamStorage prm;
 
 		// コード変更監視用
 		double lastChordNum = 0;

@@ -73,7 +73,7 @@ namespace MinMax
 		addEventInput(STR16("Event In"), 1);
 		addEventOutput(STR16("Event Out"), 16);
 
-		paramStorage.initialize(paramTable);
+		prm.initialize(paramTable);
 
 		return kResultOk;
 	}
@@ -120,7 +120,7 @@ namespace MinMax
 		{
 			double plain = 0.0;
 			if (state->read(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
-			paramStorage.set(def.tag, plain);
+			prm.set(def.tag, plain);
 		}
 
 		return kResultOk;
@@ -132,7 +132,7 @@ namespace MinMax
 
 		for (const auto& def : paramTable)
 		{
-			double plain = paramStorage.get(def.tag);
+			double plain = prm.get(def.tag);
 			if (state->write(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
 		}
 
@@ -207,13 +207,13 @@ namespace MinMax
 			if (!(queue->getPoint(valueChangeCount - 1, sampleOffset, value) == kResultTrue)) continue;
 
 			// パラメータ値をキャッシュ
-			paramStorage.setNormalized(tag, value);
+			prm.setNormalized(tag, value);
 
 			switch (tag)
 			{
 			case PARAM::SELECTED_ARTICULATION:
 			{
-				if (paramStorage.isChanged(tag))
+				if (prm.isChanged(tag))
 				{
 					articulationChanged();
 				}
@@ -221,9 +221,9 @@ namespace MinMax
 			}
 			case PARAM::CHORD_MSB:
 			{
-				ParamValue num = paramStorage.get(PARAM::CHORD_MSB) * 128 + paramStorage.get(PARAM::CHORD_LSB);
+				ParamValue num = prm.get(PARAM::CHORD_MSB) * 128 + prm.get(PARAM::CHORD_LSB);
 				notifyChordNumberChanged(num);
-				paramStorage.set(PARAM::CHORD_NUM, num);
+				prm.set(PARAM::CHORD_NUM, num);
 				break;
 			}
 			}
@@ -234,7 +234,7 @@ namespace MinMax
 	{
 		constexpr int SPECIAL_NOTES_SAMPLES = 1;
 
-		double newArtic = paramStorage.get(PARAM::SELECTED_ARTICULATION);
+		double newArtic = prm.get(PARAM::SELECTED_ARTICULATION);
 
 		std::array<const ParamDef*, PARAM_ARTICULATION_COUNT> artics;
 		size_t articCount = 0;
@@ -248,7 +248,7 @@ namespace MinMax
 
 			if (i == newArtic)
 			{
-				keySW = paramStorage.get(def->tag);
+				keySW = prm.get(def->tag);
 				break;
 			}
 		}
@@ -257,12 +257,12 @@ namespace MinMax
 		uint64 onTime = scheduler.getCurrentSampleTime();
 		uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
 
-		for (int i = 0; i < (paramStorage.get(PARAM::CHANNEL_SEPALATE) ? STRING_COUNT : 1); i++)
+		for (int i = 0; i < (prm.get(PARAM::CHANNEL_SEPALATE) ? STRING_COUNT : 1); i++)
 		{
 			scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, keySW, 127, i);
 		}
 
-		paramStorage.clearChangedFlags(PARAM::SELECTED_ARTICULATION);
+		prm.clearChangedFlags(PARAM::SELECTED_ARTICULATION);
 	}
 
 	void PLUGIN_API MyVSTProcessor::processEvent()
@@ -329,19 +329,19 @@ namespace MinMax
 			trigBrush(event, true);
 			break;
 		case PARAM::UP_HIGH:
-			trigStrum(event, true, false, paramStorage.get(PARAM::STRINGS_UP_HIGH));
+			trigStrum(event, true, false, prm.get(PARAM::STRINGS_UP_HIGH));
 			break;
 		case PARAM::UP:
 			trigStrum(event, true, false, STRING_COUNT);
 			break;
 		case PARAM::DOWN_HIGH:
-			trigStrum(event, true, true, paramStorage.get(PARAM::STRINGS_DOWN_HIGH));
+			trigStrum(event, true, true, prm.get(PARAM::STRINGS_DOWN_HIGH));
 			break;
 		case PARAM::DOWN:
 			trigStrum(event, false, true, STRING_COUNT);
 			break;
 		case PARAM::DOWN_LOW:
-			trigStrum(event, false, true, paramStorage.get(PARAM::STRINGS_DOWN_LOW));
+			trigStrum(event, false, true, prm.get(PARAM::STRINGS_DOWN_LOW));
 			break;
 		case PARAM::MUTE_1:
 			trigMute(PARAM::MUTE_1, event);
@@ -388,7 +388,7 @@ namespace MinMax
 		trigFretNoise(event);
 
 		// コード情報を取得する
-		auto& fretpos = chordMap.getChordVoicing(paramStorage.get(PARAM::CHORD_NUM));
+		auto& fretpos = chordMap.getChordVoicing(prm.get(PARAM::CHORD_NUM));
 		auto& strnum = getTargetStrings(fretpos, false, isDown, STRING_COUNT);
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
@@ -400,7 +400,7 @@ namespace MinMax
 		int strcnt = 0;
 
 		// 音価はms指定のパラメータ
-		uint64 offTime = baseOnTime + samplesPerMs * paramStorage.get(PARAM::BRUSH_TIME); // brushTime;
+		uint64 offTime = baseOnTime + samplesPerMs * prm.get(PARAM::BRUSH_TIME); // brushTime;
 
 		for (size_t s = 0; s < strnum.size; s++)
 		{
@@ -410,10 +410,10 @@ namespace MinMax
 
 			uint64 onTime = baseOnTime + offsetSamples;
 
-			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + paramStorage.get(PARAM::TRANSPOSE);
+			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + prm.get(PARAM::TRANSPOSE);
 			float velocity = baseVelocity * std::pow(BRUSH_DECAY, strcnt);
 
-			int channel = paramStorage.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
+			int channel = prm.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
 
 			strcnt++;
@@ -425,7 +425,7 @@ namespace MinMax
 		trigFretNoise(event);
 
 		// コード情報を取得する
-		auto& fretpos = chordMap.getChordVoicing(paramStorage.get(PARAM::CHORD_NUM));
+		auto& fretpos = chordMap.getChordVoicing(prm.get(PARAM::CHORD_NUM));
 		auto& strnum = getTargetStrings(fretpos, isAbove, isDown, maxStrings);
 		
 		uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
@@ -436,7 +436,7 @@ namespace MinMax
 
 		// 音価はビート数指定のパラメータ
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
-		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * paramStorage.get(PARAM::STRUM_LENGTH)));
+		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * prm.get(PARAM::STRUM_LENGTH)));
 		uint64 offTime = baseOnTime + lengthSamples;
 
 		// 発音弦のカウンタ
@@ -448,15 +448,15 @@ namespace MinMax
 
 			double delayMs =
 				(strnum.size > 1)
-				? (paramStorage.get(PARAM::SPEED) / double(STRING_COUNT)) * strcnt
+				? (prm.get(PARAM::SPEED) / double(STRING_COUNT)) * strcnt
 				: 0.0;
 
 			uint64 onTime = baseOnTime + static_cast<uint64>(delayMs * samplesPerMs);
 
-			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + paramStorage.get(PARAM::TRANSPOSE);
-			float velocity = baseVelocity * std::pow(paramStorage.get(PARAM::DECAY) / 100.0f, strcnt);
+			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + prm.get(PARAM::TRANSPOSE);
+			float velocity = baseVelocity * std::pow(prm.get(PARAM::DECAY) / 100.0f, strcnt);
 
-			int channel = paramStorage.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
+			int channel = prm.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
 
 			++strcnt;
@@ -475,8 +475,8 @@ namespace MinMax
 		// ミュート用ノート選択
 		int muteNote =
 			(trigger == PARAM::MUTE_1)
-			? paramStorage.get(PARAM::MUTE_NOTE_1)
-			: paramStorage.get(PARAM::MUTE_NOTE_2);
+			? prm.get(PARAM::MUTE_NOTE_1)
+			: prm.get(PARAM::MUTE_NOTE_2);
 
 		float velocity = std::clamp(event.noteOn.velocity, 0.01f, 1.0f);
 
@@ -485,14 +485,14 @@ namespace MinMax
 
 		uint64 offTime = onTime + static_cast<uint64>(NOTE_LENGTH * scheduler.getSamplesPerMs());
 
-		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, paramStorage.get(PARAM::MUTE_CHANNEL) - 1);
+		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, prm.get(PARAM::MUTE_CHANNEL) - 1);
 	}
 
 	void MyVSTProcessor::trigArpeggio(int stringindex, Event event)
 	{
 		trigFretNoise(event);
 
-		auto& fretpos = chordMap.getChordVoicing(paramStorage.get(PARAM::CHORD_NUM));
+		auto& fretpos = chordMap.getChordVoicing(prm.get(PARAM::CHORD_NUM));
 
 		// 弦が鳴らせない場合
 		if (stringindex < 0 || stringindex >= STRING_COUNT || fretpos.data[stringindex] < 0)
@@ -504,13 +504,13 @@ namespace MinMax
 		uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
-		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * paramStorage.get(PARAM::ARP_LENGTH)));
+		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * prm.get(PARAM::ARP_LENGTH)));
 		uint64 offTime = onTime + lengthSamples;
 
-		int pitch = chordMap.getTunings().data[stringindex] + fretpos.data[stringindex] + paramStorage.get(PARAM::TRANSPOSE);
+		int pitch = chordMap.getTunings().data[stringindex] + fretpos.data[stringindex] + prm.get(PARAM::TRANSPOSE);
 		float velocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
-		int channel = paramStorage.get(PARAM::CHANNEL_SEPALATE) ? stringindex % 16 : 0;
+		int channel = prm.get(PARAM::CHANNEL_SEPALATE) ? stringindex % 16 : 0;
 		scheduler.addNoteOn(onTime, offTime, stringindex, pitch, velocity, channel);
 	}
 
@@ -521,39 +521,39 @@ namespace MinMax
 		float distance = 0.0f;
 
 		// コード変更
-		if (lastChordNum != paramStorage.get(PARAM::CHORD_NUM))
+		if (lastChordNum != prm.get(PARAM::CHORD_NUM))
 		{
 			distance =
 				std::abs(
 					chordMap.getPositionAverage(lastChordNum) -
-					chordMap.getPositionAverage(paramStorage.get(PARAM::CHORD_NUM)));
+					chordMap.getPositionAverage(prm.get(PARAM::CHORD_NUM)));
 
 			// コード変更時は全消音
 			trigAllNotesOff();
 
 			// 現在のコードを記録
-			lastChordNum = paramStorage.get(PARAM::CHORD_NUM);
+			lastChordNum = prm.get(PARAM::CHORD_NUM);
 		}
 
-		if (paramStorage.get(PARAM::FNOISE_NOTE_NEAR) == 0 && paramStorage.get(PARAM::FNOISE_NOTE_FAR) == 0) return;
+		if (prm.get(PARAM::FNOISE_NOTE_NEAR) == 0 && prm.get(PARAM::FNOISE_NOTE_FAR) == 0) return;
 
 		int pitch = 0;
 
-		if (distance < paramStorage.get(PARAM::FNOISE_NOTE_NEAR)) return;
+		if (distance < prm.get(PARAM::FNOISE_NOTE_NEAR)) return;
 
-		if (distance < paramStorage.get(PARAM::FNOISE_NOTE_FAR))
+		if (distance < prm.get(PARAM::FNOISE_NOTE_FAR))
 		{
 			pitch =
-				paramStorage.get(PARAM::FNOISE_NOTE_NEAR) == 0 
-				? paramStorage.get(PARAM::FNOISE_NOTE_FAR) 
-				: paramStorage.get(PARAM::FNOISE_NOTE_NEAR);
+				prm.get(PARAM::FNOISE_NOTE_NEAR) == 0 
+				? prm.get(PARAM::FNOISE_NOTE_FAR) 
+				: prm.get(PARAM::FNOISE_NOTE_NEAR);
 		}
 		else
 		{
 			pitch = 
-				paramStorage.get(PARAM::FNOISE_NOTE_FAR) == 0 
-				? paramStorage.get(PARAM::FNOISE_NOTE_NEAR) 
-				: paramStorage.get(PARAM::FNOISE_NOTE_FAR);
+				prm.get(PARAM::FNOISE_NOTE_FAR) == 0 
+				? prm.get(PARAM::FNOISE_NOTE_NEAR) 
+				: prm.get(PARAM::FNOISE_NOTE_FAR);
 		}
 
 		if (pitch == 0) return;
@@ -561,7 +561,7 @@ namespace MinMax
 		uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 		uint64 offTime = onTime + static_cast<uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
 
-		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, paramStorage.get(PARAM::FNOISE_CHANNEL) - 1);
+		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, prm.get(PARAM::FNOISE_CHANNEL) - 1);
 	}
 
 	ParamID MyVSTProcessor::getParamIdByPitch(Event event)
@@ -586,7 +586,7 @@ namespace MinMax
 		{
 			const ParamDef* def = triggerParams[i];
 
-			if (paramStorage.get(def->tag) == pitch)
+			if (prm.get(def->tag) == pitch)
 			{
 				return def->tag;
 			}
@@ -672,7 +672,7 @@ namespace MinMax
 
 		const auto note = reinterpret_cast<const CNoteMsg*>(msgData);
 
-		int pitch = paramStorage.get(note->tag);
+		int pitch = prm.get(note->tag);
 
 		if (pitch <= 0) return kResultOk;
 
