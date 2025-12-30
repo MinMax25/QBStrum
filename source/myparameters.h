@@ -154,7 +154,7 @@ namespace MinMax
 			{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
 			{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
 			{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::HIDDEN, UNIT::CHORD, 0, 1199, 0, 0, 0 },
-			{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 1, 0, 0 },
+			{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
 			{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 103, 0, 0 },
 			{ PARAM::MUTE_NOTE_2, STR16("Mite Note 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 102, 0, 0 },
 			{ PARAM::STRUM_SPEED, STR16("Strum Speed"), STR16("ms"), VALUE::Real, SCALE::Exponential, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 1, 1000, 26, 1, 0 },
