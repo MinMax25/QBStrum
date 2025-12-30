@@ -12,6 +12,7 @@
 #include "chordmap.h"
 #include "cfretboard.h"
 #include "cchordlabel.h"
+#include <vstgui/lib/vstguibase.h>
 
 namespace MinMax
 {
