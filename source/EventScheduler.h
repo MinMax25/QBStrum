@@ -5,9 +5,7 @@
 #include <pluginterfaces/vst/ivstprocesscontext.h>
 #include <pluginterfaces/base/ftypes.h>
 
-#include "schedulednote.h"
 #include "timequeue.h"
-
 
 #define IS_DEBUG 0
 
