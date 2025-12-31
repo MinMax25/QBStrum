@@ -66,7 +66,7 @@ namespace MinMax
             std::function<void()> func;
         };
 
-        // CFretBoardView 内メンバ
+        // コードプリセット保存ボタン（状態は親で管理）
         class CSaveButton : public VSTGUI::CTextButton
         {
         public:
