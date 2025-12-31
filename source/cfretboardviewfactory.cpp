@@ -240,14 +240,6 @@ namespace MinMax
 
         VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
         {
-            const VSTGUI::CRect& r = getViewSize();
-            VSTGUI::CRect boardSize(r.left, r.top, r.right, r.bottom - 20);
-
-            double outerMargin = 10.0;
-            double usableHeight = boardSize.getHeight() - outerMargin * 2.0;
-            double stringSpacing = usableHeight / (STRING_COUNT - 1);
-            double fretSpacing = boardSize.getWidth() / (30 - (-1) + 1);
-
             int stringIndex =
                 int((where.y - (boardSize.top + outerMargin)) / stringSpacing + 0.5);
 
