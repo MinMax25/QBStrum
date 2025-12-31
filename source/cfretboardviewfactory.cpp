@@ -56,28 +56,37 @@ namespace MinMax
                 : public VSTGUI::COptionMenu
             {
             public:
-                ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor, int32_t tag)
-                    : COptionMenu(size, editor, tag)
-                    , editor(editor), tag(tag)
+                ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, int32_t tag)
+                    : COptionMenu(size, editor_, tag)
+                    , editor(editor_), paramID(tag)
                 {
                 }
 
                 void valueChanged() override
                 {
-                    if (!lastMenu || !editor) return;
+                    if (!editor || !editor->getController())
+                        return;
 
-                    int value = lastMenu->getCurrent()->getTag();
+                    int32_t idx = -1;
+                    if (auto* menu = getLastItemMenu(idx))
+                    {
+                        if (auto* item = menu->getEntry(idx))
+                        {
+                            int value = item->getTag();
 
-                    editor->getController()->beginEdit(tag);
-                    ParamValue norm = editor->getController()->plainParamToNormalized(tag, value);
-                    editor->getController()->setParamNormalized(tag, norm);
-                    editor->getController()->performEdit(tag, norm);
-                    editor->getController()->endEdit(tag);
+                            auto* controller = editor->getController();
+                            controller->beginEdit(paramID);
+                            ParamValue norm = controller->plainParamToNormalized(paramID, value);
+                            controller->setParamNormalized(tag, norm);
+                            controller->performEdit(paramID, norm);
+                            controller->endEdit(paramID);
+                        }
+                    }
                 }
 
             protected:
                 VSTGUI::VST3Editor* editor{};
-                ParamID tag;
+                ParamID paramID;
             };
 
             class CChordLabel : public VSTGUI::CTextLabel
