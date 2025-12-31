@@ -5,11 +5,9 @@
 #include <pluginterfaces/vst/ivstprocesscontext.h>
 #include <pluginterfaces/base/ftypes.h>
 
-#include "noteevent.h"
 #include "schedulednote.h"
 #include "timequeue.h"
 
-#include <Windows.h>
 
 #define IS_DEBUG 0
 

@@ -15,7 +15,6 @@
 
 #include "eventscheduler.h"
 #include "chordmap.h"
-#include "noteevent.h"
 
 namespace MinMax
 {
