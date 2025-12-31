@@ -74,8 +74,7 @@ namespace MinMax
             CSaveButton(const VSTGUI::CRect& size, CFretBoardView* parent_)
                 : CTextButton(size), parent(parent_)
             {
-                setTitle(u8"Save");
-                setVisible(true);
+                setTitle(u8"Save Preset");
             }
 
             void valueChanged() override
@@ -597,7 +596,7 @@ namespace MinMax
             addView(editCancelButton);
 
             // コンストラクタ内で
-            saveButton = new CSaveButton(VSTGUI::CRect(111, 1, 160, 18), this);
+            saveButton = new CSaveButton(VSTGUI::CRect(621, 1, 720, 18), this);
             saveButton->setFont(VSTGUI::kNormalFontSmall);
             saveButton->setVisible(false);
             addView(saveButton);
