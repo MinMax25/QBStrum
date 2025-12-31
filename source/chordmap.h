@@ -424,8 +424,6 @@ namespace MinMax
             return map;
         }
 
-        void clearModified() { modified = false; }
-
         // 現在の ChordMap 内容を JSON ファイルに保存
         void saveToFile(const std::filesystem::path& path)
         {
@@ -516,7 +514,7 @@ namespace MinMax
             rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
             doc.Accept(writer);
 
-            clearModified();
+            modified = false;
         }
     };
 }

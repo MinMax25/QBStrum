@@ -25,8 +25,8 @@ namespace MinMax
         class CEditModeButton : public VSTGUI::CTextButton
         {
         public:
-            CEditModeButton(const VSTGUI::CRect& size, std::function<void()> func_)
-                : CTextButton(size), func(func_)
+            CEditModeButton(const VSTGUI::CRect& size, CFretBoardView* parent_)
+                : CTextButton(size), parent(parent_)
             {
                 setTag(-1);
                 setTitle(u8"Edit");
@@ -35,21 +35,21 @@ namespace MinMax
             void valueChanged() override
             {
                 if (getValue() < 0.5f) return;
-
-                func(); // CFretBoardView 側で切替
+                if (parent) parent->toggleEditMode();
                 setValue(0.f);
             }
 
         protected:
-            std::function<void()> func;
+
+            CFretBoardView* parent;
         };
 
         // 編集キャンセルボタン（状態は親で管理）
         class CEditCancelButton : public VSTGUI::CTextButton
         {
         public:
-            CEditCancelButton(const VSTGUI::CRect& size, std::function<void()> func_)
-                : CTextButton(size), func(func_)
+            CEditCancelButton(const VSTGUI::CRect& size, CFretBoardView* parent_)
+                : CTextButton(size), parent(parent_)
             {
                 setTag(-1);
                 setTitle(u8"Cancel");
@@ -58,12 +58,13 @@ namespace MinMax
             void valueChanged() override
             {
                 if (getValue() < 0.5f) return;
-                func();
+                if (parent) parent->cancelEditMode();
                 setValue(0.f);
             }
 
         protected:
-            std::function<void()> func;
+
+            CFretBoardView* parent;
         };
 
         // コードプリセット保存ボタン（状態は親で管理）
@@ -79,8 +80,8 @@ namespace MinMax
 
             void valueChanged() override
             {
-                if (parent)
-                    parent->saveChordMap();
+                if (getValue() < 0.5f) return;
+                if (parent) parent->saveChordMap();
                 setValue(0.f); // ボタン押下後リセット
             }
 
@@ -585,30 +586,46 @@ namespace MinMax
             addView(chordSelecter);
 
             // --- Edit / Save Button ---
-            editModeButton = new CEditModeButton(
-                VSTGUI::CRect(10, 1, 60, 18),
-                [this]() { toggleEditMode(); }
-            );
+            editModeButton = new CEditModeButton(VSTGUI::CRect(10, 1, 60, 18), this);
             editModeButton->setFont(VSTGUI::kNormalFontSmall);
             addView(editModeButton);
 
             // --- Edit Cancel Button ---
-            editCancelButton = new CEditCancelButton(
-                VSTGUI::CRect(61, 1, 110, 18),
-                [this]() { cancelEditMode(); }
-            );
+            editCancelButton = new CEditCancelButton(VSTGUI::CRect(61, 1, 110, 18), this);
             editCancelButton->setFont(VSTGUI::kNormalFontSmall);
-            editCancelButton->setVisible(false); // 初期は非表示
+            editCancelButton->setVisible(false);
             addView(editCancelButton);
 
             // コンストラクタ内で
             saveButton = new CSaveButton(VSTGUI::CRect(111, 1, 160, 18), this);
+            saveButton->setFont(VSTGUI::kNormalFontSmall);
+            saveButton->setVisible(false);
             addView(saveButton);
         }
 
         ~CFretBoardView()
         {
         }
+
+        CLASS_METHODS(CFretBoardView, CViewContainer)
+
+    protected:
+
+        VSTGUI::VST3Editor* editor = nullptr;;
+
+        CFretBoard* fretBoard = nullptr;
+
+        CChordSelecter* chordSelecter = nullptr;
+
+        CEditModeButton* editModeButton = nullptr;
+
+        CEditCancelButton* editCancelButton = nullptr;
+        
+        VSTGUI::CTextButton* saveButton = nullptr;
+
+        bool isEditing = false;
+
+        StringSet originalPressedFrets;
 
         void toggleEditMode()
         {
@@ -648,25 +665,12 @@ namespace MinMax
             chordSelecter->setEditing(false);
         }
 
-        CLASS_METHODS(CFretBoardView, CViewContainer)
+        void saveChordMap()
+        {
+            // 実際のセーブ処理
 
-    protected:
-
-        VSTGUI::VST3Editor* editor = nullptr;;
-
-        CFretBoard* fretBoard = nullptr;
-
-        CChordSelecter* chordSelecter = nullptr;
-
-        CEditModeButton* editModeButton = nullptr;
-
-        CEditCancelButton* editCancelButton = nullptr;
-        
-        VSTGUI::CTextButton* saveButton = nullptr;
-
-        bool isEditing = false;
-
-        StringSet originalPressedFrets;
+            saveButton->setVisible(false);
+        }
 
         void saveEdits()
         {
@@ -679,13 +683,11 @@ namespace MinMax
             int chordNum = static_cast<int>(controller->normalizedParamToPlain(PARAM::CHORD_NUM, norm));
             ChordMap::Instance().setVoicing(chordNum, pressed);
 
+            // 変更箇所がある場合セーブボタン可視化
+            saveButton->setVisible(ChordMap::Instance().isModified());
+
             // 編集終了後、元の状態として保持しておく
             originalPressedFrets = pressed;
-        }
-
-        void saveChordMap()
-        {
-
         }
     };
 
