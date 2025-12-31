@@ -52,6 +52,7 @@ namespace MinMax
             : public VSTGUI::CViewContainer
         {
         private:
+
             class ChordOptionMenu
                 : public VSTGUI::COptionMenu
             {
@@ -74,9 +75,43 @@ namespace MinMax
                     editor->getController()->endEdit(tag);
                 }
 
+
+
             protected:
                 VSTGUI::VST3Editor* editor{};
                 ParamID tag;
+            };
+
+            class CChordLabel : public CTextLabel
+            {
+            public:
+                CChordLabel(const CRect& size)
+                    : CTextLabel(size)
+                {
+                }
+
+                void draw(CDrawContext* context) override
+                {
+                    auto str = getText().getString();
+                    if (str.empty()) return;
+
+                    int index = std::stoi(str);
+
+                    const auto& map = ChordMap::Instance();
+
+                    UTF8String name =
+                        (index >= 0 && index < map.getFlatCount())
+                        ? map.getByIndex(index).displayName.c_str()
+                        : "---";
+
+                    drawBack(context);
+                    drawPlatformText(context, name);
+                }
+
+                CLASS_METHODS(CChordLabel, CTextLabel)
+
+            private:
+
             };
 
             ChordOptionMenu* createChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, int32_t tag)
@@ -407,6 +442,8 @@ namespace MinMax
                 return pressedFrets;
             }
 
+            CLASS_METHODS(CFretBoard, CControl)
+
         private:
             VSTGUI::CColor bg;
             VSTGUI::CColor stringColor;
@@ -442,8 +479,6 @@ namespace MinMax
                     f == 18
                     );
             }
-
-            CLASS_METHODS(CFretBoard, CControl)
         };
 
     public:
