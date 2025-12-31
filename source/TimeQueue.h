@@ -1,7 +1,6 @@
 #pragma once
 
 #include <array>
-#include <Windows.h>
 
 namespace MinMax
 {
@@ -38,7 +37,6 @@ namespace MinMax
     //   ※前提：各 TimeQueue はモノフォニック（同時に1音のみ）
     //   - 複数 NoteOn が同じ sampleOffset に存在することはない
     //   - 同一弦内での競合や補正は addNoteOn で解決済み
-
     class TimeQueue
     {
     public:
@@ -152,5 +150,4 @@ namespace MinMax
         std::array<ScheduledNote, Capacity> buf_{};
         size_t count_ = 0;
     };
-
 }
