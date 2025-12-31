@@ -250,6 +250,16 @@ namespace MinMax
         {
             StringSet result{};
 
+            if (chordNumber > getFlatCount())
+            {
+                result.size = STRING_COUNT;
+                for (size_t i = 0; i < result.size; i++)
+                {
+                    result.data[i] = -1;
+                }
+                return result;
+            }
+
             auto& f = getByIndex(chordNumber);
             auto& v = ChordRoots[f.root].ChordTypes[f.type].Voicings[f.pos].Frets;
 

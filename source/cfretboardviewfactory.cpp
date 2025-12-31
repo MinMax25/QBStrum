@@ -9,9 +9,126 @@
 #include <vstgui/vstgui_uidescription.h>
 
 #include "myparameters.h"
+#include "cchordlabel.h"
 
 namespace MinMax
 {
+    class ChordOptionMenu 
+        : public VSTGUI::COptionMenu
+    {
+    public:
+        ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor, int32_t tag)
+            : COptionMenu(size, editor, tag)
+            , editor(editor), tag(tag)
+        {
+        }
+
+        void valueChanged() override
+        {
+            if (!lastMenu || !editor) return;
+
+            int value = lastMenu->getCurrent()->getTag();
+            editor->getController()->beginEdit(tag);
+            ParamValue norm = editor->getController()->plainParamToNormalized(tag, value);
+            editor->getController()->setParamNormalized(tag, norm);
+            editor->getController()->performEdit(tag, norm);
+            editor->getController()->endEdit(tag);
+        }
+
+    protected:
+        VSTGUI::VST3Editor* editor{};
+        ParamID tag;
+    };
+
+    class CChordSelecter
+        : public VSTGUI::CViewContainer
+    {
+    private:
+
+        ChordOptionMenu* createChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, int32_t tag)
+        {
+            auto& chordMap = ChordMap::Instance();
+
+            // トップレベル OptionMenu
+            auto* rootMenu = new ChordOptionMenu(size, editor, tag);
+
+            for (int r = 0; r < chordMap.getRootCount(); ++r)
+            {
+                // ルート項目
+                auto* rootItem = new VSTGUI::CMenuItem(chordMap.getRootName(r).c_str());
+
+                // タイプ用サブメニュー
+                auto* typeMenu = new VSTGUI::COptionMenu(CRect(0, 0, 0, 0), nullptr, -1);
+
+                for (int t = 0; t < chordMap.getTypeCount(r); ++t)
+                {
+                    auto* typeItem = new VSTGUI::CMenuItem(chordMap.getTypeName(r, t).c_str());
+
+                    // ボイシング用サブメニュー
+                    auto* voicingMenu = new VSTGUI::COptionMenu(CRect(0, 0, 0, 0), nullptr, -1);
+
+                    for (int v = 0; v < chordMap.getVoicingCount(r, t); ++v)
+                    {
+                        int flatIndex = chordMap.getFlatIndex(r, t, v);
+
+                        auto* voicingItem = new VSTGUI::CMenuItem(chordMap.getVoicingName(r, t, v).c_str(), flatIndex);
+
+                        voicingMenu->addEntry(voicingItem);
+                    }
+
+                    typeItem->setSubmenu(voicingMenu);
+                    voicingMenu->forget();
+
+                    typeMenu->addEntry(typeItem);
+                }
+
+                rootItem->setSubmenu(typeMenu);
+                typeMenu->forget();
+
+                rootMenu->addEntry(rootItem);
+            }
+
+            return rootMenu;
+        }
+
+    public:
+
+        CChordSelecter(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description, const VSTGUI::CRect& size)
+            : CViewContainer(size)
+        {
+            editor = static_cast<VSTGUI::VST3Editor*>(description->getController());
+            if (editor) editor->addRef();
+
+            VSTGUI::CColor backGroundColor;
+            description->getColor(u8"Dark", backGroundColor);
+            setBackgroundColor(backGroundColor);
+
+            // 階層化コードメニュー
+            chordMenu = createChordOptionMenu(CRect(1, 1, 40, 18), editor, PARAM::CHORD_NUM);
+            chordMenu->setBackColor(VSTGUI::kGreyCColor);
+            addView(chordMenu);
+
+            //
+            CChordLabel* chordLabel = new CChordLabel(CRect(41, 1, 180, 18));
+            chordLabel->setFont(kNormalFontSmall);
+            chordLabel->setListener(editor);
+            chordLabel->setTag(PARAM::CHORD_NUM);
+            addView(chordLabel);
+        }
+
+        ~CChordSelecter()
+        {
+            if (editor) editor->release();
+        }
+
+        CLASS_METHODS(CChordSelecter, CViewContainer)
+
+    protected:
+        ChordOptionMenu* chordMenu{};
+        bool updatingFromParam = false;
+        VST3Editor* editor{};
+    };
+
     class CEditModeButton
         : public VSTGUI::CTextButton
     {
@@ -281,6 +398,11 @@ namespace MinMax
 
             invalid();
             return VSTGUI::kMouseEventHandled;
+        }
+
+        StringSet getPressedFrets()
+        {
+            return pressedFrets;
         }
 
     private:
