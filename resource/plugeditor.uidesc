@@ -3069,7 +3069,7 @@
 							"control-tag": "SELECTED_ARTICULATION",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
-							"font-color": "~ WhiteCColor",
+							"font-color": "~ CyanCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
 							"menu-check-style": "false",
