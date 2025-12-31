@@ -666,8 +666,7 @@ namespace MinMax
 
         void saveChordMap()
         {
-            // 実際のセーブ処理
-
+            ChordMap::Instance().saveToFile();
             saveButton->setVisible(false);
         }
 

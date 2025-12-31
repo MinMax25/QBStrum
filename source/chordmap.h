@@ -12,8 +12,8 @@
 
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
-#include <rapidjson/writer.h>
 #include <rapidjson/ostreamwrapper.h>
+#include <rapidjson//prettywriter.h>
 
 namespace MinMax
 {
@@ -162,7 +162,6 @@ namespace MinMax
         {
             //
             // コードマップ定義ファイルを読み込む
-
             Instance() = LoadPreset(path);
         }
 
@@ -304,7 +303,103 @@ namespace MinMax
 
         bool isModified() const { return modified; }
 
+        // 現在の ChordMap 内容を JSON ファイルに保存
+        void saveToFile()
+        {
+            if (presetPath.empty()) return;
+
+            if (!modified) return; // 変更がないならスキップ
+
+            // 1. 元ファイルのバックアップ作成（日時付き）
+            if (std::filesystem::exists(presetPath))
+            {
+                auto t = std::chrono::system_clock::now();
+                auto time = std::chrono::system_clock::to_time_t(t);
+                std::tm tm;
+#ifdef _WIN32
+                localtime_s(&tm, &time);
+#else
+                localtime_r(&time, &tm);
+#endif
+
+                std::ostringstream oss;
+                oss << presetPath.stem().string() << "_"
+                    << std::put_time(&tm, "%Y%m%d_%H%M%S")
+                    << presetPath.extension().string();
+
+                std::filesystem::path backupPath = presetPath.parent_path() / oss.str();
+                std::filesystem::copy_file(presetPath, backupPath, std::filesystem::copy_options::overwrite_existing);
+            }
+
+            // 2. JSON オブジェクト作成
+            rapidjson::Document doc;
+            doc.SetObject();
+            auto& allocator = doc.GetAllocator();
+
+            doc.AddMember("Name", rapidjson::Value(Name.c_str(), allocator), allocator);
+
+            // Tunings
+            rapidjson::Value notes(rapidjson::kArrayType);
+            for (size_t i = 0; i < Tunings.size; ++i)
+            {
+                notes.PushBack(Tunings.data[i], allocator);
+            }
+            doc.AddMember("Notes", notes, allocator);
+
+            // ChordRoots
+            rapidjson::Value chordRoots(rapidjson::kArrayType);
+            for (auto& r : ChordRoots)
+            {
+                rapidjson::Value rootObj(rapidjson::kObjectType);
+                rootObj.AddMember("Id", r.Id, allocator);
+                rootObj.AddMember("Name", rapidjson::Value(r.Name.c_str(), allocator), allocator);
+
+                rapidjson::Value types(rapidjson::kArrayType);
+                for (auto& t : r.ChordTypes)
+                {
+                    rapidjson::Value typeObj(rapidjson::kObjectType);
+                    typeObj.AddMember("Id", t.Id, allocator);
+                    typeObj.AddMember("Name", rapidjson::Value(t.Name.c_str(), allocator), allocator);
+
+                    rapidjson::Value voicings(rapidjson::kArrayType);
+                    for (auto& v : t.Voicings)
+                    {
+                        rapidjson::Value vObj(rapidjson::kObjectType);
+                        vObj.AddMember("Id", v.Id, allocator);
+                        vObj.AddMember("Name", rapidjson::Value(v.Name.c_str(), allocator), allocator);
+
+                        rapidjson::Value frets(rapidjson::kArrayType);
+                        for (auto f : v.Frets)
+                            frets.PushBack(f, allocator);
+
+                        vObj.AddMember("Frets", frets, allocator);
+                        voicings.PushBack(vObj, allocator);
+                    }
+                    typeObj.AddMember("Voicings", voicings, allocator);
+                    types.PushBack(typeObj, allocator);
+                }
+                rootObj.AddMember("ChordTypes", types, allocator);
+                chordRoots.PushBack(rootObj, allocator);
+            }
+            doc.AddMember("ChordRoots", chordRoots, allocator);
+
+            // 3. ファイルに書き込み
+            std::ofstream ofs(presetPath);
+            if (!ofs.is_open())
+            {
+                throw std::runtime_error("Cannot open file for writing: " + presetPath.string());
+            }
+
+            rapidjson::OStreamWrapper osw(ofs);
+            //rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+            rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+            doc.Accept(writer);
+
+            modified = false;
+        }
+
     protected:
+        std::filesystem::path presetPath;
 
         string Name;
 
@@ -421,100 +516,9 @@ namespace MinMax
             size_t dot = filename.find_last_of('.');
             map.Name = filename.substr(0, dot);
 
+            map.presetPath = path;
+
             return map;
-        }
-
-        // 現在の ChordMap 内容を JSON ファイルに保存
-        void saveToFile(const std::filesystem::path& path)
-        {
-            if (!modified)
-                return; // 変更がないならスキップ
-            
-            // 1. 元ファイルのバックアップ作成（日時付き）
-            if (std::filesystem::exists(path))
-            {
-                auto t = std::chrono::system_clock::now();
-                auto time = std::chrono::system_clock::to_time_t(t);
-                std::tm tm;
-#ifdef _WIN32
-                localtime_s(&tm, &time);
-#else
-                localtime_r(&time, &tm);
-#endif
-
-                std::ostringstream oss;
-                oss << path.stem().string() << "_"
-                    << std::put_time(&tm, "%Y%m%d_%H%M%S")
-                    << path.extension().string();
-
-                std::filesystem::path backupPath = path.parent_path() / oss.str();
-                std::filesystem::copy_file(path, backupPath, std::filesystem::copy_options::overwrite_existing);
-            }
-
-            // 2. JSON オブジェクト作成
-            rapidjson::Document doc;
-            doc.SetObject();
-            auto& allocator = doc.GetAllocator();
-
-            doc.AddMember("Name", rapidjson::Value(Name.c_str(), allocator), allocator);
-
-            // Tunings
-            rapidjson::Value notes(rapidjson::kArrayType);
-            for (size_t i = 0; i < Tunings.size; ++i)
-            {
-                notes.PushBack(Tunings.data[i], allocator);
-            }
-            doc.AddMember("Notes", notes, allocator);
-
-            // ChordRoots
-            rapidjson::Value chordRoots(rapidjson::kArrayType);
-            for (auto& r : ChordRoots)
-            {
-                rapidjson::Value rootObj(rapidjson::kObjectType);
-                rootObj.AddMember("Id", r.Id, allocator);
-                rootObj.AddMember("Name", rapidjson::Value(r.Name.c_str(), allocator), allocator);
-
-                rapidjson::Value types(rapidjson::kArrayType);
-                for (auto& t : r.ChordTypes)
-                {
-                    rapidjson::Value typeObj(rapidjson::kObjectType);
-                    typeObj.AddMember("Id", t.Id, allocator);
-                    typeObj.AddMember("Name", rapidjson::Value(t.Name.c_str(), allocator), allocator);
-
-                    rapidjson::Value voicings(rapidjson::kArrayType);
-                    for (auto& v : t.Voicings)
-                    {
-                        rapidjson::Value vObj(rapidjson::kObjectType);
-                        vObj.AddMember("Id", v.Id, allocator);
-                        vObj.AddMember("Name", rapidjson::Value(v.Name.c_str(), allocator), allocator);
-
-                        rapidjson::Value frets(rapidjson::kArrayType);
-                        for (auto f : v.Frets)
-                            frets.PushBack(f, allocator);
-
-                        vObj.AddMember("Frets", frets, allocator);
-                        voicings.PushBack(vObj, allocator);
-                    }
-                    typeObj.AddMember("Voicings", voicings, allocator);
-                    types.PushBack(typeObj, allocator);
-                }
-                rootObj.AddMember("ChordTypes", types, allocator);
-                chordRoots.PushBack(rootObj, allocator);
-            }
-            doc.AddMember("ChordRoots", chordRoots, allocator);
-
-            // 3. ファイルに書き込み
-            std::ofstream ofs(path);
-            if (!ofs.is_open())
-            {
-                throw std::runtime_error("Cannot open file for writing: " + path.string());
-            }
-
-            rapidjson::OStreamWrapper osw(ofs);
-            rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
-            doc.Accept(writer);
-
-            modified = false;
         }
     };
 }
