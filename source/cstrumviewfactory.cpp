@@ -21,8 +21,8 @@ namespace MinMax
 
         CNoteButton(
             std::function<void(CControl*, CPoint, bool)> _func,
-            const CRect& size, IControlListener* listener = nullptr, int32_t tag = -1, UTF8StringPtr title = nullptr, Style = kKickStyle)
-            : CTextButton(size, listener, tag, title, style)
+            const CRect& size, IControlListener* listener = nullptr, int32_t paramID = -1, UTF8StringPtr title = nullptr, Style = kKickStyle)
+            : CTextButton(size, listener, paramID, title, style)
         {
             onNoteButtonClicked = _func;
         }
@@ -102,7 +102,7 @@ namespace MinMax
 
 				// ピッチ・ノート入力
                 CNoteEdit* txtONote = new CNoteEdit(CRect(CPoint(0, 0), CPoint(40, 15)), description->getController(), -1);
-                txtONote->setTag(def->tag);
+                txtONote->setTag(def->paramID);
                 txtONote->setBackColor(kWhiteCColor);
                 txtONote->setFontColor(kBlackCColor);
                 txtONote->setFont(kNormalFontSmall);
@@ -112,12 +112,12 @@ namespace MinMax
                 CNoteLabel* labONote = new CNoteLabel(CRect(CPoint(0, 0), CPoint(40, 15)));
                 labONote->setListener(description->getController());
                 labONote->setFont(kNormalFontSmall);
-                labONote->setTag(def->tag);
+                labONote->setTag(def->paramID);
                 rcvONote->addView(labONote);
 
 				// ノート送信ボタン
                 CNoteButton* btnONote = new CNoteButton([this](CControl* p, CPoint where, bool onoff) { onNoteButtonClicked(p, where, onoff); }, CRect(CPoint(0, 0), CPoint(64, 15)));
-                btnONote->setTag(def->tag);
+                btnONote->setTag(def->paramID);
                 btnONote->setWantsFocus(false);
                 btnONote->setStyle(CTextButton::kKickStyle);
                 btnONote->setRoundRadius(2);
@@ -144,9 +144,9 @@ namespace MinMax
             {
                 CNoteMsg note;
 
-                ParamID tag = pControl->getTag();
+                ParamID paramID = pControl->getTag();
 
-                note.tag = tag;
+                note.paramID = paramID;
                 note.isOn = onoff;
 
 				int vel = (223 - where.x) * 2;

@@ -120,7 +120,7 @@ namespace MinMax
 		{
 			double plain = 0.0;
 			if (state->read(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
-			prm.set(def.tag, plain);
+			prm.set(def.paramID, plain);
 		}
 
 		return kResultOk;
@@ -132,7 +132,7 @@ namespace MinMax
 
 		for (const auto& def : paramTable)
 		{
-			double plain = prm.get(def.tag);
+			double plain = prm.get(def.paramID);
 			if (state->write(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
 		}
 
@@ -198,7 +198,7 @@ namespace MinMax
 			IParamValueQueue* queue = processData->inputParameterChanges->getParameterData(i);
 			if (queue == NULL) continue;
 
-			ParamID tag = queue->getParameterId();
+			ParamID paramID = queue->getParameterId();
 
 			int32 valueChangeCount = queue->getPointCount();
 			int32 sampleOffset;
@@ -207,13 +207,13 @@ namespace MinMax
 			if (!(queue->getPoint(valueChangeCount - 1, sampleOffset, value) == kResultTrue)) continue;
 
 			// パラメータ値をキャッシュ
-			prm.setNormalized(tag, value);
+			prm.setNormalized(paramID, value);
 
-			switch (tag)
+			switch (paramID)
 			{
 			case PARAM::SELECTED_ARTICULATION:
 			{
-				if (prm.isChanged(tag))
+				if (prm.isChanged(paramID))
 				{
 					articulationChanged();
 				}
@@ -248,7 +248,7 @@ namespace MinMax
 
 			if (i == newArtic)
 			{
-				keySW = prm.get(def->tag);
+				keySW = prm.get(def->paramID);
 				break;
 			}
 		}
@@ -280,10 +280,10 @@ namespace MinMax
 			// ピッチからパラメータＩＤ取得
 			if (event.type == Event::kNoteOnEvent)
 			{
-				ParamID tag = getParamIdByPitch(event);
-				if (tag > 0)
+				ParamID paramID = getParamIdByPitch(event);
+				if (paramID > 0)
 				{
-					routingProcess(tag, event);
+					routingProcess(paramID, event);
 				}
 			}
 		}
@@ -586,9 +586,9 @@ namespace MinMax
 		{
 			const ParamDef* def = triggerParams[i];
 
-			if (prm.get(def->tag) == pitch)
+			if (prm.get(def->paramID) == pitch)
 			{
-				return def->tag;
+				return def->paramID;
 			}
 		}
 		return 0;
@@ -672,7 +672,7 @@ namespace MinMax
 
 		const auto note = reinterpret_cast<const CNoteMsg*>(msgData);
 
-		int pitch = prm.get(note->tag);
+		int pitch = prm.get(note->paramID);
 
 		if (pitch <= 0) return kResultOk;
 

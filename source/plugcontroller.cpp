@@ -63,10 +63,10 @@ namespace MinMax
 			if (state->read(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
 
 			// 正規化値に変換
-			ParamValue normalized = plainParamToNormalized(def.tag, plain);
+			ParamValue normalized = plainParamToNormalized(def.paramID, plain);
 
 			// EditControllerに値をセット
-			setParamNormalized(def.tag, normalized);
+			setParamNormalized(def.paramID, normalized);
 		}
 
 		return kResultOk;
@@ -107,9 +107,9 @@ namespace MinMax
 		return nullptr;
 	}
 
-	tresult PLUGIN_API MyVSTController::setParamNormalized(ParamID tag, ParamValue value)
+	tresult PLUGIN_API MyVSTController::setParamNormalized(ParamID paramID, ParamValue value)
 	{
-		tresult result = EditControllerEx1::setParamNormalized(tag, value);
+		tresult result = EditControllerEx1::setParamNormalized(paramID, value);
 		return result;
 	}
 

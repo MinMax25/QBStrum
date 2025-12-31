@@ -29,10 +29,10 @@ namespace ParameterFramework
         ParamValue max;
 
     public:
-        ExpParameter(const TChar* title, ParamID tag, const TChar* units,
+        ExpParameter(const TChar* title, ParamID paramID, const TChar* units,
             ParamValue minPlain, ParamValue maxPlain,
             int32 flags, UnitID unitID)
-            : Parameter(title, tag, units, 0.0, 0, flags, unitID),
+            : Parameter(title, paramID, units, 0.0, 0, flags, unitID),
             min(minPlain), max(maxPlain)
         {
             setPrecision(0);
@@ -128,7 +128,7 @@ namespace ParameterFramework
 
     struct ParamDef
     {
-        ParamID tag;
+        ParamID paramID;
         String name;
         String units;
         VALUE type;
@@ -197,7 +197,7 @@ namespace ParameterFramework
                 auto p =
                     std::make_unique<StringListParameter>(
                         def.name,
-                        def.tag,
+                        def.paramID,
                         def.units,
                         def.flags,
                         def.unitID
@@ -238,7 +238,7 @@ namespace ParameterFramework
                         std::make_unique<Parameter>
                         (
                             def.name,
-                            def.tag,
+                            def.paramID,
                             def.units,
                             defaultValue,
                             1,
@@ -257,7 +257,7 @@ namespace ParameterFramework
                     auto p =
                         std::make_unique<RangeParameter>(
                             def.name,
-                            def.tag,
+                            def.paramID,
                             def.units,
                             min,
                             max,
@@ -277,7 +277,7 @@ namespace ParameterFramework
                         auto p =
                             std::make_unique<RangeParameter>(
                                 def.name,
-                                def.tag,
+                                def.paramID,
                                 def.units,
                                 min,
                                 max,
@@ -295,7 +295,7 @@ namespace ParameterFramework
                         auto p =
                             std::make_unique<ExpParameter>(
                                 def.name,
-                                def.tag,
+                                def.paramID,
                                 def.units,
                                 min,
                                 max,
@@ -349,14 +349,14 @@ namespace ParameterFramework
                 // 正規化処理はパラメータメソッドを利用
                 std::unique_ptr<Parameter> p = ParamHelper::get().createParameter(def);
                 if (!p) continue;
-                paramInstances.emplace(def.tag, std::move(p));
+                paramInstances.emplace(def.paramID, std::move(p));
 
                 // 正規化値初期化
                 ParamEntry entry{};
-                entry.current = entry.previous = getNormalized(def.tag, def.defaultValue);
+                entry.current = entry.previous = getNormalized(def.paramID, def.defaultValue);
                 entry.changed = false;
 
-                storage.emplace(def.tag, entry);
+                storage.emplace(def.paramID, entry);
             }
         }
 

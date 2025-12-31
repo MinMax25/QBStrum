@@ -18,8 +18,8 @@ namespace MinMax
         static constexpr int NOTE_COUNT = 128;
     public:
 
-        CNoteEdit(const CRect& size, IControlListener* listener, int32_t tag, UTF8StringPtr txt = nullptr, CBitmap* background = nullptr, const int32_t style = 0)
-            : CTextEdit(size, listener, tag, txt, background, style)
+        CNoteEdit(const CRect& size, IControlListener* listener, int32_t paramID, UTF8StringPtr txt = nullptr, CBitmap* background = nullptr, const int32_t style = 0)
+            : CTextEdit(size, listener, paramID, txt, background, style)
         {
             setStringToValueFunction(StringToValueFunction);
         }
