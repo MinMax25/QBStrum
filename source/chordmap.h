@@ -37,7 +37,7 @@ namespace MinMax
         public:
 
             int root = 0;
-            int type = 0;
+            int valueType = 0;
             int pos = 0;
 
             std::string rootName{};
@@ -173,7 +173,7 @@ namespace MinMax
             StringSet result{};
 
             auto& s = getByIndex(chordNumber);
-            auto& v = ChordRoots[s.root].ChordTypes[s.type].Voicings[s.pos].Frets;
+            auto& v = ChordRoots[s.root].ChordTypes[s.valueType].Voicings[s.pos].Frets;
 
             result.size = STRING_COUNT;
 
@@ -266,7 +266,7 @@ namespace MinMax
             }
 
             auto& f = getByIndex(chordNumber);
-            auto& v = ChordRoots[f.root].ChordTypes[f.type].Voicings[f.pos].Frets;
+            auto& v = ChordRoots[f.root].ChordTypes[f.valueType].Voicings[f.pos].Frets;
 
             for (int i = 0; i < (int)v.size(); i++)
             {
@@ -285,7 +285,7 @@ namespace MinMax
         void setVoicing(int chordNumber, const StringSet& frets)
         {
             auto& f = getByIndex(chordNumber);
-            auto& v = ChordRoots[f.root].ChordTypes[f.type].Voicings[f.pos].Frets;
+            auto& v = ChordRoots[f.root].ChordTypes[f.valueType].Voicings[f.pos].Frets;
 
             bool changed = false;
             for (size_t i = 0; i < frets.size && i < v.size(); ++i)
@@ -442,7 +442,7 @@ namespace MinMax
                     {
                         FlatChordEntry e;
                         e.root = r;
-                        e.type = t;
+                        e.valueType = t;
                         e.pos = p;
                         e.rootName = ChordRoots[r].Name;
                         e.typeName = ChordRoots[r].ChordTypes[t].Name;

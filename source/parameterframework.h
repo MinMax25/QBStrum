@@ -131,7 +131,7 @@ namespace ParameterFramework
         ParamID tag;
         String name;
         String units;
-        VALUE type;
+        VALUE valueType;
         SCALE scaleType = SCALE::Linear;
 
         std::optional<uint32> rangeKind;
@@ -166,7 +166,7 @@ namespace ParameterFramework
         {
             if (!rangeResolver || !optionProvider) return nullptr;
 
-            VALUE vtype = def.type;
+            VALUE vtype = def.valueType;
 
             double defaultValue = def.defaultValue;
             int32 precision = def.precision;
@@ -192,7 +192,7 @@ namespace ParameterFramework
 
             std::unique_ptr<Parameter> param;
 
-            if (hasOption && def.type != VALUE::Bool)
+            if (hasOption && def.valueType != VALUE::Bool)
             {   // Bool ‚Í enumerated ‚ð‘z’è‚µ‚È‚¢
                 auto p =
                     std::make_unique<StringListParameter>(

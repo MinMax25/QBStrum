@@ -169,9 +169,9 @@ namespace MinMax
 		return kResultFalse;
 	}
 
-	tresult PLUGIN_API MyVSTController::getUnitByBus(MediaType type, BusDirection dir, int32 busIndex, int32 channel, UnitID& unitId)
+	tresult PLUGIN_API MyVSTController::getUnitByBus(MediaType valueType, BusDirection dir, int32 busIndex, int32 channel, UnitID& unitId)
 	{
-		if (type == kEvent && dir == kInput)
+		if (valueType == kEvent && dir == kInput)
 		{
 			if (busIndex == 0 && channel == 0)
 			{

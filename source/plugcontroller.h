@@ -34,7 +34,7 @@ namespace MinMax
 
 		tresult PLUGIN_API getMidiControllerAssignment(int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& value) SMTG_OVERRIDE;
 
-		tresult PLUGIN_API getUnitByBus(MediaType type, BusDirection dir, int32 busIndex, int32 channel, UnitID& unitId) SMTG_OVERRIDE;
+		tresult PLUGIN_API getUnitByBus(MediaType valueType, BusDirection dir, int32 busIndex, int32 channel, UnitID& unitId) SMTG_OVERRIDE;
 		
 		tresult PLUGIN_API notify(IMessage* message) SMTG_OVERRIDE;
 
