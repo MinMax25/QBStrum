@@ -35,6 +35,8 @@ namespace MinMax
                 state = !state;
                 setTitle(state ? u8"Save" : u8"Edit");
                 func(this);
+
+                setValue(0.f); 
             }
 
             bool getState()
@@ -56,9 +58,9 @@ namespace MinMax
                 : public VSTGUI::COptionMenu
             {
             public:
-                ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, int32_t tag)
-                    : COptionMenu(size, editor_, tag)
-                    , editor(editor_), paramID(tag)
+                ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID paramID_)
+                    : COptionMenu(size, editor_, paramID_)
+                    , editor(editor_), paramID(paramID_)
                 {
                 }
 
@@ -77,7 +79,7 @@ namespace MinMax
                             auto* controller = editor->getController();
                             controller->beginEdit(paramID);
                             ParamValue norm = controller->plainParamToNormalized(paramID, value);
-                            controller->setParamNormalized(tag, norm);
+                            controller->setParamNormalized(paramID, norm);
                             controller->performEdit(paramID, norm);
                             controller->endEdit(paramID);
                         }
@@ -85,7 +87,9 @@ namespace MinMax
                 }
 
             protected:
+
                 VSTGUI::VST3Editor* editor{};
+                
                 ParamID paramID;
             };
 
@@ -101,6 +105,7 @@ namespace MinMax
                 {
                     auto str = getText().getString();
                     if (str.empty()) return;
+                    if (!std::isdigit(str[0]) && str[0] != '-') return;
 
                     int index = std::atoi(str.c_str());
 
@@ -399,6 +404,8 @@ namespace MinMax
 
             VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
             {
+                if (!isEditing) return VSTGUI::kMouseEventNotHandled;
+
                 int stringIndex =
                     int((where.y - (boardSize.top + outerMargin)) / stringSpacing + 0.5);
 
