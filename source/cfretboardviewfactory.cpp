@@ -66,6 +66,28 @@ namespace MinMax
             std::function<void()> func;
         };
 
+        // CFretBoardView 内メンバ
+        class CSaveButton : public VSTGUI::CTextButton
+        {
+        public:
+            CSaveButton(const VSTGUI::CRect& size, CFretBoardView* parent_)
+                : CTextButton(size), parent(parent_)
+            {
+                setTitle(u8"Save");
+                setVisible(true);
+            }
+
+            void valueChanged() override
+            {
+                if (parent)
+                    parent->saveChordMap();
+                setValue(0.f); // ボタン押下後リセット
+            }
+
+        private:
+            CFretBoardView* parent;
+        };
+
         // コード選択
         // コード選択用階層メニューと選択コード名表示ラベルを持つ
         // ※編集中は操作不可（階層化メニュー非表示）
@@ -578,6 +600,10 @@ namespace MinMax
             editCancelButton->setFont(VSTGUI::kNormalFontSmall);
             editCancelButton->setVisible(false); // 初期は非表示
             addView(editCancelButton);
+
+            // コンストラクタ内で
+            saveButton = new CSaveButton(VSTGUI::CRect(111, 1, 160, 18), this);
+            addView(saveButton);
         }
 
         ~CFretBoardView()
@@ -635,6 +661,8 @@ namespace MinMax
         CEditModeButton* editModeButton = nullptr;
 
         CEditCancelButton* editCancelButton = nullptr;
+        
+        VSTGUI::CTextButton* saveButton = nullptr;
 
         bool isEditing = false;
 
@@ -653,6 +681,11 @@ namespace MinMax
 
             // 編集終了後、元の状態として保持しておく
             originalPressedFrets = pressed;
+        }
+
+        void saveChordMap()
+        {
+
         }
     };
 
