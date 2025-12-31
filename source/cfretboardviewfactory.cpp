@@ -105,7 +105,8 @@ namespace MinMax
                 {
                     auto str = getText().getString();
                     if (str.empty()) return;
-                    if (!std::isdigit(str[0]) && str[0] != '-') return;
+                    if (!std::isdigit(static_cast<unsigned char>(str[0])) && str[0] != '-')
+                        return;
 
                     int index = std::atoi(str.c_str());
 
@@ -123,9 +124,7 @@ namespace MinMax
                 CLASS_METHODS(CChordLabel, CTextLabel)
 
             private:
-
             };
-
 
         public:
 
