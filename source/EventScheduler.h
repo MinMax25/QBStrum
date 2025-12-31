@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
 #include <pluginterfaces/vst/vsttypes.h>
@@ -16,6 +16,33 @@
 namespace MinMax
 {
 	inline constexpr int SPECIAL_NOTES = -1;
+
+	enum class NoteEventType : uint8_t
+	{
+		On,
+		Off,
+	};
+
+	// NoteEvent:
+	//   Scheduler ã‹ã‚‰ Processor ã¸æ¸¡ã•ã‚Œã‚‹
+	//   é€ä¿¡ç”¨ã® MIDI ãƒãƒ¼ãƒˆã‚¤ãƒ™ãƒ³ãƒˆã€‚
+	//   çŠ¶æ…‹ã‚„ãƒ­ã‚¸ãƒƒã‚¯ã¯æŒãŸãªã„ã€‚
+	class NoteEvent
+	{
+	public:
+		NoteEventType eventType;
+
+		int channel;
+		int noteId;
+
+		// ç¾åœ¨ã® ProcessBlock å…ˆé ­ã‹ã‚‰ã®ã‚µãƒ³ãƒ—ãƒ«ã‚ªãƒ•ã‚»ãƒƒãƒˆ
+		int sampleOffset;
+
+		int pitch;
+
+		// 0.0f â€“ 1.0f æ­£è¦åŒ–ãƒ™ãƒ­ã‚·ãƒ†ã‚£
+		float velocity;
+	};
 
 	struct IScheduledEventListener
 	{
@@ -61,7 +88,7 @@ namespace MinMax
 			auto& q = buffer(stringIndex);
 
 			// ============================================================
-			// 1. “¯ˆê onTime ƒm[ƒg‚ÌŠm”F
+			// 1. åŒä¸€ onTime ãƒãƒ¼ãƒˆã®ç¢ºèª
 			// ============================================================
 			if (ScheduledNote* same = q.findNoteWithOnTime(onTime))
 			{
@@ -70,7 +97,7 @@ namespace MinMax
 					return;
 				}
 
-				// –¢”­‰¹ ¨ “à—eã‘‚«ichannel / noteId ‚ÍˆÛj
+				// æœªç™ºéŸ³ â†’ å†…å®¹ä¸Šæ›¸ãï¼ˆchannel / noteId ã¯ç¶­æŒï¼‰
 				same->offTime = offTime;
 				same->pitch = pitch;
 				same->velocity = velocity;
@@ -80,7 +107,7 @@ namespace MinMax
 			}
 
 			// ============================================================
-			// 2. ’¼‘Oƒm[ƒgionTime ‚æ‚è‘O‚ÅÅŒãj‚Ì•â³
+			// 2. ç›´å‰ãƒãƒ¼ãƒˆï¼ˆonTime ã‚ˆã‚Šå‰ã§æœ€å¾Œï¼‰ã®è£œæ­£
 			// ============================================================
 			if (ScheduledNote* prev = q.findLastBefore(onTime))
 			{
@@ -88,10 +115,10 @@ namespace MinMax
 				{
 					uint64 adjustedOff = onTime - 1;
 
-					// underflow ‘Îô
+					// underflow å¯¾ç­–
 					if (adjustedOff <= currentSampleTime)
 					{
-						// offTime == currentSampleTime ‚Í block “à NoteOff ‚ğ•ÛØ‚·‚é‚½‚ßˆÓ}“I
+						// offTime == currentSampleTime ã¯ block å†… NoteOff ã‚’ä¿è¨¼ã™ã‚‹ãŸã‚æ„å›³çš„
 						prev->offTime = currentSampleTime;
 						onTime = currentSampleTime + 1;
 					}
@@ -103,7 +130,7 @@ namespace MinMax
 			}
 
 			// ============================================================
-			// 3. V‹Kƒm[ƒg¶¬E’Ç‰Á
+			// 3. æ–°è¦ãƒãƒ¼ãƒˆç”Ÿæˆãƒ»è¿½åŠ 
 			// ============================================================
 			ScheduledNote note{};
 			note.valid = true;
@@ -115,7 +142,7 @@ namespace MinMax
 			note.channel = channel;
 			note.noteId = getNewNoteId();
 
-			q.push(note); // onTime ¸‡‚Å‘}“ü‚³‚ê‚é‘O’ñ
+			q.push(note); // onTime æ˜‡é †ã§æŒ¿å…¥ã•ã‚Œã‚‹å‰æ
 
 		}
 
@@ -123,21 +150,21 @@ namespace MinMax
 		{
 			// dispatch:
 			//
-			// –ğŠ„:
-			//   Œ»İ‚Ì process blockiblockStart ` blockEndj‚ÉŠî‚Ã‚«A
-			//   TimeQueue ‚ÉŠi”[‚³‚ê‚½ ScheduledNote ‚©‚ç
-			//   NoteOn / NoteOff ƒCƒxƒ“ƒg‚ğ Listener ‚É‘—M‚·‚éB
+			// å½¹å‰²:
+			//   ç¾åœ¨ã® process blockï¼ˆblockStart ï½ blockEndï¼‰ã«åŸºã¥ãã€
+			//   TimeQueue ã«æ ¼ç´ã•ã‚ŒãŸ ScheduledNote ã‹ã‚‰
+			//   NoteOn / NoteOff ã‚¤ãƒ™ãƒ³ãƒˆã‚’ Listener ã«é€ä¿¡ã™ã‚‹ã€‚
 			//
-			// ‘O’ñğŒ:
-			//   - ScheduledNote.onTime < ScheduledNote.offTime ‚ª•ÛØ‚³‚ê‚Ä‚¢‚é
-			//   - ScheduledNote ‚Í onTime ¸‡‚Å TimeQueue ‚ÉŠi”[‚³‚ê‚Ä‚¢‚é
-			//   - addNoteOn ‚Å‰¹‰¿•â³EÕ“Ë‰ğŒˆÏ‚İ
+			// å‰ææ¡ä»¶:
+			//   - ScheduledNote.onTime < ScheduledNote.offTime ãŒä¿è¨¼ã•ã‚Œã¦ã„ã‚‹
+			//   - ScheduledNote ã¯ onTime æ˜‡é †ã§ TimeQueue ã«æ ¼ç´ã•ã‚Œã¦ã„ã‚‹
+			//   - addNoteOn ã§éŸ³ä¾¡è£œæ­£ãƒ»è¡çªè§£æ±ºæ¸ˆã¿
 			//
-			// ˆ—:
-			//   - block “à‚É onTime ‚ªŠÜ‚Ü‚ê‚éê‡A‚Ü‚¾‘—M‚µ‚Ä‚¢‚È‚¯‚ê‚Î NoteOn ‚ğ‘—M
-			//   - block “à‚É offTime ‚ªŠÜ‚Ü‚ê‚éê‡ANoteOff ‚ğ‘—M‚µƒLƒ…[‚©‚çíœ
-			//   - æ“ª—v‘f‚ª block ŠOifuturej‚Ìê‡A‚»‚êˆÈ~‚à future ‚Ì‚½‚ßˆ—‚ğI—¹
-			//   - “¯ˆê block “à‚Å onTime / offTime ‚ª“¯‚É‘¶İ‚·‚éê‡ANoteOn ¨ NoteOff ‚Ì‡‚Å‘—M
+			// å‡¦ç†:
+			//   - block å†…ã« onTime ãŒå«ã¾ã‚Œã‚‹å ´åˆã€ã¾ã é€ä¿¡ã—ã¦ã„ãªã‘ã‚Œã° NoteOn ã‚’é€ä¿¡
+			//   - block å†…ã« offTime ãŒå«ã¾ã‚Œã‚‹å ´åˆã€NoteOff ã‚’é€ä¿¡ã—ã‚­ãƒ¥ãƒ¼ã‹ã‚‰å‰Šé™¤
+			//   - å…ˆé ­è¦ç´ ãŒ block å¤–ï¼ˆfutureï¼‰ã®å ´åˆã€ãã‚Œä»¥é™ã‚‚ future ã®ãŸã‚å‡¦ç†ã‚’çµ‚äº†
+			//   - åŒä¸€ block å†…ã§ onTime / offTime ãŒåŒæ™‚ã«å­˜åœ¨ã™ã‚‹å ´åˆã€NoteOn â†’ NoteOff ã®é †ã§é€ä¿¡
 			for (int i = 0; i < STRING_COUNT; ++i)
 			{
 				auto& q = stringQueues[i];
@@ -146,7 +173,7 @@ namespace MinMax
 				{
 					auto& note = q.current();
 
-					// ƒm[ƒgƒIƒ“‘—MğŒ: block “à‚©‚Â–¢‘—M
+					// ãƒãƒ¼ãƒˆã‚ªãƒ³é€ä¿¡æ¡ä»¶: block å†…ã‹ã¤æœªé€ä¿¡
 					if (!note.isSendNoteOn && note.onTime >= blockStart && note.onTime < blockEnd)
 					{
 						int sampleOffset = static_cast<int>(note.onTime - blockStart);
@@ -154,22 +181,22 @@ namespace MinMax
 						note.isSendNoteOn = true;
 					}
 
-					// ƒm[ƒgƒIƒt‘—MğŒ: block “à‚É offTime ‚ª‚ ‚é
+					// ãƒãƒ¼ãƒˆã‚ªãƒ•é€ä¿¡æ¡ä»¶: block å†…ã« offTime ãŒã‚ã‚‹
 					if (note.offTime >= blockStart && note.offTime < blockEnd)
 					{
 						int sampleOffset = static_cast<int>(note.offTime - blockStart);
 						sendNoteEventCommon(false, sampleOffset, note, note.velocity);
-						q.eraseCurrent(); // ‘—MÏ‚İƒm[ƒg‚Ííœ
+						q.eraseCurrent(); // é€ä¿¡æ¸ˆã¿ãƒãƒ¼ãƒˆã¯å‰Šé™¤
 					}
 					else
 					{
-						// ‚Ü‚¾ future ƒm[ƒg‚È‚Ì‚Åˆ—I—¹
+						// ã¾ã  future ãƒãƒ¼ãƒˆãªã®ã§å‡¦ç†çµ‚äº†
 						break;
 					}
 				}
 			}
 
-			// “ÁêƒLƒ…[‚à“¯—l‚Éˆ—
+			// ç‰¹æ®Šã‚­ãƒ¥ãƒ¼ã‚‚åŒæ§˜ã«å‡¦ç†
 			{
 				auto& q = specialQueue;
 				while (!q.empty())
@@ -196,7 +223,7 @@ namespace MinMax
 				}
 			}
 
-			// ƒuƒƒbƒNI—¹Œã‚ÌƒTƒ“ƒvƒ‹XV
+			// ãƒ–ãƒ­ãƒƒã‚¯çµ‚äº†å¾Œã®ã‚µãƒ³ãƒ—ãƒ«æ™‚åˆ»æ›´æ–°
 			currentSampleTime += numSamples;
 		}
 
