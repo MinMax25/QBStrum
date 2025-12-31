@@ -13,37 +13,36 @@
 
 namespace MinMax
 {
-    class ChordOptionMenu 
-        : public VSTGUI::COptionMenu
-    {
-    public:
-        ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor, int32_t tag)
-            : COptionMenu(size, editor, tag)
-            , editor(editor), tag(tag)
-        {
-        }
-
-        void valueChanged() override
-        {
-            if (!lastMenu || !editor) return;
-
-            int value = lastMenu->getCurrent()->getTag();
-            editor->getController()->beginEdit(tag);
-            ParamValue norm = editor->getController()->plainParamToNormalized(tag, value);
-            editor->getController()->setParamNormalized(tag, norm);
-            editor->getController()->performEdit(tag, norm);
-            editor->getController()->endEdit(tag);
-        }
-
-    protected:
-        VSTGUI::VST3Editor* editor{};
-        ParamID tag;
-    };
-
     class CChordSelecter
         : public VSTGUI::CViewContainer
     {
     private:
+        class ChordOptionMenu
+            : public VSTGUI::COptionMenu
+        {
+        public:
+            ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor, int32_t tag)
+                : COptionMenu(size, editor, tag)
+                , editor(editor), tag(tag)
+            {
+            }
+
+            void valueChanged() override
+            {
+                if (!lastMenu || !editor) return;
+
+                int value = lastMenu->getCurrent()->getTag();
+                editor->getController()->beginEdit(tag);
+                ParamValue norm = editor->getController()->plainParamToNormalized(tag, value);
+                editor->getController()->setParamNormalized(tag, norm);
+                editor->getController()->performEdit(tag, norm);
+                editor->getController()->endEdit(tag);
+            }
+
+        protected:
+            VSTGUI::VST3Editor* editor{};
+            ParamID tag;
+        };
 
         ChordOptionMenu* createChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, int32_t tag)
         {
@@ -124,42 +123,14 @@ namespace MinMax
         CLASS_METHODS(CChordSelecter, CViewContainer)
 
     protected:
+
         ChordOptionMenu* chordMenu{};
+
         bool updatingFromParam = false;
+
         VST3Editor* editor{};
     };
-
-    class CEditModeButton
-        : public VSTGUI::CTextButton
-    {
-    public:
-        CEditModeButton(const VSTGUI::CRect& size, std::function<void(CControl*)> _func)
-            : CTextButton(size)
-            , func(_func)
-        {
-            setTag(9001);
-            setTitle(u8"Edit");
-        }
-
-        void valueChanged() override
-        {
-            if (!getValue()) return;
-
-            state = !state;
-            setTitle(state ? u8"Save" : u8"Edit");
-            func(this);
-        }
-
-        bool getState()
-        {
-            return state;
-        }
-
-    protected:
-        std::function<void(CControl*)> func;
-        bool state = false;
-    };
-
+ 
     class CFretBoard
         : public VSTGUI::CControl
     {
@@ -447,6 +418,38 @@ namespace MinMax
     class CFretBoardView
         : public VSTGUI::CViewContainer
     {
+    private:
+        class CEditModeButton
+            : public VSTGUI::CTextButton
+        {
+        public:
+            CEditModeButton(const VSTGUI::CRect& size, std::function<void(CControl*)> _func)
+                : CTextButton(size)
+                , func(_func)
+            {
+                setTag(9001);
+                setTitle(u8"Edit");
+            }
+
+            void valueChanged() override
+            {
+                if (!getValue()) return;
+
+                state = !state;
+                setTitle(state ? u8"Save" : u8"Edit");
+                func(this);
+            }
+
+            bool getState()
+            {
+                return state;
+            }
+
+        protected:
+            std::function<void(CControl*)> func;
+            bool state = false;
+        };
+
     public:
         CFretBoardView(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description, const VSTGUI::CRect& size)
             : CViewContainer(size)
@@ -485,7 +488,7 @@ namespace MinMax
 
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
-    private:
+    protected:
 
         VSTGUI::VST3Editor* editor = nullptr;;
 
