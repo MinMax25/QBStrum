@@ -232,7 +232,7 @@ namespace MinMax
 
 	void PLUGIN_API MyVSTProcessor::articulationChanged()
 	{
-		constexpr int SPECIAL_NOTES_SAMPLES = 1;
+		constexpr int SPECIAL_NOTES_SAMPLES = 3;
 
 		double newArtic = prm.get(PARAM::SELECTED_ARTICULATION);
 
@@ -379,7 +379,7 @@ namespace MinMax
 
 	void MyVSTProcessor::trigBrush(Event event, bool isDown)
 	{
-		const int BRUSH_PER_MS = 1;
+		const int BRUSH_PER_MS = 2;
 		const float BRUSH_DECAY = 0.98f;
 
 		// 現在鳴っている音をすべて消す
