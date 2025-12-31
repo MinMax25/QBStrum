@@ -46,50 +46,50 @@ namespace MinMax
     class CFretBoard
         : public VSTGUI::CControl
     {
+        // 設定
+        const int lastFret = 19;                            // 最大フレット数
+        const int firstFret = -1;                           // -1フレット（ナット外側）
+        const int numFrets = (lastFret - firstFret + 1);
+        const double outerMargin = 10.0;                    // 上部余白
+
     public:
         CFretBoard(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, ParamID tag)
             : CControl(size)
         {
+            using namespace VSTGUI;
+
             setListener(listener);
             setTag(tag);
+
+            // 初期値設定
+            frameSize = size;
+            boardSize = VSTGUI::CRect(frameSize.left, frameSize.top + 20, frameSize.right, frameSize.bottom - 20);
+            usableHeight = boardSize.getHeight() - outerMargin * 2.0;
+            stringSpacing = usableHeight / (STRING_COUNT - 1);
+            fretSpacing = boardSize.getWidth() / numFrets;
+
+            bg = CColor(60, 40, 20, 255);
+            stringColor = CColor(230, 230, 230, 255);
+            fretColor = CColor(180, 180, 180, 255);
+            nutColor = CColor(255, 255, 255, 255);
+            markerColor = CColor(200, 200, 200, 255);
+            fretNumberColor = CColor(220, 220, 220, 255);
+            pressedColor = CColor(255, 140, 0, 255);
         }
 
         void draw(VSTGUI::CDrawContext* pContext) override
         {
             using namespace VSTGUI;
 
-            const CRect& r = getViewSize();
-
-            const CRect& boardSize = CRect(r.left, r.top, r.right, r.bottom - 20);
-
             // 背景
-            CColor bg(60, 40, 20, 255);
             pContext->setFillColor(bg);
             pContext->drawRect(boardSize, kDrawFilled);
-
-            // 設定
-            const int lastFret = 30;    // 最大フレット数
-            const int firstFret = -1;   // -1フレット（ナット外側）
-            const int numFrets = (lastFret - firstFret + 1);
-
-            CColor stringColor(230, 230, 230, 255);
-            CColor fretColor(180, 180, 180, 255);
-            CColor nutColor(255, 255, 255, 255);
-            CColor markerColor(200, 200, 200, 255);
-
-            // ←─★ 上下余白を 10px に設定
-            double outerMargin = 10.0;
-
-            double usableHeight = boardSize.getHeight() - outerMargin * 2.0;
-            double stringSpacing = usableHeight / (STRING_COUNT - 1);
-            double fretSpacing = boardSize.getWidth() / numFrets;
 
             // ------------------------
             // 弦の描画（上下10px以内に収める）
             // ------------------------
             pContext->setFrameColor(stringColor);
             pContext->setLineWidth(2.0);
-
             for (int i = 0; i < STRING_COUNT; ++i)
             {
                 double y = boardSize.top + outerMargin + stringSpacing * i;
@@ -105,14 +105,10 @@ namespace MinMax
 
                 if (fret == 0)
                 {
-                    // ナット（二重線）
+                    // ナット
                     pContext->setFrameColor(nutColor);
-
-                    pContext->setLineWidth(2.0);
-                    pContext->drawLine(CPoint(x, boardSize.top), CPoint(x, boardSize.bottom));
-
-                    pContext->setLineWidth(2.0);
-                    pContext->drawLine(CPoint(x + 3, boardSize.top), CPoint(x + 3, boardSize.bottom));
+                    pContext->setLineWidth(5.0);
+                    pContext->drawLine(CPoint(x - 3, boardSize.top), CPoint(x - 3, boardSize.bottom));
                     continue;
                 }
 
@@ -122,26 +118,6 @@ namespace MinMax
 
                 pContext->drawLine(CPoint(x, boardSize.top), CPoint(x, boardSize.bottom));
             }
-
-            // ------------------------
-            // ポジションマーカー
-            // ------------------------
-            auto isMarkerFret =
-                [](int f)
-                {
-                    return
-                        (
-                            f == 2 ||
-                            f == 4 ||
-                            f == 6 ||
-                            f == 8 ||
-                            f == 11 ||
-                            f == 14 ||
-                            f == 16 ||
-                            f == 18 ||
-                            f == 20 ||
-                            f == 22);
-                };
 
             pContext->setFillColor(markerColor);
 
@@ -169,7 +145,6 @@ namespace MinMax
             // ------------------------
             // フレット番号（0〜  ）
             // ------------------------
-            CColor fretNumberColor(220, 220, 220, 255);
             pContext->setFontColor(fretNumberColor);
 
             // フォント（VSTGUI既定）
@@ -177,7 +152,7 @@ namespace MinMax
             pContext->setFont(font, 10);
 
             // 表示Y位置（指板の下）
-            double numberY = r.bottom - 8; // 下端から少し上
+            double numberY = frameSize.bottom - 8; // 下端から少し上
 
             for (int fret = 0; fret <= 19; ++fret)
             {
@@ -201,7 +176,6 @@ namespace MinMax
             // 押さえているフレットのマーカー表示（🔶）
             // ------------------------
             {
-                CColor pressedColor(255, 140, 0, 255);
                 pContext->setFillColor(pressedColor);
                 pContext->setFrameColor(pressedColor);
 
@@ -318,14 +292,42 @@ namespace MinMax
         }
 
     private:
+        VSTGUI::CColor bg;
+        VSTGUI::CColor stringColor;
+        VSTGUI::CColor fretColor;
+        VSTGUI::CColor nutColor;
+        VSTGUI::CColor markerColor;
+        VSTGUI::CColor fretNumberColor;
+        VSTGUI::CColor pressedColor;
 
-        CLASS_METHODS(CFretBoard, CControl)
+        VSTGUI::CRect frameSize;
+        VSTGUI::CRect boardSize;
+
+        double usableHeight;
+        double stringSpacing;
+        double fretSpacing;
 
         // 押さえているフレット
         StringSet pressedFrets;
 
         //
         bool isEditing = false;
+
+        bool isMarkerFret(int f)
+        {
+            return (
+                f == 2 ||
+                f == 4 ||
+                f == 6 ||
+                f == 8 ||
+                f == 11 ||
+                f == 14 ||
+                f == 16 ||
+                f == 18
+            );
+        }
+
+        CLASS_METHODS(CFretBoard, CControl)
     };
 
     class CFretBoardView
@@ -341,14 +343,14 @@ namespace MinMax
             setBackgroundColor(VSTGUI::kGreyCColor);
 
             // --- FretBoard ---
-            CFretBoard* fretBoard = new CFretBoard(VSTGUI::CRect(0, 20, 1120, size.getHeight() + 20), editor, PARAM::CHORD_NUM);
+            CFretBoard* fretBoard = new CFretBoard(getViewSize(), editor, PARAM::CHORD_NUM);
             addView(fretBoard);
 
             // --- Edit / Save Button ---
             editButton =
                 new CEditModeButton(
                     VSTGUI::CRect(10, 1, 60, 18),
-                    [this](VSTGUI::CControl* p) 
+                    [this](VSTGUI::CControl* p)
                     {
                         valueChanged(p);
                     }
@@ -389,7 +391,7 @@ namespace MinMax
 
         VSTGUI::CView* create(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description) const override
         {
-            return new CFretBoardView(attributes, description, VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(660, 160)));
+            return new CFretBoardView(attributes, description, VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(730, 175)));
         }
     };
 

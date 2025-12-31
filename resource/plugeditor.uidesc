@@ -3061,19 +3061,6 @@
 							"wants-focus": "false"
 						}
 					},
-					"UI:Chord Selecter View": {
-						"attributes": {
-							"background-color": "Dark",
-							"background-color-draw-style": "filled and stroked",
-							"class": "UI:Chord Selecter View",
-							"mouse-enabled": "true",
-							"opacity": "1",
-							"origin": "555, 385",
-							"size": "182, 20",
-							"transparent": "false",
-							"wants-focus": "false"
-						}
-					},
 					"COptionMenu": {
 						"attributes": {
 							"back-color": "~ BlackCColor",
