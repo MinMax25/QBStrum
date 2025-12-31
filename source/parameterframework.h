@@ -204,6 +204,7 @@ namespace ParameterFramework
                     );
 
                 auto options = optionProvider->getOptionNames(*def.rangeKind);
+
                 if (options.empty())
                 {   // Å’áŒÀƒ_ƒ~[‚ğ1‚Â
                     options.push_back("-");
