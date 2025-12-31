@@ -182,7 +182,6 @@ namespace MinMax
 
             ~CChordSelecter()
             {
-                if (editor) editor->release();
             }
 
             CLASS_METHODS(CChordSelecter, CViewContainer)
@@ -485,7 +484,6 @@ namespace MinMax
             : CViewContainer(size)
         {
             editor = dynamic_cast<VSTGUI::VST3Editor*>(description->getController());
-            if (editor) editor->addRef();
 
             setBackgroundColor(VSTGUI::kGreyCColor);
 
@@ -512,7 +510,6 @@ namespace MinMax
 
         ~CFretBoardView()
         {
-            if (editor) editor->release();
         }
 
         void valueChanged(VSTGUI::CControl* pControl)
