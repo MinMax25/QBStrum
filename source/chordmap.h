@@ -1,13 +1,19 @@
 #pragma once
 
+#include <array>
+#include <chrono>
+#include <iomanip>
 #include <string>
 #include <vector>
 #include <fstream>
 #include <filesystem>
 #include <stdexcept>
+#include <sstream>
+
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
-#include <array>
+#include <rapidjson/writer.h>
+#include <rapidjson/ostreamwrapper.h>
 
 namespace MinMax
 {
@@ -282,11 +288,21 @@ namespace MinMax
             auto& f = getByIndex(chordNumber);
             auto& v = ChordRoots[f.root].ChordTypes[f.type].Voicings[f.pos].Frets;
 
+            bool changed = false;
             for (size_t i = 0; i < frets.size && i < v.size(); ++i)
             {
-                v[i] = frets.data[i];
+                if (v[i] != frets.data[i])
+                {
+                    v[i] = frets.data[i];
+                    changed = true;
+                }
             }
+
+            if (changed)
+                modified = true;
         }
+
+        bool isModified() const { return modified; }
 
     protected:
 
@@ -303,6 +319,8 @@ namespace MinMax
         ChordMap& operator=(const ChordMap&) = delete;
         ChordMap(ChordMap&&) = default;
         ChordMap& operator=(ChordMap&&) = default;
+
+        bool modified = false;
 
         void buildFlatTable()
         {
@@ -404,6 +422,101 @@ namespace MinMax
             map.Name = filename.substr(0, dot);
 
             return map;
+        }
+
+        void clearModified() { modified = false; }
+
+        // 現在の ChordMap 内容を JSON ファイルに保存
+        void saveToFile(const std::filesystem::path& path)
+        {
+            if (!modified)
+                return; // 変更がないならスキップ
+            
+            // 1. 元ファイルのバックアップ作成（日時付き）
+            if (std::filesystem::exists(path))
+            {
+                auto t = std::chrono::system_clock::now();
+                auto time = std::chrono::system_clock::to_time_t(t);
+                std::tm tm;
+#ifdef _WIN32
+                localtime_s(&tm, &time);
+#else
+                localtime_r(&time, &tm);
+#endif
+
+                std::ostringstream oss;
+                oss << path.stem().string() << "_"
+                    << std::put_time(&tm, "%Y%m%d_%H%M%S")
+                    << path.extension().string();
+
+                std::filesystem::path backupPath = path.parent_path() / oss.str();
+                std::filesystem::copy_file(path, backupPath, std::filesystem::copy_options::overwrite_existing);
+            }
+
+            // 2. JSON オブジェクト作成
+            rapidjson::Document doc;
+            doc.SetObject();
+            auto& allocator = doc.GetAllocator();
+
+            doc.AddMember("Name", rapidjson::Value(Name.c_str(), allocator), allocator);
+
+            // Tunings
+            rapidjson::Value notes(rapidjson::kArrayType);
+            for (size_t i = 0; i < Tunings.size; ++i)
+            {
+                notes.PushBack(Tunings.data[i], allocator);
+            }
+            doc.AddMember("Notes", notes, allocator);
+
+            // ChordRoots
+            rapidjson::Value chordRoots(rapidjson::kArrayType);
+            for (auto& r : ChordRoots)
+            {
+                rapidjson::Value rootObj(rapidjson::kObjectType);
+                rootObj.AddMember("Id", r.Id, allocator);
+                rootObj.AddMember("Name", rapidjson::Value(r.Name.c_str(), allocator), allocator);
+
+                rapidjson::Value types(rapidjson::kArrayType);
+                for (auto& t : r.ChordTypes)
+                {
+                    rapidjson::Value typeObj(rapidjson::kObjectType);
+                    typeObj.AddMember("Id", t.Id, allocator);
+                    typeObj.AddMember("Name", rapidjson::Value(t.Name.c_str(), allocator), allocator);
+
+                    rapidjson::Value voicings(rapidjson::kArrayType);
+                    for (auto& v : t.Voicings)
+                    {
+                        rapidjson::Value vObj(rapidjson::kObjectType);
+                        vObj.AddMember("Id", v.Id, allocator);
+                        vObj.AddMember("Name", rapidjson::Value(v.Name.c_str(), allocator), allocator);
+
+                        rapidjson::Value frets(rapidjson::kArrayType);
+                        for (auto f : v.Frets)
+                            frets.PushBack(f, allocator);
+
+                        vObj.AddMember("Frets", frets, allocator);
+                        voicings.PushBack(vObj, allocator);
+                    }
+                    typeObj.AddMember("Voicings", voicings, allocator);
+                    types.PushBack(typeObj, allocator);
+                }
+                rootObj.AddMember("ChordTypes", types, allocator);
+                chordRoots.PushBack(rootObj, allocator);
+            }
+            doc.AddMember("ChordRoots", chordRoots, allocator);
+
+            // 3. ファイルに書き込み
+            std::ofstream ofs(path);
+            if (!ofs.is_open())
+            {
+                throw std::runtime_error("Cannot open file for writing: " + path.string());
+            }
+
+            rapidjson::OStreamWrapper osw(ofs);
+            rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
+            doc.Accept(writer);
+
+            clearModified();
         }
     };
 }

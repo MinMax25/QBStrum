@@ -600,7 +600,7 @@ namespace MinMax
             isEditing = !isEditing;
 
             // ボタンタイトル更新
-            editModeButton->setTitle(isEditing ? u8"Save" : u8"Edit");
+            editModeButton->setTitle(isEditing ? u8"Update" : u8"Edit");
             editCancelButton->setVisible(isEditing);
 
             // 各ビューに編集状態を通知
