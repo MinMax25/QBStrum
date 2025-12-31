@@ -21,59 +21,35 @@ namespace MinMax
         : public VSTGUI::CViewContainer
     {
     private:
-        // 編集モード切り替えボタン
-        // 編集中：Save, 非編集中:Edit
-        // ※テキストはボタン押下時のモード遷移先
-        class CEditModeButton
-            : public VSTGUI::CTextButton
+        // 編集モード切替ボタン（状態は親で管理）
+        class CEditModeButton : public VSTGUI::CTextButton
         {
         public:
             CEditModeButton(const VSTGUI::CRect& size, std::function<void()> func_)
-                : CTextButton(size)
-                , func(func_)
+                : CTextButton(size), func(func_)
             {
                 setTag(-1);
-                setTitle(u8"---");
+                setTitle(u8"Edit");
             }
 
             void valueChanged() override
             {
                 if (getValue() < 0.5f) return;
 
-                state = !state;
-                setTitle(state ? u8"Save" : u8"Edit");
-                func();
-
+                func(); // CFretBoardView 側で切替
                 setValue(0.f);
             }
 
-            bool getState()
-            {
-                return state;
-            }
-
-            void setState(bool value)
-            {
-                state = value;
-                setTitle(state ? u8"Save" : u8"Edit");
-            }
-
         protected:
-
             std::function<void()> func;
-
-            bool state = false;
         };
 
-        // 編集キャンセルボタン
-        // ※非編集中は非表示
-        class CEditCancelButton
-            : public VSTGUI::CTextButton
+        // 編集キャンセルボタン（状態は親で管理）
+        class CEditCancelButton : public VSTGUI::CTextButton
         {
         public:
             CEditCancelButton(const VSTGUI::CRect& size, std::function<void()> func_)
-                : CTextButton(size)
-                , func(func_)
+                : CTextButton(size), func(func_)
             {
                 setTag(-1);
                 setTitle(u8"Cancel");
@@ -87,7 +63,6 @@ namespace MinMax
             }
 
         protected:
-
             std::function<void()> func;
         };
 
@@ -575,23 +550,20 @@ namespace MinMax
             addView(chordSelecter);
 
             // --- Edit / Save Button ---
-            editModeButton =
-                new CEditModeButton(
-                    VSTGUI::CRect(10, 1, 60, 18),
-                    [this]() { toggleEditMode(); }
-                );
+            editModeButton = new CEditModeButton(
+                VSTGUI::CRect(10, 1, 60, 18),
+                [this]() { toggleEditMode(); }
+            );
             editModeButton->setFont(VSTGUI::kNormalFontSmall);
-            editModeButton->setState(isEditing);
             addView(editModeButton);
 
             // --- Edit Cancel Button ---
-            editCancelButton =
-                new CEditCancelButton(
-                    VSTGUI::CRect(61, 1, 110, 18),
-                    [this]() { cancelEditMode(); }
-                );
+            editCancelButton = new CEditCancelButton(
+                VSTGUI::CRect(61, 1, 110, 18),
+                [this]() { cancelEditMode(); }
+            );
             editCancelButton->setFont(VSTGUI::kNormalFontSmall);
-            editCancelButton->setVisible(isEditing);
+            editCancelButton->setVisible(false); // 初期は非表示
             addView(editCancelButton);
         }
 
@@ -602,9 +574,12 @@ namespace MinMax
         void toggleEditMode()
         {
             isEditing = !isEditing;
+
+            // ボタンタイトル更新
             editModeButton->setTitle(isEditing ? u8"Save" : u8"Edit");
             editCancelButton->setVisible(isEditing);
 
+            // 各ビューに編集状態を通知
             fretBoard->setEditing(isEditing);
             chordSelecter->setEditing(isEditing);
         }
@@ -612,6 +587,7 @@ namespace MinMax
         void cancelEditMode()
         {
             isEditing = false;
+
             editModeButton->setTitle(u8"Edit");
             editCancelButton->setVisible(false);
 
