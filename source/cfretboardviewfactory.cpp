@@ -10,22 +10,30 @@
 
 #include "myparameters.h"
 
+#include "debug_log.h"
+
 namespace MinMax
 {
+    //
+    // フレットボード
+    // 表示・編集用
     class CFretBoardView
         : public VSTGUI::CViewContainer
     {
     private:
+        // 編集モード切り替えボタン
+        // 編集中：Save, 非編集中:Edit
+        // ※テキストはボタン押下時のモード遷移先
         class CEditModeButton
             : public VSTGUI::CTextButton
         {
         public:
-            CEditModeButton(const VSTGUI::CRect& size, std::function<void(CControl*)> _func)
+            CEditModeButton(const VSTGUI::CRect& size, std::function<void(CEditModeButton*)> _func)
                 : CTextButton(size)
                 , func(_func)
             {
-                setTag(9001);
-                setTitle(u8"Edit");
+                setTag(-1);
+                setTitle(u8"---");
             }
 
             void valueChanged() override
@@ -44,11 +52,48 @@ namespace MinMax
                 return state;
             }
 
+            void setState(bool value)
+            {
+                state = value;
+                setTitle(state ? u8"Save" : u8"Edit");
+            }
+
         protected:
-            std::function<void(CControl*)> func;
+
+            std::function<void(CEditModeButton*)> func;
+            
             bool state = false;
         };
 
+        // 編集キャンセルボタン
+        // ※非編集中は非表示
+        class CEditCancelButton
+            : public VSTGUI::CTextButton
+        {
+        public:
+            CEditCancelButton(const VSTGUI::CRect& size, std::function<void(CEditCancelButton*)> _func)
+                : CTextButton(size)
+                , func(_func)
+            {
+                setTag(-1);
+                setTitle(u8"Cancel");
+            }
+
+            void valueChanged() override
+            {
+                if (getValue() < 0.5f) return;
+                func(this);
+                setValue(0.f);
+            }
+
+        protected:
+
+            std::function<void(CEditCancelButton*)> func;
+        };
+
+        // コード選択
+        // コード選択用階層メニューと選択コード名表示ラベルを持つ
+        // ※編集中は操作不可（階層化メニュー非表示）
         class CChordSelecter
             : public VSTGUI::CViewContainer
         {
@@ -66,6 +111,8 @@ namespace MinMax
 
                 void valueChanged() override
                 {
+                    if (isEditing) return;
+
                     if (!editor || !editor->getController())
                         return;
 
@@ -86,11 +133,18 @@ namespace MinMax
                     }
                 }
 
+                void setState(bool state)
+                {
+                    isEditing = state;
+                }
+
             protected:
 
                 VSTGUI::VST3Editor* editor{};
                 
                 ParamID paramID;
+
+                bool isEditing = false;
             };
 
             class CChordLabel : public VSTGUI::CTextLabel
@@ -151,13 +205,18 @@ namespace MinMax
             {
             }
 
+            void setEditing(bool state)
+            {
+                chordMenu->setVisible(!state); // 編集時はメニュー非表示
+            }
+
             CLASS_METHODS(CChordSelecter, CViewContainer)
 
         protected:
 
-            ChordOptionMenu* chordMenu{};
-
             VSTGUI::VST3Editor* editor{};
+
+            ChordOptionMenu* chordMenu{};
 
             ChordOptionMenu* createChordOptionMenu(const VSTGUI::CRect& size, int32_t tag)
             {
@@ -206,6 +265,11 @@ namespace MinMax
             }
         };
 
+        // ギターフレット表示ビュー
+        // 非編集時：PARAM::CHORD_NUMの値のヴォイシング情報を表示
+        // 編集時　：PARAM::CHORD_NUMのヴォイシング情報の写しを作り、
+        //           その内容を編集、Save時にはChordMapのPARAM::CHORD_NUMのヴォイシング情報を更新
+        //           Cancel時は編集内容を破棄し現在のPARAM::CHORD_NUMの値のヴォイシング情報を表示
         class CFretBoard
             : public VSTGUI::CControl
         {
@@ -403,7 +467,7 @@ namespace MinMax
 
             VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
             {
-                if (!isEditing) return VSTGUI::kMouseEventNotHandled;
+                if (!editing) return VSTGUI::kMouseEventNotHandled;
 
                 int stringIndex =
                     int((where.y - (boardSize.top + outerMargin)) / stringSpacing + 0.5);
@@ -448,9 +512,10 @@ namespace MinMax
                 return VSTGUI::kMouseEventHandled;
             }
 
-            StringSet getPressedFrets()
+            void setEditing(bool state)
             {
-                return pressedFrets;
+                editing = state;
+                invalid(); // 再描画
             }
 
             CLASS_METHODS(CFretBoard, CControl)
@@ -475,7 +540,7 @@ namespace MinMax
             StringSet pressedFrets;
 
             //
-            bool isEditing = false;
+            bool editing = false;
 
             bool isMarkerFret(int f)
             {
@@ -502,33 +567,57 @@ namespace MinMax
             setBackgroundColor(VSTGUI::kGreyCColor);
 
             // --- FretBoard ---
-            auto* fretBoard = new CFretBoard(getViewSize(), editor, PARAM::CHORD_NUM);
+            fretBoard = new CFretBoard(getViewSize(), editor, PARAM::CHORD_NUM);
             addView(fretBoard);
 
             // --- Chord Selecter ---
-            auto* chordSelecter = new CChordSelecter(VSTGUI::CRect(300, 1, 450, 19), editor, PARAM::CHORD_NUM);
+            chordSelecter = new CChordSelecter(VSTGUI::CRect(300, 1, 450, 19), editor, PARAM::CHORD_NUM);
             addView(chordSelecter);
 
             // --- Edit / Save Button ---
-            auto* editButton =
+            editModeButton =
                 new CEditModeButton(
                     VSTGUI::CRect(10, 1, 60, 18),
-                    [this](VSTGUI::CControl* p)
-                    {
-                        valueChanged(p);
-                    }
+                    [this](CEditModeButton* p) { editModeChanged(p); }
                 );
-            editButton->setFont(VSTGUI::kNormalFontSmall);
-            addView(editButton);
+            editModeButton->setFont(VSTGUI::kNormalFontSmall);
+            editModeButton->setState(isEditing);
+            addView(editModeButton);
+
+            // --- Edit Cancel Button ---
+            editCancelButton =
+                new CEditCancelButton(
+                    VSTGUI::CRect(61, 1, 110, 18),
+                    [this](CEditCancelButton* p) { editCanceled(p); }
+                );
+            editCancelButton->setFont(VSTGUI::kNormalFontSmall);
+            editCancelButton->setVisible(isEditing);
+            addView(editCancelButton);
         }
 
         ~CFretBoardView()
         {
         }
 
-        void valueChanged(VSTGUI::CControl* pControl)
+        void editModeChanged(CEditModeButton* pControl)
         {
-            if (pControl->getTag() != 9001) return;
+            isEditing = pControl->getState();
+            editCancelButton->setVisible(isEditing);
+
+            // 一括でビューに編集フラグを通知
+            fretBoard->setEditing(isEditing);
+            chordSelecter->setEditing(isEditing);
+        }
+
+        void editCanceled(CEditCancelButton* pControl)
+        {
+            isEditing = false;
+            editModeButton->setState(false);
+            editCancelButton->setVisible(false);
+
+            // 一括でビューに編集フラグを通知
+            fretBoard->setEditing(false);
+            chordSelecter->setEditing(false);
         }
 
         CLASS_METHODS(CFretBoardView, CViewContainer)
@@ -536,7 +625,17 @@ namespace MinMax
     protected:
 
         VSTGUI::VST3Editor* editor = nullptr;;
-    };
+   
+        bool isEditing = false;
+
+        CFretBoard* fretBoard = nullptr;
+
+        CChordSelecter* chordSelecter = nullptr;
+
+        CEditModeButton* editModeButton = nullptr;
+        
+        CEditCancelButton* editCancelButton = nullptr;
+ };
 
     class CFretBoardViewFactory
         : public VSTGUI::ViewCreatorAdapter
