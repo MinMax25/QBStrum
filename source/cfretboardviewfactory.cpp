@@ -30,7 +30,7 @@ namespace MinMax
 
             void valueChanged() override
             {
-                if (!getValue()) return;
+                if (getValue() < 0.5f) return;
 
                 state = !state;
                 setTitle(state ? u8"Save" : u8"Edit");
@@ -67,14 +67,13 @@ namespace MinMax
                     if (!lastMenu || !editor) return;
 
                     int value = lastMenu->getCurrent()->getTag();
+
                     editor->getController()->beginEdit(tag);
                     ParamValue norm = editor->getController()->plainParamToNormalized(tag, value);
                     editor->getController()->setParamNormalized(tag, norm);
                     editor->getController()->performEdit(tag, norm);
                     editor->getController()->endEdit(tag);
                 }
-
-
 
             protected:
                 VSTGUI::VST3Editor* editor{};
@@ -94,14 +93,14 @@ namespace MinMax
                     auto str = getText().getString();
                     if (str.empty()) return;
 
-                    int index = std::stoi(str);
+                    int index = std::atoi(str.c_str());
 
                     const auto& map = ChordMap::Instance();
 
                     VSTGUI::UTF8String name =
                         (index >= 0 && index < map.getFlatCount())
                         ? map.getByIndex(index).displayName.c_str()
-                        : "---";
+                        : "# undefined #";
 
                     drawBack(context);
                     drawPlatformText(context, name);
@@ -113,7 +112,41 @@ namespace MinMax
 
             };
 
-            ChordOptionMenu* createChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, int32_t tag)
+
+        public:
+
+            CChordSelecter(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID tag)
+                : CViewContainer(size)
+                , editor(editor_)
+            {
+                // 階層化コードメニュー
+                chordMenu = createChordOptionMenu(VSTGUI::CRect(1, 1, 17, 17), PARAM::CHORD_NUM);
+                chordMenu->setBackColor(VSTGUI::kGreyCColor);
+                addView(chordMenu);
+
+                // コード名表示ラベル
+                CChordLabel* chordLabel = new CChordLabel(VSTGUI::CRect(18, 1, 148, 17));
+                chordLabel->setBackColor(VSTGUI::kWhiteCColor);
+                chordLabel->setFontColor(VSTGUI::kBlackCColor);
+                chordLabel->setFont(VSTGUI::kNormalFontSmaller);
+                chordLabel->setListener(editor);
+                chordLabel->setTag(PARAM::CHORD_NUM);
+                addView(chordLabel);
+            }
+
+            ~CChordSelecter()
+            {
+            }
+
+            CLASS_METHODS(CChordSelecter, CViewContainer)
+
+        protected:
+
+            ChordOptionMenu* chordMenu{};
+
+            VSTGUI::VST3Editor* editor{};
+
+            ChordOptionMenu* createChordOptionMenu(const VSTGUI::CRect& size, int32_t tag)
             {
                 auto& chordMap = ChordMap::Instance();
 
@@ -158,41 +191,6 @@ namespace MinMax
 
                 return rootMenu;
             }
-
-        public:
-
-            CChordSelecter(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID tag)
-                : CViewContainer(size)
-                , editor(editor_)
-            {
-                // 階層化コードメニュー
-                chordMenu = createChordOptionMenu(VSTGUI::CRect(1, 1, 17, 17), editor, PARAM::CHORD_NUM);
-                chordMenu->setBackColor(VSTGUI::kGreyCColor);
-                addView(chordMenu);
-
-                // コード名表示ラベル
-                CChordLabel* chordLabel = new CChordLabel(VSTGUI::CRect(18, 1, 148, 17));
-                chordLabel->setBackColor(VSTGUI::kWhiteCColor);
-                chordLabel->setFontColor(VSTGUI::kBlackCColor);
-                chordLabel->setFont(VSTGUI::kNormalFontSmaller);
-                chordLabel->setListener(editor);
-                chordLabel->setTag(PARAM::CHORD_NUM);
-                addView(chordLabel);
-            }
-
-            ~CChordSelecter()
-            {
-            }
-
-            CLASS_METHODS(CChordSelecter, CViewContainer)
-
-        protected:
-
-            ChordOptionMenu* chordMenu{};
-
-            bool updatingFromParam = false;
-
-            VSTGUI::VST3Editor* editor{};
         };
 
         class CFretBoard
@@ -306,7 +304,7 @@ namespace MinMax
                 // 表示Y位置（指板の下）
                 double numberY = frameSize.bottom - 8; // 下端から少し上
 
-                for (int fret = 0; fret <= 19; ++fret)
+                for (int fret = 0; fret <= lastFret; ++fret)
                 {
                     // フレット中央の X 座標
                     double x =
@@ -400,7 +398,7 @@ namespace MinMax
 
                 int fret = int((where.x - boardSize.left) / fretSpacing) - 1;
 
-                if (fret < -1 || fret > 18)
+                if (fret < firstFret || fret > lastFret - 1)
                     return VSTGUI::kMouseEventNotHandled;
 
                 int& current = pressedFrets.data[stringIndex];
@@ -484,6 +482,7 @@ namespace MinMax
             : CViewContainer(size)
         {
             editor = dynamic_cast<VSTGUI::VST3Editor*>(description->getController());
+            assert(editor && "CFretBoardView requires VST3Editor");
 
             setBackgroundColor(VSTGUI::kGreyCColor);
 
