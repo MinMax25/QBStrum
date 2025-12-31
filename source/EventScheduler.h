@@ -229,14 +229,16 @@ namespace MinMax
 			{
 				while (!q.empty())
 				{
-					sendNoteEventCommon(false, 0, q.current(), 0.0f);
+					auto& note = q.current();
+					sendNoteEventCommon(false, 0, note, note.velocity);
 					q.eraseCurrent();
 				}
 			}
 
 			while (!specialQueue.empty())
 			{
-				sendNoteEventCommon(false, 0, specialQueue.current(), 0.0f);
+				auto& note = specialQueue.current();
+				sendNoteEventCommon(false, 0, note, note.velocity);
 				specialQueue.eraseCurrent();
 			}
 		}
