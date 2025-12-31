@@ -493,6 +493,19 @@ namespace MinMax
                 invalid(); // 再描画
             }
 
+            // 現在の押弦情報をコピーして返す
+            StringSet getPressedFrets() const
+            {
+                return pressedFrets; // コピーされる
+            }
+
+            // 押弦情報を上書きして再描画
+            void setPressedFrets(const StringSet& newFrets)
+            {
+                pressedFrets = newFrets;
+                invalid(); // 再描画
+            }
+
             CLASS_METHODS(CFretBoard, CControl)
 
         private:
@@ -573,6 +586,17 @@ namespace MinMax
 
         void toggleEditMode()
         {
+            if (isEditing)
+            {
+                // Save前の編集モード終了
+                saveEdits();
+            }
+            else
+            {
+                // 編集開始時に元の状態を保持
+                originalPressedFrets = fretBoard->getPressedFrets();
+            }
+
             isEditing = !isEditing;
 
             // ボタンタイトル更新
@@ -591,6 +615,9 @@ namespace MinMax
             editModeButton->setTitle(u8"Edit");
             editCancelButton->setVisible(false);
 
+            // 元のデータに戻す
+            fretBoard->setPressedFrets(originalPressedFrets);
+
             fretBoard->setEditing(false);
             chordSelecter->setEditing(false);
         }
@@ -601,8 +628,6 @@ namespace MinMax
 
         VSTGUI::VST3Editor* editor = nullptr;;
 
-        bool isEditing = false;
-
         CFretBoard* fretBoard = nullptr;
 
         CChordSelecter* chordSelecter = nullptr;
@@ -610,6 +635,25 @@ namespace MinMax
         CEditModeButton* editModeButton = nullptr;
 
         CEditCancelButton* editCancelButton = nullptr;
+
+        bool isEditing = false;
+
+        StringSet originalPressedFrets;
+
+        void saveEdits()
+        {
+            // 現在の押弦情報を取得
+            auto pressed = fretBoard->getPressedFrets();
+
+            // ChordMap の現在選択コード番号に対して更新
+            auto* controller = editor->getController();
+            ParamValue norm = controller->getParamNormalized(PARAM::CHORD_NUM);
+            int chordNum = static_cast<int>(controller->normalizedParamToPlain(PARAM::CHORD_NUM, norm));
+            ChordMap::Instance().setVoicing(chordNum, pressed);
+
+            // 編集終了後、元の状態として保持しておく
+            originalPressedFrets = pressed;
+        }
     };
 
     class CFretBoardViewFactory

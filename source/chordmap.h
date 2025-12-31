@@ -276,6 +276,17 @@ namespace MinMax
         {
             return indexTable[r][t][v];
         }
+        
+        void setVoicing(int chordNumber, const StringSet& frets)
+        {
+            auto& f = getByIndex(chordNumber);
+            auto& v = ChordRoots[f.root].ChordTypes[f.type].Voicings[f.pos].Frets;
+
+            for (size_t i = 0; i < frets.size && i < v.size(); ++i)
+            {
+                v[i] = frets.data[i];
+            }
+        }
 
     protected:
 
