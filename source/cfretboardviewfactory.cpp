@@ -28,9 +28,9 @@ namespace MinMax
             : public VSTGUI::CTextButton
         {
         public:
-            CEditModeButton(const VSTGUI::CRect& size, std::function<void(CEditModeButton*)> _func)
+            CEditModeButton(const VSTGUI::CRect& size, std::function<void()> func_)
                 : CTextButton(size)
-                , func(_func)
+                , func(func_)
             {
                 setTag(-1);
                 setTitle(u8"---");
@@ -42,9 +42,9 @@ namespace MinMax
 
                 state = !state;
                 setTitle(state ? u8"Save" : u8"Edit");
-                func(this);
+                func();
 
-                setValue(0.f); 
+                setValue(0.f);
             }
 
             bool getState()
@@ -60,8 +60,8 @@ namespace MinMax
 
         protected:
 
-            std::function<void(CEditModeButton*)> func;
-            
+            std::function<void()> func;
+
             bool state = false;
         };
 
@@ -71,9 +71,9 @@ namespace MinMax
             : public VSTGUI::CTextButton
         {
         public:
-            CEditCancelButton(const VSTGUI::CRect& size, std::function<void(CEditCancelButton*)> _func)
+            CEditCancelButton(const VSTGUI::CRect& size, std::function<void()> func_)
                 : CTextButton(size)
-                , func(_func)
+                , func(func_)
             {
                 setTag(-1);
                 setTitle(u8"Cancel");
@@ -82,13 +82,13 @@ namespace MinMax
             void valueChanged() override
             {
                 if (getValue() < 0.5f) return;
-                func(this);
+                func();
                 setValue(0.f);
             }
 
         protected:
 
-            std::function<void(CEditCancelButton*)> func;
+            std::function<void()> func;
         };
 
         // コード選択
@@ -141,7 +141,7 @@ namespace MinMax
             protected:
 
                 VSTGUI::VST3Editor* editor{};
-                
+
                 ParamID paramID;
 
                 bool isEditing = false;
@@ -578,7 +578,7 @@ namespace MinMax
             editModeButton =
                 new CEditModeButton(
                     VSTGUI::CRect(10, 1, 60, 18),
-                    [this](CEditModeButton* p) { editModeChanged(p); }
+                    [this]() { toggleEditMode(); }
                 );
             editModeButton->setFont(VSTGUI::kNormalFontSmall);
             editModeButton->setState(isEditing);
@@ -588,7 +588,7 @@ namespace MinMax
             editCancelButton =
                 new CEditCancelButton(
                     VSTGUI::CRect(61, 1, 110, 18),
-                    [this](CEditCancelButton* p) { editCanceled(p); }
+                    [this]() { cancelEditMode(); }
                 );
             editCancelButton->setFont(VSTGUI::kNormalFontSmall);
             editCancelButton->setVisible(isEditing);
@@ -599,23 +599,22 @@ namespace MinMax
         {
         }
 
-        void editModeChanged(CEditModeButton* pControl)
+        void toggleEditMode()
         {
-            isEditing = pControl->getState();
+            isEditing = !isEditing;
+            editModeButton->setTitle(isEditing ? u8"Save" : u8"Edit");
             editCancelButton->setVisible(isEditing);
 
-            // 一括でビューに編集フラグを通知
             fretBoard->setEditing(isEditing);
             chordSelecter->setEditing(isEditing);
         }
 
-        void editCanceled(CEditCancelButton* pControl)
+        void cancelEditMode()
         {
             isEditing = false;
-            editModeButton->setState(false);
+            editModeButton->setTitle(u8"Edit");
             editCancelButton->setVisible(false);
 
-            // 一括でビューに編集フラグを通知
             fretBoard->setEditing(false);
             chordSelecter->setEditing(false);
         }
@@ -625,7 +624,7 @@ namespace MinMax
     protected:
 
         VSTGUI::VST3Editor* editor = nullptr;;
-   
+
         bool isEditing = false;
 
         CFretBoard* fretBoard = nullptr;
@@ -633,9 +632,9 @@ namespace MinMax
         CChordSelecter* chordSelecter = nullptr;
 
         CEditModeButton* editModeButton = nullptr;
-        
+
         CEditCancelButton* editCancelButton = nullptr;
- };
+    };
 
     class CFretBoardViewFactory
         : public VSTGUI::ViewCreatorAdapter
