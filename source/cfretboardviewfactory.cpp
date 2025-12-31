@@ -9,7 +9,6 @@
 #include <vstgui/vstgui_uidescription.h>
 
 #include "myparameters.h"
-#include "cchordlabel.h"
 
 namespace MinMax
 {
@@ -82,15 +81,15 @@ namespace MinMax
                 ParamID tag;
             };
 
-            class CChordLabel : public CTextLabel
+            class CChordLabel : public VSTGUI::CTextLabel
             {
             public:
-                CChordLabel(const CRect& size)
+                CChordLabel(const VSTGUI::CRect& size)
                     : CTextLabel(size)
                 {
                 }
 
-                void draw(CDrawContext* context) override
+                void draw(VSTGUI::CDrawContext* context) override
                 {
                     auto str = getText().getString();
                     if (str.empty()) return;
@@ -99,7 +98,7 @@ namespace MinMax
 
                     const auto& map = ChordMap::Instance();
 
-                    UTF8String name =
+                    VSTGUI::UTF8String name =
                         (index >= 0 && index < map.getFlatCount())
                         ? map.getByIndex(index).displayName.c_str()
                         : "---";
@@ -127,14 +126,14 @@ namespace MinMax
                     auto* rootItem = new VSTGUI::CMenuItem(chordMap.getRootName(r).c_str());
 
                     // タイプ用サブメニュー
-                    auto* typeMenu = new VSTGUI::COptionMenu(CRect(0, 0, 0, 0), nullptr, -1);
+                    auto* typeMenu = new VSTGUI::COptionMenu(VSTGUI::CRect(0, 0, 0, 0), nullptr, -1);
 
                     for (int t = 0; t < chordMap.getTypeCount(r); ++t)
                     {
                         auto* typeItem = new VSTGUI::CMenuItem(chordMap.getTypeName(r, t).c_str());
 
                         // ボイシング用サブメニュー
-                        auto* voicingMenu = new VSTGUI::COptionMenu(CRect(0, 0, 0, 0), nullptr, -1);
+                        auto* voicingMenu = new VSTGUI::COptionMenu(VSTGUI::CRect(0, 0, 0, 0), nullptr, -1);
 
                         for (int v = 0; v < chordMap.getVoicingCount(r, t); ++v)
                         {
@@ -167,15 +166,15 @@ namespace MinMax
                 , editor(editor_)
             {
                 // 階層化コードメニュー
-                chordMenu = createChordOptionMenu(CRect(1, 1, 17, 17), editor, PARAM::CHORD_NUM);
+                chordMenu = createChordOptionMenu(VSTGUI::CRect(1, 1, 17, 17), editor, PARAM::CHORD_NUM);
                 chordMenu->setBackColor(VSTGUI::kGreyCColor);
                 addView(chordMenu);
 
                 // コード名表示ラベル
-                CChordLabel* chordLabel = new CChordLabel(CRect(18, 1, 148, 17));
-                chordLabel->setBackColor(kWhiteCColor);
-                chordLabel->setFontColor(kBlackCColor);
-                chordLabel->setFont(kNormalFontSmaller);
+                CChordLabel* chordLabel = new CChordLabel(VSTGUI::CRect(18, 1, 148, 17));
+                chordLabel->setBackColor(VSTGUI::kWhiteCColor);
+                chordLabel->setFontColor(VSTGUI::kBlackCColor);
+                chordLabel->setFont(VSTGUI::kNormalFontSmaller);
                 chordLabel->setListener(editor);
                 chordLabel->setTag(PARAM::CHORD_NUM);
                 addView(chordLabel);
@@ -194,7 +193,7 @@ namespace MinMax
 
             bool updatingFromParam = false;
 
-            VST3Editor* editor{};
+            VSTGUI::VST3Editor* editor{};
         };
 
         class CFretBoard
