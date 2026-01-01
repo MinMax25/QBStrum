@@ -7,8 +7,6 @@
 
 #include "timequeue.h"
 
-#define IS_DEBUG 0
-
 namespace MinMax
 {
 	inline constexpr int SPECIAL_NOTES = -1;
