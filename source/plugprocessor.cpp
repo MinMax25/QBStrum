@@ -7,10 +7,12 @@
 #include <pluginterfaces/base/ibstream.h>
 
 #include "plugcids.h"
-
 #include "plugprocessor.h"
+#include "plugdefine.h"
 #include "parameterframework.h"
 #include "myparameters.h"
+
+#include "debug_log.h"
 
 namespace MinMax
 {
@@ -34,6 +36,16 @@ namespace MinMax
 			event.noteOn.noteId = e.noteId;
 			event.noteOn.pitch = e.pitch;
 			event.noteOn.velocity = e.velocity;
+
+			DebugLog(EventScheduler::Instance().toString().c_str());
+			DebugLog(
+				"[NoteOn ] ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
+				event.noteOn.channel,
+				event.noteOn.noteId,
+				event.noteOn.pitch,
+				event.noteOn.velocity,
+				event.sampleOffset
+			);
 		}
 		else
 		{
@@ -42,6 +54,15 @@ namespace MinMax
 			event.noteOff.noteId = e.noteId;
 			event.noteOff.pitch = e.pitch;
 			event.noteOff.velocity = 0.0f;
+			DebugLog(EventScheduler::Instance().toString().c_str());
+			DebugLog(
+				"[NoteOff] ch=%d noteId=%d pitch=%d vel=%.2f offset=%d",
+				event.noteOff.channel,
+				event.noteOff.noteId,
+				event.noteOff.pitch,
+				event.noteOff.velocity,
+				event.sampleOffset
+			);
 		}
 
 		processData->outputEvents->addEvent(event);
