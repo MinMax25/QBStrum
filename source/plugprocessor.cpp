@@ -27,7 +27,7 @@ namespace MinMax
 
 		event.flags = Event::kIsLive;
 		event.busIndex = 0;
-		event.sampleOffset = e.sampleOffset;
+		event.sampleOffset = 0;//e.sampleOffset;
 
 		if (e.eventType == NoteEventType::On)
 		{
@@ -37,8 +37,8 @@ namespace MinMax
 			event.noteOn.pitch = e.pitch;
 			event.noteOn.velocity = e.velocity;
 
-			DebugLog(EventScheduler::Instance().toString().c_str());
-			DebugLog(
+			DLogWrite(EventScheduler::Instance().toString().c_str());
+			DLogWriteLine(
 				"[NoteOn ] ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
 				event.noteOn.channel,
 				event.noteOn.noteId,
@@ -54,8 +54,8 @@ namespace MinMax
 			event.noteOff.noteId = e.noteId;
 			event.noteOff.pitch = e.pitch;
 			event.noteOff.velocity = 0.0f;
-			DebugLog(EventScheduler::Instance().toString().c_str());
-			DebugLog(
+			DLogWrite(EventScheduler::Instance().toString().c_str());
+			DLogWriteLine(
 				"[NoteOff] ch=%d noteId=%d pitch=%d vel=%.2f offset=%d",
 				event.noteOff.channel,
 				event.noteOff.noteId,
