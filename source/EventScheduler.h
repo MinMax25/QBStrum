@@ -107,25 +107,14 @@ namespace MinMax
 			{
 				if (prev->offTime > onTime)
 				{
-					uint64 adjustedOff = onTime - 1;
-
-					// underflow 対策
-					if (adjustedOff <= currentSampleTime)
+					if (onTime - 1 < currentSampleTime)
 					{
-						// offTime == currentSampleTime は block 内 NoteOff を保証するため意図的
 						prev->offTime = currentSampleTime;
-						onTime = currentSampleTime + numSamples;	
-						// numSamples+は次ブロック送りとなるがそこそこの遅延時間となる
-						// パラメータ化して+1と+numSamplesを切り替えれるようにする
-						// 
-						// CubaseのMIDIイベントログを見るとonTime加算値が1<numSamplesだと同時と判断されているっぽい
-						// Cubase + HALION 7ではそうしないと正常の発音されない
-						// Cubase + 他の音源では正常に発音される
-						// Studio One + HALION 7では正常に発音される
+						onTime = currentSampleTime + 1;
 					}
 					else
 					{
-						prev->offTime = adjustedOff;
+						prev->offTime = onTime - 1;
 					}
 				}
 			}
@@ -144,7 +133,6 @@ namespace MinMax
 			note.noteId = getNewNoteId();
 
 			q.push(note); // onTime 昇順で挿入される前提
-
 		}
 
 		void dispatch()

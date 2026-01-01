@@ -36,18 +36,6 @@ namespace MinMax
 			event.noteOn.noteId = e.noteId;
 			event.noteOn.pitch = e.pitch;
 			event.noteOn.velocity = e.velocity;
-
-			DLogWrite("MIDI Out->");
-			DLogWrite(EventScheduler::Instance().toString().c_str());
-			DLogWriteLine(
-				"[NoteOn ] flg=%d ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
-				event.flags,
-				event.noteOn.channel,
-				event.noteOn.noteId,
-				event.noteOn.pitch,
-				event.noteOn.velocity,
-				event.sampleOffset
-			);
 		}
 		else
 		{
@@ -56,18 +44,6 @@ namespace MinMax
 			event.noteOff.noteId = e.noteId;
 			event.noteOff.pitch = e.pitch;
 			event.noteOff.velocity = 0.0f;
-
-			DLogWrite("MIDI Out->");
-			DLogWrite(EventScheduler::Instance().toString().c_str());
-			DLogWriteLine(
-				"[NoteOff] flg=%d ch=%d noteId=%d pitch=%d vel=%.2f offset=%d",
-				event.flags,
-				event.noteOff.channel,
-				event.noteOff.noteId,
-				event.noteOff.pitch,
-				event.noteOff.velocity,
-				event.sampleOffset
-			);
 		}
 
 		processData->outputEvents->addEvent(event);
@@ -306,18 +282,6 @@ namespace MinMax
 			// ピッチからパラメータＩＤ取得
 			if (event.type == Event::kNoteOnEvent)
 			{
-				//DLogWrite("MIDI In ->");
-				//DLogWrite(EventScheduler::Instance().toString().c_str());
-				//DLogWriteLine(
-				//	"[NoteOn ] flg=%d ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
-				//	event.flags,
-				//	event.noteOn.channel,
-				//	event.noteOn.noteId,
-				//	event.noteOn.pitch,
-				//	event.noteOn.velocity,
-				//	event.sampleOffset
-				//);
-
 				ParamID tag = getParamIdByPitch(event);
 				if (tag > 0)
 				{
@@ -326,17 +290,7 @@ namespace MinMax
 			}
 			else if (event.type == Event::kNoteOffEvent)
 			{
-				//DLogWrite("MIDI In ->");
-				//DLogWrite(EventScheduler::Instance().toString().c_str());
-				//DLogWriteLine(
-				//	"[NoteOff ] flg=%d ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
-				//	event.flags,
-				//	event.noteOff.channel,
-				//	event.noteOff.noteId,
-				//	event.noteOff.pitch,
-				//	event.noteOff.velocity,
-				//	event.sampleOffset
-				//);
+
 			}
 		}
 	}
@@ -357,33 +311,10 @@ namespace MinMax
 			switch (event.type)
 			{
 			case Event::kNoteOnEvent:
-				//DLogWrite("MIDI*In ->");
-				//DLogWrite(EventScheduler::Instance().toString().c_str());
-				//DLogWriteLine(
-				//	"[NoteOn ] flg=%d ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
-				//	event.flags,
-				//	event.noteOn.channel,
-				//	event.noteOn.noteId,
-				//	event.noteOn.pitch,
-				//	event.noteOn.velocity,
-				//	event.sampleOffset
-				//);
-
 				routingProcess(paramid, event);
 				break;
 
 			case Event::kNoteOffEvent:
-				//DLogWrite("MIDI*In ->");
-				//DLogWrite(EventScheduler::Instance().toString().c_str());
-				//DLogWriteLine(
-				//	"[NoteOff ] flg=%d ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
-				//	event.flags,
-				//	event.noteOff.channel,
-				//	event.noteOff.noteId,
-				//	event.noteOff.pitch,
-				//	event.noteOff.velocity,
-				//	event.sampleOffset
-				//);
 				break;
 
 			default:
