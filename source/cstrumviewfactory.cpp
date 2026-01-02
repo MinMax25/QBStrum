@@ -101,7 +101,7 @@ namespace MinMax
                 rcvONote->addView(labStrumTitle);
 
 				// ピッチ・ノート入力
-                CNoteEdit* txtONote = new CNoteEdit(CRect(CPoint(0, 0), CPoint(40, 15)), description->getController(), -1);
+                CNoteEdit* txtONote = new CNoteEdit(CRect(CPoint(0, 0), CPoint(25, 15)), description->getController(), -1);
                 txtONote->setTag(def->tag);
                 txtONote->setBackColor(kWhiteCColor);
                 txtONote->setFontColor(kBlackCColor);
@@ -109,7 +109,7 @@ namespace MinMax
                 rcvONote->addView(txtONote);
 
 				// ノート名表示ラベル
-                CNoteLabel* labONote = new CNoteLabel(CRect(CPoint(0, 0), CPoint(40, 15)));
+                CNoteLabel* labONote = new CNoteLabel(CRect(CPoint(0, 0), CPoint(30, 15)));
                 labONote->setListener(description->getController());
                 labONote->setFont(kNormalFontSmall);
                 labONote->setTag(def->tag);
