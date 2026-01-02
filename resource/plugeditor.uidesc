@@ -63,6 +63,7 @@
 			"STRUM_LENGTH": "1206",
 			"STRUM_SPEED": "1204",
 			"TAG_MUTE_CHANNEL": "1201",
+			"TAG_NEED_SAMPLEBLOCK_ADUST": "1004",
 			"TAG_TRANSPOSE": "1002"
 		},
 		"custom": {
@@ -79,14 +80,14 @@
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
-				"EditorSize": "0, 0, 1340, 828",
-				"SplitViewSize_0_0": "0.8379052369077306661182547031785361468792",
-				"SplitViewSize_0_1": "0.1371571072319202055922460203873924911022",
-				"SplitViewSize_1_0": "0.357855361596010002056544863080489449203",
-				"SplitViewSize_1_1": "0.6371571072319202055922460203873924911022",
-				"SplitViewSize_2_0": "0.720895522388059650786829024582402780652",
-				"SplitViewSize_2_1": "0.2753731343283581933789605500351171940565",
-				"TabSwitchValue": "0",
+				"EditorSize": "0, 0, 1920, 976",
+				"SplitViewSize_0_0": "0.8631578947368421239616509410552680492401",
+				"SplitViewSize_0_1": "0.1157894736842105254392976121380343101919",
+				"SplitViewSize_1_0": "0.3800000000000000044408920985006261616945",
+				"SplitViewSize_1_1": "0.6157894736842105531948732277669478207827",
+				"SplitViewSize_2_0": "0.6999999999999999555910790149937383830547",
+				"SplitViewSize_2_1": "0.2973958333333333592385372412536526098847",
+				"TabSwitchValue": "1",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
@@ -94,7 +95,7 @@
 				"SelectedRow": "21"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "12"
+				"SelectedRow": "28"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -2636,9 +2637,9 @@
 							"font-color": "~ WhiteCColor",
 							"frame-width": "1",
 							"opacity": "1",
-							"origin": "280, 325",
+							"origin": "615, 200",
 							"round-rect-radius": "0",
-							"size": "90, 15",
+							"size": "110, 15",
 							"title": "Sepalate Channel",
 							"transparent": "false",
 							"wants-focus": "true",
@@ -3092,6 +3093,28 @@
 							"text-shadow-offset": "1, 1",
 							"transparent": "false",
 							"value-precision": "2",
+							"wants-focus": "true",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CCheckBox": {
+						"attributes": {
+							"autosize-to-fit": "false",
+							"boxfill-color": "~ WhiteCColor",
+							"boxframe-color": "~ BlackCColor",
+							"checkmark-color": "~ RedCColor",
+							"class": "CCheckBox",
+							"control-tag": "CHANNEL_SEPALATE",
+							"draw-crossbox": "false",
+							"font": "~ NormalFontVerySmall",
+							"font-color": "~ WhiteCColor",
+							"frame-width": "1",
+							"opacity": "1",
+							"origin": "615, 215",
+							"round-rect-radius": "0",
+							"size": "115, 15",
+							"title": "Sampleblock Adust",
+							"transparent": "false",
 							"wants-focus": "true",
 							"wheel-inc-value": "0.1"
 						}

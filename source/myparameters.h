@@ -47,6 +47,7 @@ namespace MinMax
 		CHANNEL_SEPALATE = 1001,
 		TRANSPOSE,
 		SELECTED_ARTICULATION,
+		NEED_SAMPLEBLOCK_ADUST,
 
 		// CHORD
 		CHORD_LSB = 1101,	// DAW受信用
@@ -142,7 +143,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 46;
+	inline constexpr size_t PARAM_MAX = 47;
 
 	// 全パラメータ定義
 	inline const std::array<ParamDef, PARAM_MAX> paramTable =
@@ -152,6 +153,7 @@ namespace MinMax
 			{ PARAM::CHANNEL_SEPALATE, STR16("Channel Sepalate"), STR16(""), VALUE::Bool, SCALE::Linear, std::nullopt, FLAG::HIDDEN, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 			{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::TRANSPOSE_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 			{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::ARTICULATION_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
+			{ PARAM::NEED_SAMPLEBLOCK_ADUST, STR16("Need Sampleblock Adust"), STR16(""), VALUE::Bool, SCALE::Linear, std::nullopt, FLAG::HIDDEN, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 			{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
 			{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
 			{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::HIDDEN, UNIT::CHORD, 0, 1199, 0, 0, 0 },
