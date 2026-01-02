@@ -183,6 +183,8 @@ namespace MinMax
                 : CViewContainer(size)
                 , editor(editor_)
             {
+                setBackgroundColor(VSTGUI::kTransparentCColor);
+
                 // 階層化コードメニュー
                 chordMenu = createChordOptionMenu(VSTGUI::CRect(1, 1, 17, 17), PARAM::CHORD_NUM);
                 chordMenu->setBackColor(VSTGUI::kGreyCColor);
@@ -581,22 +583,22 @@ namespace MinMax
             addView(fretBoard);
 
             // --- Chord Selecter ---
-            chordSelecter = new CChordSelecter(VSTGUI::CRect(300, 1, 450, 19), editor, PARAM::CHORD_NUM);
+            chordSelecter = new CChordSelecter(VSTGUI::CRect(365, 1, 515, 19), editor, PARAM::CHORD_NUM);
             addView(chordSelecter);
 
             // --- Edit / Save Button ---
-            editModeButton = new CEditModeButton(VSTGUI::CRect(10, 1, 60, 18), this);
+            editModeButton = new CEditModeButton(VSTGUI::CRect(75, 1, 125, 18), this);
             editModeButton->setFont(VSTGUI::kNormalFontSmall);
             addView(editModeButton);
 
             // --- Edit Cancel Button ---
-            editCancelButton = new CEditCancelButton(VSTGUI::CRect(61, 1, 110, 18), this);
+            editCancelButton = new CEditCancelButton(VSTGUI::CRect(126, 1, 175, 18), this);
             editCancelButton->setFont(VSTGUI::kNormalFontSmall);
             editCancelButton->setVisible(false);
             addView(editCancelButton);
 
-            // コンストラクタ内で
-            saveButton = new CSaveButton(VSTGUI::CRect(621, 1, 720, 18), this);
+            // 
+            saveButton = new CSaveButton(VSTGUI::CRect(686, 1, 785, 18), this);
             saveButton->setFont(VSTGUI::kNormalFontSmall);
             saveButton->setVisible(false);
             addView(saveButton);
