@@ -107,13 +107,28 @@ namespace MinMax
 			{
 				if (prev->offTime > onTime)
 				{
-					if (onTime - 1 < currentSampleTime)
+					if (onTime == currentSampleTime)
 					{
 						prev->offTime = currentSampleTime;
+						onTime = onTime + 1;
 					}
 					else
 					{
 						prev->offTime = onTime - 1;
+					}
+
+					if (isBlockAdust)
+					{
+						if (prev->offTime < currentSampleTime + numSamples &&
+							onTime < currentSampleTime + numSamples)
+						{
+							onTime = currentSampleTime + numSamples;
+						}
+					}
+
+					if (offTime < onTime)
+					{
+						offTime = onTime + 1;
 					}
 				}
 			}
@@ -262,6 +277,8 @@ namespace MinMax
 		EventScheduler& operator=(const EventScheduler&) = delete;
 		EventScheduler(EventScheduler&&) = default;
 		EventScheduler& operator=(EventScheduler&&) = default;
+
+		bool isBlockAdust = false;
 
 		uint32 numSamples = 0;
 		uint64 currentSampleTime = 0;
