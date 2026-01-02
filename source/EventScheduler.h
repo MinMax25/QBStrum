@@ -107,28 +107,29 @@ namespace MinMax
 			{
 				if (prev->offTime > onTime)
 				{
+					// 直前のオフが自身のオンより後の場合
+					// 直前のオフを前倒しする
 					if (onTime == currentSampleTime)
-					{
+					{	// 自身のオンがブロック頭の場合は直前のオフを調整すると過去ブロック
+						// になってしまうため自身のオンを１サンプル後へずらす
 						prev->offTime = currentSampleTime;
 						onTime = onTime + 1;
 					}
 					else
-					{
+					{	// 直前のオフを自身のオンの１サンプル前へ移動
 						prev->offTime = onTime - 1;
 					}
 
-					if (isBlockAdust)
-					{
-						if (prev->offTime < currentSampleTime + numSamples &&
-							onTime < currentSampleTime + numSamples)
-						{
-							onTime = currentSampleTime + numSamples;
-						}
+					if (offTime <= onTime)
+					{	// 調整の結果自身の音価が１サンプル以下にならないようにする
+						offTime = onTime + 1;
 					}
 
-					if (offTime < onTime)
+					// 同じブロックにオン・オフが混在できない音源対応
+					if (isBlockAdust && prev->pitch == pitch)
 					{
-						offTime = onTime + 1;
+						onTime += numSamples;
+						offTime += numSamples;
 					}
 				}
 			}
