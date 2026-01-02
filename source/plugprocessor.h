@@ -52,7 +52,7 @@ namespace MinMax
 		// 追加メソッド
 		void PLUGIN_API processContext();
 		void PLUGIN_API processParameter();
-		void PLUGIN_API articulationChanged();
+		void PLUGIN_API articulationChanged(int sampleOffset);
 		void PLUGIN_API processEvent();
 		void PLUGIN_API processInnerEvent();
 		void PLUGIN_API routingProcess(ParamID parmid, Event event);

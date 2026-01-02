@@ -25,7 +25,7 @@ namespace MinMax
 
 		Event event{};
 
-		event.flags = Event::kIsLive;
+		event.flags = 0; //Event::kIsLive;
 		event.busIndex = 0;
 		event.sampleOffset = e.sampleOffset;
 
@@ -36,6 +36,18 @@ namespace MinMax
 			event.noteOn.noteId = e.noteId;
 			event.noteOn.pitch = e.pitch;
 			event.noteOn.velocity = e.velocity;
+
+			DLogWrite("MIDI Out->");
+			DLogWrite(EventScheduler::Instance().toString().c_str());
+			DLogWriteLine(
+				"[NoteOn ] flg=%d ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
+				event.flags,
+				event.noteOn.channel,
+				event.noteOn.noteId,
+				event.noteOn.pitch,
+				event.noteOn.velocity,
+				event.sampleOffset
+			);
 		}
 		else
 		{
@@ -44,6 +56,18 @@ namespace MinMax
 			event.noteOff.noteId = e.noteId;
 			event.noteOff.pitch = e.pitch;
 			event.noteOff.velocity = 0.0f;
+
+			DLogWrite("MIDI Out->");
+			DLogWrite(EventScheduler::Instance().toString().c_str());
+			DLogWriteLine(
+				"[NoteOff] flg=%d ch=%d noteId=%d pitch=%d vel=%.2f offset=%d",
+				event.flags,
+				event.noteOff.channel,
+				event.noteOff.noteId,
+				event.noteOff.pitch,
+				event.noteOff.velocity,
+				event.sampleOffset
+			);
 		}
 
 		processData->outputEvents->addEvent(event);
@@ -217,7 +241,7 @@ namespace MinMax
 			{
 				if (prm.isChanged(tag))
 				{
-					articulationChanged();
+					articulationChanged(sampleOffset);
 				}
 				break;
 			}
@@ -232,7 +256,7 @@ namespace MinMax
 		}
 	}
 
-	void PLUGIN_API MyVSTProcessor::articulationChanged()
+	void PLUGIN_API MyVSTProcessor::articulationChanged(int sampleOffset)
 	{
 		constexpr int SPECIAL_NOTES_SAMPLES = 3;
 
@@ -256,7 +280,7 @@ namespace MinMax
 		}
 		if (keySW == 0) return;
 
-		uint64 onTime = scheduler.getCurrentSampleTime();
+		uint64 onTime = scheduler.getCurrentSampleTime() + sampleOffset;
 		uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
 
 		for (int i = 0; i < (prm.get(PARAM::CHANNEL_SEPALATE) ? STRING_COUNT : 1); i++)
@@ -287,10 +311,6 @@ namespace MinMax
 				{
 					routingProcess(tag, event);
 				}
-			}
-			else if (event.type == Event::kNoteOffEvent)
-			{
-
 			}
 		}
 	}
@@ -711,11 +731,11 @@ namespace MinMax
 	{
 		if (data.numSamples > 0)
 		{
-			int32 minBus = std::min(data.numInputs, data.numOutputs);
+			int32 minBus = (std::min)(data.numInputs, data.numOutputs);
 
 			for (int32 i = 0; i < minBus; i++)
 			{
-				int32 minChan = std::min(data.inputs[i].numChannels, data.outputs[i].numChannels);
+				int32 minChan = (std::min)(data.inputs[i].numChannels, data.outputs[i].numChannels);
 				for (int32 c = 0; c < minChan; c++)
 				{
 					if (data.outputs[i].channelBuffers32[c] != data.inputs[i].channelBuffers32[c])

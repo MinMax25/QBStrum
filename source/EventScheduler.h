@@ -110,7 +110,6 @@ namespace MinMax
 					if (onTime - 1 < currentSampleTime)
 					{
 						prev->offTime = currentSampleTime;
-						onTime = currentSampleTime + 1;
 					}
 					else
 					{
