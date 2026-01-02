@@ -271,6 +271,11 @@ namespace MinMax
 		bool isPlaying() const { return state & ProcessContext::kPlaying; }
 		uint64 getCurrentSampleTime() const { return currentSampleTime; }
 
+		void setNeedSampleblockAdust(bool value)
+		{
+			isBlockAdust = value;
+		}
+
 	private:
 		EventScheduler() = default;
 		EventScheduler(const EventScheduler&) = delete;

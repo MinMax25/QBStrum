@@ -37,6 +37,7 @@ namespace MinMax
 			event.noteOn.pitch = e.pitch;
 			event.noteOn.velocity = e.velocity;
 
+#if DEBUG
 			DLogWrite("MIDI Out->");
 			DLogWrite(EventScheduler::Instance().toString().c_str());
 			DLogWriteLine(
@@ -48,6 +49,7 @@ namespace MinMax
 				event.noteOn.velocity,
 				event.sampleOffset
 			);
+#endif
 		}
 		else
 		{
@@ -57,6 +59,7 @@ namespace MinMax
 			event.noteOff.pitch = e.pitch;
 			event.noteOff.velocity = 0.0f;
 
+#if DEBUG
 			DLogWrite("MIDI Out->");
 			DLogWrite(EventScheduler::Instance().toString().c_str());
 			DLogWriteLine(
@@ -68,6 +71,7 @@ namespace MinMax
 				event.noteOff.velocity,
 				event.sampleOffset
 			);
+#endif
 		}
 
 		processData->outputEvents->addEvent(event);
@@ -250,6 +254,12 @@ namespace MinMax
 				ParamValue num = prm.get(PARAM::CHORD_MSB) * 128 + prm.get(PARAM::CHORD_LSB);
 				notifyChordNumberChanged(num);
 				prm.set(PARAM::CHORD_NUM, num);
+				break;
+			}
+			case PARAM::NEED_SAMPLEBLOCK_ADUST:
+			{
+				bool state = prm.get(PARAM::NEED_SAMPLEBLOCK_ADUST) > 0.5;
+				EventScheduler::Instance().setNeedSampleblockAdust(state);
 				break;
 			}
 			}
