@@ -287,8 +287,8 @@ namespace MinMax
 
                 // 初期値設定
                 frameSize = size;
-                boardSize = VSTGUI::CRect(frameSize.left, frameSize.top + 20, frameSize.right, frameSize.bottom - 20);
-                usableHeight = boardSize.getHeight() - outerMargin * 2.0;
+                boardSize = VSTGUI::CRect(frameSize.left + 65, frameSize.top + 20, frameSize.right, frameSize.bottom - 15);
+                usableHeight = boardSize.getHeight() - outerMargin * 2;
                 stringSpacing = usableHeight / (STRING_COUNT - 1);
                 fretSpacing = boardSize.getWidth() / numFrets;
 
@@ -391,7 +391,7 @@ namespace MinMax
                     text.printf("%d", fret);
 
                     // 文字の矩形（中央揃え）
-                    CRect textRect(x - 10, numberY - 10, x + 10, numberY + 2);
+                    CRect textRect(x - 10, numberY - 5, x + 10, numberY + 2);
 
                     pContext->drawString(text, textRect, kCenterText, true);
                 }
@@ -574,7 +574,7 @@ namespace MinMax
             editor = dynamic_cast<VSTGUI::VST3Editor*>(description->getController());
             assert(editor && "CFretBoardView requires VST3Editor");
 
-            setBackgroundColor(VSTGUI::kGreyCColor);
+            setBackgroundColor(VSTGUI::kTransparentCColor);
 
             // --- FretBoard ---
             fretBoard = new CFretBoard(getViewSize(), editor, PARAM::CHORD_NUM);

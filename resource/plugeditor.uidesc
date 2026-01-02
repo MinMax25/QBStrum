@@ -3108,7 +3108,7 @@
 					},
 					"UI:FretBoard View": {
 						"attributes": {
-							"background-color": "~ GreyCColor",
+							"background-color": "~ TransparentCColor",
 							"background-color-draw-style": "filled and stroked",
 							"class": "UI:FretBoard View",
 							"mouse-enabled": "true",
