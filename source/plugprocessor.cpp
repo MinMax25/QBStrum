@@ -598,8 +598,9 @@ namespace MinMax
 
 		uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 		uint64 offTime = onTime + static_cast<uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
+		float velocity = prm.get(PARAM::FNOISE_VELOCITY) / 127;
 
-		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, 127, prm.get(PARAM::FNOISE_CHANNEL) - 1);
+		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, velocity, prm.get(PARAM::FNOISE_CHANNEL) - 1);
 	}
 
 	ParamID MyVSTProcessor::getParamIdByPitch(Event event)
