@@ -32,17 +32,12 @@ namespace MinMax
         }
     };
 
-    // TimeQueue:
-    //   ScheduledNote を onTime 昇順で保持する固定長コンテナ。
-    //   ※前提：各 TimeQueue はモノフォニック（同時に1音のみ）
-    //   - 複数 NoteOn が同じ sampleOffset に存在することはない
-    //   - 同一弦内での競合や補正は addNoteOn で解決済み
+    // ScheduledNote を onTime 昇順で保持する固定長コンテナ。
     class TimeQueue
     {
     public:
         static constexpr size_t Capacity = 64;
 
-        // --- 状態 ---
         bool empty() const noexcept
         {
             return count_ == 0;
@@ -63,7 +58,6 @@ namespace MinMax
             count_ = 0;
         }
 
-        // --- アクセス ---
         ScheduledNote& current() noexcept
         {
             return buf_[0];
@@ -128,26 +122,15 @@ namespace MinMax
                 if (buf_[i].onTime < onTime)
                     result = &buf_[i];
                 else
-                    break; // onTime 昇順なので、以降は不要
+                    break;
             }
             return result;
         }
 
-        std::string toString() const
-        {
-            std::string s;
-            s += "TimeQueue[count=" + std::to_string(count_) + "]\n";
-            for (size_t i = 0; i < count_; ++i)
-            {
-                s += "  ";
-                s += buf_[i].toString();
-                s += "\n";
-            }
-            return s;
-        }
-
     private:
+
         std::array<ScheduledNote, Capacity> buf_{};
+        
         size_t count_ = 0;
     };
 }

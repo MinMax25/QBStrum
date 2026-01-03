@@ -68,8 +68,6 @@ namespace MinMax
 		void process(ProcessData& data)
 		{
 			numSamples = data.numSamples;
-			blockStart = currentSampleTime;
-			blockEnd = blockStart + numSamples;
 
 			if (data.processContext != nullptr)
 			{
@@ -81,9 +79,6 @@ namespace MinMax
 		{
 			auto& q = buffer(stringIndex);
 
-			// ============================================================
-			// 1. 同一 onTime ノートの確認
-			// ============================================================
 			if (ScheduledNote* same = q.findNoteWithOnTime(onTime))
 			{
 				if (same->isSendNoteOn)
@@ -91,7 +86,6 @@ namespace MinMax
 					return;
 				}
 
-				// 未発音 → 内容上書き（channel / noteId は維持）
 				same->offTime = offTime;
 				same->pitch = pitch;
 				same->velocity = velocity;
@@ -100,44 +94,40 @@ namespace MinMax
 				return;
 			}
 
-			// ============================================================
-			// 2. 直前ノート（onTime より前で最後）の補正
-			// ============================================================
 			if (ScheduledNote* prev = q.findLastBefore(onTime))
 			{
 				if (prev->offTime > onTime)
 				{
-					// 直前のオフが自身のオンより後の場合
-					// 直前のオフを前倒しする
 					if (onTime == currentSampleTime)
-					{	// 自身のオンがブロック頭の場合は直前のオフを調整すると過去ブロック
+					{
+						// 自身のオンがブロック頭の場合は直前のオフを調整すると過去ブロック
 						// になってしまうため自身のオンを１サンプル後へずらす
 						prev->offTime = currentSampleTime;
 						onTime = onTime + 1;
 					}
 					else
-					{	// 直前のオフを自身のオンの１サンプル前へ移動
+					{
+						// 直前のオフを自身のオンの１サンプル前へ移動
 						prev->offTime = onTime - 1;
 					}
 
 					if (offTime <= onTime)
-					{	// 調整の結果自身の音価が１サンプル以下にならないようにする
+					{
+						// 調整の結果、自身の音価が１サンプル以下にならないようにする
 						offTime = onTime + 1;
 					}
 
-					// 同じブロックにオン・オフが混在できない音源対応
 					if (isBlockAdust && prev->pitch == pitch)
 					{
+						// 同じブロックにオン・オフが混在できない音源対応
 						onTime += numSamples;
 						offTime += numSamples;
 					}
 				}
 			}
 
-			// ============================================================
-			// 3. 新規ノート生成・追加
-			// ============================================================
 			ScheduledNote note{};
+
 			note.valid = true;
 			note.isSendNoteOn = false;
 			note.onTime = onTime;
@@ -147,77 +137,28 @@ namespace MinMax
 			note.channel = channel;
 			note.noteId = getNewNoteId();
 
-			q.push(note); // onTime 昇順で挿入される前提
+			q.push(note);
 		}
 
 		void dispatch()
 		{
-			// dispatch:
-			//
-			// 役割:
-			//   現在の process block（blockStart ～ blockEnd）に基づき、
-			//   TimeQueue に格納された ScheduledNote から
-			//   NoteOn / NoteOff イベントを Listener に送信する。
-			//
-			// 前提条件:
-			//   - ScheduledNote.onTime < ScheduledNote.offTime が保証されている
-			//   - ScheduledNote は onTime 昇順で TimeQueue に格納されている
-			//   - addNoteOn で音価補正・衝突解決済み
-			//
-			// 処理:
-			//   - block 内に onTime が含まれる場合、まだ送信していなければ NoteOn を送信
-			//   - block 内に offTime が含まれる場合、NoteOff を送信しキューから削除
-			//   - 先頭要素が block 外（future）の場合、それ以降も future のため処理を終了
-			//   - 同一 block 内で onTime / offTime が同時に存在する場合、NoteOn → NoteOff の順で送信
-			for (int i = 0; i < STRING_COUNT; ++i)
+			for (int i = SPECIAL_NOTES; i < STRING_COUNT; ++i)
 			{
-				auto& q = stringQueues[i];
+				auto& q = buffer(i);
 
 				while (!q.empty())
 				{
 					auto& note = q.current();
 
-					// ノートオン送信条件: block 内かつ未送信
-					if (!note.isSendNoteOn && note.onTime >= blockStart && note.onTime < blockEnd)
+					if (isWithinRange(note.onTime))
 					{
-						int sampleOffset = static_cast<int>(note.onTime - blockStart);
-						sendNoteEventCommon(true, sampleOffset, note, note.velocity);
+						outQueue.push(note);
 						note.isSendNoteOn = true;
 					}
 
-					// ノートオフ送信条件: block 内に offTime がある
-					if (note.offTime >= blockStart && note.offTime < blockEnd)
+					if (isWithinRange(note.offTime))
 					{
-						int sampleOffset = static_cast<int>(note.offTime - blockStart);
-						sendNoteEventCommon(false, sampleOffset, note, note.velocity);
-						q.eraseCurrent(); // 送信済みノートは削除
-					}
-					else
-					{
-						// まだ future ノートなので処理終了
-						break;
-					}
-				}
-			}
-
-			// 特殊キューも同様に処理
-			{
-				auto& q = specialQueue;
-				while (!q.empty())
-				{
-					auto& note = q.current();
-
-					if (!note.isSendNoteOn && note.onTime >= blockStart && note.onTime < blockEnd)
-					{
-						int sampleOffset = static_cast<int>(note.onTime - blockStart);
-						sendNoteEventCommon(true, sampleOffset, note, note.velocity);
-						note.isSendNoteOn = true;
-					}
-
-					if (note.offTime >= blockStart && note.offTime < blockEnd)
-					{
-						int sampleOffset = static_cast<int>(note.offTime - blockStart);
-						sendNoteEventCommon(false, sampleOffset, note, note.velocity);
+						outQueue.push(note);
 						q.eraseCurrent();
 					}
 					else
@@ -227,7 +168,14 @@ namespace MinMax
 				}
 			}
 
-			// ブロック終了後のサンプル時刻更新
+			while (!outQueue.empty())
+			{
+				auto& note = outQueue.current();
+				int sampleOffset = static_cast<int>((note.isSendNoteOn ? note.offTime : note.onTime) - currentSampleTime);
+				sendNoteEventCommon(!note.isSendNoteOn, sampleOffset, note, note.velocity);
+				outQueue.eraseCurrent();
+			}
+
 			currentSampleTime += numSamples;
 		}
 
@@ -264,7 +212,7 @@ namespace MinMax
 			std::snprintf(
 				buf, sizeof(buf),
 				"EventScheduler{cur=%llu block=[%llu-%llu) sr=%.1f tempo=%.1f}",
-				currentSampleTime, blockStart, blockEnd, sampleRate, tempo
+				currentSampleTime, currentSampleTime, currentSampleTime + numSamples - 1, sampleRate, tempo
 			);
 			return buf;
 		}
@@ -287,23 +235,19 @@ namespace MinMax
 		bool isBlockAdust = false;
 
 		uint32 numSamples = 0;
+
 		uint64 currentSampleTime = 0;
-		uint64 blockStart = 0;
-		uint64 blockEnd = 0;
 
 		IScheduledEventListener* listener = nullptr;
+
 		TimeQueue stringQueues[STRING_COUNT];
 		TimeQueue specialQueue;
 
-		TimeQueue& buffer(uint32 number)
-		{
-			if (number == SPECIAL_NOTES) return specialQueue;
-			if (number < STRING_COUNT) return stringQueues[number];
-			return specialQueue;
-		}
+		TimeQueue outQueue;
 
 		uint32 noteid = 0;
 
+		// Context From DAW
 		uint32 state = 0;
 		double sampleRate = 0;
 		TSamples projectTimeSamples = 0;
@@ -338,7 +282,10 @@ namespace MinMax
 				projectTimeSamples = ctx->projectTimeSamples;
 			}
 
-			if (systemTime != ctx->systemTime) systemTime = ctx->systemTime;
+			if (systemTime != ctx->systemTime) 
+			{
+				systemTime = ctx->systemTime;
+			}
 
 			if (continousTimeSamples != ctx->continousTimeSamples)
 			{
@@ -411,6 +358,18 @@ namespace MinMax
 			{
 				samplesToNextClock = ctx->samplesToNextClock;
 			}
+		}
+
+		TimeQueue& buffer(uint32 number)
+		{
+			if (number == SPECIAL_NOTES) return specialQueue;
+			if (number < STRING_COUNT) return stringQueues[number];
+			return specialQueue;
+		}
+
+		bool isWithinRange(uint64 time)
+		{
+			return time >= currentSampleTime && time < currentSampleTime + numSamples;
 		}
 
 		void sendNoteEventCommon(bool on, uint32 sampleOffset, const ScheduledNote& note, float velocity)

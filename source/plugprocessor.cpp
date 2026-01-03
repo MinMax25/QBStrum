@@ -38,7 +38,6 @@ namespace MinMax
 			event.noteOn.velocity = e.velocity;
 
 #if DEBUG
-			DLogWrite("MIDI Out->");
 			DLogWrite(EventScheduler::Instance().toString().c_str());
 			DLogWriteLine(
 				"[NoteOn ] flg=%d ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
@@ -60,7 +59,6 @@ namespace MinMax
 			event.noteOff.velocity = 0.0f;
 
 #if DEBUG
-			DLogWrite("MIDI Out->");
 			DLogWrite(EventScheduler::Instance().toString().c_str());
 			DLogWriteLine(
 				"[NoteOff] flg=%d ch=%d noteId=%d pitch=%d vel=%.2f offset=%d",
@@ -103,6 +101,7 @@ namespace MinMax
 		addEventInput(STR16("Event In"), 1);
 		addEventOutput(STR16("Event Out"), 16);
 
+		// init parameter strage
 		prm.initialize(paramTable);
 
 		return kResultOk;
