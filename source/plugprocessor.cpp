@@ -417,7 +417,6 @@ namespace MinMax
 
 	void MyVSTProcessor::trigBrush(Event event, bool isDown)
 	{
-		const int BRUSH_PER_MS = 2;
 		const float BRUSH_DECAY = 0.98f;
 
 		// 現在鳴っている音をすべて消す
@@ -444,7 +443,7 @@ namespace MinMax
 		{
 			int i = strnum.data[s];
 
-			uint64 offsetSamples = samplesPerMs * (BRUSH_PER_MS * strcnt);
+			uint64 offsetSamples = samplesPerMs * strcnt;
 
 			uint64 onTime = baseOnTime + offsetSamples;
 

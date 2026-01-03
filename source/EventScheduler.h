@@ -170,7 +170,7 @@ namespace MinMax
 
 			while (!outQueue.empty())
 			{
-				auto& note = outQueue.current();
+ 				auto& note = outQueue.current();
 				int sampleOffset = static_cast<int>((note.isSendNoteOn ? note.offTime : note.onTime) - currentSampleTime);
 				sendNoteEventCommon(!note.isSendNoteOn, sampleOffset, note, note.velocity);
 				outQueue.eraseCurrent();
