@@ -24,7 +24,7 @@ namespace MinMax
     {
         /// 定数
         inline static const char* STR_USERPROFILE = "USERPROFILE";
-        inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/DrumJack/settings";
+        inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrim";
 
         inline static const VSTGUI::UTF8String TITLE = "QBStrum";
         inline static const VSTGUI::UTF8String FILTER = "Chord Preset(.json)";
