@@ -26,9 +26,9 @@ namespace MinMax
         inline static const char* STR_USERPROFILE = "USERPROFILE";
         inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrim";
 
-        inline static const VSTGUI::UTF8String TITLE = "QBStrum";
-        inline static const VSTGUI::UTF8String FILTER = "Chord Preset(.json)";
-        inline static const VSTGUI::UTF8String FILE_EXT = "json";
+        inline static const std::string TITLE = "QBStrum";
+        inline static const std::string FILTER = "Chord Preset(.json)";
+        inline static const std::string FILE_EXT = "json";
 
         // プリセットパスを取得する
         inline static std::filesystem::path getPresetPath()
@@ -719,10 +719,10 @@ namespace MinMax
 
         void saveChordMap()
         {
-            showDialog(saveButton, VSTGUI::CNewFileSelector::kSelectSaveFile, [this](std::string) { savePreset(); });
+            showDialog(saveButton, VSTGUI::CNewFileSelector::kSelectSaveFile, [this](std::string) { savePreset(filename); });
         }
 
-        void savePreset()
+        void savePreset(std::string path)
         {
             //ChordMap::Instance().saveToFile();
             saveButton->setVisible(false);
@@ -757,7 +757,7 @@ namespace MinMax
 
             std::string defaultName = filename.empty() ? "NewPreset.json" : std::filesystem::path(filename).filename().string();
 
-            selector->setTitle(Files::TITLE);
+            selector->setTitle(Files::TITLE.c_str());
 
             if (!filename.empty())
             {
@@ -767,7 +767,7 @@ namespace MinMax
 
             selector->setDefaultSaveName(defaultName.c_str());
 
-            selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER, Files::FILE_EXT));
+            selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER.c_str(), Files::FILE_EXT.c_str()));
 
             pControl->getFrame()->setFocusView(nullptr);
 
