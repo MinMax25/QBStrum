@@ -43,8 +43,8 @@ namespace MinMax
         // プリセットディレクトリを作成する
         inline static void createPresetDirectory()
         {
-            std::string p = getPresetPath().string();
-            if (!std::filesystem::exists(getPresetPath().string()))
+            auto p = getPresetPath();
+            if (!std::filesystem::exists(p))
             {
                 std::filesystem::create_directories(p);
             }
@@ -253,9 +253,7 @@ namespace MinMax
                 addView(chordLabel);
             }
 
-            ~CChordSelecter()
-            {
-            }
+            ~CChordSelecter() {}
 
             void setEditing(bool state)
             {
@@ -665,7 +663,7 @@ namespace MinMax
 
     protected:
 
-        VSTGUI::VST3Editor* editor = nullptr;;
+        VSTGUI::VST3Editor* editor = nullptr;
 
         CFretBoard* fretBoard = nullptr;
 
