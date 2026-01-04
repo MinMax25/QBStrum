@@ -2,18 +2,67 @@
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
 
+#include <filesystem>
+#include <vector>
+#include <base/source/fstring.h>
+#include <public.sdk/source/vst/vstguieditor.h>
+#include <public.sdk/source/vst/vsteditcontroller.h>
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/uidescription/iuidescription.h>
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/vstgui_uidescription.h>
+#include <vstgui/vstgui.h>
+#include <rapidjson/document.h>
 
 #include "myparameters.h"
 
-#include "debug_log.h"
-
 namespace MinMax
 {
+    // プリセットファイル操作
+    const struct Files 
+    {
+        /// 定数
+        inline static const char* STR_USERPROFILE = "USERPROFILE";
+        inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/DrumJack/settings";
+
+        inline static const VSTGUI::UTF8String TITLE = "QBStrum";
+        inline static const VSTGUI::UTF8String FILTER = "Chord Preset(.json)";
+        inline static const VSTGUI::UTF8String FILE_EXT = "json";
+
+        // プリセットパスを取得する
+        inline static std::filesystem::path getPresetPath()
+        {
+            return std::filesystem::path(getenv(STR_USERPROFILE)).append(PRESET_ROOT).make_preferred();
+        }
+
+        // プリセットディレクトリを作成する
+        inline static void createPresetDirectory()
+        {
+            std::string p = getPresetPath().string();
+            if (!std::filesystem::exists(getPresetPath().string()))
+            {
+                std::filesystem::create_directories(p);
+            }
+        }
+
+        // プリセットファイルのパス一覧を取得する 
+        inline static tresult getPresetFiles(std::vector<std::string>& file_names)
+        {
+            std::filesystem::directory_iterator iter(getPresetPath()), end;
+            std::error_code err;
+
+            for (; iter != end && !err; iter.increment(err))
+            {
+                const std::filesystem::directory_entry entry = *iter;
+                if (std::filesystem::path(entry.path().string()).extension() != ".json") continue;
+                file_names.push_back(entry.path().string());
+            }
+
+            return kResultTrue;
+        }
+    };
+
     //
     // フレットボード
     // 表示・編集用
@@ -624,6 +673,8 @@ namespace MinMax
         
         VSTGUI::CTextButton* saveButton = nullptr;
 
+        std::string filename;
+
         bool isEditing = false;
 
         StringSet originalPressedFrets;
@@ -668,7 +719,12 @@ namespace MinMax
 
         void saveChordMap()
         {
-            ChordMap::Instance().saveToFile();
+            showDialog(saveButton, VSTGUI::CNewFileSelector::kSelectSaveFile, [this](std::string) { savePreset(); });
+        }
+
+        void savePreset()
+        {
+            //ChordMap::Instance().saveToFile();
             saveButton->setVisible(false);
         }
 
@@ -688,6 +744,47 @@ namespace MinMax
 
             // 編集終了後、元の状態として保持しておく
             originalPressedFrets = pressed;
+        }
+
+        // ファイルダイアログ表示
+        tresult showDialog(VSTGUI::CControl* pControl, VSTGUI::CNewFileSelector::Style style, std::function<void(std::string path)> fileSelected)
+        {
+            tresult result = kResultFalse;
+            Files::createPresetDirectory();
+
+            auto* selector = VSTGUI::CNewFileSelector::create(pControl->getFrame(), style);
+            if (selector == nullptr) return result;
+
+            std::string defaultName = getFileNameOnly(filename);
+
+            selector->setTitle(Files::TITLE);
+            if (!filename.empty())
+            {
+                std::filesystem::path p(filename);
+                selector->setInitialDirectory(p.parent_path().string().c_str());
+            }
+            selector->setDefaultSaveName(defaultName.c_str());
+            selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER, Files::FILE_EXT));
+
+            pControl->getFrame()->setFocusView(nullptr);
+            if (selector->runModal() && (int)selector->getNumSelectedFiles() == 1)
+            {
+                filename = selector->getSelectedFile(0);
+                fileSelected(filename);
+            }
+
+            selector->forget();
+
+            return result;
+        }
+
+        std::string getFileNameOnly(const std::string& fullPath)
+        {
+            if (fullPath.empty())
+                return "NewPreset.json";
+
+            std::filesystem::path p(fullPath);
+            return p.filename().string();
         }
     };
 
