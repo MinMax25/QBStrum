@@ -144,7 +144,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 48;
+	inline constexpr size_t PARAM_MAX = 47;
 
 	// 全パラメータ定義
 	inline const std::array<ParamDef, PARAM_MAX> paramTable =
@@ -176,8 +176,7 @@ namespace MinMax
 			{ PARAM::STRINGS_DOWN_HIGH, STR16("Strings Down High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 3, 0, 0 },
 			{ PARAM::STRINGS_DOWN_LOW, STR16("Strings Down Low"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 1, 0, 0 },
 			{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 77, 0, 0 },
-			{ PARAM::BRUSH_UP, STR16("Brush Up"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,            UNIT::TRIGGER, 0, 1, 76, 0, 0 },
-			{ PARAM::BRUSH_DOWN, STR16("Brush Down"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,        UNIT::TRIGGER, 0, 1, 74, 0, 0 },
+			{ PARAM::BRUSH_DOWN, STR16("Brush"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,             UNIT::TRIGGER, 0, 1, 74, 0, 0 },
 			{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,              UNIT::TRIGGER, 0, 1, 63, 0, 0 },
 			{ PARAM::UP, STR16("Up"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,                        UNIT::TRIGGER, 0, 1, 62, 0, 0 },
 			{ PARAM::DOWN_HIGH, STR16("Down High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 61, 0, 0 },

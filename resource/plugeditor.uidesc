@@ -114,7 +114,7 @@
 					"mouse-enabled": "true",
 					"opacity": "1",
 					"origin": "0, 0",
-					"size": "815, 580",
+					"size": "815, 560",
 					"transparent": "false",
 					"wants-focus": "false"
 				},
@@ -1329,7 +1329,7 @@
 							"min-value": "0",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "735, 560",
+							"origin": "735, 545",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "70, 15",
@@ -3008,7 +3008,7 @@
 							"class": "UI:FretBoard View",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "10, 390",
+							"origin": "10, 380",
 							"size": "795, 170",
 							"transparent": "false",
 							"wants-focus": "false"
