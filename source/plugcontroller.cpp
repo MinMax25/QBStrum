@@ -13,6 +13,7 @@
 #include "plugcontroller.h"
 #include "parameterframework.h"
 #include "myparameters.h"
+#include "myvst3editor.h"
 
 namespace MinMax
 {
@@ -101,7 +102,8 @@ namespace MinMax
 	{
 		if (FIDStringsEqual(name, Vst::ViewType::kEditor))
 		{
-			auto* view = new VSTGUI::VST3Editor(this, "view", "plugeditor.uidesc");
+			//auto* view = new VSTGUI::VST3Editor(this, "view", "plugeditor.uidesc");
+			auto* view = new MyVST3Editor(this, "view", "plugeditor.uidesc");
 			return view;
 		}
 		return nullptr;
