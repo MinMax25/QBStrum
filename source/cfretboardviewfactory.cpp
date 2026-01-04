@@ -755,18 +755,22 @@ namespace MinMax
             auto* selector = VSTGUI::CNewFileSelector::create(pControl->getFrame(), style);
             if (selector == nullptr) return result;
 
-            std::string defaultName = getFileNameOnly(filename);
+            std::string defaultName = filename.empty() ? "NewPreset.json" : std::filesystem::path(filename).filename().string();
 
             selector->setTitle(Files::TITLE);
+
             if (!filename.empty())
             {
                 std::filesystem::path p(filename);
                 selector->setInitialDirectory(p.parent_path().string().c_str());
             }
+
             selector->setDefaultSaveName(defaultName.c_str());
+
             selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER, Files::FILE_EXT));
 
             pControl->getFrame()->setFocusView(nullptr);
+
             if (selector->runModal() && (int)selector->getNumSelectedFiles() == 1)
             {
                 filename = selector->getSelectedFile(0);
@@ -776,15 +780,6 @@ namespace MinMax
             selector->forget();
 
             return result;
-        }
-
-        std::string getFileNameOnly(const std::string& fullPath)
-        {
-            if (fullPath.empty())
-                return "NewPreset.json";
-
-            std::filesystem::path p(fullPath);
-            return p.filename().string();
         }
     };
 

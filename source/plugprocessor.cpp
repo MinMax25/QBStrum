@@ -12,8 +12,6 @@
 #include "parameterframework.h"
 #include "myparameters.h"
 
-#include "debug_log.h"
-
 namespace MinMax
 {
 #pragma region Implements
@@ -36,19 +34,6 @@ namespace MinMax
 			event.noteOn.noteId = e.noteId;
 			event.noteOn.pitch = e.pitch;
 			event.noteOn.velocity = e.velocity;
-
-#if DEBUG
-			DLogWrite(EventScheduler::Instance().toString().c_str());
-			DLogWriteLine(
-				"[NoteOn ] flg=%d ch=%d noteId=%d pitch%d vel=%.2f offset=%d",
-				event.flags,
-				event.noteOn.channel,
-				event.noteOn.noteId,
-				event.noteOn.pitch,
-				event.noteOn.velocity,
-				event.sampleOffset
-			);
-#endif
 		}
 		else
 		{
@@ -57,19 +42,6 @@ namespace MinMax
 			event.noteOff.noteId = e.noteId;
 			event.noteOff.pitch = e.pitch;
 			event.noteOff.velocity = 0.0f;
-
-#if DEBUG
-			DLogWrite(EventScheduler::Instance().toString().c_str());
-			DLogWriteLine(
-				"[NoteOff] flg=%d ch=%d noteId=%d pitch=%d vel=%.2f offset=%d",
-				event.flags,
-				event.noteOff.channel,
-				event.noteOff.noteId,
-				event.noteOff.pitch,
-				event.noteOff.velocity,
-				event.sampleOffset
-			);
-#endif
 		}
 
 		processData->outputEvents->addEvent(event);
