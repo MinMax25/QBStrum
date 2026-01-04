@@ -24,7 +24,7 @@ namespace MinMax
     {
         /// 定数
         inline static const char* STR_USERPROFILE = "USERPROFILE";
-        inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrim";
+        inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum";
 
         inline static const std::string TITLE = "QBStrum";
         inline static const std::string FILTER = "Chord Preset(.json)";
@@ -33,7 +33,11 @@ namespace MinMax
         // プリセットパスを取得する
         inline static std::filesystem::path getPresetPath()
         {
-            return std::filesystem::path(getenv(STR_USERPROFILE)).append(PRESET_ROOT).make_preferred();
+            const char* home = getenv(STR_USERPROFILE);
+            if (!home)
+                return std::filesystem::current_path();
+
+            return std::filesystem::path(home).append(PRESET_ROOT).make_preferred();
         }
 
         // プリセットディレクトリを作成する
@@ -719,7 +723,14 @@ namespace MinMax
 
         void saveChordMap()
         {
-            showDialog(saveButton, VSTGUI::CNewFileSelector::kSelectSaveFile, [this](std::string) { savePreset(filename); });
+            showDialog(
+                saveButton,
+                VSTGUI::CNewFileSelector::kSelectSaveFile,
+                [this](const std::string& path)
+                {
+                    savePreset(path);
+                }
+            );
         }
 
         void savePreset(std::string path)
