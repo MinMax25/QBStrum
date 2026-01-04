@@ -512,9 +512,9 @@ namespace MinMax
             map.Deserialize(doc);
             map.buildFlatTable();
 
-            string filename = path.filename().string();
-            size_t dot = filename.find_last_of('.');
-            map.Name = filename.substr(0, dot);
+            string presetFileName = path.filename().string();
+            size_t dot = presetFileName.find_last_of('.');
+            map.Name = presetFileName.substr(0, dot);
 
             map.presetPath = path;
 

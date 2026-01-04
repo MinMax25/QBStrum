@@ -677,7 +677,7 @@ namespace MinMax
         
         VSTGUI::CTextButton* saveButton = nullptr;
 
-        std::string filename;
+        std::string presetFileName;
 
         bool isEditing = false;
 
@@ -758,21 +758,20 @@ namespace MinMax
         }
 
         // ファイルダイアログ表示
-        tresult showDialog(VSTGUI::CControl* pControl, VSTGUI::CNewFileSelector::Style style, std::function<void(std::string path)> fileSelected)
+        void showDialog(VSTGUI::CControl* pControl, VSTGUI::CNewFileSelector::Style style, std::function<void(std::string path)> fileSelected)
         {
-            tresult result = kResultFalse;
             Files::createPresetDirectory();
 
             auto* selector = VSTGUI::CNewFileSelector::create(pControl->getFrame(), style);
-            if (selector == nullptr) return result;
+            if (selector == nullptr) return;
 
-            std::string defaultName = filename.empty() ? "NewPreset.json" : std::filesystem::path(filename).filename().string();
+            std::string defaultName = presetFileName.empty() ? "NewPreset.json" : std::filesystem::path(presetFileName).filename().string();
 
             selector->setTitle(Files::TITLE.c_str());
 
-            if (!filename.empty())
+            if (!presetFileName.empty())
             {
-                std::filesystem::path p(filename);
+                std::filesystem::path p(presetFileName);
                 selector->setInitialDirectory(p.parent_path().string().c_str());
             }
 
@@ -784,13 +783,13 @@ namespace MinMax
 
             if (selector->runModal() && (int)selector->getNumSelectedFiles() == 1)
             {
-                filename = selector->getSelectedFile(0);
-                fileSelected(filename);
+                presetFileName = selector->getSelectedFile(0);
+                fileSelected(presetFileName);
             }
 
             selector->forget();
 
-            return result;
+            return;
         }
     };
 
