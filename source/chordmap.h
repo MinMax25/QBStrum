@@ -306,7 +306,7 @@ namespace MinMax
         // 現在の ChordMap 内容を JSON ファイルに保存
         void saveToFile(std::string path)
         {
-            std::filesystem::path presetPath(path);
+            presetPath = std::filesystem::path(path);
 
             if (!modified) return; // 変更がないならスキップ
 

@@ -208,7 +208,13 @@ namespace MinMax
                 void draw(VSTGUI::CDrawContext* context) override
                 {
                     auto str = getText().getString();
-                    if (str.empty()) return;
+
+                    if (str.empty())
+                    {
+                        drawBack(context);
+                        return;
+                    }
+                    
                     if (!std::isdigit(static_cast<unsigned char>(str[0])) && str[0] != '-')
                         return;
 
@@ -655,9 +661,7 @@ namespace MinMax
             addView(saveButton);
         }
 
-        ~CFretBoardView()
-        {
-        }
+        ~CFretBoardView() override { }
 
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
@@ -726,15 +730,10 @@ namespace MinMax
                 VSTGUI::CNewFileSelector::kSelectSaveFile,
                 [this](const std::string& path)
                 {
-                    savePreset(path);
+                    ChordMap::Instance().saveToFile(path);
+                    saveButton->setVisible(false);
                 }
             );
-        }
-
-        void savePreset(std::string path)
-        {
-            //ChordMap::Instance().saveToFile();
-            saveButton->setVisible(false);
         }
 
         void saveEdits()
@@ -756,7 +755,7 @@ namespace MinMax
         }
 
         // ファイルダイアログ表示
-        void showDialog(VSTGUI::CControl* pControl, VSTGUI::CNewFileSelector::Style style, std::function<void(std::string path)> fileSelected)
+        void showDialog(VSTGUI::CControl* pControl, VSTGUI::CNewFileSelector::Style style, std::function<void(const std::string& path)> fileSelected)
         {
             Files::createPresetDirectory();
 
