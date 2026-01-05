@@ -3,6 +3,7 @@
 #include <array>
 #include <base/source/fstring.h>
 #include <pluginterfaces/vst/ivstevents.h>
+#include <pluginterfaces/vst/vsttypes.h>
 
 namespace MinMax
 {
