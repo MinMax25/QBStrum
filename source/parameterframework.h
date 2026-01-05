@@ -1,17 +1,17 @@
 #pragma once
 
-#include <assert.h>
-#include <optional>
-#include <memory>
-#include <vector>
 #include <algorithm>
-#include <cmath>
-#include <unordered_map>
+#include <assert.h>
+#include <base/source/fobject.h>
 #include <base/source/fstring.h>
+#include <cmath>
+#include <memory>
+#include <optional>
+#include <pluginterfaces/base/ustring.h>
 #include <public.sdk/source/vst/utility/stringconvert.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
-#include <pluginterfaces/base/ustring.h>
-#include <base/source/fobject.h>
+#include <unordered_map>
+#include <vector>
 
 namespace ParameterFramework
 {
