@@ -4,13 +4,13 @@
 #pragma once
 
 #include <vstgui/plugin-bindings/vst3editor.h>
-#include <vstgui/vstgui_uidescription.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
+#include <vstgui/vstgui_uidescription.h>
 
-#include "plugdefine.h"
-#include "cnotelabel.h"
 #include "cnoteedit.h"
+#include "cnotelabel.h"
 #include "myparameters.h"
+#include "plugdefine.h"
 
 namespace MinMax
 {
