@@ -25,15 +25,6 @@
 
 namespace MinMax
 {
-    // メニュー要素追加
-    template<typename F>
-    inline void addCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb)
-    {
-        auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(title));
-        item->setActions(std::forward<F>(cb));
-        menu->addEntry(item);
-    }
-
     // フレットボードビュー
     class CFretBoardView
         : public VSTGUI::CViewContainer
@@ -106,6 +97,22 @@ namespace MinMax
             menu->forget();
         }
 
+        static void popupEditMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
+        {
+            auto* menu = new VSTGUI::COptionMenu();
+
+            addCommand(menu, "Edit", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+            addCommand(menu, "Commit Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+            addCommand(menu, "Cancel Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+
+            VSTGUI::CRect r = anchor->getViewSize();
+            VSTGUI::CPoint p(r.left, r.bottom);
+            anchor->localToFrame(p);
+
+            menu->popup(frame, p);
+            menu->forget();
+        }
+
         static VSTGUI::COptionMenu* createOpenPresetMenu()
         {
             auto* menu = new VSTGUI::COptionMenu();
@@ -133,22 +140,6 @@ namespace MinMax
             }
 
             return menu;
-        }
-
-        static void popupEditMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
-        {
-            auto* menu = new VSTGUI::COptionMenu();
-
-            addCommand(menu, "Edit", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
-            addCommand(menu, "Commit Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
-            addCommand(menu, "Cancel Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
-
-            VSTGUI::CRect r = anchor->getViewSize();
-            VSTGUI::CPoint p(r.left, r.bottom);
-            anchor->localToFrame(p);
-
-            menu->popup(frame, p);
-            menu->forget();
         }
 
         void saveChordMap()
@@ -213,6 +204,15 @@ namespace MinMax
             selector->forget();
 
             return;
+        }
+
+        // メニュー要素追加
+        template<typename F>
+        static void addCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb)
+        {
+            auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(title));
+            item->setActions(std::forward<F>(cb));
+            menu->addEntry(item);
         }
     };
 
