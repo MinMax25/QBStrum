@@ -64,20 +64,15 @@ namespace MinMax
     protected:
         VSTGUI::VST3Editor* editor = nullptr;
 
+        std::string presetFileName;
+
+        StringSet originalPressedFrets;
+
         CFretBoard* fretBoard = nullptr;
 
         CChordSelecter* chordSelecter = nullptr;
 
         CMenuButton* fileButton = nullptr;
-
-        CMenuButton* editButton = nullptr;
-
-        std::string presetFileName;
-
-        bool isEditing = false;
-
-        StringSet originalPressedFrets;
-
         static void popupFileMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
         {
             auto* menu = new VSTGUI::COptionMenu();
@@ -97,6 +92,7 @@ namespace MinMax
             menu->forget();
         }
 
+        CMenuButton* editButton = nullptr;
         static void popupEditMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
         {
             auto* menu = new VSTGUI::COptionMenu();
@@ -142,20 +138,7 @@ namespace MinMax
             return menu;
         }
 
-        void saveChordMap()
-        {
-            if (!fileButton) return;
-
-            showDialog(
-                fileButton, 
-                VSTGUI::CNewFileSelector::kSelectSaveFile,
-                [this](const std::string& path)
-                {
-                    ChordMap::Instance().saveToFile(path);
-                }
-            );
-        }
-
+        // コードボイシングの保存
         void saveEdits()
         {
             // 現在の押弦情報を取得
@@ -169,6 +152,21 @@ namespace MinMax
 
             // 編集終了後、元の状態として保持しておく
             originalPressedFrets = pressed;
+        }
+
+        // コードプリセットの保存
+        void saveChordMap()
+        {
+            if (!fileButton) return;
+
+            showDialog(
+                fileButton,
+                VSTGUI::CNewFileSelector::kSelectSaveFile,
+                [this](const std::string& path)
+                {
+                    ChordMap::Instance().saveToFile(path);
+                }
+            );
         }
 
         // ファイルダイアログ表示
