@@ -141,11 +141,6 @@ namespace MinMax
 
         ~CChordSelecter() {}
 
-        void setEditing(bool state)
-        {
-            chordMenu->setVisible(!state); // 編集時はメニュー非表示
-        }
-
         CLASS_METHODS(CChordSelecter, CViewContainer)
 
     protected:
