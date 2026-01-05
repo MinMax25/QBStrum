@@ -2,9 +2,9 @@
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
 
-#include <vector>
 #include <base/source/fstring.h>
 #include <public.sdk/source/vst/vstguieditor.h>
+#include <vector>
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/vstgui.h>
 

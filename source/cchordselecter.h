@@ -1,11 +1,11 @@
 #pragma once
 
 #include <filesystem>
-#include <string>
-#include <public.sdk/source/vst/vstguieditor.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
-#include <vstgui/plugin-bindings/vst3editor.h>
+#include <public.sdk/source/vst/vstguieditor.h>
+#include <string>
 #include <vstgui/lib/vstguibase.h>
+#include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/vstgui.h>
 
 #include "myparameters.h"
