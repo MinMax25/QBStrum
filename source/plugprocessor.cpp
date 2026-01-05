@@ -2,15 +2,15 @@
 // Copyright(c) 2025 MinMax.
 //------------------------------------------------------------------------
 
+#include <pluginterfaces/base/ibstream.h>
 #include <pluginterfaces/vst/ivstparameterchanges.h>
 #include <vstgui/vstgui_uidescription.h>
-#include <pluginterfaces/base/ibstream.h>
 
-#include "plugcids.h"
-#include "plugprocessor.h"
-#include "plugdefine.h"
-#include "parameterframework.h"
 #include "myparameters.h"
+#include "parameterframework.h"
+#include "plugcids.h"
+#include "plugdefine.h"
+#include "plugprocessor.h"
 
 namespace MinMax
 {

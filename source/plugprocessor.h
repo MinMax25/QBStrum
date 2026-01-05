@@ -4,15 +4,20 @@
 
 #pragma once
 
+#include <pluginterfaces/base/fplatform.h>
 #include <pluginterfaces/base/ftypes.h>
+#include <pluginterfaces/base/funknown.h>
+#include <pluginterfaces/base/ibstream.h>
+#include <pluginterfaces/vst/ivstaudioprocessor.h>
+#include <pluginterfaces/vst/ivstmessage.h>
+#include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/utility/ringbuffer.h>
 #include <public.sdk/source/vst/vstaudioeffect.h>
 
-#include "myparameters.h"
 #include "chordmap.h"
-#include "eventscheduler.h"
-#include "parameterframework.h"
 #include "plugdefine.h"
+#include "eventscheduler.h"
+#include "myparameters.h"
 
 namespace MinMax
 {
