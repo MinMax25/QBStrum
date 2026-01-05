@@ -1,6 +1,10 @@
 #pragma once
 
 #include <array>
+#include <cstdio>
+#include <sal.h>
+#include <string>
+#include <pluginterfaces/base/ftypes.h>
 
 namespace MinMax
 {
