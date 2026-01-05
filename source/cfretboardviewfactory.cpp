@@ -48,8 +48,11 @@ namespace MinMax
         StringSet originalPressedFrets;
 
         CFretBoard* fretBoard = nullptr;
+
         CChordSelecter* chordSelecter = nullptr;
+
         CMenuButton* fileButton = nullptr;
+
         CMenuButton* editButton = nullptr;
 
         void initFretBoard()
