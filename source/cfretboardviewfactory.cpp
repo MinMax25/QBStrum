@@ -3,25 +3,25 @@
 //------------------------------------------------------------------------
 #pragma once
 
-#include <filesystem>
-#include <vector>
-#include <string>
 #include <base/source/fstring.h>
-#include <public.sdk/source/vst/vstguieditor.h>
+#include <filesystem>
 #include <public.sdk/source/vst/vsteditcontroller.h>
+#include <public.sdk/source/vst/vstguieditor.h>
+#include <rapidjson/document.h>
+#include <string>
+#include <vector>
+#include <vstgui/lib/vstguibase.h>
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/uidescription/iuidescription.h>
-#include <vstgui/lib/vstguibase.h>
-#include <vstgui/vstgui_uidescription.h>
 #include <vstgui/vstgui.h>
-#include <rapidjson/document.h>
+#include <vstgui/vstgui_uidescription.h>
 
-#include "myparameters.h"
-#include "files.h"
+#include "cchordselecter.h"
 #include "cfretboard.h"
 #include "cmenubutton.h"
-#include "cchordselecter.h"
+#include "files.h"
+#include "myparameters.h"
 
 namespace MinMax
 {
