@@ -329,11 +329,47 @@ namespace MinMax
         class CFretBoard
             : public VSTGUI::CControl
         {
+        private:
             // 設定
             const int lastFret = 19;                            // 最大フレット数
             const int firstFret = -1;                           // -1フレット（ナット外側）
             const int numFrets = (lastFret - firstFret + 1);
             const double outerMargin = 10.0;                    // 上部余白
+
+            VSTGUI::CColor bg;
+            VSTGUI::CColor stringColor;
+            VSTGUI::CColor fretColor;
+            VSTGUI::CColor nutColor;
+            VSTGUI::CColor markerColor;
+            VSTGUI::CColor fretNumberColor;
+            VSTGUI::CColor pressedColor;
+
+            VSTGUI::CRect frameSize;
+            VSTGUI::CRect boardSize;
+
+            double usableHeight;
+            double stringSpacing;
+            double fretSpacing;
+
+            // 押さえているフレット
+            StringSet pressedFrets;
+
+            //
+            bool editing = false;
+
+            bool isMarkerFret(int f)
+            {
+                return (
+                    f == 2 ||
+                    f == 4 ||
+                    f == 6 ||
+                    f == 8 ||
+                    f == 11 ||
+                    f == 14 ||
+                    f == 16 ||
+                    f == 18
+                    );
+            }
 
         public:
             CFretBoard(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, ParamID tag)
@@ -588,42 +624,6 @@ namespace MinMax
             }
 
             CLASS_METHODS(CFretBoard, CControl)
-
-        private:
-            VSTGUI::CColor bg;
-            VSTGUI::CColor stringColor;
-            VSTGUI::CColor fretColor;
-            VSTGUI::CColor nutColor;
-            VSTGUI::CColor markerColor;
-            VSTGUI::CColor fretNumberColor;
-            VSTGUI::CColor pressedColor;
-
-            VSTGUI::CRect frameSize;
-            VSTGUI::CRect boardSize;
-
-            double usableHeight;
-            double stringSpacing;
-            double fretSpacing;
-
-            // 押さえているフレット
-            StringSet pressedFrets;
-
-            //
-            bool editing = false;
-
-            bool isMarkerFret(int f)
-            {
-                return (
-                    f == 2 ||
-                    f == 4 ||
-                    f == 6 ||
-                    f == 8 ||
-                    f == 11 ||
-                    f == 14 ||
-                    f == 16 ||
-                    f == 18
-                    );
-            }
         };
 
     public:
