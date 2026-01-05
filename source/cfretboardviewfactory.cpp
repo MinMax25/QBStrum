@@ -1,19 +1,13 @@
-﻿//------------------------------------------------------------------------
-// Copyright(c) 2024 MinMax.
-//------------------------------------------------------------------------
-#pragma once
+﻿#pragma once
 
 #include <base/source/fstring.h>
 #include <filesystem>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 #include <public.sdk/source/vst/vstguieditor.h>
-#include <rapidjson/document.h>
-#include <string>
-#include <vector>
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/plugin-bindings/vst3editor.h>
-#include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/uidescription/iuidescription.h>
+#include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
 #include <vstgui/vstgui.h>
 #include <vstgui/vstgui_uidescription.h>
 
@@ -25,12 +19,12 @@
 
 namespace MinMax
 {
-    // フレットボードビュー
-    class CFretBoardView
-        : public VSTGUI::CViewContainer
+    class CFretBoardView : public VSTGUI::CViewContainer
     {
     public:
-        CFretBoardView(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description, const VSTGUI::CRect& size)
+        CFretBoardView(const VSTGUI::UIAttributes& attributes,
+            const VSTGUI::IUIDescription* description,
+            const VSTGUI::CRect& size)
             : CViewContainer(size)
         {
             editor = dynamic_cast<VSTGUI::VST3Editor*>(description->getController());
@@ -40,74 +34,87 @@ namespace MinMax
 
             presetFileName = ChordMap::Instance().getPresetPath().u8string();
 
-            // --- FretBoard ---
-            fretBoard = new CFretBoard(getViewSize());
-            fretBoard->setPressedFrets(getVoicing(0));
-            addView(fretBoard);
-
-            // --- Chord Selecter ---
-            chordSelecter = new CChordSelecter(VSTGUI::CRect(365, 1, 515, 19), [this](CChordSelecter* p, int value) { chordNumberChanged(p, value); });
-            addView(chordSelecter);
-
-            // --- File Menu ---
-            fileButton = new CMenuButton(VSTGUI::CRect(1, 1, 60, 18), "Preset", [this](CMenuButton* b) { popupFileMenu(getFrame(), b); });
-            addView(fileButton);
-
-            // --- Edit Menu ---
-            editButton = new CMenuButton(VSTGUI::CRect(62, 1, 122, 18), "Edit", [this](CMenuButton* b) { popupEditMenu(getFrame(), b); });
-            addView(editButton);
+            initFretBoard();
+            initChordSelecter();
+            initMenuButtons();
         }
 
-        ~CFretBoardView() override { }
+        ~CFretBoardView() override = default;
 
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
     protected:
         VSTGUI::VST3Editor* editor = nullptr;
-
         std::string presetFileName;
-
         StringSet originalPressedFrets;
 
         CFretBoard* fretBoard = nullptr;
-
         CChordSelecter* chordSelecter = nullptr;
-
         CMenuButton* fileButton = nullptr;
-        void popupFileMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
+        CMenuButton* editButton = nullptr;
+
+        // ---- UI 初期化 ----
+        void initFretBoard()
         {
-            auto* menu = new VSTGUI::COptionMenu();
-
-            auto* openMenu = createOpenPresetMenu();
-            auto* openItem = new VSTGUI::CMenuItem("Open", openMenu);
-
-            menu->addEntry(openItem);
-            openMenu->forget();
-
-            addMenuCommand(menu, "Save", [this](VSTGUI::CCommandMenuItem*) { saveChordMap(); });
-
-            VSTGUI::CRect r = anchor->getViewSize();
-            VSTGUI::CPoint p(r.left, r.bottom);
-            anchor->localToFrame(p);
-
-            menu->popup(frame, p);
-            menu->forget();
+            fretBoard = new CFretBoard(getViewSize());
+            fretBoard->setPressedFrets(getVoicing(0));
+            addView(fretBoard);
         }
 
-        CMenuButton* editButton = nullptr;
-        void popupEditMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
+        void initChordSelecter()
+        {
+            constexpr VSTGUI::CRect rect(365, 1, 515, 19);
+            chordSelecter = new CChordSelecter(rect, [this](CChordSelecter* /*p*/, int value)
+                {
+                    fretBoard->setPressedFrets(getVoicing(value));
+                });
+            addView(chordSelecter);
+        }
+
+        void initMenuButtons()
+        {
+            constexpr VSTGUI::CRect fileRect(1, 1, 60, 18);
+            constexpr VSTGUI::CRect editRect(62, 1, 122, 18);
+
+            fileButton = new CMenuButton(fileRect, "Preset", [this](CMenuButton* b)
+                {
+                    popupMenu(b, MenuType::File);
+                });
+            addView(fileButton);
+
+            editButton = new CMenuButton(editRect, "Edit", [this](CMenuButton* b)
+                {
+                    popupMenu(b, MenuType::Edit);
+                });
+            addView(editButton);
+        }
+
+        enum class MenuType { File, Edit };
+
+        void popupMenu(VSTGUI::CView* anchor, MenuType type)
         {
             auto* menu = new VSTGUI::COptionMenu();
 
-            addMenuCommand(menu, "Edit", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
-            addMenuCommand(menu, "Commit Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
-            addMenuCommand(menu, "Cancel Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+            if (type == MenuType::File)
+            {
+                auto* openMenu = createOpenPresetMenu();
+                menu->addEntry(new VSTGUI::CMenuItem("Open", openMenu));
+                openMenu->forget();
+
+                addMenuCommand(menu, "Save", [this](VSTGUI::CCommandMenuItem*) { saveChordMap(); });
+            }
+            else
+            {
+                addMenuCommand(menu, "Edit", [](VSTGUI::CCommandMenuItem*) { /* 編集処理 */ });
+                addMenuCommand(menu, "Commit Changes", [](VSTGUI::CCommandMenuItem*) { /* 確定処理 */ });
+                addMenuCommand(menu, "Cancel Changes", [](VSTGUI::CCommandMenuItem*) { /* キャンセル処理 */ });
+            }
 
             VSTGUI::CRect r = anchor->getViewSize();
             VSTGUI::CPoint p(r.left, r.bottom);
             anchor->localToFrame(p);
 
-            menu->popup(frame, p);
+            menu->popup(getFrame(), p);
             menu->forget();
         }
 
@@ -118,115 +125,103 @@ namespace MinMax
             std::vector<std::string> files;
             if (Files::getPresetFiles(files) != kResultTrue || files.empty())
             {
-                auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc("No Presets"));
+                auto* item = new VSTGUI::CCommandMenuItem(
+                    VSTGUI::CCommandMenuItem::Desc("No Presets")
+                );
                 item->setEnabled(false);
                 menu->addEntry(item);
                 return menu;
             }
 
-            int32_t tagBase = 10000;
-
             for (const auto& fullpath : files)
             {
-                std::filesystem::path p(fullpath);
-
-                std::string utf8 = p.filename().u8string();
-                VSTGUI::UTF8String title(utf8.c_str());
-
-                auto* item = new VSTGUI::CCommandMenuItem(title);
-
-                item->setActions(
-                    [this, fullpath](VSTGUI::CCommandMenuItem*)
-                    {
-                        ChordMap::Instance().initFromPreset(fullpath);
-                        presetFileName = fullpath;
-                        fretBoard->valueChanged();
-                    }
+                auto filename = std::filesystem::path(fullpath).filename().u8string();
+                auto* item = new VSTGUI::CCommandMenuItem(
+                    VSTGUI::CCommandMenuItem::Desc(filename.c_str())
                 );
+
+                item->setActions([this, fullpath](VSTGUI::CCommandMenuItem*)
+                    {
+                        try
+                        {
+                            ChordMap::Instance().initFromPreset(fullpath);
+                            presetFileName = fullpath;
+                            fretBoard->valueChanged();
+                        }
+                        catch (...)
+                        {
+                            showError("Failed to load preset.");
+                        }
+                    });
+
                 menu->addEntry(item);
             }
 
             return menu;
         }
 
-        void chordNumberChanged(const CChordSelecter* p, int value)
+        StringSet getVoicing(int value) const
         {
-            fretBoard->setPressedFrets(getVoicing(value));
-        } 
-
-        StringSet getVoicing(const int value)
-        {
-            const auto& map = ChordMap::Instance();
-            return map.getChordVoicing(value);
+            return ChordMap::Instance().getChordVoicing(value);
         }
 
-        // コードボイシングの保存
-        void saveEdits()
-        {
-            // 現在の押弦情報を取得
-            auto pressed = fretBoard->getPressedFrets();
-
-            // ChordMap の現在選択コード番号に対して更新
-            auto* controller = editor->getController();
-            ParamValue norm = controller->getParamNormalized(PARAM::CHORD_NUM);
-            int chordNum = static_cast<int>(controller->normalizedParamToPlain(PARAM::CHORD_NUM, norm));
-            ChordMap::Instance().setVoicing(chordNum, pressed);
-
-            // 編集終了後、元の状態として保持しておく
-            originalPressedFrets = pressed;
-        }
-
-        // コードプリセットの保存
         void saveChordMap()
         {
             if (!fileButton) return;
 
-            showDialog(
-                fileButton,
-                VSTGUI::CNewFileSelector::kSelectSaveFile,
+            showDialog(fileButton, VSTGUI::CNewFileSelector::kSelectSaveFile,
                 [this](const std::string& path)
                 {
-                    ChordMap::Instance().saveToFile(path);
-                }
-            );
+                    try
+                    {
+                        ChordMap::Instance().saveToFile(path);
+                        presetFileName = path;
+                    }
+                    catch (...)
+                    {
+                        showError("Failed to save preset.");
+                    }
+                });
         }
 
-        // ファイルダイアログ表示
-        void showDialog(VSTGUI::CControl* pControl, VSTGUI::CNewFileSelector::Style style, std::function<void(const std::string& path)> fileSelected)
+        void showDialog(VSTGUI::CControl* pControl,
+            VSTGUI::CNewFileSelector::Style style,
+            std::function<void(const std::string& path)> fileSelected)
         {
             Files::createPresetDirectory();
 
             auto* selector = VSTGUI::CNewFileSelector::create(pControl->getFrame(), style);
-            if (selector == nullptr) return;
+            if (!selector) return;
 
-            std::string defaultName = presetFileName.empty() ? "NewPreset.json" : std::filesystem::path(presetFileName).filename().u8string();
-
-            selector->setTitle(Files::TITLE.c_str());
+            std::string defaultName = presetFileName.empty() ? "NewPreset.json" :
+                std::filesystem::path(presetFileName).filename().u8string();
 
             if (!presetFileName.empty())
             {
-                std::filesystem::path p(presetFileName);
-                selector->setInitialDirectory(p.parent_path().string().c_str());
+                selector->setInitialDirectory(std::filesystem::path(presetFileName).parent_path().string().c_str());
             }
 
+            selector->setTitle(Files::TITLE.c_str());
             selector->setDefaultSaveName(defaultName.c_str());
-
             selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER.c_str(), Files::FILE_EXT.c_str()));
 
             pControl->getFrame()->setFocusView(nullptr);
 
-            if (selector->runModal() && (int)selector->getNumSelectedFiles() == 1)
+            if (selector->runModal() && selector->getNumSelectedFiles() == 1)
             {
                 presetFileName = selector->getSelectedFile(0);
                 fileSelected(presetFileName);
             }
 
             selector->forget();
-
-            return;
         }
 
-        // メニュー要素追加
+        void showError(const std::string& msg)
+        {
+            // TODO: 実際のUIエラー表示に置き換え
+            fprintf(stderr, "Error: %s\n", msg.c_str());
+        }
+
         template<typename F>
         static void addMenuCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb)
         {
@@ -236,15 +231,12 @@ namespace MinMax
         }
     };
 
-    class CFretBoardViewFactory
-        : public VSTGUI::ViewCreatorAdapter
+    class CFretBoardViewFactory : public VSTGUI::ViewCreatorAdapter
     {
     public:
-
         CFretBoardViewFactory() { VSTGUI::UIViewFactory::registerViewCreator(*this); }
 
         VSTGUI::IdStringPtr getViewName() const override { return "UI:FretBoard View"; }
-
         VSTGUI::IdStringPtr getBaseViewName() const override { return VSTGUI::UIViewCreator::kCViewContainer; }
 
         VSTGUI::CView* create(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description) const override
