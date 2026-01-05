@@ -1,5 +1,9 @@
+//------------------------------------------------------------------------
+// Copyright(c) 2024 MinMax.
+//------------------------------------------------------------------------
 #pragma once
 
+#include <public.sdk/source/vst/vsteditcontroller.h>
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/plugin-bindings/vst3editor.h>
 
