@@ -1,9 +1,17 @@
 ﻿//------------------------------------------------------------------------
 // Copyright(c) 2025 MinMax.
 //------------------------------------------------------------------------
-
 #pragma once
 
+#include <base/source/fobject.h>
+#include <pluginterfaces/base/fplatform.h>
+#include <pluginterfaces/base/ftypes.h>
+#include <pluginterfaces/base/funknown.h>
+#include <pluginterfaces/base/ibstream.h>
+#include <pluginterfaces/gui/iplugview.h>
+#include <pluginterfaces/vst/ivsteditcontroller.h>
+#include <pluginterfaces/vst/ivstmessage.h>
+#include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
 namespace MinMax
