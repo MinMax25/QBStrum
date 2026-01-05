@@ -1,10 +1,14 @@
 //------------------------------------------------------------------------
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
+#pragma once
 
-#include <base/source/fstring.h>
+#include <cstdlib>
 #include <filesystem>
+#include <pluginterfaces/base/ftypes.h>
+#include <pluginterfaces/base/funknown.h>
 #include <string>
+#include <system_error>
 #include <vector>
 
 namespace MinMax

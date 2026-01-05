@@ -1,6 +1,7 @@
 ﻿//------------------------------------------------------------------------
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
+#pragma once
 
 #include <base/source/fstring.h>
 #include <public.sdk/source/vst/vstguieditor.h>
