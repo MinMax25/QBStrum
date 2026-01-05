@@ -1,6 +1,7 @@
 #pragma once
 
 #include <array>
+#include <base/source/fstring.h>
 #include <cassert>
 #include <pluginterfaces/base/fstrdefs.h>
 
