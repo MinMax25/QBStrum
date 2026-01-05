@@ -8,12 +8,11 @@
 #include <public.sdk/source/vst/utility/ringbuffer.h>
 #include <public.sdk/source/vst/vstaudioeffect.h>
 
-#include "plugdefine.h"
-
+#include "chordmap.h"
 #include "myparameters.h"
 #include "parameterframework.h"
+#include "plugdefine.h"
 
-#include "chordmap.h"
 #include "eventscheduler.h"
 
 namespace MinMax
