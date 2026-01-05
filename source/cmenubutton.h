@@ -41,7 +41,7 @@ namespace MinMax
 
         void draw(VSTGUI::CDrawContext* ctx) override
         {
-            // hover ”wŒiiWindows •—j
+            // hover ”wŒi
             if (mouseInside)
             {
                 ctx->setFillColor(VSTGUI::kGreyCColor);

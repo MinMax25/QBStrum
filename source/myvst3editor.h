@@ -2,8 +2,6 @@
 
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/lib/vstguibase.h>
-#include <pluginterfaces/gui/iplugview.h>
-#include <pluginterfaces/base/ustring.h>
 
 namespace MinMax
 {
