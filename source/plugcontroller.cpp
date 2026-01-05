@@ -3,18 +3,18 @@
 //------------------------------------------------------------------------
 #pragma once
 
-#include <public.sdk/source/vst/utility/stringconvert.h>
-#include <pluginterfaces/vst/ivstmidicontrollers.h>
-#include <pluginterfaces/vst/ivstcomponent.h>
 #include <base/source/fstreamer.h>
 #include <pluginterfaces/base/ibstream.h>
+#include <pluginterfaces/vst/ivstcomponent.h>
+#include <pluginterfaces/vst/ivstmidicontrollers.h>
+#include <public.sdk/source/vst/utility/stringconvert.h>
 #include <vstgui/plugin-bindings/vst3editor.h>
 
-#include "plugdefine.h"
-#include "plugcontroller.h"
-#include "parameterframework.h"
 #include "myparameters.h"
 #include "myvst3editor.h"
+#include "parameterframework.h"
+#include "plugcontroller.h"
+#include "plugdefine.h"
 
 namespace MinMax
 {
