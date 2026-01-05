@@ -4,17 +4,17 @@
 
 #pragma once
 
-#include <public.sdk/source/vst/vstaudioeffect.h>
-#include <public.sdk/source/vst/utility/ringbuffer.h>
 #include <pluginterfaces/base/ftypes.h>
+#include <public.sdk/source/vst/utility/ringbuffer.h>
+#include <public.sdk/source/vst/vstaudioeffect.h>
 
 #include "plugdefine.h"
 
-#include "parameterframework.h"
 #include "myparameters.h"
+#include "parameterframework.h"
 
-#include "eventscheduler.h"
 #include "chordmap.h"
+#include "eventscheduler.h"
 
 namespace MinMax
 {
