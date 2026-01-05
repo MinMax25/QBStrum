@@ -3,8 +3,9 @@
 #include <array>
 #include <cassert>
 #include <pluginterfaces/base/fstrdefs.h>
-#include "parameterframework.h"	
+
 #include "chordmap.h"
+#include "parameterframework.h"	
 
 namespace MinMax
 {
