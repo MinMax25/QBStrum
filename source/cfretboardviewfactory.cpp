@@ -42,6 +42,7 @@ namespace MinMax
 
             // --- FretBoard ---
             fretBoard = new CFretBoard(getViewSize());
+            fretBoard->setPressedFrets(getVoicing(0));
             addView(fretBoard);
 
             // --- Chord Selecter ---
@@ -49,11 +50,11 @@ namespace MinMax
             addView(chordSelecter);
 
             // --- File Menu ---
-            fileButton = new CMenuButton(VSTGUI::CRect(1, 1, 60, 18), editor, -1, "Preset", [this](CMenuButton* b) { popupFileMenu(getFrame(), b); });
+            fileButton = new CMenuButton(VSTGUI::CRect(1, 1, 60, 18), "Preset", [this](CMenuButton* b) { popupFileMenu(getFrame(), b); });
             addView(fileButton);
 
             // --- Edit Menu ---
-            editButton = new CMenuButton(VSTGUI::CRect(62, 1, 122, 18), editor, -1, "Edit", [this](CMenuButton* b) { popupEditMenu(getFrame(), b); });
+            editButton = new CMenuButton(VSTGUI::CRect(62, 1, 122, 18), "Edit", [this](CMenuButton* b) { popupEditMenu(getFrame(), b); });
             addView(editButton);
         }
 
@@ -150,8 +151,14 @@ namespace MinMax
 
         void chordNumberChanged(const CChordSelecter* p, int value)
         {
-
+            fretBoard->setPressedFrets(getVoicing(value));
         } 
+
+        StringSet getVoicing(const int& value)
+        {
+            const auto& map = ChordMap::Instance();
+            return map.getChordVoicing(value);
+        }
 
         // コードボイシングの保存
         void saveEdits()

@@ -26,8 +26,8 @@ namespace MinMax
     public:
         using SelectedChordChanged = std::function<void(CMenuButton*)>;
 
-        CMenuButton(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, int32_t tag, const VSTGUI::UTF8String& title, SelectedChordChanged cb)
-            : VSTGUI::CTextButton(size, listener, tag, title)
+        CMenuButton(const VSTGUI::CRect& size, const VSTGUI::UTF8String& title, SelectedChordChanged cb)
+            : VSTGUI::CTextButton(size, nullptr, -1, title)
             , selectedChordChanged(cb)
         {
             setFrameColor(VSTGUI::kTransparentCColor);
