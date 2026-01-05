@@ -24,11 +24,11 @@ namespace MinMax
         : public VSTGUI::CTextButton
     {
     public:
-        using Callback = std::function<void(CMenuButton*)>;
+        using SelectedChordChanged = std::function<void(CMenuButton*)>;
 
-        CMenuButton(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, int32_t tag, const VSTGUI::UTF8String& title, Callback cb)
+        CMenuButton(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, int32_t tag, const VSTGUI::UTF8String& title, SelectedChordChanged cb)
             : VSTGUI::CTextButton(size, listener, tag, title)
-            , callback(cb)
+            , selectedChordChanged(cb)
         {
             setFrameColor(VSTGUI::kTransparentCColor);
             setGradient(nullptr);
@@ -66,11 +66,11 @@ namespace MinMax
         void valueChanged() override
         {
             if (getValue()) return;
-            if (callback) callback(this);
+            if (selectedChordChanged) selectedChordChanged(this);
         }
 
     private:
         bool mouseInside{ false };
-        Callback callback;
+        SelectedChordChanged selectedChordChanged;
     };
 }

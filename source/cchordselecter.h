@@ -34,97 +34,37 @@ namespace MinMax
             : public VSTGUI::COptionMenu
         {
         public:
-            ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID paramID_)
-                : COptionMenu(size, editor_, paramID_)
-                , editor(editor_)
-                , paramID(paramID_)
+            using SelectedChordChanged = std::function<void(ChordOptionMenu*, int)>;
+
+            ChordOptionMenu(const VSTGUI::CRect& size, SelectedChordChanged cb)
+                : COptionMenu(size, nullptr, -1)
+                , selectedChordChanged(cb)
             {
             }
 
             void valueChanged() override
             {
-                if (isEditing) return;
-
-                if (!editor || !editor->getController())
-                    return;
-
                 int32_t idx = -1;
                 if (auto* menu = getLastItemMenu(idx))
                 {
                     if (auto* item = menu->getEntry(idx))
                     {
                         int value = item->getTag();
-
-                        auto* controller = editor->getController();
-                        controller->beginEdit(paramID);
-                        ParamValue norm = controller->plainParamToNormalized(paramID, value);
-                        controller->setParamNormalized(paramID, norm);
-                        controller->performEdit(paramID, norm);
-                        controller->endEdit(paramID);
+                        selectedChordChanged(this, value);
                     }
                 }
             }
 
-            void setState(bool state)
-            {
-                isEditing = state;
-            }
-
         protected:
-
-            VSTGUI::VST3Editor* editor{};
-
-            ParamID paramID;
-
-            bool isEditing = false;
-        };
-
-        class CChordLabel : public VSTGUI::CTextLabel
-        {
-        public:
-            CChordLabel(const VSTGUI::CRect& size)
-                : CTextLabel(size)
-            {
-            }
-
-            void draw(VSTGUI::CDrawContext* context) override
-            {
-                auto str = getText().getString();
-
-                if (str.empty())
-                {
-                    drawBack(context);
-                    return;
-                }
-
-                if (!std::isdigit(static_cast<unsigned char>(str[0])) && str[0] != '-')
-                    return;
-
-                int index = std::atoi(str.c_str());
-
-                const auto& map = ChordMap::Instance();
-
-                VSTGUI::UTF8String name =
-                    (index >= 0 && index < map.getFlatCount())
-                    ? map.getByIndex(index).displayName.c_str()
-                    : "# undefined #";
-
-                drawBack(context);
-                drawPlatformText(context, name);
-            }
-
-            CLASS_METHODS(CChordLabel, CTextLabel)
-
-        private:
+            SelectedChordChanged selectedChordChanged;
         };
 
     public:
-        using Callback = std::function<void(CChordSelecter*)>;
+        using SelectedChordChanged = std::function<void(CChordSelecter*, int)>;
 
-        CChordSelecter(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID tag, Callback cb)
+        CChordSelecter(const VSTGUI::CRect& size, SelectedChordChanged cb)
             : CViewContainer(size)
-            , editor(editor_)
-            , callback(cb)
+            , selectedChordChanged(cb)
         {
             setBackgroundColor(VSTGUI::kTransparentCColor);
 
@@ -134,12 +74,11 @@ namespace MinMax
             addView(chordMenu);
 
             // コード名表示ラベル
-            CChordLabel* chordLabel = new CChordLabel(VSTGUI::CRect(18, 1, 148, 17));
+            chordLabel = new VSTGUI::CTextLabel(VSTGUI::CRect(18, 1, 148, 17));
             chordLabel->setBackColor(VSTGUI::kWhiteCColor);
             chordLabel->setFontColor(VSTGUI::kBlackCColor);
             chordLabel->setFont(VSTGUI::kNormalFontSmaller);
-            chordLabel->setListener(editor);
-            chordLabel->setTag(PARAM::CHORD_NUM);
+            setChordText(0);
             addView(chordLabel);
         }
 
@@ -148,16 +87,18 @@ namespace MinMax
         CLASS_METHODS(CChordSelecter, CViewContainer)
 
     protected:
-        VSTGUI::VST3Editor* editor{};
-
         ChordOptionMenu* chordMenu{};
+
+        VSTGUI::CTextLabel* chordLabel = nullptr;
+
+        SelectedChordChanged selectedChordChanged;
 
         ChordOptionMenu* createChordOptionMenu(const VSTGUI::CRect& size, int32_t tag)
         {
             auto& chordMap = ChordMap::Instance();
 
             // トップレベル OptionMenu
-            auto* rootMenu = new ChordOptionMenu(size, editor, tag);
+            auto* rootMenu = new ChordOptionMenu(size, [this](ChordOptionMenu* p, int value) { onSelectedChordChanged(value); });
 
             for (int r = 0; r < chordMap.getRootCount(); ++r)
             {
@@ -198,6 +139,22 @@ namespace MinMax
             return rootMenu;
         }
 
-        Callback callback;
+        void onSelectedChordChanged(int value)
+        {
+            setChordText(value);
+            if (selectedChordChanged) selectedChordChanged(this, value);
+        }
+
+        void setChordText(int value)
+        {
+            const auto& map = ChordMap::Instance();
+
+            VSTGUI::UTF8String name =
+                (value >= 0 && value < map.getFlatCount())
+                ? map.getByIndex(value).displayName.c_str()
+                : "# undefined #";
+
+            if (chordLabel) chordLabel->setText(name);
+        }
     };
 }

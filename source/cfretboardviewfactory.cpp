@@ -29,8 +29,6 @@ namespace MinMax
     class CFretBoardView
         : public VSTGUI::CViewContainer
     {
-    private:
-
     public:
         CFretBoardView(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description, const VSTGUI::CRect& size)
             : CViewContainer(size)
@@ -47,7 +45,7 @@ namespace MinMax
             addView(fretBoard);
 
             // --- Chord Selecter ---
-            chordSelecter = new CChordSelecter(VSTGUI::CRect(365, 1, 515, 19), editor, PARAM::CHORD_NUM, [this](CChordSelecter*) { chordNumberChanged(); });
+            chordSelecter = new CChordSelecter(VSTGUI::CRect(365, 1, 515, 19), [this](CChordSelecter* p, int value) { chordNumberChanged(p, value); });
             addView(chordSelecter);
 
             // --- File Menu ---
@@ -150,7 +148,7 @@ namespace MinMax
             return menu;
         }
 
-        void chordNumberChanged()
+        void chordNumberChanged(const CChordSelecter* p, int value)
         {
 
         } 
