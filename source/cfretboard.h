@@ -4,12 +4,19 @@
 #pragma once
 
 #include <base/source/fstring.h>
-#include <public.sdk/source/vst/vstguieditor.h>
 #include <vector>
+#include <vstgui/lib/cbuttonstate.h>
+#include <vstgui/lib/ccolor.h>
+#include <vstgui/lib/cdrawcontext.h>
+#include <vstgui/lib/cdrawdefs.h>
+#include <vstgui/lib/cfont.h>
+#include <vstgui/lib/controls/ccontrol.h>
+#include <vstgui/lib/cpoint.h>
+#include <vstgui/lib/crect.h>
 #include <vstgui/lib/vstguibase.h>
-#include <vstgui/vstgui.h>
+#include <vstgui/lib/vstguifwd.h>
 
-#include "myparameters.h"
+#include "chordmap.h"
 
 namespace MinMax
 {
