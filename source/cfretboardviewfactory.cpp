@@ -32,7 +32,6 @@ namespace MinMax
         menu->addEntry(item);
     }
 
-    //
     // フレットボードビュー
     class CFretBoardView
         : public VSTGUI::CViewContainer
