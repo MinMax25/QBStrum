@@ -1,6 +1,7 @@
 ﻿//------------------------------------------------------------------------
 // Copyright(c) 2025 MinMax.
 //------------------------------------------------------------------------
+#pragma once
 
 #include <public.sdk/source/vst/utility/stringconvert.h>
 #include <pluginterfaces/vst/ivstmidicontrollers.h>

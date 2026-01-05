@@ -1,6 +1,7 @@
 ﻿//------------------------------------------------------------------------
 // Copyright(c) 2025 MinMax.
 //------------------------------------------------------------------------
+#pragma once
 
 #include <pluginterfaces/base/ibstream.h>
 #include <pluginterfaces/vst/ivstparameterchanges.h>

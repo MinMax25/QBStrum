@@ -1,6 +1,7 @@
 //------------------------------------------------------------------------
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
+#pragma once
 
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/vstgui_uidescription.h>
