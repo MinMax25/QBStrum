@@ -46,6 +46,10 @@ namespace MinMax
             fretBoard = new CFretBoard(getViewSize());
             addView(fretBoard);
 
+            // --- Chord Selecter ---
+            chordSelecter = new CChordSelecter(VSTGUI::CRect(365, 1, 515, 19), editor, PARAM::CHORD_NUM, [this](CChordSelecter*) { chordNumberChanged(); });
+            addView(chordSelecter);
+
             // --- File Menu ---
             fileButton = new CMenuButton(VSTGUI::CRect(1, 1, 60, 18), editor, -1, "Preset", [this](CMenuButton* b) { popupFileMenu(getFrame(), b); });
             addView(fileButton);
@@ -53,10 +57,6 @@ namespace MinMax
             // --- Edit Menu ---
             editButton = new CMenuButton(VSTGUI::CRect(62, 1, 122, 18), editor, -1, "Edit", [this](CMenuButton* b) { popupEditMenu(getFrame(), b); });
             addView(editButton);
-
-            // --- Chord Selecter ---
-            chordSelecter = new CChordSelecter(VSTGUI::CRect(365, 1, 515, 19), editor, PARAM::CHORD_NUM);
-            addView(chordSelecter);
         }
 
         ~CFretBoardView() override { }
@@ -85,7 +85,7 @@ namespace MinMax
             menu->addEntry(openItem);
             openMenu->forget();
 
-            addCommand(menu, "Save", [this](VSTGUI::CCommandMenuItem*) { saveChordMap(); });
+            addMenuCommand(menu, "Save", [this](VSTGUI::CCommandMenuItem*) { saveChordMap(); });
 
             VSTGUI::CRect r = anchor->getViewSize();
             VSTGUI::CPoint p(r.left, r.bottom);
@@ -100,9 +100,9 @@ namespace MinMax
         {
             auto* menu = new VSTGUI::COptionMenu();
 
-            addCommand(menu, "Edit", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
-            addCommand(menu, "Commit Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
-            addCommand(menu, "Cancel Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+            addMenuCommand(menu, "Edit", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+            addMenuCommand(menu, "Commit Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+            addMenuCommand(menu, "Cancel Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
 
             VSTGUI::CRect r = anchor->getViewSize();
             VSTGUI::CPoint p(r.left, r.bottom);
@@ -149,6 +149,11 @@ namespace MinMax
 
             return menu;
         }
+
+        void chordNumberChanged()
+        {
+
+        } 
 
         // コードボイシングの保存
         void saveEdits()
@@ -218,7 +223,7 @@ namespace MinMax
 
         // メニュー要素追加
         template<typename F>
-        static void addCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb)
+        static void addMenuCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb)
         {
             auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(title));
             item->setActions(std::forward<F>(cb));

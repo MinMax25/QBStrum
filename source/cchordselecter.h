@@ -36,7 +36,8 @@ namespace MinMax
         public:
             ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID paramID_)
                 : COptionMenu(size, editor_, paramID_)
-                , editor(editor_), paramID(paramID_)
+                , editor(editor_)
+                , paramID(paramID_)
             {
             }
 
@@ -118,9 +119,12 @@ namespace MinMax
         };
 
     public:
-        CChordSelecter(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID tag)
+        using Callback = std::function<void(CChordSelecter*)>;
+
+        CChordSelecter(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID tag, Callback cb)
             : CViewContainer(size)
             , editor(editor_)
+            , callback(cb)
         {
             setBackgroundColor(VSTGUI::kTransparentCColor);
 
@@ -193,5 +197,7 @@ namespace MinMax
 
             return rootMenu;
         }
+
+        Callback callback;
     };
 }
