@@ -2,10 +2,10 @@
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
 
-#include <filesystem>
-#include <vector>
-#include <string>
 #include <base/source/fstring.h>
+#include <filesystem>
+#include <string>
+#include <vector>
 
 namespace MinMax
 {

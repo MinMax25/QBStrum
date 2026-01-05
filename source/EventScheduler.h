@@ -1,9 +1,9 @@
 ﻿#pragma once
 
-#include <pluginterfaces/vst/ivstaudioprocessor.h>
-#include <pluginterfaces/vst/vsttypes.h>
-#include <pluginterfaces/vst/ivstprocesscontext.h>
 #include <pluginterfaces/base/ftypes.h>
+#include <pluginterfaces/vst/ivstaudioprocessor.h>
+#include <pluginterfaces/vst/ivstprocesscontext.h>
+#include <pluginterfaces/vst/vsttypes.h>
 
 #include "timequeue.h"
 
