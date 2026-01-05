@@ -1,7 +1,7 @@
 #pragma once
 
-#include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/lib/vstguibase.h>
+#include <vstgui/plugin-bindings/vst3editor.h>
 
 namespace MinMax
 {
