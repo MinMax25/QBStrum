@@ -1,6 +1,7 @@
 ﻿//------------------------------------------------------------------------
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
+#pragma once
 
 #include <filesystem>
 #include <vector>
@@ -20,6 +21,7 @@
 #include "files.h"
 #include "cfretboard.h"
 #include "cmenubutton.h"
+#include "cchordselecter.h"
 
 namespace MinMax
 {
@@ -37,180 +39,6 @@ namespace MinMax
         : public VSTGUI::CViewContainer
     {
     private:
-        // コード選択
-        class CChordSelecter
-            : public VSTGUI::CViewContainer
-        {
-        private:
-            class ChordOptionMenu
-                : public VSTGUI::COptionMenu
-            {
-            public:
-                ChordOptionMenu(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID paramID_)
-                    : COptionMenu(size, editor_, paramID_)
-                    , editor(editor_), paramID(paramID_)
-                {
-                }
-
-                void valueChanged() override
-                {
-                    if (isEditing) return;
-
-                    if (!editor || !editor->getController())
-                        return;
-
-                    int32_t idx = -1;
-                    if (auto* menu = getLastItemMenu(idx))
-                    {
-                        if (auto* item = menu->getEntry(idx))
-                        {
-                            int value = item->getTag();
-
-                            auto* controller = editor->getController();
-                            controller->beginEdit(paramID);
-                            ParamValue norm = controller->plainParamToNormalized(paramID, value);
-                            controller->setParamNormalized(paramID, norm);
-                            controller->performEdit(paramID, norm);
-                            controller->endEdit(paramID);
-                        }
-                    }
-                }
-
-                void setState(bool state)
-                {
-                    isEditing = state;
-                }
-
-            protected:
-
-                VSTGUI::VST3Editor* editor{};
-
-                ParamID paramID;
-
-                bool isEditing = false;
-            };
-
-            class CChordLabel : public VSTGUI::CTextLabel
-            {
-            public:
-                CChordLabel(const VSTGUI::CRect& size)
-                    : CTextLabel(size)
-                {
-                }
-
-                void draw(VSTGUI::CDrawContext* context) override
-                {
-                    auto str = getText().getString();
-
-                    if (str.empty())
-                    {
-                        drawBack(context);
-                        return;
-                    }
-                    
-                    if (!std::isdigit(static_cast<unsigned char>(str[0])) && str[0] != '-')
-                        return;
-
-                    int index = std::atoi(str.c_str());
-
-                    const auto& map = ChordMap::Instance();
-
-                    VSTGUI::UTF8String name =
-                        (index >= 0 && index < map.getFlatCount())
-                        ? map.getByIndex(index).displayName.c_str()
-                        : "# undefined #";
-
-                    drawBack(context);
-                    drawPlatformText(context, name);
-                }
-
-                CLASS_METHODS(CChordLabel, CTextLabel)
-
-            private:
-            };
-
-        public:
-            CChordSelecter(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID tag)
-                : CViewContainer(size)
-                , editor(editor_)
-            {
-                setBackgroundColor(VSTGUI::kTransparentCColor);
-
-                // 階層化コードメニュー
-                chordMenu = createChordOptionMenu(VSTGUI::CRect(1, 1, 17, 17), PARAM::CHORD_NUM);
-                chordMenu->setBackColor(VSTGUI::kGreyCColor);
-                addView(chordMenu);
-
-                // コード名表示ラベル
-                CChordLabel* chordLabel = new CChordLabel(VSTGUI::CRect(18, 1, 148, 17));
-                chordLabel->setBackColor(VSTGUI::kWhiteCColor);
-                chordLabel->setFontColor(VSTGUI::kBlackCColor);
-                chordLabel->setFont(VSTGUI::kNormalFontSmaller);
-                chordLabel->setListener(editor);
-                chordLabel->setTag(PARAM::CHORD_NUM);
-                addView(chordLabel);
-            }
-
-            ~CChordSelecter() {}
-
-            void setEditing(bool state)
-            {
-                chordMenu->setVisible(!state); // 編集時はメニュー非表示
-            }
-
-            CLASS_METHODS(CChordSelecter, CViewContainer)
-
-        protected:
-            VSTGUI::VST3Editor* editor{};
-
-            ChordOptionMenu* chordMenu{};
-
-            ChordOptionMenu* createChordOptionMenu(const VSTGUI::CRect& size, int32_t tag)
-            {
-                auto& chordMap = ChordMap::Instance();
-
-                // トップレベル OptionMenu
-                auto* rootMenu = new ChordOptionMenu(size, editor, tag);
-
-                for (int r = 0; r < chordMap.getRootCount(); ++r)
-                {
-                    // ルート項目
-                    auto* rootItem = new VSTGUI::CMenuItem(chordMap.getRootName(r).c_str());
-
-                    // タイプ用サブメニュー
-                    auto* typeMenu = new VSTGUI::COptionMenu(VSTGUI::CRect(0, 0, 0, 0), nullptr, -1);
-
-                    for (int t = 0; t < chordMap.getTypeCount(r); ++t)
-                    {
-                        auto* typeItem = new VSTGUI::CMenuItem(chordMap.getTypeName(r, t).c_str());
-
-                        // ボイシング用サブメニュー
-                        auto* voicingMenu = new VSTGUI::COptionMenu(VSTGUI::CRect(0, 0, 0, 0), nullptr, -1);
-
-                        for (int v = 0; v < chordMap.getVoicingCount(r, t); ++v)
-                        {
-                            int flatIndex = chordMap.getFlatIndex(r, t, v);
-
-                            auto* voicingItem = new VSTGUI::CMenuItem(chordMap.getVoicingName(r, t, v).c_str(), flatIndex);
-
-                            voicingMenu->addEntry(voicingItem);
-                        }
-
-                        typeItem->setSubmenu(voicingMenu);
-                        voicingMenu->forget();
-
-                        typeMenu->addEntry(typeItem);
-                    }
-
-                    rootItem->setSubmenu(typeMenu);
-                    typeMenu->forget();
-
-                    rootMenu->addEntry(rootItem);
-                }
-
-                return rootMenu;
-            }
-        };
 
     public:
         CFretBoardView(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description, const VSTGUI::CRect& size)
