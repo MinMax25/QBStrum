@@ -216,10 +216,9 @@ namespace MinMax
         }
 
         template<typename F>
-        static void addMenuCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb, bool isEnabled = true)
+        static void addMenuCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb)
         {
             auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(title));
-            item->setEnabled(isEnabled);
             item->setActions(std::forward<F>(cb));
             menu->addEntry(item);
         }
