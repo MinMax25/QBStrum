@@ -86,6 +86,7 @@ namespace MinMax
                 auto* openMenu = createOpenPresetMenu();
                 menu->addEntry(new VSTGUI::CMenuItem("Open", openMenu));
                 openMenu->forget();
+
                 addMenuCommand(menu, "Save", [this](VSTGUI::CCommandMenuItem*) { saveChordMap(); });
             }
             else
