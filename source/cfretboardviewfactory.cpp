@@ -40,6 +40,8 @@ namespace MinMax
 
             setBackgroundColor(VSTGUI::kTransparentCColor);
 
+            presetFileName = ChordMap::Instance().getPresetPath().u8string();
+
             // --- FretBoard ---
             fretBoard = new CFretBoard(getViewSize(), editor, PARAM::CHORD_NUM);
             addView(fretBoard);
@@ -73,16 +75,17 @@ namespace MinMax
         CChordSelecter* chordSelecter = nullptr;
 
         CMenuButton* fileButton = nullptr;
-        static void popupFileMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
+        void popupFileMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
         {
             auto* menu = new VSTGUI::COptionMenu();
 
             auto* openMenu = createOpenPresetMenu();
             auto* openItem = new VSTGUI::CMenuItem("Open", openMenu);
+
             menu->addEntry(openItem);
             openMenu->forget();
 
-            addCommand(menu, "Save", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+            addCommand(menu, "Save", [this](VSTGUI::CCommandMenuItem*) { saveChordMap(); });
 
             VSTGUI::CRect r = anchor->getViewSize();
             VSTGUI::CPoint p(r.left, r.bottom);
@@ -93,7 +96,7 @@ namespace MinMax
         }
 
         CMenuButton* editButton = nullptr;
-        static void popupEditMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
+        void popupEditMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
         {
             auto* menu = new VSTGUI::COptionMenu();
 
@@ -109,7 +112,7 @@ namespace MinMax
             menu->forget();
         }
 
-        static VSTGUI::COptionMenu* createOpenPresetMenu()
+        VSTGUI::COptionMenu* createOpenPresetMenu()
         {
             auto* menu = new VSTGUI::COptionMenu();
 
@@ -131,7 +134,16 @@ namespace MinMax
                 std::string utf8 = p.filename().u8string();
                 VSTGUI::UTF8String title(utf8.c_str());
 
-                auto* item = new VSTGUI::CMenuItem(title, tagBase++);
+                auto* item = new VSTGUI::CCommandMenuItem(title);
+
+                item->setActions(
+                    [this, fullpath](VSTGUI::CCommandMenuItem*)
+                    {
+                        ChordMap::Instance().initFromPreset(fullpath);
+                        presetFileName = fullpath;
+                        fretBoard->valueChanged();
+                    }
+                );
                 menu->addEntry(item);
             }
 
@@ -177,7 +189,7 @@ namespace MinMax
             auto* selector = VSTGUI::CNewFileSelector::create(pControl->getFrame(), style);
             if (selector == nullptr) return;
 
-            std::string defaultName = presetFileName.empty() ? "NewPreset.json" : std::filesystem::path(presetFileName).filename().string();
+            std::string defaultName = presetFileName.empty() ? "NewPreset.json" : std::filesystem::path(presetFileName).filename().u8string();
 
             selector->setTitle(Files::TITLE.c_str());
 

@@ -158,10 +158,9 @@ namespace MinMax
             return instance;
         }
 
-        static void initFromPreset(const std::filesystem::path& path)
+        void initFromPreset(const std::filesystem::path& path)
         {
-            //
-            // コードマップ定義ファイルを読み込む
+            presetPath = path;
             Instance() = LoadPreset(path);
         }
 
@@ -396,6 +395,11 @@ namespace MinMax
             doc.Accept(writer);
 
             modified = false;
+        }
+
+        std::filesystem::path getPresetPath()
+        {
+            return presetPath;
         }
 
     protected:
