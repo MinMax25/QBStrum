@@ -1,8 +1,8 @@
 ﻿#pragma once
 
+#include <array>
 #include <base/source/fstring.h>
 #include <pluginterfaces/vst/ivstevents.h>
-#include <array>
 
 namespace MinMax
 {
