@@ -2,20 +2,19 @@
 
 #include <array>
 #include <chrono>
+#include <ctime>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
-#include <sstream>
-#include <stdexcept>
-#include <string>
-#include <vector>
-
 #include <rapidjson//prettywriter.h>
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
 #include <rapidjson/ostreamwrapper.h>
-#include <ctime>
 #include <rapidjson/rapidjson.h>
+#include <sstream>
+#include <stdexcept>
+#include <string>
+#include <vector>
 
 namespace MinMax
 {

@@ -1,10 +1,14 @@
 ﻿#pragma once
 
+#include <cstdint>
+#include <cstdio>
 #include <pluginterfaces/base/ftypes.h>
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
 #include <pluginterfaces/vst/ivstprocesscontext.h>
 #include <pluginterfaces/vst/vsttypes.h>
+#include <string>
 
+#include "chordmap.h"
 #include "timequeue.h"
 
 namespace MinMax
