@@ -8,9 +8,8 @@
 #include <public.sdk/source/vst/utility/ringbuffer.h>
 #include <public.sdk/source/vst/vstaudioeffect.h>
 
-#include "chordmap.h"
 #include "myparameters.h"
-
+#include "chordmap.h"
 #include "eventscheduler.h"
 #include "parameterframework.h"
 #include "plugdefine.h"
