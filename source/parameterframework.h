@@ -3,6 +3,7 @@
 #include <algorithm>
 #include <assert.h>
 #include <base/source/fobject.h>
+#include <base/source/fstring.h>
 #include <cmath>
 #include <memory>
 #include <optional>
