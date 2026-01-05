@@ -91,7 +91,6 @@ namespace MinMax
             }
             else
             {
-                addMenuCommand(menu, "Edit", [](VSTGUI::CCommandMenuItem*) {});
                 addMenuCommand(menu, "Commit Changes", [](VSTGUI::CCommandMenuItem*) {});
                 addMenuCommand(menu, "Cancel Changes", [](VSTGUI::CCommandMenuItem*) {});
             }
