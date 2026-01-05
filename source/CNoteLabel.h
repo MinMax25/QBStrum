@@ -3,9 +3,15 @@
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
 
-#include <vstgui/plugin-bindings/vst3editor.h>
-#include <vstgui/lib/controls/ctextlabel.h>
+#include <array>
+#include <string>
 #include <vstgui/lib/cdrawcontext.h>
+#include <vstgui/lib/controls/ccontrol.h>
+#include <vstgui/lib/controls/cparamdisplay.h>
+#include <vstgui/lib/controls/ctextlabel.h>
+#include <vstgui/lib/crect.h>
+#include <vstgui/lib/cstring.h>
+#include <vstgui/lib/vstguibase.h>
 
 #include "plugdefine.h"
 

@@ -1,8 +1,20 @@
 #pragma once
+
 //------------------------------------------------------------------------
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
 
+#include <algorithm>
+#include <cctype>
+#include <cstdint>
+#include <cstdlib>
+#include <iterator>
+#include <string>
+#include <vstgui/lib/cbitmap.h>
+#include <vstgui/lib/controls/ctextedit.h>
+#include <vstgui/lib/controls/icontrollistener.h>
+#include <vstgui/lib/crect.h>
+#include <vstgui/lib/vstguibase.h>
 #include <vstgui/plugin-bindings/vst3editor.h>
 
 #include "plugdefine.h"
