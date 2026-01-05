@@ -1,9 +1,15 @@
+//------------------------------------------------------------------------
+// Copyright(c) 2024 MinMax.
+//------------------------------------------------------------------------
 #pragma once
 
 #include <array>
-#include <base/source/fstring.h>
 #include <cassert>
 #include <pluginterfaces/base/fstrdefs.h>
+#include <cstdlib>
+#include <filesystem>
+#include <optional>
+#include <pluginterfaces/base/ftypes.h>
 
 #include "chordmap.h"
 #include "parameterframework.h"	
