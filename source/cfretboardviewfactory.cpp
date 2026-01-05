@@ -43,7 +43,7 @@ namespace MinMax
             presetFileName = ChordMap::Instance().getPresetPath().u8string();
 
             // --- FretBoard ---
-            fretBoard = new CFretBoard(getViewSize(), editor, PARAM::CHORD_NUM);
+            fretBoard = new CFretBoard(getViewSize());
             addView(fretBoard);
 
             // --- File Menu ---

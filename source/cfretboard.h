@@ -2,11 +2,9 @@
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
 
-#include <filesystem>
 #include <vector>
 #include <base/source/fstring.h>
 #include <public.sdk/source/vst/vstguieditor.h>
-#include <public.sdk/source/vst/vsteditcontroller.h>
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/vstgui.h>
 
@@ -62,13 +60,10 @@ namespace MinMax
         }
 
     public:
-        CFretBoard(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, ParamID tag)
+        CFretBoard(const VSTGUI::CRect& size)
             : CControl(size)
         {
             using namespace VSTGUI;
-
-            setListener(listener);
-            setTag(tag);
 
             // 初期値設定
             frameSize = size;
@@ -240,13 +235,6 @@ namespace MinMax
             }
         }
 
-        void valueChanged() override
-        {
-            auto value = getValue();
-            pressedFrets = ChordMap::Instance().getVoicing((int)value);
-            invalid();
-        }
-
         VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
         {
             if (!editing) return VSTGUI::kMouseEventNotHandled;
@@ -300,10 +288,10 @@ namespace MinMax
             invalid(); // 再描画
         }
 
-        // 現在の押弦情報をコピーして返す
+        // 現在の押弦情報
         StringSet getPressedFrets() const
         {
-            return pressedFrets; // コピーされる
+            return pressedFrets;
         }
 
         // 押弦情報を上書きして再描画
