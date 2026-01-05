@@ -154,7 +154,7 @@ namespace MinMax
             fretBoard->setPressedFrets(getVoicing(value));
         } 
 
-        StringSet getVoicing(const int& value)
+        StringSet getVoicing(const int value)
         {
             const auto& map = ChordMap::Instance();
             return map.getChordVoicing(value);
