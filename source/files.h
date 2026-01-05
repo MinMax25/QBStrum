@@ -1,0 +1,59 @@
+//------------------------------------------------------------------------
+// Copyright(c) 2024 MinMax.
+//------------------------------------------------------------------------
+
+#include <filesystem>
+#include <vector>
+#include <string>
+#include <base/source/fstring.h>
+
+namespace MinMax
+{
+    // プリセットファイル操作
+    const struct Files
+    {
+        /// 定数
+        inline static const char* STR_USERPROFILE = "USERPROFILE";
+        inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum";
+
+        inline static const std::string TITLE = "QBStrum";
+        inline static const std::string FILTER = "Chord Preset(.json)";
+        inline static const std::string FILE_EXT = "json";
+
+        // プリセットパスを取得する
+        inline static std::filesystem::path getPresetPath()
+        {
+            const char* home = getenv(STR_USERPROFILE);
+            if (!home)
+                return std::filesystem::current_path();
+
+            return std::filesystem::path(home).append(PRESET_ROOT).make_preferred();
+        }
+
+        // プリセットディレクトリを作成する
+        inline static void createPresetDirectory()
+        {
+            auto p = getPresetPath();
+            if (!std::filesystem::exists(p))
+            {
+                std::filesystem::create_directories(p);
+            }
+        }
+
+        // プリセットファイルのパス一覧を取得する 
+        inline static tresult getPresetFiles(std::vector<std::string>& file_names)
+        {
+            std::filesystem::directory_iterator iter(getPresetPath()), end;
+            std::error_code err;
+
+            for (; iter != end && !err; iter.increment(err))
+            {
+                const std::filesystem::directory_entry entry = *iter;
+                if (std::filesystem::path(entry.path().string()).extension() != ".json") continue;
+                file_names.push_back(entry.path().string());
+            }
+
+            return kResultTrue;
+        }
+    };
+}
