@@ -50,7 +50,9 @@ namespace MinMax
         bool canEdit_ = false;
 
         // 押さえているフレット
-        StringSet pressedFrets;
+        StringSet pressed{};
+
+        StringSet editPressed{};
 
         bool isMarkerFret(int f)
         {
@@ -64,6 +66,24 @@ namespace MinMax
                 f == 16 ||
                 f == 18
                 );
+        }
+
+        void savePressedFrets()
+        {
+            editPressed.size = pressed.size;
+            for (int i = 0; i < pressed.size; i++)
+            {
+                editPressed.data[i] = pressed.data[i];
+            }
+        }
+
+        void restorePressedFrets()
+        {
+            pressed.size = editPressed.size;
+            for (int i = 0; i < editPressed.size; i++)
+            {
+                pressed.data[i] = editPressed.data[i];
+            }
         }
 
     public:
@@ -190,9 +210,9 @@ namespace MinMax
                 pContext->setFillColor(pressedColor);
                 pContext->setFrameColor(pressedColor);
 
-                for (unsigned int stringIndex = 0; stringIndex < pressedFrets.size; ++stringIndex)
+                for (unsigned int stringIndex = 0; stringIndex < pressed.size; ++stringIndex)
                 {
-                    int fret = pressedFrets.data[stringIndex];
+                    int fret = pressed.data[stringIndex];
 
                     double y = boardSize.top + outerMargin + stringSpacing * stringIndex;
 
@@ -257,7 +277,7 @@ namespace MinMax
             if (fret < firstFret || fret > lastFret - 1)
                 return VSTGUI::kMouseEventNotHandled;
 
-            int& current = pressedFrets.data[stringIndex];
+            int& current = pressed.data[stringIndex];
 
             // ---- ナット左 ----
             if (fret < 0)
@@ -292,19 +312,27 @@ namespace MinMax
         void setCanEdit(bool state)
         {
             canEdit_ = state;
-            invalid(); // 再描画
+            if (canEdit_)
+            {
+                savePressedFrets();
+            }
+            else
+            {
+                restorePressedFrets();
+            }
+            invalid();
         }
 
         // 現在の押弦情報
         StringSet getPressedFrets() const
         {
-            return pressedFrets;
+            return pressed;
         }
 
         // 押弦情報を上書きして再描画
         void setPressedFrets(const StringSet& newFrets)
         {
-            pressedFrets = newFrets;
+            pressed = newFrets;
             invalid(); // 再描画
         }
 

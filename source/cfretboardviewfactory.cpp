@@ -42,15 +42,13 @@ namespace MinMax
 
     protected:
         VSTGUI::CColor NORMAL_TEXT_COLOR = VSTGUI::kWhiteCColor;    // 通常の色
-        VSTGUI::CColor EDIT_TEXT_COLOR = VSTGUI::kYellowCColor;     // 編集モード時の色
+        VSTGUI::CColor EDIT_TEXT_COLOR = VSTGUI::kRedCColor;     // 編集モード時の色
 
         bool canEdit = false; // 初期状態は編集不可
 
         VSTGUI::VST3Editor* editor = nullptr;
 
         std::string presetFileName;
-
-        StringSet originalPressedFrets;
 
         CFretBoard* fretBoard = nullptr;
 
@@ -104,13 +102,9 @@ namespace MinMax
                     addMenuCommand(menu, "Commit Changes", [this](VSTGUI::CCommandMenuItem*) { commitEdits(); });
                     addMenuCommand(menu, "Cancel Changes", [this](VSTGUI::CCommandMenuItem*) { cancelEdits(); });
                 }
-
-                if (!canEdit)
+                else
                 {
-                    canEdit = true;
-                    editButton->setTextColor(EDIT_TEXT_COLOR);
-                    fretBoard->setCanEdit(true);
-                    chordSelecter->setCanEdit(false);
+                    addMenuCommand(menu, "Enter Edit Mode", [this](VSTGUI::CCommandMenuItem*) { enterEditMode(); });
                 }
             }
 
@@ -146,16 +140,24 @@ namespace MinMax
             return menu;
         }
   
+        void enterEditMode()
+        {
+            canEdit = true;
+            editButton->setTextColor(EDIT_TEXT_COLOR);
+            fretBoard->setCanEdit(true);
+            chordSelecter->setCanEdit(false);
+        }
+
         void commitEdits()
         {
             if (!canEdit) return;
 
             // fretBoard の編集内容を ChordMap に反映
-            //auto pressed = fretBoard->getPressedFrets();
-            //auto* controller = editor->getController();
-            //ParamValue norm = controller->getParamNormalized(PARAM::CHORD_NUM);
-            //int chordNum = static_cast<int>(controller->normalizedParamToPlain(PARAM::CHORD_NUM, norm));
-            //ChordMap::Instance().setVoicing(chordNum, pressed);
+            auto pressed = fretBoard->getPressedFrets();
+            auto* controller = editor->getController();
+            ParamValue norm = controller->getParamNormalized(PARAM::CHORD_NUM);
+            int chordNum = static_cast<int>(controller->normalizedParamToPlain(PARAM::CHORD_NUM, norm));
+            ChordMap::Instance().setVoicing(chordNum, pressed);
 
             exitEditMode();
         }
@@ -163,10 +165,6 @@ namespace MinMax
         void cancelEdits()
         {
             if (!canEdit) return;
-
-            // fretBoard を元の状態に戻す
-            //fretBoard->setPressedFrets(originalPressedFrets);
-
             exitEditMode();
         }
 

@@ -87,6 +87,10 @@ namespace MinMax
         void setCanEdit(bool editable)
         {
             canEdit_ = editable;
+            if (chordMenu)
+                chordMenu->setMouseEnabled(canEdit_);
+            if (chordLabel)
+                chordLabel->setFontColor(editable ? VSTGUI::kBlackCColor : VSTGUI::kRedCColor);
         }
 
         CLASS_METHODS(CChordSelecter, CViewContainer)
