@@ -41,6 +41,11 @@ namespace MinMax
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
     protected:
+        VSTGUI::CColor NORMAL_TEXT_COLOR = VSTGUI::kWhiteCColor;    // 通常の色
+        VSTGUI::CColor EDIT_TEXT_COLOR = VSTGUI::kYellowCColor;     // 編集モード時の色
+
+        bool canEdit = false; // 初期状態は編集不可
+
         VSTGUI::VST3Editor* editor = nullptr;
 
         std::string presetFileName;
@@ -71,6 +76,7 @@ namespace MinMax
         {
             fileButton = new CMenuButton({ 1,1,60,18 }, "Preset", [this](CMenuButton* b) { popupMenu(b, MenuType::File); });
             addView(fileButton);
+
             editButton = new CMenuButton({ 62,1,122,18 }, "Edit", [this](CMenuButton* b) { popupMenu(b, MenuType::Edit); });
             addView(editButton);
         }
@@ -91,8 +97,21 @@ namespace MinMax
             }
             else
             {
-                addMenuCommand(menu, "Commit Changes", [](VSTGUI::CCommandMenuItem*) {});
-                addMenuCommand(menu, "Cancel Changes", [](VSTGUI::CCommandMenuItem*) {});
+                editButton->setTextColor(canEdit ? EDIT_TEXT_COLOR : NORMAL_TEXT_COLOR);
+
+                if (canEdit)
+                {
+                    addMenuCommand(menu, "Commit Changes", [this](VSTGUI::CCommandMenuItem*) { commitEdits(); });
+                    addMenuCommand(menu, "Cancel Changes", [this](VSTGUI::CCommandMenuItem*) { cancelEdits(); });
+                }
+
+                if (!canEdit)
+                {
+                    canEdit = true;
+                    editButton->setTextColor(EDIT_TEXT_COLOR);
+                    fretBoard->setCanEdit(true);
+                    chordSelecter->setCanEdit(false);
+                }
             }
 
             VSTGUI::CPoint p(anchor->getViewSize().left, anchor->getViewSize().bottom);
@@ -125,6 +144,39 @@ namespace MinMax
                 menu->addEntry(item);
             }
             return menu;
+        }
+  
+        void commitEdits()
+        {
+            if (!canEdit) return;
+
+            // fretBoard の編集内容を ChordMap に反映
+            //auto pressed = fretBoard->getPressedFrets();
+            //auto* controller = editor->getController();
+            //ParamValue norm = controller->getParamNormalized(PARAM::CHORD_NUM);
+            //int chordNum = static_cast<int>(controller->normalizedParamToPlain(PARAM::CHORD_NUM, norm));
+            //ChordMap::Instance().setVoicing(chordNum, pressed);
+
+            exitEditMode();
+        }
+
+        void cancelEdits()
+        {
+            if (!canEdit) return;
+
+            // fretBoard を元の状態に戻す
+            //fretBoard->setPressedFrets(originalPressedFrets);
+
+            exitEditMode();
+        }
+
+        // 編集モードを抜ける共通処理
+        void exitEditMode()
+        {
+            canEdit = false;
+            editButton->setTextColor(NORMAL_TEXT_COLOR); 
+            fretBoard->setCanEdit(false);
+            chordSelecter->setCanEdit(true);
         }
 
         StringSet getVoicing(int v) const { return ChordMap::Instance().getChordVoicing(v); }
@@ -164,9 +216,10 @@ namespace MinMax
         }
 
         template<typename F>
-        static void addMenuCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb)
+        static void addMenuCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb, bool isEnabled = true)
         {
             auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(title));
+            item->setEnabled(isEnabled);
             item->setActions(std::forward<F>(cb));
             menu->addEntry(item);
         }

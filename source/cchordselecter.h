@@ -83,10 +83,17 @@ namespace MinMax
         }
 
         ~CChordSelecter() {}
+        
+        void setCanEdit(bool editable)
+        {
+            canEdit_ = editable;
+        }
 
         CLASS_METHODS(CChordSelecter, CViewContainer)
 
     protected:
+        bool canEdit_ = true;
+
         ChordOptionMenu* chordMenu{};
 
         VSTGUI::CTextLabel* chordLabel = nullptr;

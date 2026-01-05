@@ -47,11 +47,10 @@ namespace MinMax
         double stringSpacing;
         double fretSpacing;
 
+        bool canEdit_ = false;
+
         // 押さえているフレット
         StringSet pressedFrets;
-
-        //
-        bool editing = false;
 
         bool isMarkerFret(int f)
         {
@@ -245,7 +244,7 @@ namespace MinMax
 
         VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
         {
-            if (!editing) return VSTGUI::kMouseEventNotHandled;
+            if (!canEdit_) return VSTGUI::kMouseEventNotHandled;
 
             int stringIndex =
                 int((where.y - (boardSize.top + outerMargin)) / stringSpacing + 0.5);
@@ -290,9 +289,9 @@ namespace MinMax
             return VSTGUI::kMouseEventHandled;
         }
 
-        void setEditing(bool state)
+        void setCanEdit(bool state)
         {
-            editing = state;
+            canEdit_ = state;
             invalid(); // 再描画
         }
 
