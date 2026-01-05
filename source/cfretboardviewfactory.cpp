@@ -4,6 +4,7 @@
 
 #include <filesystem>
 #include <vector>
+#include <string>
 #include <base/source/fstring.h>
 #include <public.sdk/source/vst/vstguieditor.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
@@ -19,6 +20,16 @@
 
 namespace MinMax
 {
+
+    //
+    template<typename F>
+    inline void addCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb)
+    {
+        auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(title));
+        item->setActions(std::forward<F>(cb));
+        menu->addEntry(item);
+    }
+
     // プリセットファイル操作
     const struct Files 
     {
@@ -68,87 +79,16 @@ namespace MinMax
     };
 
     //
-    // フレットボード
-    // 表示・編集用
+    // フレットボードビュー
     class CFretBoardView
         : public VSTGUI::CViewContainer
     {
     private:
-        // 編集モード切替ボタン（状態は親で管理）
-        class CEditModeButton : public VSTGUI::CTextButton
-        {
-        public:
-            CEditModeButton(const VSTGUI::CRect& size, CFretBoardView* parent_)
-                : CTextButton(size), parent(parent_)
-            {
-                setTag(-1);
-                setTitle(u8"Edit");
-            }
-
-            void valueChanged() override
-            {
-                if (getValue() < 0.5f) return;
-                if (parent) parent->toggleEditMode();
-                setValue(0.f);
-            }
-
-        protected:
-
-            CFretBoardView* parent;
-        };
-
-        // 編集キャンセルボタン（状態は親で管理）
-        class CEditCancelButton : public VSTGUI::CTextButton
-        {
-        public:
-            CEditCancelButton(const VSTGUI::CRect& size, CFretBoardView* parent_)
-                : CTextButton(size), parent(parent_)
-            {
-                setTag(-1);
-                setTitle(u8"Cancel");
-            }
-
-            void valueChanged() override
-            {
-                if (getValue() < 0.5f) return;
-                if (parent) parent->cancelEditMode();
-                setValue(0.f);
-            }
-
-        protected:
-
-            CFretBoardView* parent;
-        };
-
-        // コードプリセット保存ボタン（状態は親で管理）
-        class CSaveButton : public VSTGUI::CTextButton
-        {
-        public:
-            CSaveButton(const VSTGUI::CRect& size, CFretBoardView* parent_)
-                : CTextButton(size), parent(parent_)
-            {
-                setTitle(u8"Save Preset");
-            }
-
-            void valueChanged() override
-            {
-                if (getValue() < 0.5f) return;
-                if (parent) parent->saveChordMap();
-                setValue(0.f); // ボタン押下後リセット
-            }
-
-        private:
-            CFretBoardView* parent;
-        };
-
         // コード選択
-        // コード選択用階層メニューと選択コード名表示ラベルを持つ
-        // ※編集中は操作不可（階層化メニュー非表示）
         class CChordSelecter
             : public VSTGUI::CViewContainer
         {
         private:
-
             class ChordOptionMenu
                 : public VSTGUI::COptionMenu
             {
@@ -237,7 +177,6 @@ namespace MinMax
             };
 
         public:
-
             CChordSelecter(const VSTGUI::CRect& size, VSTGUI::VST3Editor* editor_, ParamID tag)
                 : CViewContainer(size)
                 , editor(editor_)
@@ -269,7 +208,6 @@ namespace MinMax
             CLASS_METHODS(CChordSelecter, CViewContainer)
 
         protected:
-
             VSTGUI::VST3Editor* editor{};
 
             ChordOptionMenu* chordMenu{};
@@ -322,10 +260,6 @@ namespace MinMax
         };
 
         // ギターフレット表示ビュー
-        // 非編集時：PARAM::CHORD_NUMの値のヴォイシング情報を表示
-        // 編集時　：PARAM::CHORD_NUMのヴォイシング情報の写しを作り、
-        //           その内容を編集、Save時にはChordMapのPARAM::CHORD_NUMのヴォイシング情報を更新
-        //           Cancel時は編集内容を破棄し現在のPARAM::CHORD_NUMの値のヴォイシング情報を表示
         class CFretBoard
             : public VSTGUI::CControl
         {
@@ -626,6 +560,61 @@ namespace MinMax
             CLASS_METHODS(CFretBoard, CControl)
         };
 
+        // メニュー表示
+        class MenuButton 
+            : public VSTGUI::CTextButton
+        {
+        public:
+            using Callback = std::function<void(MenuButton*)>;
+
+            MenuButton(const VSTGUI::CRect& size, VSTGUI::IControlListener* listener, int32_t tag, const VSTGUI::UTF8String& title, Callback cb)
+                : VSTGUI::CTextButton(size, listener, tag, title)
+                , callback(cb)
+            {
+                setFrameColor(VSTGUI::kTransparentCColor);
+                setGradient(nullptr);
+                setTextColor(VSTGUI::kWhiteCColor);
+                setFont(VSTGUI::kNormalFontSmall);
+            }
+
+            VSTGUI::CMouseEventResult onMouseEntered(VSTGUI::CPoint& where, const VSTGUI::CButtonState& buttons ) override
+            {
+                mouseInside = true;
+                invalid();
+                return VSTGUI::kMouseEventHandled;
+            }
+
+            VSTGUI::CMouseEventResult onMouseExited(VSTGUI::CPoint& where, const VSTGUI::CButtonState& buttons) override
+            {
+                mouseInside = false;
+                invalid();
+                return VSTGUI::kMouseEventHandled;
+            }
+
+            void draw(VSTGUI::CDrawContext* ctx) override
+            {
+                // hover 背景（Windows 風）
+                if (mouseInside)
+                {
+                    ctx->setFillColor(VSTGUI::kGreyCColor);
+                    ctx->drawRect(getViewSize(), VSTGUI::kDrawFilled);
+                }
+
+                // テキスト描画（親クラス任せ）
+                VSTGUI::CTextButton::draw(ctx);
+            }
+
+            void valueChanged() override
+            {
+                if (getValue()) return;
+                if (callback) callback(this);
+            }
+
+        private:
+            bool mouseInside{ false };
+            Callback callback;
+        };
+
     public:
         CFretBoardView(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description, const VSTGUI::CRect& size)
             : CViewContainer(size)
@@ -639,26 +628,17 @@ namespace MinMax
             fretBoard = new CFretBoard(getViewSize(), editor, PARAM::CHORD_NUM);
             addView(fretBoard);
 
+            // --- File Menu ---
+            fileButton = new MenuButton(VSTGUI::CRect(1, 1, 60, 18), editor, -1, "Preset", [this](MenuButton* b) { popupFileMenu(getFrame(), b); });
+            addView(fileButton);
+
+            // --- Edit Menu ---
+            editButton = new MenuButton(VSTGUI::CRect(62, 1, 122, 18), editor, -1, "Edit", [this](MenuButton* b) { popupEditMenu(getFrame(), b); });
+            addView(editButton);
+
             // --- Chord Selecter ---
             chordSelecter = new CChordSelecter(VSTGUI::CRect(365, 1, 515, 19), editor, PARAM::CHORD_NUM);
             addView(chordSelecter);
-
-            // --- Edit / Save Button ---
-            editModeButton = new CEditModeButton(VSTGUI::CRect(75, 1, 125, 18), this);
-            editModeButton->setFont(VSTGUI::kNormalFontSmall);
-            addView(editModeButton);
-
-            // --- Edit Cancel Button ---
-            editCancelButton = new CEditCancelButton(VSTGUI::CRect(126, 1, 175, 18), this);
-            editCancelButton->setFont(VSTGUI::kNormalFontSmall);
-            editCancelButton->setVisible(false);
-            addView(editCancelButton);
-
-            // 
-            saveButton = new CSaveButton(VSTGUI::CRect(686, 1, 785, 18), this);
-            saveButton->setFont(VSTGUI::kNormalFontSmall);
-            saveButton->setVisible(false);
-            addView(saveButton);
         }
 
         ~CFretBoardView() override { }
@@ -666,18 +646,15 @@ namespace MinMax
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
     protected:
-
         VSTGUI::VST3Editor* editor = nullptr;
 
         CFretBoard* fretBoard = nullptr;
 
         CChordSelecter* chordSelecter = nullptr;
 
-        CEditModeButton* editModeButton = nullptr;
+        MenuButton* fileButton = nullptr;
 
-        CEditCancelButton* editCancelButton = nullptr;
-        
-        VSTGUI::CTextButton* saveButton = nullptr;
+        MenuButton* editButton = nullptr;
 
         std::string presetFileName;
 
@@ -685,53 +662,80 @@ namespace MinMax
 
         StringSet originalPressedFrets;
 
-        void toggleEditMode()
+        static void popupFileMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
         {
-            if (isEditing)
-            {
-                // Save前の編集モード終了
-                saveEdits();
-            }
-            else
-            {
-                // 編集開始時に元の状態を保持
-                originalPressedFrets = fretBoard->getPressedFrets();
-            }
+            auto* menu = new VSTGUI::COptionMenu();
 
-            isEditing = !isEditing;
+            auto* openMenu = createOpenPresetMenu();
+            auto* openItem = new VSTGUI::CMenuItem("Open", openMenu);
+            menu->addEntry(openItem);
+            openMenu->forget();
 
-            // ボタンタイトル更新
-            editModeButton->setTitle(isEditing ? u8"Update" : u8"Edit");
-            editCancelButton->setVisible(isEditing);
+            addCommand(menu, "Save", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
 
-            // 各ビューに編集状態を通知
-            fretBoard->setEditing(isEditing);
-            chordSelecter->setEditing(isEditing);
+            VSTGUI::CRect r = anchor->getViewSize();
+            VSTGUI::CPoint p(r.left, r.bottom);
+            anchor->localToFrame(p);
+
+            menu->popup(frame, p);
+            menu->forget();
         }
 
-        void cancelEditMode()
+        static VSTGUI::COptionMenu* createOpenPresetMenu()
         {
-            isEditing = false;
+            auto* menu = new VSTGUI::COptionMenu();
 
-            editModeButton->setTitle(u8"Edit");
-            editCancelButton->setVisible(false);
+            std::vector<std::string> files;
+            if (Files::getPresetFiles(files) != kResultTrue || files.empty())
+            {
+                auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc("No Presets"));
+                item->setEnabled(false);
+                menu->addEntry(item);
+                return menu;
+            }
 
-            // 元のデータに戻す
-            fretBoard->setPressedFrets(originalPressedFrets);
+            int32_t tagBase = 10000;
 
-            fretBoard->setEditing(false);
-            chordSelecter->setEditing(false);
+            for (const auto& fullpath : files)
+            {
+                std::filesystem::path p(fullpath);
+
+                std::string utf8 = p.filename().u8string();
+                VSTGUI::UTF8String title(utf8.c_str());
+
+                auto* item = new VSTGUI::CMenuItem(title, tagBase++);
+                menu->addEntry(item);
+            }
+
+            return menu;
+        }
+
+        static void popupEditMenu(VSTGUI::CFrame* frame, const VSTGUI::CView* anchor)
+        {
+            auto* menu = new VSTGUI::COptionMenu();
+
+            addCommand(menu, "Edit", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+            addCommand(menu, "Commit Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+            addCommand(menu, "Cancel Changes", [](VSTGUI::CCommandMenuItem*) { /* ... */ });
+
+            VSTGUI::CRect r = anchor->getViewSize();
+            VSTGUI::CPoint p(r.left, r.bottom);
+            anchor->localToFrame(p);
+
+            menu->popup(frame, p);
+            menu->forget();
         }
 
         void saveChordMap()
         {
+            if (!fileButton) return;
+
             showDialog(
-                saveButton,
+                fileButton, 
                 VSTGUI::CNewFileSelector::kSelectSaveFile,
                 [this](const std::string& path)
                 {
                     ChordMap::Instance().saveToFile(path);
-                    saveButton->setVisible(false);
                 }
             );
         }
@@ -746,9 +750,6 @@ namespace MinMax
             ParamValue norm = controller->getParamNormalized(PARAM::CHORD_NUM);
             int chordNum = static_cast<int>(controller->normalizedParamToPlain(PARAM::CHORD_NUM, norm));
             ChordMap::Instance().setVoicing(chordNum, pressed);
-
-            // 変更箇所がある場合セーブボタン可視化
-            saveButton->setVisible(ChordMap::Instance().isModified());
 
             // 編集終了後、元の状態として保持しておく
             originalPressedFrets = pressed;

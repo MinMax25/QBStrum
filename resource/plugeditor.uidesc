@@ -32,6 +32,16 @@
 					"rgba": "#646464ff",
 					"start": "1"
 				}
+			],
+			"Menu Button Gradient": [
+				{
+					"rgba": "#808080ff",
+					"start": "0"
+				},
+				{
+					"rgba": "#808080ff",
+					"start": "1"
+				}
 			]
 		},
 		"control-tags": {
@@ -88,12 +98,12 @@
 				"SplitViewSize_1_1": "0.6371571072319202055922460203873924911022",
 				"SplitViewSize_2_0": "0.6105476673427991940457104647066444158554",
 				"SplitViewSize_2_1": "0.3860716700473292850581685797806130722165",
-				"TabSwitchValue": "1",
+				"TabSwitchValue": "3",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "28"
+				"SelectedRow": "26"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "18"
@@ -103,6 +113,9 @@
 			},
 			"UIFontsDataSource": {
 				"SelectedRow": "0"
+			},
+			"UIGradientsDataSource": {
+				"SelectedRow": "2"
 			}
 		},
 		"templates": {
