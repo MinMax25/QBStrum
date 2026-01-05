@@ -20,8 +20,7 @@
 
 namespace MinMax
 {
-
-    //
+    // メニュー要素追加
     template<typename F>
     inline void addCommand(VSTGUI::COptionMenu* menu, const VSTGUI::UTF8String& title, F&& cb)
     {
@@ -259,7 +258,7 @@ namespace MinMax
             }
         };
 
-        // ギターフレット表示ビュー
+        // ギターフレット表示コントロール
         class CFretBoard
             : public VSTGUI::CControl
         {
