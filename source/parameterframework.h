@@ -1,7 +1,9 @@
+//------------------------------------------------------------------------
+// Copyright(c) 2024 MinMax.
+//------------------------------------------------------------------------
 #pragma once
 
 #include <algorithm>
-#include <assert.h>
 #include <base/source/fobject.h>
 #include <base/source/fstring.h>
 #include <cmath>
@@ -9,9 +11,18 @@
 #include <optional>
 #include <pluginterfaces/base/ustring.h>
 #include <public.sdk/source/vst/utility/stringconvert.h>
-#include <public.sdk/source/vst/vsteditcontroller.h>
 #include <unordered_map>
 #include <vector>
+#include <array>
+#include <cassert>
+#include <cstdlib>
+#include <string>
+#include <utility>
+#include <pluginterfaces/base/fstrdefs.h>
+#include <pluginterfaces/base/ftypes.h>
+#include <pluginterfaces/vst/ivsteditcontroller.h>
+#include <pluginterfaces/vst/vsttypes.h>
+#include <public.sdk/source/vst/vstparameters.h>
 
 namespace ParameterFramework
 {
