@@ -2,9 +2,19 @@
 // Copyright(c) 2024 MinMax.
 //------------------------------------------------------------------------
 
-#include <filesystem>
-#include <public.sdk/source/vst/vstguieditor.h>
-#include <vstgui/vstgui.h>
+#include <cstdint>
+#include <functional>
+#include <vstgui/lib/cbuttonstate.h>
+#include <vstgui/lib/ccolor.h>
+#include <vstgui/lib/cdrawcontext.h>
+#include <vstgui/lib/cdrawdefs.h>
+#include <vstgui/lib/cfont.h>
+#include <vstgui/lib/controls/cbuttons.h>
+#include <vstgui/lib/controls/icontrollistener.h>
+#include <vstgui/lib/cpoint.h>
+#include <vstgui/lib/crect.h>
+#include <vstgui/lib/cstring.h>
+#include <vstgui/lib/vstguifwd.h>
 
 namespace MinMax
 {
