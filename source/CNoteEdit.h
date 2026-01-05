@@ -15,7 +15,6 @@
 #include <vstgui/lib/controls/icontrollistener.h>
 #include <vstgui/lib/crect.h>
 #include <vstgui/lib/vstguibase.h>
-#include <vstgui/plugin-bindings/vst3editor.h>
 
 #include "plugdefine.h"
 
