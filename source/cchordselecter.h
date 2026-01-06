@@ -165,7 +165,6 @@ namespace MinMax
         void onSelectedChordChanged(int value)
         {
             currentChordNumber = value;
-            setChordText(value);
             if (selectedChordChanged) selectedChordChanged(this, value);
         }
 

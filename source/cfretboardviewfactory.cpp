@@ -113,13 +113,20 @@ namespace MinMax
 
         void onParameterChordChanged(int value)
         {
+            if (canEdit) return;
             fretBoard->setPressedFrets(getVoicing(value));
             chordSelecter->setChordNumber(value);
         }
 
         void onSelectedChordChanged(int value)
         {
-
+            if (canEdit) return;
+            auto* c = editor->getController();
+            c->beginEdit(PARAM::CHORD_NUM);
+            Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(PARAM::CHORD_NUM, value);
+            c->setParamNormalized(PARAM::CHORD_NUM, norm);
+            c->performEdit(PARAM::CHORD_NUM, norm);
+            c->endEdit(PARAM::CHORD_NUM);
         }
 
         enum class MenuType { File, Edit };
