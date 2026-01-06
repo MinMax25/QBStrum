@@ -135,7 +135,7 @@ namespace MinMax
 		: public ParameterFramework::IOptionProvider
 	{
 	public:
-		OptionList getOptionNames(int32 rangeKind) const override
+		std::vector<std::string> getOptionNames(int32 rangeKind) const override
 		{
 			switch (rangeKind)
 			{

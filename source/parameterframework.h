@@ -29,8 +29,6 @@ namespace ParameterFramework
     using namespace Steinberg;
     using namespace Steinberg::Vst;
 
-    using OptionList = std::vector<std::string>;
-
 #pragma region Custom Parameter
 
     class ExpParameter : public Parameter
@@ -134,7 +132,7 @@ namespace ParameterFramework
     struct IOptionProvider
     {
         virtual ~IOptionProvider() = default;
-        virtual OptionList getOptionNames(int32 rangeKind) const = 0;
+        virtual std::vector<std::string> getOptionNames(int32 rangeKind) const = 0;
     };
 
     struct ParamDef
@@ -186,7 +184,7 @@ namespace ParameterFramework
             double max = def.maxValue;
             bool hasOption = false;
 
-            OptionList options;
+            std::vector<std::string> options;
 
             ValueRange rs;
             if (rangeResolver && def.rangeKind.has_value() && rangeResolver->resolve(*def.rangeKind, rs))
