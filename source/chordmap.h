@@ -401,6 +401,11 @@ namespace MinMax
             return presetPath;
         }
 
+        std::string getPresetName()
+        {
+            return getPresetPath().stem().u8string();
+        }
+
     protected:
         std::filesystem::path presetPath;
 

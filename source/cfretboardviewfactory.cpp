@@ -47,6 +47,7 @@ namespace MinMax
             initChordSelecter();
             initMenuButtons();
             initChordListener();
+            initLabelPreset();
         }
 
         ~CFretBoardView() override
@@ -77,6 +78,8 @@ namespace MinMax
         CMenuButton* fileButton = nullptr;
 
         CMenuButton* editButton = nullptr;
+
+        VSTGUI::CTextLabel* labelPreset = nullptr;
 
         void onParameterChordChanged(int value)
         {
@@ -111,10 +114,10 @@ namespace MinMax
 
         void initMenuButtons()
         {
-            fileButton = new CMenuButton({ 1,1,60,18 }, "Preset", [this](CMenuButton* b) { popupMenu(b, MenuType::File); });
+            fileButton = new CMenuButton({ 1, 1, 59, 18 }, "Preset", [this](CMenuButton* b) { popupMenu(b, MenuType::File); });
             addView(fileButton);
 
-            editButton = new CMenuButton({ 62,1,122,18 }, "Edit", [this](CMenuButton* b) { popupMenu(b, MenuType::Edit); });
+            editButton = new CMenuButton({ 60, 1, 119, 18 }, "Edit", [this](CMenuButton* b) { popupMenu(b, MenuType::Edit); });
             addView(editButton);
         }
 
@@ -128,6 +131,15 @@ namespace MinMax
                         onParameterChordChanged(v);
                     }
                 );
+        }
+
+        void initLabelPreset()
+        {
+            labelPreset = new VSTGUI::CTextLabel(VSTGUI::CRect(140, 1, 340, 18));
+            labelPreset->setBackColor(VSTGUI::kGreyCColor);
+            labelPreset->setFont(VSTGUI::kNormalFontSmall);
+            labelPreset->setText(ChordMap::Instance().getPresetName());
+            addView(labelPreset);
         }
 
         void popupMenu(VSTGUI::CView* anchor, MenuType type)
@@ -191,6 +203,7 @@ namespace MinMax
                             auto cn = chordSelecter->getCurrentChordNumber();
                             auto& pf = cm.getChordVoicing(cn);
                             fretBoard->setPressedFrets(pf);
+                            labelPreset->setText(cm.getPresetName());
                         }
                         catch (...)
                         {
