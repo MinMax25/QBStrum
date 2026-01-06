@@ -11,7 +11,6 @@
 #include <vstgui/uidescription/iuidescription.h>
 #include <vstgui/uidescription/iviewcreator.h>
 #include <vstgui/uidescription/uiattributes.h>
-#include <vstgui/uidescription/uiviewfactory.h>
 #include <vstgui/vstgui_uidescription.h>
 
 #include "cnoteedit.h"
