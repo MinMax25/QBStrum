@@ -23,12 +23,13 @@
 #include <vstgui/uidescription/uiattributes.h>
 #include <vstgui/uidescription/uiviewfactory.h>
 
+#include "cchordlistener.h"
 #include "cchordselecter.h"
 #include "cfretboard.h"
 #include "chordmap.h"
 #include "cmenubutton.h"
 #include "files.h"
-#include "cchordlistener.h"
+#include "plugdefine.h"
 
 namespace MinMax
 {
@@ -187,6 +188,18 @@ namespace MinMax
                         try
                         {
                             ChordMap::Instance().initFromPreset(f);
+                            if (auto message = Steinberg::owned(editor->getController()->allocateMessage()))
+                            {
+                                message->setMessageID(MSG_PRESET_PATH);
+                                if (auto attr = message->getAttributes())
+                                {
+                                    // std::filesystem は UTF-8 → UTF-16 を正しくやってくれる
+                                    std::u16string u16 = std::filesystem::path(f).u16string();
+                                    attr->setString(MSG_PRESET_PATH, reinterpret_cast<const Steinberg::Vst::TChar*>(u16.c_str()));
+                                }
+                                if (editor->getController() == nullptr) return;
+                                editor->getController()->getPeer()->notify(message);
+                            }
                         }
                         catch (...)
                         {
