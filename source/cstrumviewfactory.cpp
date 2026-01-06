@@ -11,6 +11,7 @@
 #include "cnotelabel.h"
 #include "myparameters.h"
 #include "plugdefine.h"
+#include "cnotemsg.h"
 
 namespace MinMax
 {

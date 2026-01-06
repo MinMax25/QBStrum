@@ -13,6 +13,7 @@
 #include "plugcids.h"
 #include "plugdefine.h"
 #include "plugprocessor.h"
+#include "cnotemsg.h"
 
 namespace MinMax
 {

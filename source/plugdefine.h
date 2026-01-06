@@ -10,14 +10,6 @@ namespace MinMax
 	inline constexpr auto MSG_CHORD_CHANGED = "ChordChanged";
 	inline constexpr auto MSG_CHORD_VALUE = "ChordValue";
 
-	// ノートメッセージ値
-	struct CNoteMsg
-	{
-		Steinberg::Vst::ParamID tag;
-		bool isOn;
-		int velocity;
-	};
-
 	// 音程名変換辞書
 	inline const std::array<char*, 128> NoteNames =
 	{
