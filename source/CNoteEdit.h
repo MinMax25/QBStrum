@@ -44,14 +44,14 @@ namespace MinMax
             auto& itr = std::find(NoteNames.begin(), NoteNames.end(), key);
             if (itr != NoteNames.end())
             {
-                result = std::distance(NoteNames.begin(), itr);
+                result = (float)std::distance(NoteNames.begin(), itr);
                 return true;
             }
 
             // “ü—Í‚ª”’l‚¾‚Á‚½ê‡‚Í‚»‚Ì‚Ü‚Ü•ÏŠ·‚·‚é
             int val = std::atoi(key.c_str());
             if (val < NOTE_COUNT) {
-                result = val;
+                result = (float)val;
                 return true;
             }
 

@@ -3,8 +3,15 @@
 //------------------------------------------------------------------------
 #pragma once
 
-#include <vstgui/plugin-bindings/vst3editor.h>
+#include <vstgui/lib/cpoint.h>
+#include <vstgui/lib/crect.h>
+#include <vstgui/lib/cview.h>
+#include <vstgui/lib/vstguibase.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
+#include <vstgui/uidescription/iuidescription.h>
+#include <vstgui/uidescription/iviewcreator.h>
+#include <vstgui/uidescription/uiattributes.h>
+#include <vstgui/uidescription/uiviewfactory.h>
 #include <vstgui/vstgui_uidescription.h>
 
 #include "cnoteedit.h"
