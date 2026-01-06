@@ -98,7 +98,7 @@ namespace MinMax
                 labStrumTitle->setFontColor(kWhiteCColor);
                 labStrumTitle->setHoriAlign(CHoriTxtAlign::kLeftText);
                 labStrumTitle->setFont(kNormalFontSmall);
-                labStrumTitle->setText(String(def->name).text8());
+                labStrumTitle->setText(Steinberg::String(def->name).text8());
                 rcvONote->addView(labStrumTitle);
 
 				// ピッチ・ノート入力

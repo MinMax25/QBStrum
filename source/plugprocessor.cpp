@@ -6,6 +6,7 @@
 #include <pluginterfaces/base/ibstream.h>
 #include <pluginterfaces/vst/ivstparameterchanges.h>
 #include <vstgui/vstgui_uidescription.h>
+#include <pluginterfaces/vst/ivstevents.h>
 
 #include "myparameters.h"
 #include "parameterframework.h"

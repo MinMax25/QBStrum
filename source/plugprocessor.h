@@ -13,12 +13,12 @@
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/utility/ringbuffer.h>
 #include <public.sdk/source/vst/vstaudioeffect.h>
+#include <pluginterfaces/vst/ivstevents.h>
 
 #include "chordmap.h"
 #include "parameterframework.h"
 #include "myparameters.h"
 #include "eventscheduler.h"
-#include "plugdefine.h"
 
 namespace MinMax
 {

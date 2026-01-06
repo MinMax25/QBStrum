@@ -393,7 +393,6 @@ namespace MinMax
             }
 
             rapidjson::OStreamWrapper osw(ofs);
-            //rapidjson::Writer<rapidjson::OStreamWrapper> writer(osw);
             rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
             doc.Accept(writer);
 

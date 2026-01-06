@@ -1,18 +1,11 @@
 ﻿#pragma once
 
 #include <array>
-#include <base/source/fstring.h>
-#include <pluginterfaces/vst/ivstevents.h>
+//#include <pluginterfaces/vst/ivstevents.h>
 #include <pluginterfaces/vst/vsttypes.h>
 
 namespace MinMax
 {
-	using namespace Steinberg;
-	using namespace Steinberg::Vst;
-
-	using String = Steinberg::String;
-	using Event = Steinberg::Vst::Event;
-
 	// メッセージ識別子
 	inline constexpr auto MSG_SOUND_CHECK = "SoundCheck";
 	inline constexpr auto MSG_CHORD_CHANGED = "ChordChanged";
@@ -21,7 +14,7 @@ namespace MinMax
 	// ノートメッセージ値
 	struct CNoteMsg
 	{
-		ParamID tag;
+		Steinberg::Vst::ParamID tag;
 		bool isOn;
 		int velocity;
 	};
