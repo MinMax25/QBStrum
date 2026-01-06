@@ -26,8 +26,6 @@
 
 namespace ParameterFramework
 {
-    using namespace Steinberg;
-
 #pragma region Custom Parameter
 
     class ExpParameter : public Steinberg::Vst::Parameter
@@ -37,9 +35,15 @@ namespace ParameterFramework
         Steinberg::Vst::ParamValue max;
 
     public:
-        ExpParameter(const Steinberg::Vst::TChar* title, Steinberg::Vst::ParamID tag, const Steinberg::Vst::TChar* units,
-            Steinberg::Vst::ParamValue minPlain, Steinberg::Vst::ParamValue maxPlain,
-            int32 flags, Steinberg::Vst::UnitID unitID)
+        ExpParameter(
+            const Steinberg::Vst::TChar* title,
+            Steinberg::Vst::ParamID tag,
+            const Steinberg::Vst::TChar* units,
+            Steinberg::Vst::ParamValue minPlain,
+            Steinberg::Vst::ParamValue maxPlain,
+            Steinberg::int32 flags,
+            Steinberg::Vst::UnitID unitID
+        )
             : Parameter(title, tag, units, 0.0, 0, flags, unitID),
             min(minPlain), max(maxPlain)
         {
@@ -48,14 +52,14 @@ namespace ParameterFramework
 
         void toString(Steinberg::Vst::ParamValue valueNormalized, Steinberg::Vst::String128 string) const override
         {
-            UString128 wrapper;
+            Steinberg::UString128 wrapper;
             wrapper.printFloat(toPlain(valueNormalized), precision);
             wrapper.copyTo(string, 128);
         }
 
         bool fromString(const Steinberg::Vst::TChar* string, Steinberg::Vst::ParamValue& valueNormalized) const override
         {
-            UString wrapper((Steinberg::Vst::TChar*)string, strlen16(string));
+            Steinberg::UString wrapper((Steinberg::Vst::TChar*)string, Steinberg::strlen16(string));
             Steinberg::Vst::ParamValue plainValue;
             if (wrapper.scanFloat(plainValue))
             {
@@ -125,24 +129,24 @@ namespace ParameterFramework
     struct IRangeResolver
     {
         virtual ~IRangeResolver() = default;
-        virtual bool resolve(uint32 rangeKind, ValueRange& out) const = 0;
+        virtual bool resolve(Steinberg::uint32 rangeKind, ValueRange& out) const = 0;
     };
 
     struct IOptionProvider
     {
         virtual ~IOptionProvider() = default;
-        virtual std::vector<std::string> getOptionNames(int32 rangeKind) const = 0;
+        virtual std::vector<std::string> getOptionNames(Steinberg::int32 rangeKind) const = 0;
     };
 
     struct ParamDef
     {
         Steinberg::Vst::ParamID tag;
-        String name;
-        String units;
+        Steinberg::String name;
+        Steinberg::String units;
         VALUE valueType;
         SCALE scaleType = SCALE::Linear;
 
-        std::optional<uint32> rangeKind;
+        std::optional<Steinberg::uint32> rangeKind;
 
         FLAG flags;
         
@@ -152,9 +156,9 @@ namespace ParameterFramework
         double maxValue = 1.0;
 
         double defaultValue = 0.0;
-        int32 precision = 0;
+        Steinberg::int32 precision = 0;
  
-        int32 defaultIndex = 0;
+        Steinberg::int32 defaultIndex = 0;
     };
 
     class ParamHelper
@@ -177,7 +181,7 @@ namespace ParameterFramework
             VALUE vtype = def.valueType;
 
             double defaultValue = def.defaultValue;
-            int32 precision = def.precision;
+            Steinberg::int32 precision = def.precision;
 
             double min = def.minValue;
             double max = def.maxValue;
@@ -226,7 +230,7 @@ namespace ParameterFramework
                     p->appendString(u16str);
                 }               
 
-                int32 index = std::clamp(def.defaultIndex, 0, static_cast<int32>(options.size() - 1));
+                Steinberg::int32 index = std::clamp(def.defaultIndex, 0, static_cast<Steinberg::int32>(options.size() - 1));
 
                 Steinberg::Vst::ParamValue norm =
                     options.size() > 1
