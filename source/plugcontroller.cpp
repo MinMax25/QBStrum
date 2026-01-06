@@ -103,8 +103,7 @@ namespace MinMax
 	{
 		if (FIDStringsEqual(name, Vst::ViewType::kEditor))
 		{
-			//auto* view = new VSTGUI::VST3Editor(this, "view", "plugeditor.uidesc");
-			auto* view = new MyVST3Editor(this, "view", "plugeditor.uidesc");
+			view = new MyVST3Editor(this, "view", "plugeditor.uidesc");
 			return view;
 		}
 		return nullptr;

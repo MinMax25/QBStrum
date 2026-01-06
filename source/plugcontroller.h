@@ -14,6 +14,8 @@
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
+#include "myvst3editor.h"
+
 namespace MinMax
 {
 	class MyVSTController 
@@ -45,6 +47,8 @@ namespace MinMax
 		tresult PLUGIN_API getUnitByBus(MediaType valueType, BusDirection dir, int32 busIndex, int32 channel, UnitID& unitId) SMTG_OVERRIDE;
 		
 		tresult PLUGIN_API notify(IMessage* message) SMTG_OVERRIDE;
+
+		MyVST3Editor* view = nullptr;
 
 		// --------------
 

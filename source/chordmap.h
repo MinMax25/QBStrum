@@ -306,7 +306,6 @@ namespace MinMax
 
         bool isModified() const { return modified; }
 
-        // 現在の ChordMap 内容を JSON ファイルに保存
         void saveToFile(std::string path)
         {
             presetPath = std::filesystem::path(path);

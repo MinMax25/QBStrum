@@ -17,5 +17,7 @@ namespace MinMax
 			: VSTGUI::VST3Editor(controller, _viewName, _xmlFile)
 		{
 		}
+
+		~MyVST3Editor() override = default;
 	};
 }
