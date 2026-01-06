@@ -3,17 +3,33 @@
 //------------------------------------------------------------------------
 #pragma once
 
+#include <algorithm>
+#include <array>
+#include <cmath>
+#include <cstdlib>
+#include <pluginterfaces/base/fplatform.h>
+#include <pluginterfaces/base/fstrdefs.h>
+#include <pluginterfaces/base/ftypes.h>
+#include <pluginterfaces/base/funknown.h>
 #include <pluginterfaces/base/ibstream.h>
-#include <pluginterfaces/vst/ivstparameterchanges.h>
-#include <vstgui/vstgui_uidescription.h>
+#include <pluginterfaces/vst/ivstaudioprocessor.h>
 #include <pluginterfaces/vst/ivstevents.h>
+#include <pluginterfaces/vst/ivstmessage.h>
+#include <pluginterfaces/vst/ivstparameterchanges.h>
+#include <pluginterfaces/vst/vstspeaker.h>
+#include <pluginterfaces/vst/vsttypes.h>
+#include <public.sdk/source/vst/vstaudioeffect.h>
+#include <string.h>
+#include <vector>
 
+#include "chordmap.h"
+#include "cnotemsg.h"
+#include "EventScheduler.h"
 #include "myparameters.h"
 #include "parameterframework.h"
 #include "plugcids.h"
 #include "plugdefine.h"
 #include "plugprocessor.h"
-#include "cnotemsg.h"
 
 namespace MinMax
 {
