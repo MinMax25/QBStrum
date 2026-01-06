@@ -5,11 +5,13 @@
 
 #include <array>
 #include <cassert>
-#include <pluginterfaces/base/fstrdefs.h>
 #include <cstdlib>
 #include <filesystem>
 #include <optional>
+#include <pluginterfaces/base/fstrdefs.h>
 #include <pluginterfaces/base/ftypes.h>
+#include <string>
+#include <vector>
 
 #include "chordmap.h"
 #include "parameterframework.h"	
