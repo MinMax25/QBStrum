@@ -24,7 +24,7 @@ namespace MinMax
 		if (!processData) return;
 		if (!processData->outputEvents) return;
 
-		Event event{};
+		Steinberg::Vst::Event event{};
 
 		event.flags = 0; //Event::kIsLive;
 		event.busIndex = 0;
@@ -32,7 +32,7 @@ namespace MinMax
 
 		if (e.eventType == NoteEventType::On)
 		{
-			event.type = Event::kNoteOnEvent;
+			event.type = Steinberg::Vst::Event::kNoteOnEvent;
 			event.noteOn.channel = e.channel;
 			event.noteOn.noteId = e.noteId;
 			event.noteOn.pitch = e.pitch;
@@ -40,7 +40,7 @@ namespace MinMax
 		}
 		else
 		{
-			event.type = Event::kNoteOffEvent;
+			event.type = Steinberg::Vst::Event::kNoteOffEvent;
 			event.noteOff.channel = e.channel;
 			event.noteOff.noteId = e.noteId;
 			event.noteOff.pitch = e.pitch;
@@ -199,14 +199,14 @@ namespace MinMax
 
 		for (int32 i = 0; i < paramChangeCount; i++)
 		{
-			IParamValueQueue* queue = processData->inputParameterChanges->getParameterData(i);
+			Steinberg::Vst::IParamValueQueue* queue = processData->inputParameterChanges->getParameterData(i);
 			if (queue == NULL) continue;
 
-			ParamID tag = queue->getParameterId();
+			Steinberg::Vst::ParamID tag = queue->getParameterId();
 
 			int32 valueChangeCount = queue->getPointCount();
 			int32 sampleOffset;
-			ParamValue value;
+			Steinberg::Vst::ParamValue value;
 
 			if (!(queue->getPoint(valueChangeCount - 1, sampleOffset, value) == kResultTrue)) continue;
 
@@ -225,7 +225,7 @@ namespace MinMax
 			}
 			case PARAM::CHORD_MSB:
 			{
-				ParamValue num = prm.get(PARAM::CHORD_MSB) * 128 + prm.get(PARAM::CHORD_LSB);
+				Steinberg::Vst::ParamValue num = prm.get(PARAM::CHORD_MSB) * 128 + prm.get(PARAM::CHORD_LSB);
 				notifyChordNumberChanged(num);
 				prm.set(PARAM::CHORD_NUM, num);
 				break;
@@ -281,16 +281,16 @@ namespace MinMax
 		if (processData->inputEvents == NULL) return;
 
 		// イベント処理
-		Event event;
+		Steinberg::Vst::Event event;
 
 		for (int32 i = 0; i < processData->inputEvents->getEventCount(); i++)
 		{
 			if (processData->inputEvents->getEvent(i, event) != kResultOk) continue;
 
 			// ピッチからパラメータＩＤ取得
-			if (event.type == Event::kNoteOnEvent)
+			if (event.type == Steinberg::Vst::Event::kNoteOnEvent)
 			{
-				ParamID tag = getParamIdByPitch(event);
+				Steinberg::Vst::ParamID tag = getParamIdByPitch(event);
 				if (tag > 0)
 				{
 					routingProcess(tag, event);
@@ -304,21 +304,21 @@ namespace MinMax
 		if (!processData) return;
 
 		// イベント処理
-		Event event{};
+		Steinberg::Vst::Event event{};
 
 		while (InnerEvents.pop(event))
 		{
 			// ピッチからパラメータＩＤ取得
-			ParamID paramid = getParamIdByPitch(event);
+			Steinberg::Vst::ParamID paramid = getParamIdByPitch(event);
 			if (paramid < 0) continue;
 
 			switch (event.type)
 			{
-			case Event::kNoteOnEvent:
+			case Steinberg::Vst::Event::kNoteOnEvent:
 				routingProcess(paramid, event);
 				break;
 
-			case Event::kNoteOffEvent:
+			case Steinberg::Vst::Event::kNoteOffEvent:
 				break;
 
 			default:
@@ -327,7 +327,7 @@ namespace MinMax
 		}
 	}
 
-	void PLUGIN_API MyVSTProcessor::routingProcess(ParamID paramid, Event event)
+	void PLUGIN_API MyVSTProcessor::routingProcess(Steinberg::Vst::ParamID paramid, Steinberg::Vst::Event event)
 	{
 		// ストラム処理振分け
 		switch (paramid)
@@ -390,7 +390,7 @@ namespace MinMax
 		scheduler.allNotesOff();
 	}
 
-	void MyVSTProcessor::trigBrush(Event event, bool isDown)
+	void MyVSTProcessor::trigBrush(Steinberg::Vst::Event event, bool isDown)
 	{
 		const float BRUSH_DECAY = 0.98f;
 
@@ -432,7 +432,7 @@ namespace MinMax
 		}
 	}
 
-	void MyVSTProcessor::trigStrum(Event event, bool isAbove, bool isDown, int maxStrings)
+	void MyVSTProcessor::trigStrum(Steinberg::Vst::Event event, bool isAbove, bool isDown, int maxStrings)
 	{
 		trigFretNoise(event);
 
@@ -475,7 +475,7 @@ namespace MinMax
 		}
 	}
 
-	void MyVSTProcessor::trigMute(PARAM trigger, Event event)
+	void MyVSTProcessor::trigMute(PARAM trigger, Steinberg::Vst::Event event)
 	{
 		const double NOTE_LENGTH = 40.0;
 
@@ -500,7 +500,7 @@ namespace MinMax
 		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, prm.get(PARAM::MUTE_CHANNEL) - 1);
 	}
 
-	void MyVSTProcessor::trigArpeggio(int stringindex, Event event)
+	void MyVSTProcessor::trigArpeggio(int stringindex, Steinberg::Vst::Event event)
 	{
 		trigFretNoise(event);
 
@@ -526,7 +526,7 @@ namespace MinMax
 		scheduler.addNoteOn(onTime, offTime, stringindex, pitch, velocity, channel);
 	}
 
-	void MyVSTProcessor::trigFretNoise(Event event)
+	void MyVSTProcessor::trigFretNoise(Steinberg::Vst::Event event)
 	{
 		constexpr double FRET_NOISE_LENGTH = 40.0;
 
@@ -577,12 +577,12 @@ namespace MinMax
 		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, velocity, prm.get(PARAM::FNOISE_CHANNEL) - 1);
 	}
 
-	ParamID MyVSTProcessor::getParamIdByPitch(Event event)
+	Steinberg::Vst::ParamID MyVSTProcessor::getParamIdByPitch(Steinberg::Vst::Event event)
 	{
 		// ピッチからパラメータID取得
 		int pitch = -1;
 
-		if (event.type == Event::kNoteOnEvent)
+		if (event.type == Steinberg::Vst::Event::kNoteOnEvent)
 		{
 			pitch = event.noteOn.pitch;
 		}
@@ -649,7 +649,7 @@ namespace MinMax
 
 	void MyVSTProcessor::notifyChordNumberChanged(int chordNumber)
 	{
-		FUnknownPtr<IMessage> msg = allocateMessage();
+		FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();
 		if (!msg) return;
 
 		msg->setMessageID(MSG_CHORD_CHANGED);
@@ -657,7 +657,7 @@ namespace MinMax
 		sendMessage(msg);
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::notify(IMessage* message)
+	tresult PLUGIN_API MyVSTProcessor::notify(Steinberg::Vst::IMessage* message)
 	{
 		auto msgID = message->getMessageID();
 
@@ -669,9 +669,9 @@ namespace MinMax
 		return kResultFalse;
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::notifyStrumTrigger(IMessage* message)
+	tresult PLUGIN_API MyVSTProcessor::notifyStrumTrigger(Steinberg::Vst::IMessage* message)
 	{
-		Event event{};
+		Steinberg::Vst::Event event{};
 		const void* msgData;
 		uint32 msgSize;
 
@@ -689,8 +689,8 @@ namespace MinMax
 
 		if (pitch <= 0) return kResultOk;
 
-		event.flags = Event::EventFlags::kIsLive;
-		event.type = note->isOn ? Event::EventTypes::kNoteOnEvent : Event::EventTypes::kNoteOffEvent;
+		event.flags = Steinberg::Vst::Event::EventFlags::kIsLive;
+		event.type = note->isOn ? Steinberg::Vst::Event::EventTypes::kNoteOnEvent : Steinberg::Vst::Event::EventTypes::kNoteOffEvent;
 
 		if (note->isOn)
 		{

@@ -20,7 +20,7 @@ namespace MinMax
 {
 	class MyVSTController 
 		: public Steinberg::Vst::EditControllerEx1
-		, public IMidiMapping
+		, public Steinberg::Vst::IMidiMapping
 	{
 	public:
 		MyVSTController() = default;
@@ -42,11 +42,11 @@ namespace MinMax
 
 		// -- 追加部分 --
 
-		tresult PLUGIN_API getMidiControllerAssignment(int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& value) SMTG_OVERRIDE;
+		tresult PLUGIN_API getMidiControllerAssignment(int32 busIndex, int16 channel, Steinberg::Vst::CtrlNumber midiControllerNumber, Steinberg::Vst::ParamID& value) SMTG_OVERRIDE;
 
-		tresult PLUGIN_API getUnitByBus(MediaType valueType, BusDirection dir, int32 busIndex, int32 channel, UnitID& unitId) SMTG_OVERRIDE;
+		tresult PLUGIN_API getUnitByBus(Steinberg::Vst::MediaType valueType, Steinberg::Vst::BusDirection dir, int32 busIndex, int32 channel, Steinberg::Vst::UnitID& unitId) SMTG_OVERRIDE;
 		
-		tresult PLUGIN_API notify(IMessage* message) SMTG_OVERRIDE;
+		tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
 
 		MyVST3Editor* view = nullptr;
 

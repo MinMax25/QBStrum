@@ -28,10 +28,10 @@ namespace MinMax
 		}
 
 		// ユニット登録
-		addUnit(new Unit(STR16("Chord"), UNIT::CHORD));
-		addUnit(new Unit(STR16("Strum"), UNIT::STRUM));
-		addUnit(new Unit(STR16("Trigger"), UNIT::TRIGGER));
-		addUnit(new Unit(STR16("Articulation"), UNIT::ARTICULATION));
+		addUnit(new Steinberg::Vst::Unit(STR16("Chord"), UNIT::CHORD));
+		addUnit(new Steinberg::Vst::Unit(STR16("Strum"), UNIT::STRUM));
+		addUnit(new Steinberg::Vst::Unit(STR16("Trigger"), UNIT::TRIGGER));
+		addUnit(new Steinberg::Vst::Unit(STR16("Articulation"), UNIT::ARTICULATION));
 
 		// パラメータ登録
 		auto& helper = PF::ParamHelper::get();
@@ -63,7 +63,7 @@ namespace MinMax
 			if (state->read(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
 
 			// 正規化値に変換
-			ParamValue normalized = plainParamToNormalized(def.tag, plain);
+			Steinberg::Vst::ParamValue normalized = plainParamToNormalized(def.tag, plain);
 
 			// EditControllerに値をセット
 			setParamNormalized(def.tag, normalized);
@@ -107,89 +107,89 @@ namespace MinMax
 		return nullptr;
 	}
 
-	tresult PLUGIN_API MyVSTController::setParamNormalized(ParamID tag, ParamValue value)
+	tresult PLUGIN_API MyVSTController::setParamNormalized(Steinberg::Vst::ParamID tag, Steinberg::Vst::ParamValue value)
 	{
 		tresult result = EditControllerEx1::setParamNormalized(tag, value);
 		return result;
 	}
 
-	tresult PLUGIN_API MyVSTController::getMidiControllerAssignment(int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& value)
+	tresult PLUGIN_API MyVSTController::getMidiControllerAssignment(int32 busIndex, int16 channel, Steinberg::Vst::CtrlNumber midiControllerNumber, Steinberg::Vst::ParamID& value)
 	{
 		switch (midiControllerNumber)
 		{
-		case kCtrlNRPNSelectLSB:
-			value = static_cast<CtrlNumber>(PARAM::CHORD_LSB);
+		case Steinberg::Vst::kCtrlNRPNSelectLSB:
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::CHORD_LSB);
 			return kResultTrue;
 
-		case kCtrlNRPNSelectMSB:
-			value = static_cast<CtrlNumber>(PARAM::CHORD_MSB);
+		case Steinberg::Vst::kCtrlNRPNSelectMSB:
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::CHORD_MSB);
 			return kResultTrue;
 
 		case 20:
-			value = static_cast<CtrlNumber>(PARAM::STRUM_SPEED);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRUM_SPEED);
 			return kResultTrue;
 
 		case 21:
-			value = static_cast<CtrlNumber>(PARAM::STRUM_DECAY);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRUM_DECAY);
 			return kResultTrue;
 
 		case 22:
-			value = static_cast<CtrlNumber>(PARAM::STRUM_LENGTH);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRUM_LENGTH);
 			return kResultTrue;
 
-		case kCtrlReleaseTime:
-			value = static_cast<CtrlNumber>(PARAM::BRUSH_TIME);
+		case Steinberg::Vst::kCtrlReleaseTime:
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::BRUSH_TIME);
 			return kResultTrue;
 
 		case 23:
-			value = static_cast<CtrlNumber>(PARAM::ARP_LENGTH);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::ARP_LENGTH);
 			return kResultTrue;
 
 		case 24:
-			value = static_cast<CtrlNumber>(PARAM::STRINGS_UP_HIGH);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRINGS_UP_HIGH);
 			return kResultTrue;
 
 		case 25:
-			value = static_cast<CtrlNumber>(PARAM::STRINGS_DOWN_HIGH);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRINGS_DOWN_HIGH);
 			return kResultTrue;
 
 		case 26:
-			value = static_cast<CtrlNumber>(PARAM::STRINGS_DOWN_LOW);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRINGS_DOWN_LOW);
 			return kResultTrue;
 
-		case kCtrlSoundVariation:
-			value = static_cast<CtrlNumber>(PARAM::SELECTED_ARTICULATION);
+		case Steinberg::Vst::kCtrlSoundVariation:
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::SELECTED_ARTICULATION);
 			return kResultTrue;
 
 		case 27:
-			value = static_cast<CtrlNumber>(PARAM::TRANSPOSE);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::TRANSPOSE);
 			return kResultTrue;
 		}
 
 		return kResultFalse;
 	}
 
-	tresult PLUGIN_API MyVSTController::getUnitByBus(MediaType valueType, BusDirection dir, int32 busIndex, int32 channel, UnitID& unitId)
+	tresult PLUGIN_API MyVSTController::getUnitByBus(Steinberg::Vst::MediaType valueType, Steinberg::Vst::BusDirection dir, int32 busIndex, int32 channel, Steinberg::Vst::UnitID& unitId)
 	{
-		if (valueType == kEvent && dir == kInput)
+		if (valueType == Steinberg::Vst::kEvent && dir == Steinberg::Vst::kInput)
 		{
 			if (busIndex == 0 && channel == 0)
 			{
-				unitId = kRootUnitId;
+				unitId = Steinberg::Vst::kRootUnitId;
 				return kResultTrue;
 			}
 		}
 		return kResultFalse;
 	}
 
-	tresult PLUGIN_API MyVSTController::notify(IMessage* message)
+	tresult PLUGIN_API MyVSTController::notify(Steinberg::Vst::IMessage* message)
 	{
 		if (!message) return kInvalidArgument;
 
 		const char* value = message->getMessageID();
 
 		if (strcmp(value, MSG_CHORD_CHANGED) != 0) return kResultFalse;
-		IAttributeList* attr = message->getAttributes();
+		Steinberg::Vst::IAttributeList* attr = message->getAttributes();
 		if (!attr) return kResultFalse;
 
 		const void* data = nullptr;
@@ -200,7 +200,7 @@ namespace MinMax
 		const int* chord = reinterpret_cast<const int*>(data);
 
 		beginEdit(static_cast<int>(PARAM::CHORD_NUM));
-		ParamValue norm = plainParamToNormalized(PARAM::CHORD_NUM, *chord);
+		Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_NUM, *chord);
 		setParamNormalized(static_cast<int>(PARAM::CHORD_NUM), norm);
 		performEdit(static_cast<int>(PARAM::CHORD_NUM), norm);
 		endEdit(static_cast<int>(PARAM::CHORD_NUM));

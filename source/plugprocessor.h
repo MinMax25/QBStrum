@@ -26,7 +26,7 @@ namespace MinMax
 		: public Steinberg::Vst::AudioEffect
 		, public IScheduledEventListener
 	{
-		using RingBuff =OneReaderOneWriter::RingBuffer<Event>;
+		using RingBuff =OneReaderOneWriter::RingBuffer<Steinberg::Vst::Event>;
 		using ProcessorParamStorage = PF::ProcessorParamStorage;
 
 	public:
@@ -59,18 +59,18 @@ namespace MinMax
 		void PLUGIN_API articulationChanged(int sampleOffset);
 		void PLUGIN_API processEvent();
 		void PLUGIN_API processInnerEvent();
-		void PLUGIN_API routingProcess(ParamID parmid, Event event);
+		void PLUGIN_API routingProcess(Steinberg::Vst::ParamID parmid, Steinberg::Vst::Event event);
 		void PLUGIN_API trigAllNotesOff();
-		void PLUGIN_API trigBrush(Event event, bool isDown);
-		void PLUGIN_API trigStrum(Event event, bool isAbove, bool isDown, int maxStrings);
-		void PLUGIN_API trigMute(PARAM trigger, Event event);
-		void PLUGIN_API trigArpeggio(int stringindex, Event event);
-		void PLUGIN_API trigFretNoise(Event event);
-		ParamID PLUGIN_API getParamIdByPitch(Event event);
+		void PLUGIN_API trigBrush(Steinberg::Vst::Event event, bool isDown);
+		void PLUGIN_API trigStrum(Steinberg::Vst::Event event, bool isAbove, bool isDown, int maxStrings);
+		void PLUGIN_API trigMute(PARAM trigger, Steinberg::Vst::Event event);
+		void PLUGIN_API trigArpeggio(int stringindex, Steinberg::Vst::Event event);
+		void PLUGIN_API trigFretNoise(Steinberg::Vst::Event event);
+		Steinberg::Vst::ParamID PLUGIN_API getParamIdByPitch(Steinberg::Vst::Event event);
 		StringSet PLUGIN_API getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings);
 		void PLUGIN_API notifyChordNumberChanged(int chordNumber);
-		tresult PLUGIN_API notify(IMessage* message) SMTG_OVERRIDE;
-		tresult PLUGIN_API notifyStrumTrigger(IMessage* message);
+		tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
+		tresult PLUGIN_API notifyStrumTrigger(Steinberg::Vst::IMessage* message);
 		void PLUGIN_API processAudio(Vst::ProcessData& data);
 
 		// ストラムイベントスケジューラー
@@ -80,7 +80,7 @@ namespace MinMax
 		ChordMap& chordMap = ChordMap::Instance();
 
 		// プロセスデータの写し
-		ProcessData* processData{};
+		Steinberg::Vst::ProcessData* processData{};
 
 		// パラメータキャッシュ値
 		ProcessorParamStorage prm;

@@ -147,7 +147,7 @@ namespace MinMax
             {
                 CNoteMsg note;
 
-                ParamID tag = pControl->getTag();
+                Steinberg::Vst::ParamID tag = pControl->getTag();
 
                 note.tag = tag;
                 note.isOn = onoff;

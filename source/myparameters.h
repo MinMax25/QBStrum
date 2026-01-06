@@ -17,8 +17,7 @@
 namespace MinMax
 {
 	using namespace Steinberg;
-	using namespace Steinberg::Vst;
-	//using namespace ParamF;
+	//using namespace Steinberg::Vst;
 
 	// ユニット識別子
 	enum UNIT

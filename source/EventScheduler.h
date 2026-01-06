@@ -72,7 +72,7 @@ namespace MinMax
 
 		void setSampleRate(double value) { sampleRate = value; }
 
-		void process(ProcessData& data)
+		void process(Steinberg::Vst::ProcessData& data)
 		{
 			numSamples = data.numSamples;
 
@@ -224,7 +224,7 @@ namespace MinMax
 			return buf;
 		}
 
-		bool isPlaying() const { return state & ProcessContext::kPlaying; }
+		bool isPlaying() const { return state & Steinberg::Vst::ProcessContext::kPlaying; }
 		uint64 getCurrentSampleTime() const { return currentSampleTime; }
 
 		void setNeedSampleblockAdust(bool value)
@@ -257,22 +257,22 @@ namespace MinMax
 		// Context From DAW
 		uint32 state = 0;
 		double sampleRate = 0;
-		TSamples projectTimeSamples = 0;
+		Steinberg::Vst::TSamples projectTimeSamples = 0;
 		int64 systemTime = 0;
-		TSamples continousTimeSamples = 0;
-		TQuarterNotes projectTimeMusic = 0;
-		TQuarterNotes barPositionMusic = 0;
-		TQuarterNotes cycleStartMusic = 0;
-		TQuarterNotes cycleEndMusic = 0;
+		Steinberg::Vst::TSamples continousTimeSamples = 0;
+		Steinberg::Vst::TQuarterNotes projectTimeMusic = 0;
+		Steinberg::Vst::TQuarterNotes barPositionMusic = 0;
+		Steinberg::Vst::TQuarterNotes cycleStartMusic = 0;
+		Steinberg::Vst::TQuarterNotes cycleEndMusic = 0;
 		double tempo = 0;
 		int32 timeSigNumerator = 0;
 		int32 timeSigDenominator = 0;
 		Vst::Chord chord{};
 		int32 smpteOffsetSubframes = 0;
-		FrameRate frameRate{};
+		Steinberg::Vst::FrameRate frameRate{};
 		int32 samplesToNextClock = 0;
 
-		void newState(ProcessContext* ctx)
+		void newState(Steinberg::Vst::ProcessContext* ctx)
 		{
 			if (state != ctx->state)
 			{
