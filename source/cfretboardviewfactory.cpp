@@ -28,6 +28,7 @@
 #include "chordmap.h"
 #include "cmenubutton.h"
 #include "files.h"
+#include "cchordlistener.h"
 
 namespace MinMax
 {
@@ -47,9 +48,14 @@ namespace MinMax
             initFretBoard();
             initChordSelecter();
             initMenuButtons();
+            initChordListener();
         }
 
-        ~CFretBoardView() override = default;
+        ~CFretBoardView() override
+        {
+            if (chordListner)
+                chordListner->forget();
+        }
 
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
@@ -64,6 +70,8 @@ namespace MinMax
         CFretBoard* fretBoard = nullptr;
 
         CChordSelecter* chordSelecter = nullptr;
+
+        CChordListner* chordListner = nullptr;
 
         CMenuButton* fileButton = nullptr;
 
@@ -89,6 +97,18 @@ namespace MinMax
 
             editButton = new CMenuButton({ 62,1,122,18 }, "Edit", [this](CMenuButton* b) { popupMenu(b, MenuType::Edit); });
             addView(editButton);
+        }
+
+        void initChordListener()
+        {
+            chordListner = 
+                new CChordListner(
+                    editor, PARAM::CHORD_NUM,
+                    [this](CChordListner*, int v)
+                    {
+                        onChordNumberChanged(v);
+                    }
+                );
         }
 
         void onChordNumberChanged(int value)

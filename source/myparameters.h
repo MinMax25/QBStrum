@@ -161,7 +161,7 @@ namespace MinMax
 			{ PARAM::NEED_SAMPLEBLOCK_ADUST, STR16("Need Sampleblock Adust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 			{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
 			{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
-			{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE, UNIT::CHORD, 0, 1199, 0, 0, 0 },
+			{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE, UNIT::CHORD, 0, 1163, 0, 0, 0 },
 			{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_CHANNEL, PF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
 			{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 103, 0, 0 },
 			{ PARAM::MUTE_NOTE_2, STR16("Mite Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 102, 0, 0 },
