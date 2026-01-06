@@ -16,8 +16,6 @@
 
 namespace MinMax
 {
-	//using namespace Steinberg;
-
 	// ユニット識別子
 	enum UNIT
 	{
