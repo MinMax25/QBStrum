@@ -4,25 +4,25 @@
 #pragma once
 
 #include <algorithm>
+#include <array>
 #include <base/source/fobject.h>
 #include <base/source/fstring.h>
+#include <cassert>
 #include <cmath>
+#include <cstdlib>
 #include <memory>
 #include <optional>
-#include <pluginterfaces/base/ustring.h>
-#include <public.sdk/source/vst/utility/stringconvert.h>
-#include <unordered_map>
-#include <vector>
-#include <array>
-#include <cassert>
-#include <cstdlib>
-#include <string>
-#include <utility>
 #include <pluginterfaces/base/fstrdefs.h>
 #include <pluginterfaces/base/ftypes.h>
+#include <pluginterfaces/base/ustring.h>
 #include <pluginterfaces/vst/ivsteditcontroller.h>
 #include <pluginterfaces/vst/vsttypes.h>
+#include <public.sdk/source/vst/utility/stringconvert.h>
 #include <public.sdk/source/vst/vstparameters.h>
+#include <string>
+#include <unordered_map>
+#include <utility>
+#include <vector>
 
 namespace PF
 {
