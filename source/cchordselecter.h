@@ -3,14 +3,9 @@
 //------------------------------------------------------------------------
 #pragma once
 
-#include <cctype>
 #include <cstdint>
-#include <cstdlib>
-#include <pluginterfaces/vst/vsttypes.h>
-#include <public.sdk/source/vst/vsteditcontroller.h>
 #include <string>
 #include <vstgui/lib/ccolor.h>
-#include <vstgui/lib/cdrawcontext.h>
 #include <vstgui/lib/cfont.h>
 #include <vstgui/lib/controls/coptionmenu.h>
 #include <vstgui/lib/controls/ctextlabel.h>
@@ -18,7 +13,6 @@
 #include <vstgui/lib/cstring.h>
 #include <vstgui/lib/cviewcontainer.h>
 #include <vstgui/lib/vstguibase.h>
-#include <vstgui/plugin-bindings/vst3editor.h>
 
 #include "chordmap.h"
 #include "myparameters.h"
