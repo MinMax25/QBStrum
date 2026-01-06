@@ -226,7 +226,7 @@ namespace PF
                 {
                     Steinberg::Vst::String128 u16str;
 #pragma warning(disable : 4996)
-                    VST3::StringConvert::convert(s, u16str);    // ”ñ„§‚Æ‚È‚Á‚Ä‚¢‚é‚ªVST SDK‚Ì‘Î‰ž‘Ò‚¿
+                    VST3::StringConvert::convert(s, u16str);
                     p->appendString(u16str);
                 }               
 
