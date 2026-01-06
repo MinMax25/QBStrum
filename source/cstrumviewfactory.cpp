@@ -3,16 +3,40 @@
 //------------------------------------------------------------------------
 #pragma once
 
+#include <array>
+#include <base/source/fstring.h>
+#include <cstdint>
+#include <functional>
+#include <pluginterfaces/base/smartpointer.h>
+#include <pluginterfaces/vst/vsttypes.h>
+#include <vstgui/lib/cbuttonstate.h>
+#include <vstgui/lib/ccolor.h>
+#include <vstgui/lib/cdrawdefs.h>
+#include <vstgui/lib/cfont.h>
+#include <vstgui/lib/controls/cbuttons.h>
+#include <vstgui/lib/controls/ccontrol.h>
+#include <vstgui/lib/controls/ctextlabel.h>
+#include <vstgui/lib/controls/icontrollistener.h>
+#include <vstgui/lib/cpoint.h>
+#include <vstgui/lib/crect.h>
+#include <vstgui/lib/crowcolumnview.h>
+#include <vstgui/lib/cview.h>
+#include <vstgui/lib/cviewcontainer.h>
+#include <vstgui/lib/vstguibase.h>
+#include <vstgui/lib/vstguifwd.h>
 #include <vstgui/plugin-bindings/vst3editor.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
-#include <vstgui/vstgui_uidescription.h>
+#include <vstgui/uidescription/iuidescription.h>
+#include <vstgui/uidescription/iviewcreator.h>
+#include <vstgui/uidescription/uiattributes.h>
+#include <vstgui/uidescription/uiviewfactory.h>
 
 #include "cnoteedit.h"
 #include "cnotelabel.h"
-#include "myparameters.h"
-#include "plugdefine.h"
 #include "cnotemsg.h"
+#include "myparameters.h"
 #include "parameterframework.h"
+#include "plugdefine.h"
 
 namespace MinMax
 {
