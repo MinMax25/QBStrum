@@ -19,8 +19,6 @@
 
 namespace MinMax
 {
-    //using namespace VSTGUI;
-
     // ƒm[ƒg”Ô†“ü—Í
     class CNoteEdit
         : public VSTGUI::CTextEdit
