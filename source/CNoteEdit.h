@@ -19,22 +19,22 @@
 
 namespace MinMax
 {
-    using namespace VSTGUI;
+    //using namespace VSTGUI;
 
     // ノート番号入力
     class CNoteEdit
-        : public CTextEdit
+        : public VSTGUI::CTextEdit
     {
         static constexpr int NOTE_COUNT = 128;
     public:
 
-        CNoteEdit(const CRect& size, IControlListener* listener, int32_t tag, UTF8StringPtr txt = nullptr, CBitmap* background = nullptr, const int32_t style = 0)
+        CNoteEdit(const  VSTGUI::CRect& size, VSTGUI::IControlListener* listener, int32_t tag, VSTGUI::UTF8StringPtr txt = nullptr, VSTGUI::CBitmap* background = nullptr, const int32_t style = 0)
             : CTextEdit(size, listener, tag, txt, background, style)
         {
             setStringToValueFunction(StringToValueFunction);
         }
 
-        static bool StringToValueFunction(UTF8StringPtr txt, float& result, CTextEdit* textEdit)
+        static bool StringToValueFunction(VSTGUI::UTF8StringPtr txt, float& result, CTextEdit* textEdit)
         {
             // バインドされていない場合は無視
             if (textEdit->getTag() < 0) return false;

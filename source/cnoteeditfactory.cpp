@@ -12,19 +12,19 @@
 namespace MinMax
 {
     class CNoteEditFactory
-        : public ViewCreatorAdapter
+        : public  VSTGUI::ViewCreatorAdapter
     {
     public:
 
-        CNoteEditFactory() { UIViewFactory::registerViewCreator(*this); }
+        CNoteEditFactory() { VSTGUI::UIViewFactory::registerViewCreator(*this); }
 
-        IdStringPtr getViewName() const override { return "UI:Note Edit"; }
+        VSTGUI::IdStringPtr getViewName() const override { return "UI:Note Edit"; }
 
-        IdStringPtr getBaseViewName() const override { return UIViewCreator::kCTextEdit; }
+        VSTGUI::IdStringPtr getBaseViewName() const override { return  VSTGUI::UIViewCreator::kCTextEdit; }
 
-        CView* create(const UIAttributes& attributes, const IUIDescription* description) const override
+        VSTGUI::CView* create(const  VSTGUI::UIAttributes& attributes, const  VSTGUI::IUIDescription* description) const override
         {
-            return new CNoteEdit(CRect(CPoint(0, 0), CPoint(40, 15)), description->getController(), -1);
+            return new CNoteEdit(VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(40, 15)), description->getController(), -1);
         }
     };
 
