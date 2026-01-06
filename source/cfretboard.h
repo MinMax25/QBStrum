@@ -71,7 +71,7 @@ namespace MinMax
         void savePressedFrets()
         {
             editPressed.size = pressed.size;
-            for (int i = 0; i < pressed.size; i++)
+            for (size_t i = 0; i < pressed.size; i++)
             {
                 editPressed.data[i] = pressed.data[i];
             }
@@ -80,7 +80,7 @@ namespace MinMax
         void restorePressedFrets()
         {
             pressed.size = editPressed.size;
-            for (int i = 0; i < editPressed.size; i++)
+            for (size_t i = 0; i < editPressed.size; i++)
             {
                 pressed.data[i] = editPressed.data[i];
             }

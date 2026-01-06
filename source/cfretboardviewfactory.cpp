@@ -29,7 +29,8 @@ namespace MinMax
             assert(editor && "CFretBoardView requires VST3Editor");
 
             setBackgroundColor(VSTGUI::kTransparentCColor);
-            presetFileName = ChordMap::Instance().getPresetPath().u8string();
+
+            presetPath = ChordMap::Instance().getPresetPath().u8string();
 
             initFretBoard();
             initChordSelecter();
@@ -48,7 +49,7 @@ namespace MinMax
 
         VSTGUI::VST3Editor* editor = nullptr;
 
-        std::string presetFileName;
+        std::string presetPath;
 
         CFretBoard* fretBoard = nullptr;
 
@@ -123,6 +124,7 @@ namespace MinMax
         VSTGUI::COptionMenu* createOpenPresetMenu()
         {
             auto* menu = new VSTGUI::COptionMenu();
+            
             std::vector<std::string> files;
             if (Files::getPresetFiles(files) != kResultTrue || files.empty())
             {
@@ -136,11 +138,19 @@ namespace MinMax
             {
                 auto name = std::filesystem::path(f).filename().u8string();
                 auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(name.c_str()));
-                item->setActions([this, f](VSTGUI::CCommandMenuItem*)
+                item->setActions(
+                    [this, f](VSTGUI::CCommandMenuItem*)
                     {
-                        try { ChordMap::Instance().initFromPreset(f); presetFileName = f; fretBoard->valueChanged(); }
-                        catch (...) { showError("Failed to load preset."); }
-                    });
+                        try
+                        {
+                            ChordMap::Instance().initFromPreset(f); presetPath = f; fretBoard->valueChanged();
+                        }
+                        catch (...)
+                        {
+                            showError("Failed to load preset.");
+                        }
+                    }
+                );
                 menu->addEntry(item);
             }
             return menu;
@@ -156,9 +166,6 @@ namespace MinMax
 
         void commitEdits()
         {
-            if (!canEdit) return;
-
-            // fretBoard の編集内容を ChordMap に反映
             auto pressed = fretBoard->getPressedFrets();
             int chordNum = chordSelecter->getCurrentChordNumber();
             ChordMap::Instance().setVoicing(chordNum, pressed);
@@ -188,11 +195,15 @@ namespace MinMax
         void saveChordMap()
         {
             if (!fileButton) return;
-            showDialog(fileButton, VSTGUI::CNewFileSelector::kSelectSaveFile, [this](const std::string& path)
+            showDialog(
+                fileButton,
+                VSTGUI::CNewFileSelector::kSelectSaveFile,
+                [this](const std::string& path)
                 {
-                    try { ChordMap::Instance().saveToFile(path); presetFileName = path; }
+                    try { ChordMap::Instance().saveToFile(path); presetPath = path; }
                     catch (...) { showError("Failed to save preset."); }
-                });
+                }
+            );
         }
 
         void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(const std::string&)> fileSelected)
@@ -202,15 +213,15 @@ namespace MinMax
             auto* selector = VSTGUI::CNewFileSelector::create(p->getFrame(), style);
             if (!selector) return;
 
-            std::string defaultName = presetFileName.empty() ? "NewPreset.json" : std::filesystem::path(presetFileName).filename().u8string();
-            if (!presetFileName.empty())
-                selector->setInitialDirectory(std::filesystem::path(presetFileName).parent_path().string().c_str());
+            std::string defaultName = presetPath.empty() ? "NewPreset.json" : std::filesystem::path(presetPath).filename().u8string();
+            if (!presetPath.empty())
+                selector->setInitialDirectory(std::filesystem::path(presetPath).parent_path().string().c_str());
 
             selector->setTitle(Files::TITLE.c_str());
             selector->setDefaultSaveName(defaultName.c_str());
             selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER.c_str(), Files::FILE_EXT.c_str()));
             p->getFrame()->setFocusView(nullptr);
-            if (selector->runModal() && selector->getNumSelectedFiles() == 1) { presetFileName = selector->getSelectedFile(0); fileSelected(presetFileName); }
+            if (selector->runModal() && selector->getNumSelectedFiles() == 1) { presetPath = selector->getSelectedFile(0); fileSelected(presetPath); }
             selector->forget();
         }
 
