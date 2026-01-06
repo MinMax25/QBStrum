@@ -21,8 +21,6 @@
 
 namespace MinMax
 {
-    using std::vector;
-
     inline constexpr int STRING_COUNT = 6;
 
     struct StringSet
@@ -56,7 +54,7 @@ namespace MinMax
 
             int Id = 0;
             std::string Name;
-            vector<int> Frets;
+            std::vector<int> Frets;
 
             bool Deserialize(const rapidjson::Value& v)
             {
@@ -89,7 +87,7 @@ namespace MinMax
 
             int Id = 0;
             std::string Name;
-            vector<Voicing> Voicings;
+            std::vector<Voicing> Voicings;
 
             bool Deserialize(const rapidjson::Value& v)
             {
@@ -124,7 +122,7 @@ namespace MinMax
 
             int Id = 0;
             std::string Name;
-            vector<ParamChordType> ChordTypes;
+            std::vector<ParamChordType> ChordTypes;
 
             bool Deserialize(const rapidjson::Value& v)
             {
@@ -410,9 +408,9 @@ namespace MinMax
 
         StringSet Tunings{};
 
-        vector<ParamChordRoot> ChordRoots;
-        vector<FlatChordEntry> flatChords;
-        vector<vector<vector<int>>> indexTable;
+        std::vector<ParamChordRoot> ChordRoots;
+        std::vector<FlatChordEntry> flatChords;
+        std::vector<std::vector<std::vector<int>>> indexTable;
 
         ChordMap() = default;
         ChordMap(const ChordMap&) = delete;
