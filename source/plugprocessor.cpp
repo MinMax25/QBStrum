@@ -21,6 +21,7 @@
 #include <public.sdk/source/vst/vstaudioeffect.h>
 #include <string.h>
 #include <vector>
+#include <base/source/fstreamer.h>
 
 #include "chordmap.h"
 #include "cnotemsg.h"
@@ -135,12 +136,26 @@ namespace MinMax
 	Steinberg::tresult PLUGIN_API MyVSTProcessor::setState(Steinberg::IBStream* state)
 	{
 		if (!state) return Steinberg::kInvalidArgument;
+		Steinberg::IBStreamer streamer(state, kLittleEndian);
 
 		for (const auto& def : paramTable)
 		{
 			double plain = 0.0;
-			if (state->read(&plain, sizeof(double), nullptr) != Steinberg::kResultOk) return Steinberg::kResultFalse;
+			if (!streamer.readDouble(plain)) return Steinberg::kResultFalse;
 			prm.set(def.tag, plain);
+		}
+
+		std::int32_t len = 0;
+		if (!streamer.readInt32(len)) return Steinberg::kResultOk;
+
+		if (len > 0 && len < 4096)
+		{
+			std::string path(len, '\0');
+			if (streamer.readRaw(path.data(), len))
+			{
+				std::filesystem::path p(path);
+				ChordMap::Instance().initFromPreset(path);
+			}
 		}
 
 		return Steinberg::kResultOk;
@@ -149,11 +164,23 @@ namespace MinMax
 	Steinberg::tresult PLUGIN_API MyVSTProcessor::getState(Steinberg::IBStream* state)
 	{
 		if (!state) return Steinberg::kInvalidArgument;
+		Steinberg::IBStreamer streamer(state, kLittleEndian);
 
 		for (const auto& def : paramTable)
 		{
 			double plain = prm.get(def.tag);
-			if (state->write(&plain, sizeof(double), nullptr) != Steinberg::kResultOk) return Steinberg::kResultFalse;
+			if (!streamer.writeDouble(plain)) return Steinberg::kResultFalse;
+		}
+
+		const std::string path = ChordMap::Instance().getPresetPath().u8string();
+
+		const std::int32_t len = static_cast<Steinberg::uint32>(path.size());
+
+		if (!streamer.writeInt32(len)) return Steinberg::kResultFalse;
+
+		if (len > 0)
+		{
+			if (!streamer.writeRaw(path.data(), len)) return Steinberg::kResultFalse;
 		}
 
 		return Steinberg::kResultOk;
