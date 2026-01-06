@@ -2,9 +2,9 @@
 
 #include <array>
 #include <cstdio>
+#include <pluginterfaces/base/ftypes.h>
 #include <sal.h>
 #include <string>
-#include <pluginterfaces/base/ftypes.h>
 
 namespace MinMax
 {
