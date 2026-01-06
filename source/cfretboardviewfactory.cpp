@@ -60,6 +60,11 @@ namespace MinMax
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
     protected:
+        enum class MenuType 
+        { 
+            File, 
+            Edit
+        };
 
         bool canEdit = false;
 
@@ -76,6 +81,24 @@ namespace MinMax
         CMenuButton* fileButton = nullptr;
 
         CMenuButton* editButton = nullptr;
+
+        void onParameterChordChanged(int value)
+        {
+            if (canEdit) return;
+            fretBoard->setPressedFrets(getVoicing(value));
+            chordSelecter->setChordNumber(value);
+        }
+
+        void onSelectedChordChanged(int value)
+        {
+            if (canEdit) return;
+            auto* c = editor->getController();
+            c->beginEdit(PARAM::CHORD_NUM);
+            Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(PARAM::CHORD_NUM, value);
+            c->setParamNormalized(PARAM::CHORD_NUM, norm);
+            c->performEdit(PARAM::CHORD_NUM, norm);
+            c->endEdit(PARAM::CHORD_NUM);
+        }
 
         void initFretBoard()
         {
@@ -110,26 +133,6 @@ namespace MinMax
                     }
                 );
         }
-
-        void onParameterChordChanged(int value)
-        {
-            if (canEdit) return;
-            fretBoard->setPressedFrets(getVoicing(value));
-            chordSelecter->setChordNumber(value);
-        }
-
-        void onSelectedChordChanged(int value)
-        {
-            if (canEdit) return;
-            auto* c = editor->getController();
-            c->beginEdit(PARAM::CHORD_NUM);
-            Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(PARAM::CHORD_NUM, value);
-            c->setParamNormalized(PARAM::CHORD_NUM, norm);
-            c->performEdit(PARAM::CHORD_NUM, norm);
-            c->endEdit(PARAM::CHORD_NUM);
-        }
-
-        enum class MenuType { File, Edit };
 
         void popupMenu(VSTGUI::CView* anchor, MenuType type)
         {
@@ -244,8 +247,14 @@ namespace MinMax
                 VSTGUI::CNewFileSelector::kSelectSaveFile,
                 [this](const std::string& path)
                 {
-                    try { ChordMap::Instance().saveToFile(path); presetPath = path; }
-                    catch (...) { showError("Failed to save preset."); }
+                    try 
+                    { 
+                        ChordMap::Instance().saveToFile(path); presetPath = path;
+                    }
+                    catch (...) 
+                    { 
+                        showError("Failed to save preset.");
+                    }
                 }
             );
         }
