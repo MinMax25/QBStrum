@@ -79,13 +79,13 @@ namespace MinMax
             grdStrum->setStyle(VSTGUI::CRowColumnView::kRowStyle);
             addView(grdStrum);
 
-            std::array<const ParamF::ParamDef*, MinMax::PARAM_TRIGGER_COUNT> triggerParams;
+            std::array<const PF::ParamDef*, MinMax::PARAM_TRIGGER_COUNT> triggerParams;
             size_t triggerCount = 0;
             getTriggerParams(triggerParams, triggerCount);
 
             for (size_t i = 0; i < triggerCount; ++i)
             {
-                const ParamF::ParamDef* def = triggerParams[i];
+                const PF::ParamDef* def = triggerParams[i];
                 
                 // ストラムパラメータ行
                 VSTGUI::CRowColumnView* rcvONote = new  VSTGUI::CRowColumnView(VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(400, 15)));

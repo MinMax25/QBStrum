@@ -27,7 +27,7 @@ namespace MinMax
 		, public IScheduledEventListener
 	{
 		using RingBuff =OneReaderOneWriter::RingBuffer<Event>;
-		using ProcessorParamStorage = ParamF::ProcessorParamStorage;
+		using ProcessorParamStorage = PF::ProcessorParamStorage;
 
 	public:
 		MyVSTProcessor();
