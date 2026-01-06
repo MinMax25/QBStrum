@@ -1,21 +1,33 @@
 ﻿#pragma once
 
-#include <base/source/fstring.h>
+#include <cassert>
 #include <filesystem>
-#include <public.sdk/source/vst/vsteditcontroller.h>
-#include <public.sdk/source/vst/vstguieditor.h>
+#include <functional>
+#include <pluginterfaces/base/funknown.h>
+#include <string>
+#include <vector>
+#include <vstgui/lib/ccolor.h>
+#include <vstgui/lib/cfileselector.h>
+#include <vstgui/lib/controls/ccontrol.h>
+#include <vstgui/lib/controls/coptionmenu.h>
+#include <vstgui/lib/cpoint.h>
+#include <vstgui/lib/crect.h>
+#include <vstgui/lib/cstring.h>
+#include <vstgui/lib/cview.h>
+#include <vstgui/lib/cviewcontainer.h>
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/plugin-bindings/vst3editor.h>
-#include <vstgui/uidescription/iuidescription.h>
-#include <vstgui/vstgui.h>
-#include <vstgui/vstgui_uidescription.h>
 #include <vstgui/uidescription/detail/uiviewcreatorattributes.h>
+#include <vstgui/uidescription/iuidescription.h>
+#include <vstgui/uidescription/iviewcreator.h>
+#include <vstgui/uidescription/uiattributes.h>
+#include <vstgui/uidescription/uiviewfactory.h>
 
 #include "cchordselecter.h"
 #include "cfretboard.h"
+#include "chordmap.h"
 #include "cmenubutton.h"
 #include "files.h"
-#include "myparameters.h"
 
 namespace MinMax
 {
