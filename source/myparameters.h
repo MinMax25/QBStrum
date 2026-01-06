@@ -18,9 +18,7 @@ namespace MinMax
 {
 	using namespace Steinberg;
 	using namespace Steinberg::Vst;
-	using namespace ParameterFramework;
-
-	using ParamHelper = ParameterFramework::ParamHelper;
+	//using namespace ParamF;
 
 	// ユニット識別子
 	enum UNIT
@@ -110,10 +108,10 @@ namespace MinMax
 
 	// 共通レンジ定義取得
 	class RangeResolver
-		: public ParameterFramework::IRangeResolver
+		: public ParamF::IRangeResolver
 	{
 	public:
-		bool resolve(uint32 id, ValueRange& out) const override
+		bool resolve(uint32 id, ParamF::ValueRange& out) const override
 		{
 			switch (static_cast<RANGE>(id))
 			{
@@ -132,7 +130,7 @@ namespace MinMax
 
 	// オプションリスト取得
 	class OptionProvider
-		: public ParameterFramework::IOptionProvider
+		: public ParamF::IOptionProvider
 	{
 	public:
 		std::vector<std::string> getOptionNames(int32 rangeKind) const override
@@ -155,62 +153,62 @@ namespace MinMax
 	inline constexpr size_t PARAM_MAX = 47;
 
 	// 全パラメータ定義
-	inline const std::array<ParamDef, PARAM_MAX> paramTable =
+	inline const std::array<ParamF::ParamDef, PARAM_MAX> paramTable =
 	{ 
 		{
-			{ PARAM::BYPASS, STR16("Bypass"), STR16(""), VALUE::Bool, SCALE::Linear, std::nullopt, FLAG::SYS_BYPASS, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
-			{ PARAM::CHANNEL_SEPALATE, STR16("Channel Sepalate"), STR16(""), VALUE::Bool, SCALE::Linear, std::nullopt, FLAG::HIDDEN, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
-			{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::TRANSPOSE_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
-			{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::ARTICULATION_RANGE, FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
-			{ PARAM::NEED_SAMPLEBLOCK_ADUST, STR16("Need Sampleblock Adust"), STR16(""), VALUE::Bool, SCALE::Linear, std::nullopt, FLAG::HIDDEN, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
-			{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
-			{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
-			{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::CHORD, 0, 1199, 0, 0, 0 },
-			{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
-			{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 103, 0, 0 },
-			{ PARAM::MUTE_NOTE_2, STR16("Mite Note 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 102, 0, 0 },
-			{ PARAM::STRUM_SPEED, STR16("Strum Speed"), STR16("ms"), VALUE::Real, SCALE::Exponential, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 1, 1000, 26, 1, 0 },
-			{ PARAM::STRUM_DECAY, STR16("Strum Decay"), STR16("%"), VALUE::Int, SCALE::Linear, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 85, 100, 96, 1, 0 },
-			{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), VALUE::Int, SCALE::Linear, RANGE::BEAT_LENGTH, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 4, 0, 0 },
-			{ PARAM::BRUSH_TIME, STR16("Brush Time"), STR16("ms"), VALUE::Real, SCALE::Exponential, std::nullopt, FLAG::AUTOMATE, UNIT::STRUM, 20, 300, 30, 1, 0 },
-			{ PARAM::ARP_LENGTH, STR16("Arpegio Length"), STR16("beat"), VALUE::Int, SCALE::Linear, RANGE::BEAT_LENGTH, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 2, 0, 0 },
-			{ PARAM::FNOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_CHANNEL, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
-			{ PARAM::FNOISE_NOTE_NEAR, STR16("Fret Noise Note Near"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 120, 0, 0 },
-			{ PARAM::FNOISE_NOTE_FAR, STR16("Fret Noise Note Far"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 123, 0, 0 },
-			{ PARAM::FNOISE_DIST_NEAR, STR16("Fret Noise Distance Near"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::FRET_DISTANCE, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
-			{ PARAM::FNOISE_DIST_FAR, STR16("Fret Noise Distance Far"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::FRET_DISTANCE, FLAG::HIDDEN, UNIT::STRUM, 0, 1, 3, 0, 0 },
-			{ PARAM::FNOISE_VELOCITY, STR16("Fret Noise Velocity"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::MIDI_DATA, FLAG::AUTOMATE, UNIT::STRUM, 0, 127, 100, 0, 0 },
-			{ PARAM::STRINGS_UP_HIGH, STR16("Strings Up High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 4, 0, 0 },
-			{ PARAM::STRINGS_DOWN_HIGH, STR16("Strings Down High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 3, 0, 0 },
-			{ PARAM::STRINGS_DOWN_LOW, STR16("Strings Down Low"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 1, 0, 0 },
-			{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 77, 0, 0 },
-			{ PARAM::BRUSH_DOWN, STR16("Brush"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,             UNIT::TRIGGER, 0, 1, 74, 0, 0 },
-			{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,              UNIT::TRIGGER, 0, 1, 63, 0, 0 },
-			{ PARAM::UP, STR16("Up"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,                        UNIT::TRIGGER, 0, 1, 62, 0, 0 },
-			{ PARAM::DOWN_HIGH, STR16("Down High"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 61, 0, 0 },
-			{ PARAM::DOWN, STR16("Down"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,                    UNIT::TRIGGER, 0, 1, 60, 0, 0 },
-			{ PARAM::DOWN_LOW, STR16("Down Low"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,            UNIT::TRIGGER, 0, 1, 59, 0, 0 },
-			{ PARAM::MUTE_1, STR16("Mute 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,                UNIT::TRIGGER, 0, 1, 58, 0, 0 },
-			{ PARAM::MUTE_2, STR16("Mute 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,                UNIT::TRIGGER, 0, 1, 57, 0, 0 },
-			{ PARAM::ARPEGGIO_1, STR16("String 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 72, 0, 0 },
-			{ PARAM::ARPEGGIO_2, STR16("String 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 71, 0, 0 },
-			{ PARAM::ARPEGGIO_3, STR16("String 3"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 69, 0, 0 },
-			{ PARAM::ARPEGGIO_4, STR16("String 4"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 67, 0, 0 },
-			{ PARAM::ARPEGGIO_5, STR16("String 5"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 65, 0, 0 },
-			{ PARAM::ARPEGGIO_6, STR16("String 6"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 64, 0, 0 },
-			{ PARAM::OPEN1 , STR16("Open 1"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 24, 0, 0 },
-			{ PARAM::OPEN2, STR16("Open 2"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 0, 0, 0 },
-			{ PARAM::HAM_LEG, STR16("Hammer/Legato"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 25, 0, 0 },
-			{ PARAM::MUTE, STR16("Mute"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 26, 0, 0 },
-			{ PARAM::DEAD, STR16("Dead"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 27, 0, 0 },
-			{ PARAM::HARMONICS, STR16("Harmonics"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 28, 0, 0 },
-			{ PARAM::SLIDE, STR16("Slide"), STR16(""), VALUE::Int, SCALE::Linear, RANGE::PITCH, FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 33, 0, 0 },
+			{ PARAM::BYPASS, STR16("Bypass"), STR16(""), ParamF::VALUE::Bool, ParamF::SCALE::Linear, std::nullopt, ParamF::FLAG::SYS_BYPASS, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
+			{ PARAM::CHANNEL_SEPALATE, STR16("Channel Sepalate"), STR16(""), ParamF::VALUE::Bool, ParamF::SCALE::Linear, std::nullopt, ParamF::FLAG::HIDDEN, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
+			{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::TRANSPOSE_RANGE, ParamF::FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
+			{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::ARTICULATION_RANGE, ParamF::FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
+			{ PARAM::NEED_SAMPLEBLOCK_ADUST, STR16("Need Sampleblock Adust"), STR16(""), ParamF::VALUE::Bool, ParamF::SCALE::Linear, std::nullopt, ParamF::FLAG::HIDDEN, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
+			{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::MIDI_DATA, ParamF::FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
+			{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::MIDI_DATA, ParamF::FLAG::HIDDEN, UNIT::CHORD, 0, 1, 0, 0, 0 },
+			{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, std::nullopt, ParamF::FLAG::AUTOMATE, UNIT::CHORD, 0, 1199, 0, 0, 0 },
+			{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::MIDI_CHANNEL, ParamF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
+			{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 103, 0, 0 },
+			{ PARAM::MUTE_NOTE_2, STR16("Mite Note 2"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 102, 0, 0 },
+			{ PARAM::STRUM_SPEED, STR16("Strum Speed"), STR16("ms"), ParamF::VALUE::Real, ParamF::SCALE::Exponential, std::nullopt, ParamF::FLAG::AUTOMATE, UNIT::STRUM, 1, 1000, 26, 1, 0 },
+			{ PARAM::STRUM_DECAY, STR16("Strum Decay"), STR16("%"), ParamF::VALUE::Int, ParamF::SCALE::Linear, std::nullopt, ParamF::FLAG::AUTOMATE, UNIT::STRUM, 85, 100, 96, 1, 0 },
+			{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::BEAT_LENGTH, ParamF::FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 4, 0, 0 },
+			{ PARAM::BRUSH_TIME, STR16("Brush Time"), STR16("ms"), ParamF::VALUE::Real, ParamF::SCALE::Exponential, std::nullopt, ParamF::FLAG::AUTOMATE, UNIT::STRUM, 20, 300, 30, 1, 0 },
+			{ PARAM::ARP_LENGTH, STR16("Arpegio Length"), STR16("beat"), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::BEAT_LENGTH, ParamF::FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 2, 0, 0 },
+			{ PARAM::FNOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::MIDI_CHANNEL, ParamF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
+			{ PARAM::FNOISE_NOTE_NEAR, STR16("Fret Noise Note Near"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 120, 0, 0 },
+			{ PARAM::FNOISE_NOTE_FAR, STR16("Fret Noise Note Far"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 123, 0, 0 },
+			{ PARAM::FNOISE_DIST_NEAR, STR16("Fret Noise Distance Near"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::FRET_DISTANCE, ParamF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 1, 0, 0 },
+			{ PARAM::FNOISE_DIST_FAR, STR16("Fret Noise Distance Far"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::FRET_DISTANCE, ParamF::FLAG::HIDDEN, UNIT::STRUM, 0, 1, 3, 0, 0 },
+			{ PARAM::FNOISE_VELOCITY, STR16("Fret Noise Velocity"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::MIDI_DATA, ParamF::FLAG::AUTOMATE, UNIT::STRUM, 0, 127, 100, 0, 0 },
+			{ PARAM::STRINGS_UP_HIGH, STR16("Strings Up High"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, ParamF::FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 4, 0, 0 },
+			{ PARAM::STRINGS_DOWN_HIGH, STR16("Strings Down High"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, ParamF::FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 3, 0, 0 },
+			{ PARAM::STRINGS_DOWN_LOW, STR16("Strings Down Low"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, ParamF::FLAG::AUTOMATE, UNIT::STRUM, 0, 1, 1, 0, 0 },
+			{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::TRIGGER, 0, 1, 77, 0, 0 },
+			{ PARAM::BRUSH_DOWN, STR16("Brush"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,             UNIT::TRIGGER, 0, 1, 74, 0, 0 },
+			{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,              UNIT::TRIGGER, 0, 1, 63, 0, 0 },
+			{ PARAM::UP, STR16("Up"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,                        UNIT::TRIGGER, 0, 1, 62, 0, 0 },
+			{ PARAM::DOWN_HIGH, STR16("Down High"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 61, 0, 0 },
+			{ PARAM::DOWN, STR16("Down"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,                    UNIT::TRIGGER, 0, 1, 60, 0, 0 },
+			{ PARAM::DOWN_LOW, STR16("Down Low"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,            UNIT::TRIGGER, 0, 1, 59, 0, 0 },
+			{ PARAM::MUTE_1, STR16("Mute 1"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,                UNIT::TRIGGER, 0, 1, 58, 0, 0 },
+			{ PARAM::MUTE_2, STR16("Mute 2"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,                UNIT::TRIGGER, 0, 1, 57, 0, 0 },
+			{ PARAM::ARPEGGIO_1, STR16("String 1"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 72, 0, 0 },
+			{ PARAM::ARPEGGIO_2, STR16("String 2"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 71, 0, 0 },
+			{ PARAM::ARPEGGIO_3, STR16("String 3"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 69, 0, 0 },
+			{ PARAM::ARPEGGIO_4, STR16("String 4"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 67, 0, 0 },
+			{ PARAM::ARPEGGIO_5, STR16("String 5"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 65, 0, 0 },
+			{ PARAM::ARPEGGIO_6, STR16("String 6"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN,          UNIT::TRIGGER, 0, 1, 64, 0, 0 },
+			{ PARAM::OPEN1 , STR16("Open 1"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 24, 0, 0 },
+			{ PARAM::OPEN2, STR16("Open 2"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 0, 0, 0 },
+			{ PARAM::HAM_LEG, STR16("Hammer/Legato"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 25, 0, 0 },
+			{ PARAM::MUTE, STR16("Mute"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 26, 0, 0 },
+			{ PARAM::DEAD, STR16("Dead"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 27, 0, 0 },
+			{ PARAM::HARMONICS, STR16("Harmonics"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 28, 0, 0 },
+			{ PARAM::SLIDE, STR16("Slide"), STR16(""), ParamF::VALUE::Int, ParamF::SCALE::Linear, RANGE::PITCH, ParamF::FLAG::HIDDEN, UNIT::ARTICULATION, 0, 1, 33, 0, 0 },
 		}
 	};
 
 	// ユニット指定によるパラメータ定義取り出し
 	template<size_t N>
-	inline bool getParamsByUnit(std::array<const ParamDef*, N>& outResult, size_t& outCount, UNIT targetUnit)
+	inline bool getParamsByUnit(std::array<const ParamF::ParamDef*, N>& outResult, size_t& outCount, UNIT targetUnit)
 	{
 		outCount = 0;
 
@@ -230,7 +228,7 @@ namespace MinMax
 	constexpr size_t PARAM_TRIGGER_COUNT = 16;
 	static_assert(PARAM_TRIGGER_COUNT <= paramTable.size(), "Trigger param count mismatch");
 
-	inline bool getTriggerParams(std::array<const ParamDef*, PARAM_TRIGGER_COUNT>& outResult, size_t& outCount)
+	inline bool getTriggerParams(std::array<const ParamF::ParamDef*, PARAM_TRIGGER_COUNT>& outResult, size_t& outCount)
 	{
 		return getParamsByUnit(outResult, outCount, UNIT::TRIGGER);
 	}
@@ -239,7 +237,7 @@ namespace MinMax
 	constexpr size_t PARAM_ARTICULATION_COUNT = 7;
 	static_assert(PARAM_ARTICULATION_COUNT <= paramTable.size(), "Articulation param count mismatch");
 
-	inline bool getArticulationParams(std::array<const ParamDef*, PARAM_ARTICULATION_COUNT>& outResult, size_t& outCount)
+	inline bool getArticulationParams(std::array<const ParamF::ParamDef*, PARAM_ARTICULATION_COUNT>& outResult, size_t& outCount)
 	{
 		return getParamsByUnit(outResult, outCount, UNIT::ARTICULATION);
 	}
@@ -250,7 +248,7 @@ namespace MinMax
 		static RangeResolver rangeResolver;
 		static OptionProvider optionProvider;
 
-		auto& helper = ParameterFramework::ParamHelper::get();
+		auto& helper = ParamF::ParamHelper::get();
 
 		const char* STR_USERPROFILE = "USERPROFILE";
 		const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum/Standard 6Strings.json";

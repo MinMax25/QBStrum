@@ -246,7 +246,7 @@ namespace MinMax
 
 		double newArtic = prm.get(PARAM::SELECTED_ARTICULATION);
 
-		std::array<const ParamDef*, PARAM_ARTICULATION_COUNT> artics;
+		std::array<const ParamF::ParamDef*, PARAM_ARTICULATION_COUNT> artics;
 		size_t articCount = 0;
 		getArticulationParams(artics, articCount);
 
@@ -254,7 +254,7 @@ namespace MinMax
 
 		for (size_t i = 0; i < articCount; ++i)
 		{
-			const ParamDef* def = artics[i];
+			const ParamF::ParamDef* def = artics[i];
 
 			if (i == newArtic)
 			{
@@ -591,13 +591,13 @@ namespace MinMax
 			return 0;
 		}
 
-		std::array<const ParamDef*, PARAM_TRIGGER_COUNT> triggerParams;
+		std::array<const ParamF::ParamDef*, PARAM_TRIGGER_COUNT> triggerParams;
 		size_t triggerCount = 0;
 		getTriggerParams(triggerParams, triggerCount);
 
 		for (size_t i = 0; i < triggerCount; ++i)
 		{
-			const ParamDef* def = triggerParams[i];
+			const ParamF::ParamDef* def = triggerParams[i];
 
 			if (prm.get(def->tag) == pitch)
 			{

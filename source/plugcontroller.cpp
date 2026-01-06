@@ -34,7 +34,7 @@ namespace MinMax
 		addUnit(new Unit(STR16("Articulation"), UNIT::ARTICULATION));
 
 		// パラメータ登録
-		auto& helper = ParameterFramework::ParamHelper::get();
+		auto& helper = ParamF::ParamHelper::get();
 
 		for (auto& def : paramTable)
 		{

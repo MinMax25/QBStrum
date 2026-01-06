@@ -24,7 +24,7 @@
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vstparameters.h>
 
-namespace ParameterFramework
+namespace ParamF
 {
 #pragma region Custom Parameter
 
