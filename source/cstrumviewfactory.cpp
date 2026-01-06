@@ -16,13 +16,13 @@ namespace MinMax
 {
     // ノート確認ボタン
     class CNoteButton
-        : public CTextButton
+        : public  VSTGUI::CTextButton
     {
     public:
 
         CNoteButton(
-            std::function<void(CControl*, CPoint, bool)> _func,
-            const CRect& size, IControlListener* listener = nullptr, int32_t tag = -1, UTF8StringPtr title = nullptr, Style = kKickStyle)
+            std::function<void(CControl*, VSTGUI::CPoint, bool)> _func,
+            const  VSTGUI::CRect& size, VSTGUI::IControlListener* listener = nullptr, int32_t tag = -1, VSTGUI::UTF8StringPtr title = nullptr, Style = kKickStyle)
             : CTextButton(size, listener, tag, title, style)
         {
             onNoteButtonClicked = _func;
@@ -38,13 +38,13 @@ namespace MinMax
             // Kill Event
         }
 
-        CMouseEventResult onMouseDown(CPoint& where, const CButtonState& buttons) override
+        VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState& buttons) override
         {
             if (onNoteButtonClicked) onNoteButtonClicked(this, where, true);
             return CTextButton::onMouseDown(where, buttons);
         }
 
-        CMouseEventResult onMouseUp(CPoint& where, const CButtonState& buttons) override
+        VSTGUI::CMouseEventResult onMouseUp(VSTGUI::CPoint& where, const  VSTGUI::CButtonState& buttons) override
         {
             if (onNoteButtonClicked) onNoteButtonClicked(this, where, false);
             return CTextButton::onMouseUp(where, buttons);
@@ -54,27 +54,27 @@ namespace MinMax
 
     protected:
 
-        std::function<void(CControl*, CPoint, bool)> onNoteButtonClicked;
+        std::function<void(CControl*, VSTGUI::CPoint, bool)> onNoteButtonClicked;
     };
 
     class CStrumView
-        : public CViewContainer
+        : public  VSTGUI::CViewContainer
     {
     public:
 
-        CStrumView(const UIAttributes& attributes, const IUIDescription* description, const CRect& size)
+        CStrumView(const  VSTGUI::UIAttributes& attributes, const  VSTGUI::IUIDescription* description, const  VSTGUI::CRect& size)
             : CViewContainer(size)
         {
-            editor = static_cast<VST3Editor*>(description->getController());
+            editor = static_cast<VSTGUI::VST3Editor*>(description->getController());
             editor->addRef();
 
-            setBackgroundColor(kGreyCColor);
+            setBackgroundColor(VSTGUI::kGreyCColor);
 
 			// ストラムパラメータグリッド
-            CRowColumnView* grdStrum = new CRowColumnView(CRect(CPoint(10, 5), CPoint(410, 15 * PARAM_TRIGGER_COUNT)));
-            grdStrum->setAutosizeFlags(kAutosizeAll);
-            grdStrum->setBackgroundColor(kTransparentCColor);
-            grdStrum->setStyle(CRowColumnView::kRowStyle);
+            VSTGUI::CRowColumnView* grdStrum = new  VSTGUI::CRowColumnView(VSTGUI::CRect(VSTGUI::CPoint(10, 5), VSTGUI::CPoint(410, 15 * PARAM_TRIGGER_COUNT)));
+            grdStrum->setAutosizeFlags(VSTGUI::kAutosizeAll);
+            grdStrum->setBackgroundColor(VSTGUI::kTransparentCColor);
+            grdStrum->setStyle(VSTGUI::CRowColumnView::kRowStyle);
             addView(grdStrum);
 
             std::array<const ParamDef*, MinMax::PARAM_TRIGGER_COUNT> triggerParams;
@@ -86,41 +86,41 @@ namespace MinMax
                 const ParamDef* def = triggerParams[i];
                 
                 // ストラムパラメータ行
-                CRowColumnView* rcvONote = new CRowColumnView(CRect(CPoint(0, 0), CPoint(400, 15)));
-                rcvONote->setAutosizeFlags(kAutosizeNone);
-                rcvONote->setBackgroundColor(kTransparentCColor);
-                rcvONote->setStyle(CRowColumnView::kColumnStyle);
+                VSTGUI::CRowColumnView* rcvONote = new  VSTGUI::CRowColumnView(VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(400, 15)));
+                rcvONote->setAutosizeFlags(VSTGUI::kAutosizeNone);
+                rcvONote->setBackgroundColor(VSTGUI::kTransparentCColor);
+                rcvONote->setStyle(VSTGUI::CRowColumnView::kColumnStyle);
 
 				// ストラムパターン名ラベル
-                CTextLabel* labStrumTitle = new CTextLabel(CRect(CPoint(0, 0), CPoint(80, 15)));
-                labStrumTitle->setBackColor(kTransparentCColor);
-                labStrumTitle->setFrameColor(kTransparentCColor);
-                labStrumTitle->setFontColor(kWhiteCColor);
-                labStrumTitle->setHoriAlign(CHoriTxtAlign::kLeftText);
-                labStrumTitle->setFont(kNormalFontSmall);
+                VSTGUI::CTextLabel* labStrumTitle = new  VSTGUI::CTextLabel(VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(80, 15)));
+                labStrumTitle->setBackColor(VSTGUI::kTransparentCColor);
+                labStrumTitle->setFrameColor(VSTGUI::kTransparentCColor);
+                labStrumTitle->setFontColor(VSTGUI::kWhiteCColor);
+                labStrumTitle->setHoriAlign(VSTGUI::CHoriTxtAlign::kLeftText);
+                labStrumTitle->setFont(VSTGUI::kNormalFontSmall);
                 labStrumTitle->setText(Steinberg::String(def->name).text8());
                 rcvONote->addView(labStrumTitle);
 
 				// ピッチ・ノート入力
-                CNoteEdit* txtONote = new CNoteEdit(CRect(CPoint(0, 0), CPoint(25, 15)), description->getController(), -1);
+                CNoteEdit* txtONote = new CNoteEdit(VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(25, 15)), description->getController(), -1);
                 txtONote->setTag(def->tag);
-                txtONote->setBackColor(kWhiteCColor);
-                txtONote->setFontColor(kBlackCColor);
-                txtONote->setFont(kNormalFontSmall);
+                txtONote->setBackColor(VSTGUI::kWhiteCColor);
+                txtONote->setFontColor(VSTGUI::kBlackCColor);
+                txtONote->setFont(VSTGUI::kNormalFontSmall);
                 rcvONote->addView(txtONote);
 
 				// ノート名表示ラベル
-                CNoteLabel* labONote = new CNoteLabel(CRect(CPoint(0, 0), CPoint(30, 15)));
+                CNoteLabel* labONote = new CNoteLabel(VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(30, 15)));
                 labONote->setListener(description->getController());
-                labONote->setFont(kNormalFontSmall);
+                labONote->setFont(VSTGUI::kNormalFontSmall);
                 labONote->setTag(def->tag);
                 rcvONote->addView(labONote);
 
 				// ノート送信ボタン
-                CNoteButton* btnONote = new CNoteButton([this](CControl* p, CPoint where, bool onoff) { onNoteButtonClicked(p, where, onoff); }, CRect(CPoint(0, 0), CPoint(64, 15)));
+                CNoteButton* btnONote = new CNoteButton([this](VSTGUI::CControl* p, VSTGUI::CPoint where, bool onoff) { onNoteButtonClicked(p, where, onoff); }, VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(64, 15)));
                 btnONote->setTag(def->tag);
                 btnONote->setWantsFocus(false);
-                btnONote->setStyle(CTextButton::kKickStyle);
+                btnONote->setStyle(VSTGUI::CTextButton::kKickStyle);
                 btnONote->setRoundRadius(2);
                 rcvONote->addView(btnONote);
 
@@ -137,9 +137,9 @@ namespace MinMax
 
     protected:
 
-        VST3Editor* editor{};
+        VSTGUI::VST3Editor* editor{};
 
-        void onNoteButtonClicked(CControl* pControl, CPoint where, bool onoff)
+        void onNoteButtonClicked(VSTGUI::CControl* pControl, VSTGUI::CPoint where, bool onoff)
         {
             if (auto message = Steinberg::owned(editor->getController()->allocateMessage()))
             {
@@ -168,19 +168,19 @@ namespace MinMax
     };
 
     class CStrumViewFactory
-        : public ViewCreatorAdapter
+        : public  VSTGUI::ViewCreatorAdapter
     {
     public:
 
-        CStrumViewFactory() { UIViewFactory::registerViewCreator(*this); }
+        CStrumViewFactory() { VSTGUI::UIViewFactory::registerViewCreator(*this); }
 
-        IdStringPtr getViewName() const override { return "UI:Strum View"; }
+        VSTGUI::IdStringPtr getViewName() const override { return "UI:Strum View"; }
 
-        IdStringPtr getBaseViewName() const override { return UIViewCreator::kCViewContainer; }
+        VSTGUI::IdStringPtr getBaseViewName() const override { return  VSTGUI::UIViewCreator::kCViewContainer; }
 
-        CView* create(const UIAttributes& attributes, const IUIDescription* description) const override
+        VSTGUI::CView* create(const  VSTGUI::UIAttributes& attributes, const  VSTGUI::IUIDescription* description) const override
         {
-            return new CStrumView(attributes, description, CRect(CPoint(0, 0), CPoint(305, 5 * 2 + 15 * PARAM_TRIGGER_COUNT)));
+            return new CStrumView(attributes, description, VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(305, 5 * 2 + 15 * PARAM_TRIGGER_COUNT)));
         }
     };
 

@@ -17,27 +17,25 @@
 
 namespace MinMax
 {
-    using namespace VSTGUI;
-    
     // ノート名表示ラベル
     class CNoteLabel
-        : public CTextLabel
+        : public  VSTGUI::CTextLabel
     {
         static constexpr int NOTE_COUNT = 128;
     public:
-        CNoteLabel(const CRect& size)
+        CNoteLabel(const  VSTGUI::CRect& size)
             : CTextLabel(size)
         {
 
         }
 
-        void CNoteLabel::draw(CDrawContext* pContext) override
+        void CNoteLabel::draw(VSTGUI::CDrawContext* pContext) override
         {
-            UTF8String value = "0" + getText();
+            VSTGUI::UTF8String value = "0" + getText();
             int row = std::stoi(value.getString());
             row = row < NOTE_COUNT ? row : 127;
 
-            UTF8String cellValue;
+            VSTGUI::UTF8String cellValue;
             cellValue = NoteNames[row];
 
             drawBack(pContext);
