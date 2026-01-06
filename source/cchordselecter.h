@@ -84,13 +84,23 @@ namespace MinMax
 
         ~CChordSelecter() {}
         
-        void setCanEdit(bool editable)
+        void beginEdit()
         {
-            canEdit_ = editable;
-            if (chordMenu)
-                chordMenu->setMouseEnabled(canEdit_);
-            if (chordLabel)
-                chordLabel->setFontColor(editable ? VSTGUI::kBlackCColor : VSTGUI::kRedCColor);
+            canEdit_ = true;
+            chordMenu->setMouseEnabled(false);
+            chordLabel->setBackColor(VSTGUI::kCyanCColor);
+        }
+
+        void endEdit()
+        {
+            canEdit_ = false;
+            chordMenu->setMouseEnabled(true);
+            chordLabel->setBackColor(VSTGUI::kWhiteCColor);
+        }
+
+        int getCurrentChordNumber()
+        {
+            return currentChordNumber;
         }
 
         CLASS_METHODS(CChordSelecter, CViewContainer)
@@ -99,6 +109,8 @@ namespace MinMax
         bool canEdit_ = true;
 
         ChordOptionMenu* chordMenu{};
+
+        int currentChordNumber = 0;
 
         VSTGUI::CTextLabel* chordLabel = nullptr;
 
@@ -152,6 +164,7 @@ namespace MinMax
 
         void onSelectedChordChanged(int value)
         {
+            currentChordNumber = value;
             setChordText(value);
             if (selectedChordChanged) selectedChordChanged(this, value);
         }

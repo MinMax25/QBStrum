@@ -41,10 +41,10 @@ namespace MinMax
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
     protected:
-        VSTGUI::CColor NORMAL_TEXT_COLOR = VSTGUI::kWhiteCColor;    // 通常の色
-        VSTGUI::CColor EDIT_TEXT_COLOR = VSTGUI::kRedCColor;     // 編集モード時の色
+        VSTGUI::CColor NORMAL_TEXT_COLOR = VSTGUI::kWhiteCColor;
+        VSTGUI::CColor EDIT_TEXT_COLOR = VSTGUI::kCyanCColor;
 
-        bool canEdit = false; // 初期状態は編集不可
+        bool canEdit = false;
 
         VSTGUI::VST3Editor* editor = nullptr;
 
@@ -67,7 +67,8 @@ namespace MinMax
 
         void initChordSelecter()
         {
-            chordSelecter = new CChordSelecter({ 365,1,515,19 }, [this](CChordSelecter*, int v) { fretBoard->setPressedFrets(getVoicing(v)); }); addView(chordSelecter);
+            chordSelecter = new CChordSelecter({ 365,1,515,19 }, [this](CChordSelecter*, int v) { onChordNumberChanged(v); });
+            addView(chordSelecter);
         }
 
         void initMenuButtons()
@@ -77,6 +78,11 @@ namespace MinMax
 
             editButton = new CMenuButton({ 62,1,122,18 }, "Edit", [this](CMenuButton* b) { popupMenu(b, MenuType::Edit); });
             addView(editButton);
+        }
+
+        void onChordNumberChanged(int value)
+        {
+            fretBoard->setPressedFrets(getVoicing(value));
         }
 
         enum class MenuType { File, Edit };
@@ -144,8 +150,8 @@ namespace MinMax
         {
             canEdit = true;
             editButton->setTextColor(EDIT_TEXT_COLOR);
-            fretBoard->setCanEdit(true);
-            chordSelecter->setCanEdit(false);
+            fretBoard->beginEdit();
+            chordSelecter->beginEdit();
         }
 
         void commitEdits()
@@ -154,30 +160,30 @@ namespace MinMax
 
             // fretBoard の編集内容を ChordMap に反映
             auto pressed = fretBoard->getPressedFrets();
-            auto* controller = editor->getController();
-            ParamValue norm = controller->getParamNormalized(PARAM::CHORD_NUM);
-            int chordNum = static_cast<int>(controller->normalizedParamToPlain(PARAM::CHORD_NUM, norm));
+            int chordNum = chordSelecter->getCurrentChordNumber();
             ChordMap::Instance().setVoicing(chordNum, pressed);
 
-            exitEditMode();
+            exitEditMode(false);
         }
 
         void cancelEdits()
         {
             if (!canEdit) return;
-            exitEditMode();
+            exitEditMode(true);
         }
 
-        // 編集モードを抜ける共通処理
-        void exitEditMode()
+        void exitEditMode(bool isCancel)
         {
             canEdit = false;
             editButton->setTextColor(NORMAL_TEXT_COLOR); 
-            fretBoard->setCanEdit(false);
-            chordSelecter->setCanEdit(true);
+            fretBoard->endEdit(isCancel);
+            chordSelecter->endEdit();
         }
 
-        StringSet getVoicing(int v) const { return ChordMap::Instance().getChordVoicing(v); }
+        StringSet getVoicing(int value) const 
+        {
+            return ChordMap::Instance().getChordVoicing(value);
+        }
 
         void saveChordMap()
         {

@@ -309,17 +309,17 @@ namespace MinMax
             return VSTGUI::kMouseEventHandled;
         }
 
-        void setCanEdit(bool state)
+        void beginEdit()
         {
-            canEdit_ = state;
-            if (canEdit_)
-            {
-                savePressedFrets();
-            }
-            else
-            {
-                restorePressedFrets();
-            }
+            canEdit_ = true;
+            savePressedFrets();
+            invalid();
+        }
+
+        void endEdit(bool isCancel)
+        {
+            canEdit_ = false;
+            if (isCancel) restorePressedFrets();
             invalid();
         }
 
