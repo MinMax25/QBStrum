@@ -3181,7 +3181,7 @@
 							"angle-start": "135",
 							"circle-drawing": "false",
 							"class": "CKnob",
-							"control-tag": "ARP_LENGTH",
+							"control-tag": "FNOISE_VELOCITY",
 							"corona-color": "~ GreyCColor",
 							"corona-dash-dot": "true",
 							"corona-dash-dot-lengths": "1.26,0.1",
