@@ -54,8 +54,6 @@ namespace MinMax
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
     protected:
-        VSTGUI::CColor NORMAL_TEXT_COLOR = VSTGUI::kWhiteCColor;
-        VSTGUI::CColor EDIT_TEXT_COLOR = VSTGUI::kCyanCColor;
 
         bool canEdit = false;
 
@@ -114,7 +112,7 @@ namespace MinMax
             }
             else
             {
-                editButton->setTextColor(canEdit ? EDIT_TEXT_COLOR : NORMAL_TEXT_COLOR);
+                editButton->setTextColor(canEdit ? editButton->EDIT_TEXT_COLOR : editButton->NORMAL_TEXT_COLOR);
 
                 if (canEdit)
                 {
@@ -172,7 +170,7 @@ namespace MinMax
         void enterEditMode()
         {
             canEdit = true;
-            editButton->setTextColor(EDIT_TEXT_COLOR);
+            editButton->setTextColor(editButton->EDIT_TEXT_COLOR);
             fretBoard->beginEdit();
             chordSelecter->beginEdit();
         }
@@ -195,7 +193,7 @@ namespace MinMax
         void exitEditMode(bool isCancel)
         {
             canEdit = false;
-            editButton->setTextColor(NORMAL_TEXT_COLOR); 
+            editButton->setTextColor(editButton->NORMAL_TEXT_COLOR); 
             fretBoard->endEdit(isCancel);
             chordSelecter->endEdit();
         }

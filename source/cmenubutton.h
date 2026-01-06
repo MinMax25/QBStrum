@@ -24,13 +24,15 @@ namespace MinMax
     public:
         using SelectedChordChanged = std::function<void(CMenuButton*)>;
 
+        const VSTGUI::CColor NORMAL_TEXT_COLOR = VSTGUI::kGreyCColor;
+        const VSTGUI::CColor EDIT_TEXT_COLOR = VSTGUI::kCyanCColor;
+
         CMenuButton(const VSTGUI::CRect& size, const VSTGUI::UTF8String& title, SelectedChordChanged cb)
             : VSTGUI::CTextButton(size, nullptr, -1, title)
             , selectedChordChanged(cb)
         {
-            setFrameColor(VSTGUI::kTransparentCColor);
             setGradient(nullptr);
-            setTextColor(VSTGUI::kWhiteCColor);
+            setTextColor(NORMAL_TEXT_COLOR);
             setFont(VSTGUI::kNormalFontSmall);
         }
 
