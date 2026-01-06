@@ -9,16 +9,16 @@
 #include <pluginterfaces/base/funknown.h>
 #include <pluginterfaces/base/ibstream.h>
 #include <pluginterfaces/vst/ivstaudioprocessor.h>
+#include <pluginterfaces/vst/ivstevents.h>
 #include <pluginterfaces/vst/ivstmessage.h>
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/utility/ringbuffer.h>
 #include <public.sdk/source/vst/vstaudioeffect.h>
-#include <pluginterfaces/vst/ivstevents.h>
 
 #include "chordmap.h"
-#include "parameterframework.h"
-#include "myparameters.h"
 #include "eventscheduler.h"
+#include "myparameters.h"
+#include "parameterframework.h"
 
 namespace MinMax
 {
