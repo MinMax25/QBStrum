@@ -114,6 +114,7 @@ namespace MinMax
         void onChordNumberChanged(int value)
         {
             fretBoard->setPressedFrets(getVoicing(value));
+            chordSelecter->setChordNumber(value);
         }
 
         enum class MenuType { File, Edit };

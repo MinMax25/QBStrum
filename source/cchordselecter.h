@@ -97,6 +97,12 @@ namespace MinMax
             return currentChordNumber;
         }
 
+        void setChordNumber(int value)
+        {
+            currentChordNumber = value;
+            setChordText(value);
+        }
+
         CLASS_METHODS(CChordSelecter, CViewContainer)
 
     protected:
