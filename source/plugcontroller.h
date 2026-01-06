@@ -52,14 +52,6 @@ namespace MinMax
 
 		MyVST3Editor* view = nullptr;
 
-		std::filesystem::path currentPresetPath;
-
-		void setCurrentPresetPath(const std::filesystem::path& path)
-		{
-			currentPresetPath = path;
-			setDirty(true);
-		}
-
 		// --------------
 
 		DEFINE_INTERFACES

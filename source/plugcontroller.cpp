@@ -55,8 +55,6 @@ namespace MinMax
 			}
 		}
 
-		currentPresetPath = ChordMap::Instance().getPresetPath();
-
 		return result;
 	}
 
@@ -95,16 +93,6 @@ namespace MinMax
 		//performEdit(static_cast<int>(PARAM::BYPASS), Bypass ? 1 : 0);
 		//endEdit(static_cast<int>(PARAM::BYPASS));
 
-		char* raw = nullptr;
-		Steinberg::uint32 size = 0;
-		if (streamer.readString8(raw, size)) return Steinberg::kResultFalse;
-
-		if (raw && size > 0)
-		{
-			std::string utf8(raw, size);
-			currentPresetPath = std::filesystem::u8path(utf8);
-		}
-
 		return Steinberg::kResultTrue;
 	}
 
@@ -115,9 +103,6 @@ namespace MinMax
 
 		//bool bypass = getParamNormalized(static_cast<int>(PARAM::BYPASS)) > 0.5;
 		//streamer.writeBool(bypass);
-
-		const std::string utf8 = currentPresetPath.u8string();
-		if (!streamer.writeString8(utf8.c_str())) return Steinberg::kResultFalse;
 
 		return Steinberg::kResultTrue;
 	}

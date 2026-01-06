@@ -16,8 +16,6 @@
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/lib/vstguifwd.h>
 
-#include "chordmap.h"
-
 namespace MinMax
 {
     // ギターフレット表示コントロール
