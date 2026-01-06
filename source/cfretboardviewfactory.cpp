@@ -43,8 +43,6 @@ namespace MinMax
 
             setBackgroundColor(VSTGUI::kTransparentCColor);
 
-            presetPath = ChordMap::Instance().getPresetPath().u8string();
-
             initFretBoard();
             initChordSelecter();
             initMenuButtons();
@@ -69,8 +67,6 @@ namespace MinMax
         bool canEdit = false;
 
         VSTGUI::VST3Editor* editor = nullptr;
-
-        std::string presetPath;
 
         CFretBoard* fretBoard = nullptr;
 
@@ -190,7 +186,7 @@ namespace MinMax
                     {
                         try
                         {
-                            ChordMap::Instance().initFromPreset(f); presetPath = f; fretBoard->valueChanged();
+                            ChordMap::Instance().initFromPreset(f);
                         }
                         catch (...)
                         {
@@ -249,7 +245,7 @@ namespace MinMax
                 {
                     try 
                     { 
-                        ChordMap::Instance().saveToFile(path); presetPath = path;
+                        ChordMap::Instance().saveToFile(path);
                     }
                     catch (...) 
                     { 
@@ -266,19 +262,18 @@ namespace MinMax
             auto* selector = VSTGUI::CNewFileSelector::create(p->getFrame(), style);
             if (!selector) return;
 
-            std::string defaultName = presetPath.empty() ? "NewPreset.json" : std::filesystem::path(presetPath).filename().u8string();
+            std::string presetPath = ChordMap::Instance().getPresetPath().u8string();
             if (!presetPath.empty())
                 selector->setInitialDirectory(std::filesystem::path(presetPath).parent_path().string().c_str());
 
             selector->setTitle(Files::TITLE.c_str());
-            selector->setDefaultSaveName(defaultName.c_str());
+            selector->setDefaultSaveName(presetPath.c_str());
             selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER.c_str(), Files::FILE_EXT.c_str()));
 
             p->getFrame()->setFocusView(nullptr);
 
             if (selector->runModal() && selector->getNumSelectedFiles() == 1) 
             {
-                presetPath = selector->getSelectedFile(0);
                 fileSelected(presetPath);
             }
             selector->forget();
