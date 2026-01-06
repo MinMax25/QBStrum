@@ -138,6 +138,7 @@ namespace MinMax
             {
                 auto name = std::filesystem::path(f).filename().u8string();
                 auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(name.c_str()));
+
                 item->setActions(
                     [this, f](VSTGUI::CCommandMenuItem*)
                     {
@@ -220,8 +221,14 @@ namespace MinMax
             selector->setTitle(Files::TITLE.c_str());
             selector->setDefaultSaveName(defaultName.c_str());
             selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER.c_str(), Files::FILE_EXT.c_str()));
+
             p->getFrame()->setFocusView(nullptr);
-            if (selector->runModal() && selector->getNumSelectedFiles() == 1) { presetPath = selector->getSelectedFile(0); fileSelected(presetPath); }
+
+            if (selector->runModal() && selector->getNumSelectedFiles() == 1) 
+            {
+                presetPath = selector->getSelectedFile(0);
+                fileSelected(presetPath);
+            }
             selector->forget();
         }
 
