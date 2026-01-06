@@ -5,9 +5,10 @@
 namespace MinMax
 {
 	// メッセージ識別子
-	inline constexpr auto MSG_SOUND_CHECK = "SoundCheck";
-	inline constexpr auto MSG_CHORD_CHANGED = "ChordChanged";
-	inline constexpr auto MSG_CHORD_VALUE = "ChordValue";
+	inline constexpr char* MSG_SOUND_CHECK = "SoundCheck";
+	inline constexpr char* MSG_CHORD_CHANGED = "ChordChanged";
+	inline constexpr char* MSG_CHORD_VALUE = "ChordValue";
+	inline constexpr char* MSG_PRESET_PATH = "PresetPath";
 
 	// 音程名変換辞書
 	inline const std::array<char*, 128> NoteNames =
