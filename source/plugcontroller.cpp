@@ -84,26 +84,11 @@ namespace MinMax
 
 	Steinberg::tresult PLUGIN_API MyVSTController::setState(Steinberg::IBStream* state)
 	{
-		if (!state) return Steinberg::kResultFalse;
-		Steinberg::IBStreamer streamer(state, kLittleEndian);
-
-		//bool Bypass;
-		//if (streamer.readBool(Bypass) == false) return Steinberg::kResultFalse;
-		//beginEdit(static_cast<int>(PARAM::BYPASS));
-		//performEdit(static_cast<int>(PARAM::BYPASS), Bypass ? 1 : 0);
-		//endEdit(static_cast<int>(PARAM::BYPASS));
-
 		return Steinberg::kResultTrue;
 	}
 
 	Steinberg::tresult PLUGIN_API MyVSTController::getState(Steinberg::IBStream* state)
 	{
-		if (!state) return Steinberg::kResultFalse;
-		Steinberg::IBStreamer streamer(state, kLittleEndian);
-
-		//bool bypass = getParamNormalized(static_cast<int>(PARAM::BYPASS)) > 0.5;
-		//streamer.writeBool(bypass);
-
 		return Steinberg::kResultTrue;
 	}
 
@@ -133,46 +118,6 @@ namespace MinMax
 
 		case Steinberg::Vst::kCtrlNRPNSelectMSB:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::CHORD_MSB);
-			return Steinberg::kResultTrue;
-
-		case 20:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRUM_SPEED);
-			return Steinberg::kResultTrue;
-
-		case 21:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRUM_DECAY);
-			return Steinberg::kResultTrue;
-
-		case 22:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRUM_LENGTH);
-			return Steinberg::kResultTrue;
-
-		case Steinberg::Vst::kCtrlReleaseTime:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::BRUSH_TIME);
-			return Steinberg::kResultTrue;
-
-		case 23:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::ARP_LENGTH);
-			return Steinberg::kResultTrue;
-
-		case 24:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRINGS_UP_HIGH);
-			return Steinberg::kResultTrue;
-
-		case 25:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRINGS_DOWN_HIGH);
-			return Steinberg::kResultTrue;
-
-		case 26:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRINGS_DOWN_LOW);
-			return Steinberg::kResultTrue;
-
-		case Steinberg::Vst::kCtrlSoundVariation:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::SELECTED_ARTICULATION);
-			return Steinberg::kResultTrue;
-
-		case 27:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::TRANSPOSE);
 			return Steinberg::kResultTrue;
 		}
 
