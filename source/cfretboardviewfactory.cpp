@@ -126,7 +126,7 @@ namespace MinMax
             auto* menu = new VSTGUI::COptionMenu();
             
             std::vector<std::string> files;
-            if (Files::getPresetFiles(files) != kResultTrue || files.empty())
+            if (Files::getPresetFiles(files) != Steinberg::kResultTrue || files.empty())
             {
                 auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc("No Presets"));
                 item->setEnabled(false);

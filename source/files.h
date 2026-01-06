@@ -45,7 +45,7 @@ namespace MinMax
         }
 
         // プリセットファイルのパス一覧を取得する 
-        inline static tresult getPresetFiles(std::vector<std::string>& file_names)
+        inline static Steinberg::tresult getPresetFiles(std::vector<std::string>& file_names)
         {
             std::filesystem::directory_iterator iter(getPresetPath()), end;
             std::error_code err;
@@ -57,7 +57,7 @@ namespace MinMax
                 file_names.push_back(entry.path().string());
             }
 
-            return kResultTrue;
+            return Steinberg::kResultTrue;
         }
     };
 }

@@ -16,7 +16,7 @@
 
 namespace MinMax
 {
-	using namespace Steinberg;
+	//using namespace Steinberg;
 
 	// ユニット識別子
 	enum UNIT
@@ -109,7 +109,7 @@ namespace MinMax
 		: public PF::IRangeResolver
 	{
 	public:
-		bool resolve(uint32 id, PF::ValueRange& out) const override
+		bool resolve(Steinberg::uint32 id, PF::ValueRange& out) const override
 		{
 			switch (static_cast<RANGE>(id))
 			{
@@ -131,7 +131,7 @@ namespace MinMax
 		: public PF::IOptionProvider
 	{
 	public:
-		std::vector<std::string> getOptionNames(int32 rangeKind) const override
+		std::vector<std::string> getOptionNames(Steinberg::int32 rangeKind) const override
 		{
 			switch (rangeKind)
 			{

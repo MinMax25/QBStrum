@@ -15,8 +15,8 @@ namespace MinMax
 
         bool isSendNoteOn = false;
 
-        uint64 onTime = 0;
-        uint64 offTime = 0;
+        Steinberg::uint64 onTime = 0;
+        Steinberg::uint64 offTime = 0;
 
         int pitch = 0;
         int noteId = 0;
@@ -91,7 +91,7 @@ namespace MinMax
         }
 
         // --- 時間(onTime)を指定して要素を取得 ---
-        ScheduledNote* findNoteWithOnTime(uint64 onTime)
+        ScheduledNote* findNoteWithOnTime(Steinberg::uint64 onTime)
         {
             for (size_t i = 0; i < count_; ++i)
             {
@@ -117,7 +117,7 @@ namespace MinMax
         // onTime より小さい onTime を持つ要素のうち、
         // 最も後ろ（時間的に直前）の ScheduledNote を返す。
         // 存在しない場合は nullptr を返す。
-        ScheduledNote* findLastBefore(uint64 onTime)
+        ScheduledNote* findLastBefore(Steinberg::uint64 onTime)
         {
             ScheduledNote* result = nullptr;
 

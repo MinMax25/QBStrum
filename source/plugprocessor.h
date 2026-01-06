@@ -26,7 +26,7 @@ namespace MinMax
 		: public Steinberg::Vst::AudioEffect
 		, public IScheduledEventListener
 	{
-		using RingBuff =OneReaderOneWriter::RingBuffer<Steinberg::Vst::Event>;
+		using RingBuff = Steinberg::OneReaderOneWriter::RingBuffer<Steinberg::Vst::Event>;
 		using ProcessorParamStorage = PF::ProcessorParamStorage;
 
 	public:
@@ -69,9 +69,9 @@ namespace MinMax
 		Steinberg::Vst::ParamID PLUGIN_API getParamIdByPitch(Steinberg::Vst::Event event);
 		StringSet PLUGIN_API getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings);
 		void PLUGIN_API notifyChordNumberChanged(int chordNumber);
-		tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
-		tresult PLUGIN_API notifyStrumTrigger(Steinberg::Vst::IMessage* message);
-		void PLUGIN_API processAudio(Vst::ProcessData& data);
+		Steinberg::tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
+		Steinberg::tresult PLUGIN_API notifyStrumTrigger(Steinberg::Vst::IMessage* message);
+		void PLUGIN_API processAudio(Steinberg::Vst::ProcessData& data);
 
 		// ストラムイベントスケジューラー
 		EventScheduler& scheduler = EventScheduler::Instance();

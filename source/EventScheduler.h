@@ -67,8 +67,8 @@ namespace MinMax
 		double getSamplesPerMs() const { return sampleRate / 1000.0; }
 		double getSampleRate() const { return sampleRate; }
 		double getTempo() const { return tempo; }
-		int32 getTimeSigNumerator() const { return timeSigNumerator; }
-		int32 getTimeSigDenominator() const { return timeSigDenominator; }
+		Steinberg::int32 getTimeSigNumerator() const { return timeSigNumerator; }
+		Steinberg::int32 getTimeSigDenominator() const { return timeSigDenominator; }
 
 		void setSampleRate(double value) { sampleRate = value; }
 
@@ -82,7 +82,7 @@ namespace MinMax
 			}
 		}
 
-		void addNoteOn(uint64 onTime, uint64 offTime, int stringIndex, int pitch, float velocity, int channel = 0)
+		void addNoteOn(Steinberg::uint64 onTime, Steinberg::uint64 offTime, int stringIndex, int pitch, float velocity, int channel = 0)
 		{
 			auto& q = buffer(stringIndex);
 
@@ -225,7 +225,7 @@ namespace MinMax
 		}
 
 		bool isPlaying() const { return state & Steinberg::Vst::ProcessContext::kPlaying; }
-		uint64 getCurrentSampleTime() const { return currentSampleTime; }
+		Steinberg::uint64 getCurrentSampleTime() const { return currentSampleTime; }
 
 		void setNeedSampleblockAdust(bool value)
 		{
@@ -241,9 +241,9 @@ namespace MinMax
 
 		bool isBlockAdust = false;
 
-		uint32 numSamples = 0;
+		Steinberg::uint32 numSamples = 0;
 
-		uint64 currentSampleTime = 0;
+		Steinberg::uint64 currentSampleTime = 0;
 
 		IScheduledEventListener* listener = nullptr;
 
@@ -252,25 +252,25 @@ namespace MinMax
 
 		TimeQueue outQueue;
 
-		uint32 noteid = 0;
+		Steinberg::uint32 noteid = 0;
 
 		// Context From DAW
-		uint32 state = 0;
+		Steinberg::uint32 state = 0;
 		double sampleRate = 0;
 		Steinberg::Vst::TSamples projectTimeSamples = 0;
-		int64 systemTime = 0;
+		Steinberg::int64 systemTime = 0;
 		Steinberg::Vst::TSamples continousTimeSamples = 0;
 		Steinberg::Vst::TQuarterNotes projectTimeMusic = 0;
 		Steinberg::Vst::TQuarterNotes barPositionMusic = 0;
 		Steinberg::Vst::TQuarterNotes cycleStartMusic = 0;
 		Steinberg::Vst::TQuarterNotes cycleEndMusic = 0;
 		double tempo = 0;
-		int32 timeSigNumerator = 0;
-		int32 timeSigDenominator = 0;
-		Vst::Chord chord{};
-		int32 smpteOffsetSubframes = 0;
+		Steinberg::int32 timeSigNumerator = 0;
+		Steinberg::int32 timeSigDenominator = 0;
+		Steinberg::Vst::Chord chord{};
+		Steinberg::int32 smpteOffsetSubframes = 0;
 		Steinberg::Vst::FrameRate frameRate{};
-		int32 samplesToNextClock = 0;
+		Steinberg::int32 samplesToNextClock = 0;
 
 		void newState(Steinberg::Vst::ProcessContext* ctx)
 		{
@@ -367,19 +367,19 @@ namespace MinMax
 			}
 		}
 
-		TimeQueue& buffer(uint32 number)
+		TimeQueue& buffer(Steinberg::uint32 number)
 		{
 			if (number == SPECIAL_NOTES) return specialQueue;
 			if (number < STRING_COUNT) return stringQueues[number];
 			return specialQueue;
 		}
 
-		bool isWithinRange(uint64 time)
+		bool isWithinRange(Steinberg::uint64 time)
 		{
 			return time >= currentSampleTime && time < currentSampleTime + numSamples;
 		}
 
-		void sendNoteEventCommon(bool on, uint32 sampleOffset, const ScheduledNote& note, float velocity)
+		void sendNoteEventCommon(bool on, Steinberg::uint32 sampleOffset, const ScheduledNote& note, float velocity)
 		{
 			NoteEvent e{};
 

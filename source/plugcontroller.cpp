@@ -18,11 +18,11 @@
 
 namespace MinMax
 {
-	tresult PLUGIN_API MyVSTController::initialize(FUnknown* context)
+	Steinberg::tresult PLUGIN_API MyVSTController::initialize(FUnknown* context)
 	{
-		tresult result = EditControllerEx1::initialize(context);
+		Steinberg::tresult result = EditControllerEx1::initialize(context);
 
-		if (result != kResultOk)
+		if (result != Steinberg::kResultOk)
 		{
 			return result;
 		}
@@ -48,19 +48,19 @@ namespace MinMax
 		return result;
 	}
 
-	tresult PLUGIN_API MyVSTController::terminate()
+	Steinberg::tresult PLUGIN_API MyVSTController::terminate()
 	{
 		return EditControllerEx1::terminate();
 	}
 
-	tresult PLUGIN_API MyVSTController::setComponentState(IBStream* state)
+	Steinberg::tresult PLUGIN_API MyVSTController::setComponentState(Steinberg::IBStream* state)
 	{
-		if (!state) return kInvalidArgument;
+		if (!state) return Steinberg::kInvalidArgument;
 
 		for (const auto& def : paramTable)
 		{
 			double plain = 0.0;
-			if (state->read(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
+			if (state->read(&plain, sizeof(double), nullptr) != Steinberg::kResultOk) return Steinberg::kResultFalse;
 
 			// 正規化値に変換
 			Steinberg::Vst::ParamValue normalized = plainParamToNormalized(def.tag, plain);
@@ -69,37 +69,37 @@ namespace MinMax
 			setParamNormalized(def.tag, normalized);
 		}
 
-		return kResultOk;
+		return Steinberg::kResultOk;
 	}
 
-	tresult PLUGIN_API MyVSTController::setState(IBStream* state)
+	Steinberg::tresult PLUGIN_API MyVSTController::setState(Steinberg::IBStream* state)
 	{
-		if (!state) return kResultFalse;
-		IBStreamer streamer(state, kLittleEndian);
+		if (!state) return Steinberg::kResultFalse;
+		Steinberg::IBStreamer streamer(state, kLittleEndian);
 
 		bool Bypass;
-		if (streamer.readBool(Bypass) == false) return kResultFalse;
+		if (streamer.readBool(Bypass) == false) return Steinberg::kResultFalse;
 		beginEdit(static_cast<int>(PARAM::BYPASS));
 		performEdit(static_cast<int>(PARAM::BYPASS), Bypass ? 1 : 0);
 		endEdit(static_cast<int>(PARAM::BYPASS));
 
-		return kResultTrue;
+		return Steinberg::kResultTrue;
 	}
 
-	tresult PLUGIN_API MyVSTController::getState(IBStream* state)
+	Steinberg::tresult PLUGIN_API MyVSTController::getState(Steinberg::IBStream* state)
 	{
-		if (!state) return kResultFalse;
-		IBStreamer streamer(state, kLittleEndian);
+		if (!state) return Steinberg::kResultFalse;
+		Steinberg::IBStreamer streamer(state, kLittleEndian);
 
 		bool bypass = getParamNormalized(static_cast<int>(PARAM::BYPASS)) > 0.5;
 		streamer.writeBool(bypass);
 
-		return kResultTrue;
+		return Steinberg::kResultTrue;
 	}
 
-	IPlugView* PLUGIN_API MyVSTController::createView(FIDString name)
+	Steinberg::IPlugView* PLUGIN_API MyVSTController::createView(Steinberg::FIDString name)
 	{
-		if (FIDStringsEqual(name, Vst::ViewType::kEditor))
+		if (Steinberg::FIDStringsEqual(name, Steinberg::Vst::ViewType::kEditor))
 		{
 			view = new MyVST3Editor(this, "view", "plugeditor.uidesc");
 			return view;
@@ -107,95 +107,95 @@ namespace MinMax
 		return nullptr;
 	}
 
-	tresult PLUGIN_API MyVSTController::setParamNormalized(Steinberg::Vst::ParamID tag, Steinberg::Vst::ParamValue value)
+	Steinberg::tresult PLUGIN_API MyVSTController::setParamNormalized(Steinberg::Vst::ParamID tag, Steinberg::Vst::ParamValue value)
 	{
-		tresult result = EditControllerEx1::setParamNormalized(tag, value);
+		Steinberg::tresult result = EditControllerEx1::setParamNormalized(tag, value);
 		return result;
 	}
 
-	tresult PLUGIN_API MyVSTController::getMidiControllerAssignment(int32 busIndex, int16 channel, Steinberg::Vst::CtrlNumber midiControllerNumber, Steinberg::Vst::ParamID& value)
+	Steinberg::tresult PLUGIN_API MyVSTController::getMidiControllerAssignment(Steinberg::int32 busIndex, Steinberg::int16 channel, Steinberg::Vst::CtrlNumber midiControllerNumber, Steinberg::Vst::ParamID& value)
 	{
 		switch (midiControllerNumber)
 		{
 		case Steinberg::Vst::kCtrlNRPNSelectLSB:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::CHORD_LSB);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case Steinberg::Vst::kCtrlNRPNSelectMSB:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::CHORD_MSB);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case 20:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRUM_SPEED);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case 21:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRUM_DECAY);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case 22:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRUM_LENGTH);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case Steinberg::Vst::kCtrlReleaseTime:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::BRUSH_TIME);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case 23:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::ARP_LENGTH);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case 24:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRINGS_UP_HIGH);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case 25:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRINGS_DOWN_HIGH);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case 26:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::STRINGS_DOWN_LOW);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case Steinberg::Vst::kCtrlSoundVariation:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::SELECTED_ARTICULATION);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 
 		case 27:
 			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::TRANSPOSE);
-			return kResultTrue;
+			return Steinberg::kResultTrue;
 		}
 
-		return kResultFalse;
+		return Steinberg::kResultFalse;
 	}
 
-	tresult PLUGIN_API MyVSTController::getUnitByBus(Steinberg::Vst::MediaType valueType, Steinberg::Vst::BusDirection dir, int32 busIndex, int32 channel, Steinberg::Vst::UnitID& unitId)
+	Steinberg::tresult PLUGIN_API MyVSTController::getUnitByBus(Steinberg::Vst::MediaType valueType, Steinberg::Vst::BusDirection dir, Steinberg::int32 busIndex, Steinberg::int32 channel, Steinberg::Vst::UnitID& unitId)
 	{
 		if (valueType == Steinberg::Vst::kEvent && dir == Steinberg::Vst::kInput)
 		{
 			if (busIndex == 0 && channel == 0)
 			{
 				unitId = Steinberg::Vst::kRootUnitId;
-				return kResultTrue;
+				return Steinberg::kResultTrue;
 			}
 		}
-		return kResultFalse;
+		return Steinberg::kResultFalse;
 	}
 
-	tresult PLUGIN_API MyVSTController::notify(Steinberg::Vst::IMessage* message)
+	Steinberg::tresult PLUGIN_API MyVSTController::notify(Steinberg::Vst::IMessage* message)
 	{
-		if (!message) return kInvalidArgument;
+		if (!message) return Steinberg::kInvalidArgument;
 
 		const char* value = message->getMessageID();
 
-		if (strcmp(value, MSG_CHORD_CHANGED) != 0) return kResultFalse;
+		if (strcmp(value, MSG_CHORD_CHANGED) != 0) return Steinberg::kResultFalse;
 		Steinberg::Vst::IAttributeList* attr = message->getAttributes();
-		if (!attr) return kResultFalse;
+		if (!attr) return Steinberg::kResultFalse;
 
 		const void* data = nullptr;
-		uint32 size = 0;
+		Steinberg::uint32 size = 0;
 
-		if (attr->getBinary(MSG_CHORD_VALUE, data, size) != kResultTrue) return kResultFalse;
+		if (attr->getBinary(MSG_CHORD_VALUE, data, size) != Steinberg::kResultTrue) return Steinberg::kResultFalse;
 
 		const int* chord = reinterpret_cast<const int*>(data);
 
@@ -205,6 +205,6 @@ namespace MinMax
 		performEdit(static_cast<int>(PARAM::CHORD_NUM), norm);
 		endEdit(static_cast<int>(PARAM::CHORD_NUM));
 
-		return kResultOk;
+		return Steinberg::kResultOk;
 	}
 }

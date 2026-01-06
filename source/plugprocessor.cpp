@@ -67,10 +67,10 @@ namespace MinMax
 	{
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::initialize(FUnknown* context)
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::initialize(FUnknown* context)
 	{
-		tresult result = AudioEffect::initialize(context);
-		if (result != kResultOk) return result;
+		Steinberg::tresult result = AudioEffect::initialize(context);
+		if (result != Steinberg::kResultOk) return result;
 
 		addAudioOutput(STR16("Stereo Out"), Steinberg::Vst::SpeakerArr::kStereo);
 		addEventInput(STR16("Event In"), 1);
@@ -79,15 +79,15 @@ namespace MinMax
 		// init parameter strage
 		prm.initialize(paramTable);
 
-		return kResultOk;
+		return Steinberg::kResultOk;
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::terminate()
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::terminate()
 	{
 		return AudioEffect::terminate();
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::setActive(TBool state)
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::setActive(Steinberg::TBool state)
 	{
 		if (state)
 		{
@@ -100,52 +100,52 @@ namespace MinMax
 		return AudioEffect::setActive(state);
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::setupProcessing(Vst::ProcessSetup& newSetup)
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::setupProcessing(Steinberg::Vst::ProcessSetup& newSetup)
 	{
 		scheduler.setSampleRate(newSetup.sampleRate);
 		return AudioEffect::setupProcessing(newSetup);
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::canProcessSampleSize(int32 symbolicSampleSize)
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::canProcessSampleSize(Steinberg::int32 symbolicSampleSize)
 	{
-		if (symbolicSampleSize == Vst::kSample32) return kResultTrue;
-		return kResultFalse;
+		if (symbolicSampleSize == Steinberg::Vst::kSample32) return Steinberg::kResultTrue;
+		return Steinberg::kResultFalse;
 	}
 
 #pragma region
 
 #pragma region State
 
-	tresult PLUGIN_API MyVSTProcessor::setState(IBStream* state)
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::setState(Steinberg::IBStream* state)
 	{
-		if (!state) return kInvalidArgument;
+		if (!state) return Steinberg::kInvalidArgument;
 
 		for (const auto& def : paramTable)
 		{
 			double plain = 0.0;
-			if (state->read(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
+			if (state->read(&plain, sizeof(double), nullptr) != Steinberg::kResultOk) return Steinberg::kResultFalse;
 			prm.set(def.tag, plain);
 		}
 
-		return kResultOk;
+		return Steinberg::kResultOk;
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::getState(IBStream* state)
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::getState(Steinberg::IBStream* state)
 	{
-		if (!state) return kInvalidArgument;
+		if (!state) return Steinberg::kInvalidArgument;
 
 		for (const auto& def : paramTable)
 		{
 			double plain = prm.get(def.tag);
-			if (state->write(&plain, sizeof(double), nullptr) != kResultOk) return kResultFalse;
+			if (state->write(&plain, sizeof(double), nullptr) != Steinberg::kResultOk) return Steinberg::kResultFalse;
 		}
 
-		return kResultOk;
+		return Steinberg::kResultOk;
 	}
 
 #pragma region process
 
-	tresult PLUGIN_API MyVSTProcessor::process(Vst::ProcessData& data)
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::process(Steinberg::Vst::ProcessData& data)
 	{
 		processData = &data;
 
@@ -171,7 +171,7 @@ namespace MinMax
 
 		processData = nullptr;
 
-		return kResultOk;
+		return Steinberg::kResultOk;
 	}
 
 	void PLUGIN_API MyVSTProcessor::processContext()
@@ -195,20 +195,20 @@ namespace MinMax
 		if (!processData) return;
 		if (processData->inputParameterChanges == NULL) return;
 
-		int32 paramChangeCount = processData->inputParameterChanges->getParameterCount();
+		Steinberg::int32 paramChangeCount = processData->inputParameterChanges->getParameterCount();
 
-		for (int32 i = 0; i < paramChangeCount; i++)
+		for (Steinberg::int32 i = 0; i < paramChangeCount; i++)
 		{
 			Steinberg::Vst::IParamValueQueue* queue = processData->inputParameterChanges->getParameterData(i);
 			if (queue == NULL) continue;
 
 			Steinberg::Vst::ParamID tag = queue->getParameterId();
 
-			int32 valueChangeCount = queue->getPointCount();
-			int32 sampleOffset;
+			Steinberg::int32 valueChangeCount = queue->getPointCount();
+			Steinberg::int32 sampleOffset;
 			Steinberg::Vst::ParamValue value;
 
-			if (!(queue->getPoint(valueChangeCount - 1, sampleOffset, value) == kResultTrue)) continue;
+			if (!(queue->getPoint(valueChangeCount - 1, sampleOffset, value) == Steinberg::kResultTrue)) continue;
 
 			// パラメータ値をキャッシュ
 			prm.setNormalized(tag, value);
@@ -264,8 +264,8 @@ namespace MinMax
 		}
 		if (keySW == 0) return;
 
-		uint64 onTime = scheduler.getCurrentSampleTime() + sampleOffset;
-		uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
+		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + sampleOffset;
+		Steinberg::uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
 
 		for (int i = 0; i < (prm.get(PARAM::CHANNEL_SEPALATE) ? STRING_COUNT : 1); i++)
 		{
@@ -283,9 +283,9 @@ namespace MinMax
 		// イベント処理
 		Steinberg::Vst::Event event;
 
-		for (int32 i = 0; i < processData->inputEvents->getEventCount(); i++)
+		for (Steinberg::int32 i = 0; i < processData->inputEvents->getEventCount(); i++)
 		{
-			if (processData->inputEvents->getEvent(i, event) != kResultOk) continue;
+			if (processData->inputEvents->getEvent(i, event) != Steinberg::kResultOk) continue;
 
 			// ピッチからパラメータＩＤ取得
 			if (event.type == Steinberg::Vst::Event::kNoteOnEvent)
@@ -404,7 +404,7 @@ namespace MinMax
 		auto& strnum = getTargetStrings(fretpos, false, isDown, STRING_COUNT);
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
-		uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
+		Steinberg::uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 
 		float baseVelocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
@@ -412,15 +412,15 @@ namespace MinMax
 		int strcnt = 0;
 
 		// 音価はms指定のパラメータ
-		uint64 offTime = baseOnTime + samplesPerMs * prm.get(PARAM::BRUSH_TIME); // brushTime;
+		Steinberg::uint64 offTime = baseOnTime + samplesPerMs * prm.get(PARAM::BRUSH_TIME); // brushTime;
 
 		for (size_t s = 0; s < strnum.size; s++)
 		{
 			int i = strnum.data[s];
 
-			uint64 offsetSamples = samplesPerMs * strcnt;
+			Steinberg::uint64 offsetSamples = samplesPerMs * strcnt;
 
-			uint64 onTime = baseOnTime + offsetSamples;
+			Steinberg::uint64 onTime = baseOnTime + offsetSamples;
 
 			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + prm.get(PARAM::TRANSPOSE);
 			float velocity = baseVelocity * std::pow(BRUSH_DECAY, strcnt);
@@ -440,7 +440,7 @@ namespace MinMax
 		auto& fretpos = chordMap.getChordVoicing(prm.get(PARAM::CHORD_NUM));
 		auto& strnum = getTargetStrings(fretpos, isAbove, isDown, maxStrings);
 		
-		uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
+		Steinberg::uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
 
@@ -448,8 +448,8 @@ namespace MinMax
 
 		// 音価はビート数指定のパラメータ
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
-		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * prm.get(PARAM::STRUM_LENGTH)));
-		uint64 offTime = baseOnTime + lengthSamples;
+		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(PARAM::STRUM_LENGTH)));
+		Steinberg::uint64 offTime = baseOnTime + lengthSamples;
 
 		// 発音弦のカウンタ
 		int strcnt = 0;
@@ -463,7 +463,7 @@ namespace MinMax
 				? (prm.get(PARAM::STRUM_SPEED) / double(STRING_COUNT)) * strcnt
 				: 0.0;
 
-			uint64 onTime = baseOnTime + static_cast<uint64>(delayMs * samplesPerMs);
+			Steinberg::uint64 onTime = baseOnTime + static_cast<Steinberg::uint64>(delayMs * samplesPerMs);
 
 			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + prm.get(PARAM::TRANSPOSE);
 			float velocity = baseVelocity * std::pow(prm.get(PARAM::STRUM_DECAY) / 100.0f, strcnt);
@@ -493,9 +493,9 @@ namespace MinMax
 		float velocity = std::clamp(event.noteOn.velocity, 0.01f, 1.0f);
 
 		// 音価は固定
-		uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
+		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 
-		uint64 offTime = onTime + static_cast<uint64>(NOTE_LENGTH * scheduler.getSamplesPerMs());
+		Steinberg::uint64 offTime = onTime + static_cast<Steinberg::uint64>(NOTE_LENGTH * scheduler.getSamplesPerMs());
 
 		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, prm.get(PARAM::MUTE_CHANNEL) - 1);
 	}
@@ -513,11 +513,11 @@ namespace MinMax
 		}
 
 		// 音価はビート数指定のパラメータ
-		uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
+		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
-		uint64 lengthSamples = static_cast<uint64>(std::lround(samplesPerBeat * prm.get(PARAM::ARP_LENGTH)));
-		uint64 offTime = onTime + lengthSamples;
+		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(PARAM::ARP_LENGTH)));
+		Steinberg::uint64 offTime = onTime + lengthSamples;
 
 		int pitch = chordMap.getTunings().data[stringindex] + fretpos.data[stringindex] + prm.get(PARAM::TRANSPOSE);
 		float velocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
@@ -570,8 +570,8 @@ namespace MinMax
 
 		if (pitch == 0) return;
 
-		uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
-		uint64 offTime = onTime + static_cast<uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
+		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
+		Steinberg::uint64 offTime = onTime + static_cast<Steinberg::uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
 		float velocity = prm.get(PARAM::FNOISE_VELOCITY) / 127;
 
 		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, velocity, prm.get(PARAM::FNOISE_CHANNEL) - 1);
@@ -649,7 +649,7 @@ namespace MinMax
 
 	void MyVSTProcessor::notifyChordNumberChanged(int chordNumber)
 	{
-		FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();
+		Steinberg::FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();
 		if (!msg) return;
 
 		msg->setMessageID(MSG_CHORD_CHANGED);
@@ -657,7 +657,7 @@ namespace MinMax
 		sendMessage(msg);
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::notify(Steinberg::Vst::IMessage* message)
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::notify(Steinberg::Vst::IMessage* message)
 	{
 		auto msgID = message->getMessageID();
 
@@ -666,28 +666,28 @@ namespace MinMax
 			return notifyStrumTrigger(message);
 		}
 
-		return kResultFalse;
+		return Steinberg::kResultFalse;
 	}
 
-	tresult PLUGIN_API MyVSTProcessor::notifyStrumTrigger(Steinberg::Vst::IMessage* message)
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::notifyStrumTrigger(Steinberg::Vst::IMessage* message)
 	{
 		Steinberg::Vst::Event event{};
 		const void* msgData;
-		uint32 msgSize;
+		Steinberg::uint32 msgSize;
 
 		const auto attr = message->getAttributes();
-		if (attr == nullptr)return kResultFalse;
+		if (attr == nullptr) return Steinberg::kResultFalse;
 
-		if (!(attr->getBinary(MSG_SOUND_CHECK, msgData, msgSize) == kResultTrue && msgSize == sizeof(CNoteMsg)))
+		if (!(attr->getBinary(MSG_SOUND_CHECK, msgData, msgSize) == Steinberg::kResultTrue && msgSize == sizeof(CNoteMsg)))
 		{
-			return kResultFalse;
+			return Steinberg::kResultFalse;
 		}
 
 		const auto note = reinterpret_cast<const CNoteMsg*>(msgData);
 
 		int pitch = prm.get(note->tag);
 
-		if (pitch <= 0) return kResultOk;
+		if (pitch <= 0) return Steinberg::kResultOk;
 
 		event.flags = Steinberg::Vst::Event::EventFlags::kIsLive;
 		event.type = note->isOn ? Steinberg::Vst::Event::EventTypes::kNoteOnEvent : Steinberg::Vst::Event::EventTypes::kNoteOffEvent;
@@ -708,41 +708,41 @@ namespace MinMax
 		// プラグインプロセッサのノートバッファに追加
 		InnerEvents.push(event);
 
-		return kResultOk;
+		return Steinberg::kResultOk;
 	}
 
-	void PLUGIN_API MyVSTProcessor::processAudio(Vst::ProcessData& data)
+	void PLUGIN_API MyVSTProcessor::processAudio(Steinberg::Vst::ProcessData& data)
 	{
 		if (data.numSamples > 0)
 		{
-			int32 minBus = (std::min)(data.numInputs, data.numOutputs);
+			Steinberg::int32 minBus = (std::min)(data.numInputs, data.numOutputs);
 
-			for (int32 i = 0; i < minBus; i++)
+			for (Steinberg::int32 i = 0; i < minBus; i++)
 			{
-				int32 minChan = (std::min)(data.inputs[i].numChannels, data.outputs[i].numChannels);
-				for (int32 c = 0; c < minChan; c++)
+				Steinberg::int32 minChan = (std::min)(data.inputs[i].numChannels, data.outputs[i].numChannels);
+				for (Steinberg::int32 c = 0; c < minChan; c++)
 				{
 					if (data.outputs[i].channelBuffers32[c] != data.inputs[i].channelBuffers32[c])
 					{
-						memcpy(data.outputs[i].channelBuffers32[c], data.inputs[i].channelBuffers32[c], data.numSamples * sizeof(Vst::Sample32));
+						memcpy(data.outputs[i].channelBuffers32[c], data.inputs[i].channelBuffers32[c], data.numSamples * sizeof(Steinberg::Vst::Sample32));
 					}
 				}
 				data.outputs[i].silenceFlags = data.inputs[i].silenceFlags;
 
-				for (int32 c = minChan; c < data.outputs[i].numChannels; c++)
+				for (Steinberg::int32 c = minChan; c < data.outputs[i].numChannels; c++)
 				{
-					memset(data.outputs[i].channelBuffers32[c], 0, data.numSamples * sizeof(Vst::Sample32));
-					data.outputs[i].silenceFlags |= ((uint64)1 << c);
+					memset(data.outputs[i].channelBuffers32[c], 0, data.numSamples * sizeof(Steinberg::Vst::Sample32));
+					data.outputs[i].silenceFlags |= ((Steinberg::uint64)1 << c);
 				}
 			}
 
-			for (int32 i = minBus; i < data.numOutputs; i++)
+			for (Steinberg::int32 i = minBus; i < data.numOutputs; i++)
 			{
-				for (int32 c = 0; c < data.outputs[i].numChannels; c++)
+				for (Steinberg::int32 c = 0; c < data.outputs[i].numChannels; c++)
 				{
-					memset(data.outputs[i].channelBuffers32[c], 0, data.numSamples * sizeof(Vst::Sample32));
+					memset(data.outputs[i].channelBuffers32[c], 0, data.numSamples * sizeof(Steinberg::Vst::Sample32));
 				}
-				data.outputs[i].silenceFlags = ((uint64)1 << data.outputs[i].numChannels) - 1;
+				data.outputs[i].silenceFlags = ((Steinberg::uint64)1 << data.outputs[i].numChannels) - 1;
 			}
 		}
 	}
