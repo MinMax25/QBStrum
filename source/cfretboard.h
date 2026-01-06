@@ -20,7 +20,6 @@
 
 namespace MinMax
 {
-
     // ギターフレット表示コントロール
     class CFretBoard
         : public VSTGUI::CControl

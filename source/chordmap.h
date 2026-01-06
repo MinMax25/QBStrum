@@ -21,7 +21,6 @@
 
 namespace MinMax
 {
-    using std::string;
     using std::vector;
 
     inline constexpr int STRING_COUNT = 6;
@@ -56,7 +55,7 @@ namespace MinMax
         public:
 
             int Id = 0;
-            string Name;
+            std::string Name;
             vector<int> Frets;
 
             bool Deserialize(const rapidjson::Value& v)
@@ -89,7 +88,7 @@ namespace MinMax
         public:
 
             int Id = 0;
-            string Name;
+            std::string Name;
             vector<Voicing> Voicings;
 
             bool Deserialize(const rapidjson::Value& v)
@@ -124,7 +123,7 @@ namespace MinMax
         public:
 
             int Id = 0;
-            string Name;
+            std::string Name;
             vector<ParamChordType> ChordTypes;
 
             bool Deserialize(const rapidjson::Value& v)
@@ -232,14 +231,14 @@ namespace MinMax
 
         int getRootCount() const { return (int)ChordRoots.size(); }
 
-        const string& getRootName(int r) const { return ChordRoots[r].Name; }
+        const std::string& getRootName(int r) const { return ChordRoots[r].Name; }
 
         int getTypeCount(int r) const
         {
             return (int)ChordRoots[r].ChordTypes.size();
         }
 
-        const string& getTypeName(int r, int t) const
+        const std::string& getTypeName(int r, int t) const
         {
             return ChordRoots[r].ChordTypes[t].Name;
         }
@@ -249,7 +248,7 @@ namespace MinMax
             return (int)ChordRoots[r].ChordTypes[t].Voicings.size();
         }
 
-        const string& getVoicingName(int r, int t, int v) const
+        const std::string& getVoicingName(int r, int t, int v) const
         {
             return ChordRoots[r].ChordTypes[t].Voicings[v].Name;
         }
@@ -407,7 +406,7 @@ namespace MinMax
     protected:
         std::filesystem::path presetPath;
 
-        string Name;
+        std::string Name;
 
         StringSet Tunings{};
 
@@ -518,7 +517,7 @@ namespace MinMax
             map.Deserialize(doc);
             map.buildFlatTable();
 
-            string presetFileName = path.filename().string();
+            std::string presetFileName = path.filename().string();
             size_t dot = presetFileName.find_last_of('.');
             map.Name = presetFileName.substr(0, dot);
 
