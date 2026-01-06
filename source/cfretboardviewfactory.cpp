@@ -86,7 +86,7 @@ namespace MinMax
 
         void initChordSelecter()
         {
-            chordSelecter = new CChordSelecter({ 365,1,515,19 }, [this](CChordSelecter*, int v) { onChordNumberChanged(v); });
+            chordSelecter = new CChordSelecter({ 365,1,515,19 }, [this](CChordSelecter*, int v) { onSelectedChordChanged(v); });
             addView(chordSelecter);
         }
 
@@ -106,15 +106,20 @@ namespace MinMax
                     editor, PARAM::CHORD_NUM,
                     [this](CChordListner*, int v)
                     {
-                        onChordNumberChanged(v);
+                        onParameterChordChanged(v);
                     }
                 );
         }
 
-        void onChordNumberChanged(int value)
+        void onParameterChordChanged(int value)
         {
             fretBoard->setPressedFrets(getVoicing(value));
             chordSelecter->setChordNumber(value);
+        }
+
+        void onSelectedChordChanged(int value)
+        {
+
         }
 
         enum class MenuType { File, Edit };
