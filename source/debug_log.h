@@ -7,6 +7,7 @@
 #include <windows.h>
 #include <cstdarg>
 #include <cstdio>
+#include <corecrt.h>
 
 inline void DLogWrite(const char* fmt, ...)
 {
