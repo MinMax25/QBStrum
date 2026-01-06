@@ -7,6 +7,7 @@
 #include <array>
 #include <cmath>
 #include <cstdlib>
+#include <filesystem>
 #include <pluginterfaces/base/fplatform.h>
 #include <pluginterfaces/base/fstrdefs.h>
 #include <pluginterfaces/base/ftypes.h>
@@ -19,9 +20,9 @@
 #include <pluginterfaces/vst/vstspeaker.h>
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vstaudioeffect.h>
+#include <string>
 #include <string.h>
 #include <vector>
-#include <base/source/fstreamer.h>
 
 #include "chordmap.h"
 #include "cnotemsg.h"
@@ -31,6 +32,7 @@
 #include "plugcids.h"
 #include "plugdefine.h"
 #include "plugprocessor.h"
+#include "stateio.h"
 
 namespace MinMax
 {
@@ -135,27 +137,20 @@ namespace MinMax
 
 	Steinberg::tresult PLUGIN_API MyVSTProcessor::setState(Steinberg::IBStream* state)
 	{
-		if (!state) return Steinberg::kInvalidArgument;
-		Steinberg::IBStreamer streamer(state, kLittleEndian);
+		StateIO io(state);
 
 		for (const auto& def : paramTable)
 		{
 			double plain = 0.0;
-			if (!streamer.readDouble(plain)) return Steinberg::kResultFalse;
+			if (!io.readDouble(plain)) return Steinberg::kResultFalse;
 			prm.set(def.tag, plain);
 		}
 
-		std::int32_t len = 0;
-		if (!streamer.readInt32(len)) return Steinberg::kResultOk;
-
-		if (len > 0 && len < 4096)
+		std::string path{};
+		if (io.readString(path))
 		{
-			std::string path(len, '\0');
-			if (streamer.readRaw(path.data(), len))
-			{
-				std::filesystem::path p(path);
-				ChordMap::Instance().initFromPreset(path);
-			}
+			std::filesystem::path p(path);
+			ChordMap::Instance().initFromPreset(path);
 		}
 
 		return Steinberg::kResultOk;
@@ -163,25 +158,16 @@ namespace MinMax
 
 	Steinberg::tresult PLUGIN_API MyVSTProcessor::getState(Steinberg::IBStream* state)
 	{
-		if (!state) return Steinberg::kInvalidArgument;
-		Steinberg::IBStreamer streamer(state, kLittleEndian);
+		StateIO io(state);
 
 		for (const auto& def : paramTable)
 		{
 			double plain = prm.get(def.tag);
-			if (!streamer.writeDouble(plain)) return Steinberg::kResultFalse;
+			if (!io.writeDouble(plain)) return Steinberg::kResultFalse;
 		}
 
 		const std::string path = ChordMap::Instance().getPresetPath().u8string();
-
-		const std::int32_t len = static_cast<Steinberg::uint32>(path.size());
-
-		if (!streamer.writeInt32(len)) return Steinberg::kResultFalse;
-
-		if (len > 0)
-		{
-			if (!streamer.writeRaw(path.data(), len)) return Steinberg::kResultFalse;
-		}
+		if (!io.writeString(path)) return Steinberg::kResultFalse;
 
 		return Steinberg::kResultOk;
 	}
