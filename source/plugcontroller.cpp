@@ -4,11 +4,21 @@
 #pragma once
 
 #include <base/source/fstreamer.h>
+#include <pluginterfaces/base/fplatform.h>
+#include <pluginterfaces/base/fstrdefs.h>
+#include <pluginterfaces/base/ftypes.h>
+#include <pluginterfaces/base/funknown.h>
 #include <pluginterfaces/base/ibstream.h>
+#include <pluginterfaces/gui/iplugview.h>
+#include <pluginterfaces/vst/ivstattributes.h>
 #include <pluginterfaces/vst/ivstcomponent.h>
+#include <pluginterfaces/vst/ivsteditcontroller.h>
+#include <pluginterfaces/vst/ivstmessage.h>
 #include <pluginterfaces/vst/ivstmidicontrollers.h>
-#include <public.sdk/source/vst/utility/stringconvert.h>
-#include <vstgui/plugin-bindings/vst3editor.h>
+#include <pluginterfaces/vst/ivstunits.h>
+#include <pluginterfaces/vst/vsttypes.h>
+#include <public.sdk/source/vst/vsteditcontroller.h>
+#include <string.h>
 
 #include "myparameters.h"
 #include "myvst3editor.h"
