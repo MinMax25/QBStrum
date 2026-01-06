@@ -27,37 +27,36 @@
 namespace ParameterFramework
 {
     using namespace Steinberg;
-    using namespace Steinberg::Vst;
 
 #pragma region Custom Parameter
 
-    class ExpParameter : public Parameter
+    class ExpParameter : public Steinberg::Vst::Parameter
     {
     private:
-        ParamValue min;
-        ParamValue max;
+        Steinberg::Vst::ParamValue min;
+        Steinberg::Vst::ParamValue max;
 
     public:
-        ExpParameter(const TChar* title, ParamID tag, const TChar* units,
-            ParamValue minPlain, ParamValue maxPlain,
-            int32 flags, UnitID unitID)
+        ExpParameter(const Steinberg::Vst::TChar* title, Steinberg::Vst::ParamID tag, const Steinberg::Vst::TChar* units,
+            Steinberg::Vst::ParamValue minPlain, Steinberg::Vst::ParamValue maxPlain,
+            int32 flags, Steinberg::Vst::UnitID unitID)
             : Parameter(title, tag, units, 0.0, 0, flags, unitID),
             min(minPlain), max(maxPlain)
         {
             setPrecision(0);
         }
 
-        void toString(ParamValue valueNormalized, String128 string) const override
+        void toString(Steinberg::Vst::ParamValue valueNormalized, Steinberg::Vst::String128 string) const override
         {
             UString128 wrapper;
             wrapper.printFloat(toPlain(valueNormalized), precision);
             wrapper.copyTo(string, 128);
         }
 
-        bool fromString(const TChar* string, ParamValue& valueNormalized) const override
+        bool fromString(const Steinberg::Vst::TChar* string, Steinberg::Vst::ParamValue& valueNormalized) const override
         {
-            UString wrapper((TChar*)string, strlen16(string));
-            ParamValue plainValue;
+            UString wrapper((Steinberg::Vst::TChar*)string, strlen16(string));
+            Steinberg::Vst::ParamValue plainValue;
             if (wrapper.scanFloat(plainValue))
             {
                 valueNormalized = toNormalized(plainValue);
@@ -66,17 +65,17 @@ namespace ParameterFramework
             return false;
         }
 
-        ParamValue toNormalized(ParamValue plainValue) const override
+        Steinberg::Vst::ParamValue toNormalized(Steinberg::Vst::ParamValue plainValue) const override
         {
             assert(max != min && "ExpParameter: max and min cannot be equal");
             if (max == min) return 0.0; // 安全回避
 
-            ParamValue norm = (plainValue - min) / (max - min);
+            Steinberg::Vst::ParamValue norm = (plainValue - min) / (max - min);
             norm = std::clamp(norm, 0.0, 1.0);
             return std::pow(norm, 1.0 / 3.0);
         }
 
-        ParamValue toPlain(ParamValue valueNormalized) const override
+        Steinberg::Vst::ParamValue toPlain(Steinberg::Vst::ParamValue valueNormalized) const override
         {
             assert(max != min && "ExpParameter: max and min cannot be equal");
             if (max == min) return 0.0; // 安全回避
@@ -107,9 +106,9 @@ namespace ParameterFramework
 
     enum FLAG
     {
-        SYS_BYPASS = ParameterInfo::kIsBypass | ParameterInfo::kCanAutomate,
-        AUTOMATE = ParameterInfo::kCanAutomate,
-        HIDDEN = ParameterInfo::kIsHidden,
+        SYS_BYPASS = Steinberg::Vst::ParameterInfo::kIsBypass | Steinberg::Vst::ParameterInfo::kCanAutomate,
+        AUTOMATE = Steinberg::Vst::ParameterInfo::kCanAutomate,
+        HIDDEN = Steinberg::Vst::ParameterInfo::kIsHidden,
     };
 
 #pragma endregion
@@ -137,7 +136,7 @@ namespace ParameterFramework
 
     struct ParamDef
     {
-        ParamID tag;
+        Steinberg::Vst::ParamID tag;
         String name;
         String units;
         VALUE valueType;
@@ -147,7 +146,7 @@ namespace ParameterFramework
 
         FLAG flags;
         
-        UnitID unitID;
+        Steinberg::Vst::UnitID unitID;
 
         double minValue = 0.0;
         double maxValue = 1.0;
@@ -171,7 +170,7 @@ namespace ParameterFramework
 
         void setOptionProvider(const IOptionProvider* p) { optionProvider = p; }
 
-        std::unique_ptr<Parameter> createParameter(const ParamDef& def)
+        std::unique_ptr<Steinberg::Vst::Parameter> createParameter(const ParamDef& def)
         {
             if (!rangeResolver || !optionProvider) return nullptr;
 
@@ -199,12 +198,12 @@ namespace ParameterFramework
                 defaultValue = min;
             }
 
-            std::unique_ptr<Parameter> param;
+            std::unique_ptr<Steinberg::Vst::Parameter> param;
 
             if (hasOption && def.valueType != VALUE::Bool)
             {   // Bool は enumerated を想定しない
                 auto p =
-                    std::make_unique<StringListParameter>(
+                    std::make_unique<Steinberg::Vst::StringListParameter>(
                         def.name,
                         def.tag,
                         def.units,
@@ -221,7 +220,7 @@ namespace ParameterFramework
 
                 for (auto& s : options)
                 {
-                    String128 u16str;
+                    Steinberg::Vst::String128 u16str;
 #pragma warning(disable : 4996)
                     VST3::StringConvert::convert(s, u16str);    // 非推奨となっているがVST SDKの対応待ち
                     p->appendString(u16str);
@@ -229,9 +228,9 @@ namespace ParameterFramework
 
                 int32 index = std::clamp(def.defaultIndex, 0, static_cast<int32>(options.size() - 1));
 
-                ParamValue norm =
+                Steinberg::Vst::ParamValue norm =
                     options.size() > 1
-                    ? static_cast<ParamValue>(index) / static_cast<ParamValue>(options.size() - 1)
+                    ? static_cast<Steinberg::Vst::ParamValue>(index) / static_cast<Steinberg::Vst::ParamValue>(options.size() - 1)
                     : 0.0;
 
                 p->setNormalized(norm);
@@ -245,7 +244,7 @@ namespace ParameterFramework
                 case VALUE::Bool:
                 {
                     auto p =
-                        std::make_unique<Parameter>
+                        std::make_unique<Steinberg::Vst::Parameter>
                         (
                             def.name,
                             def.tag,
@@ -265,7 +264,7 @@ namespace ParameterFramework
                 case VALUE::Int:
                 {
                     auto p =
-                        std::make_unique<RangeParameter>(
+                        std::make_unique<Steinberg::Vst::RangeParameter>(
                             def.name,
                             def.tag,
                             def.units,
@@ -285,7 +284,7 @@ namespace ParameterFramework
                     if (def.scaleType == SCALE::Linear)
                     {
                         auto p =
-                            std::make_unique<RangeParameter>(
+                            std::make_unique<Steinberg::Vst::RangeParameter>(
                                 def.name,
                                 def.tag,
                                 def.units,
@@ -357,7 +356,7 @@ namespace ParameterFramework
             for (const auto& def : paramTable)
             {
                 // 正規化処理はパラメータメソッドを利用
-                std::unique_ptr<Parameter> p = ParamHelper::get().createParameter(def);
+                std::unique_ptr<Steinberg::Vst::Parameter> p = ParamHelper::get().createParameter(def);
                 if (!p) continue;
                 paramInstances.emplace(def.tag, std::move(p));
 
@@ -370,7 +369,7 @@ namespace ParameterFramework
             }
         }
 
-        double get(ParamID id) const
+        double get(Steinberg::Vst::ParamID id) const
         {
             auto it = storage.find(id);
             if (it == storage.end()) return 0.0;
@@ -381,7 +380,7 @@ namespace ParameterFramework
             return p->toPlain(it->second.current);
         }
 
-        double getPrevious(ParamID id) const
+        double getPrevious(Steinberg::Vst::ParamID id) const
         {
             auto it = storage.find(id);
             if (it == storage.end()) return 0.0;
@@ -392,13 +391,13 @@ namespace ParameterFramework
             return p->toPlain(it->second.previous);
         }
 
-        void set(ParamID id, double val)
+        void set(Steinberg::Vst::ParamID id, double val)
         {
-            ParamValue normalized = getNormalized(id, val);
+            Steinberg::Vst::ParamValue normalized = getNormalized(id, val);
             setNormalized(id, normalized);
         }
 
-        void setNormalized(ParamID id, ParamValue val)
+        void setNormalized(Steinberg::Vst::ParamID id, Steinberg::Vst::ParamValue val)
         {
             auto it = storage.find(id);
             if (it == storage.end()) return;
@@ -413,20 +412,20 @@ namespace ParameterFramework
             }
         }
 
-        ParamValue getNormalized(ParamID id, double plain) const
+        Steinberg::Vst::ParamValue getNormalized(Steinberg::Vst::ParamID id, double plain) const
         {
             auto* p = findParameter(id);
             if (!p) return 0.0;
             return p->toNormalized(plain);
         }
 
-        bool isChanged(ParamID id) const
+        bool isChanged(Steinberg::Vst::ParamID id) const
         {
             auto it = storage.find(id);
             return (it != storage.end()) ? it->second.changed : false;
         }
 
-        void clearChangedFlags(ParamID id)
+        void clearChangedFlags(Steinberg::Vst::ParamID id)
         {
             auto it = storage.find(id);
             if (it == storage.end()) return;
@@ -437,15 +436,15 @@ namespace ParameterFramework
 
         struct ParamEntry
         {
-            ParamValue current = 0.0;
-            ParamValue previous = 0.0;
+            Steinberg::Vst::ParamValue current = 0.0;
+            Steinberg::Vst::ParamValue previous = 0.0;
             bool changed = false;
         };
 
-        std::unordered_map<ParamID, ParamEntry> storage;
-        std::unordered_map<ParamID, std::unique_ptr<Parameter>> paramInstances;
+        std::unordered_map<Steinberg::Vst::ParamID, ParamEntry> storage;
+        std::unordered_map<Steinberg::Vst::ParamID, std::unique_ptr<Steinberg::Vst::Parameter>> paramInstances;
 
-        Parameter* findParameter(ParamID id) const
+        Steinberg::Vst::Parameter* findParameter(Steinberg::Vst::ParamID id) const
         {
             auto it = paramInstances.find(id);
             return it != paramInstances.end() ? it->second.get() : nullptr;
