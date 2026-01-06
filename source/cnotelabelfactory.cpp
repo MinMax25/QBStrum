@@ -11,22 +11,20 @@
 
 namespace MinMax
 {
-    using namespace VSTGUI;
-
     class CNoteLabelFactory
-        : public ViewCreatorAdapter
+        : public VSTGUI::ViewCreatorAdapter
     {
     public:
 
-        CNoteLabelFactory() { UIViewFactory::registerViewCreator(*this); }
+        CNoteLabelFactory() { VSTGUI::UIViewFactory::registerViewCreator(*this); }
 
-        IdStringPtr getViewName() const override { return "UI:Note Label"; }
+        VSTGUI::IdStringPtr getViewName() const override { return "UI:Note Label"; }
 
-        IdStringPtr getBaseViewName() const override { return UIViewCreator::kCTextLabel; }
+        VSTGUI::IdStringPtr getBaseViewName() const override { return VSTGUI::UIViewCreator::kCTextLabel; }
 
-        CView* create(const UIAttributes& attributes, const IUIDescription* description) const override
+        VSTGUI::CView* create(const VSTGUI::UIAttributes& attributes, const VSTGUI::IUIDescription* description) const override
         {
-            return new CNoteLabel(CRect(CPoint(0, 0), CPoint(40, 15)));
+            return new CNoteLabel(VSTGUI::CRect(VSTGUI::CPoint(0, 0), VSTGUI::CPoint(40, 15)));
         }
     };
 
