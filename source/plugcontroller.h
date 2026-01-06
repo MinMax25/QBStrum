@@ -4,6 +4,7 @@
 #pragma once
 
 #include <base/source/fobject.h>
+#include <filesystem>
 #include <pluginterfaces/base/fplatform.h>
 #include <pluginterfaces/base/ftypes.h>
 #include <pluginterfaces/base/funknown.h>
@@ -13,6 +14,7 @@
 #include <pluginterfaces/vst/ivstmessage.h>
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
+
 
 #include "myvst3editor.h"
 
@@ -49,6 +51,14 @@ namespace MinMax
 		Steinberg::tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
 
 		MyVST3Editor* view = nullptr;
+
+		std::filesystem::path currentPresetPath;
+
+		void setCurrentPresetPath(const std::filesystem::path& path)
+		{
+			currentPresetPath = path;
+			setDirty(true);
+		}
 
 		// --------------
 

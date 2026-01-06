@@ -29,7 +29,7 @@
 #include "chordmap.h"
 #include "cmenubutton.h"
 #include "files.h"
-#include "plugdefine.h"
+#include "plugcontroller.h"
 
 namespace MinMax
 {
@@ -188,6 +188,10 @@ namespace MinMax
                         try
                         {
                             ChordMap::Instance().initFromPreset(f);
+                            if (auto* controller = dynamic_cast<MyVSTController*>(editor->getController()))
+                            {
+                                controller->setCurrentPresetPath(std::filesystem::path(f));
+                            }
                         }
                         catch (...)
                         {
