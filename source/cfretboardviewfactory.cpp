@@ -186,7 +186,11 @@ namespace MinMax
                     {
                         try
                         {
-                            ChordMap::Instance().initFromPreset(f);
+                            auto& cm = ChordMap::Instance();
+                            cm.initFromPreset(f);
+                            auto cn = chordSelecter->getCurrentChordNumber();
+                            auto& pf = cm.getChordVoicing(cn);
+                            fretBoard->setPressedFrets(pf);
                         }
                         catch (...)
                         {
@@ -198,7 +202,28 @@ namespace MinMax
             }
             return menu;
         }
-  
+
+        void saveChordMap()
+        {
+            if (!fileButton) return;
+            showDialog(
+                fileButton,
+                VSTGUI::CNewFileSelector::kSelectSaveFile,
+                [this](const std::string& path)
+                {
+                    try
+                    {
+                        ChordMap::Instance().saveToFile(path);
+
+                    }
+                    catch (...)
+                    {
+                        showError("Failed to save preset.");
+                    }
+                }
+            );
+        }
+
         void enterEditMode()
         {
             canEdit = true;
@@ -233,26 +258,6 @@ namespace MinMax
         StringSet getVoicing(int value) const 
         {
             return ChordMap::Instance().getChordVoicing(value);
-        }
-
-        void saveChordMap()
-        {
-            if (!fileButton) return;
-            showDialog(
-                fileButton,
-                VSTGUI::CNewFileSelector::kSelectSaveFile,
-                [this](const std::string& path)
-                {
-                    try 
-                    { 
-                        ChordMap::Instance().saveToFile(path);
-                    }
-                    catch (...) 
-                    { 
-                        showError("Failed to save preset.");
-                    }
-                }
-            );
         }
 
         void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(const std::string&)> fileSelected)
