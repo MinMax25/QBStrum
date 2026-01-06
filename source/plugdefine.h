@@ -1,7 +1,6 @@
 ﻿#pragma once
 
 #include <array>
-//#include <pluginterfaces/vst/ivstevents.h>
 #include <pluginterfaces/vst/vsttypes.h>
 
 namespace MinMax
