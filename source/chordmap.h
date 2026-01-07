@@ -43,11 +43,6 @@ namespace MinMax
             int root = 0;
             int valueType = 0;
             int pos = 0;
-
-            std::string rootName{};
-            std::string typeName{};
-            std::string posName{};
-
             std::string displayName{};
         };
 
@@ -164,7 +159,8 @@ namespace MinMax
 
         void initFromPreset(const std::filesystem::path& path)
         {
-            Instance() = LoadPreset(path);
+            auto loaded = LoadPreset(path);
+            Instance() = std::move(loaded);
         }
 
         StringSet getChordVoicing(int chordNumber) const
@@ -187,7 +183,7 @@ namespace MinMax
             return result;
         }
 
-        StringSet getTunings()
+        StringSet getTunings() const
         {
             //
             // 開放弦のピッチを取得する
@@ -195,7 +191,7 @@ namespace MinMax
             return Tunings;
         }
 
-        float getPositionAverage(int chordNumber)
+        float getPositionAverage(int chordNumber) const
         {
             //
             // コードボイシングの平均フレット位置を取得する
@@ -203,14 +199,16 @@ namespace MinMax
             auto& v = getChordVoicing(chordNumber);
 
             int sum = 0;
+            int count = 0;
 
             for (size_t i = 0; i < v.size; i++)
             {
                 if (v.data[i] < 0) continue;
                 sum += v.data[i];
+                ++count;
             }
 
-            return sum / float(v.size);
+            return count > 0 ? sum / float(count) : 0.0f;
         }
 
         const FlatChordEntry& getByIndex(int index) const
@@ -218,7 +216,7 @@ namespace MinMax
             //
             // インデックス指定によるコード情報を取得する
 
-            return flatChords.at((index < 0 || index > getFlatCount()) ? 0 : index);
+            return flatChords.at((index < 0 || index >= getFlatCount()) ? 0 : index);
         }
 
         int getFlatCount() const
@@ -257,7 +255,7 @@ namespace MinMax
         {
             StringSet result{};
 
-            if (chordNumber > getFlatCount())
+            if (chordNumber < 0 || chordNumber >= getFlatCount())
             {
                 result.size = STRING_COUNT;
                 for (size_t i = 0; i < result.size; i++)
@@ -451,9 +449,6 @@ namespace MinMax
                         e.root = r;
                         e.valueType = t;
                         e.pos = p;
-                        e.rootName = ChordRoots[r].Name;
-                        e.typeName = ChordRoots[r].ChordTypes[t].Name;
-                        e.posName = ChordRoots[r].ChordTypes[t].Voicings[p].Name;
                         e.displayName =
                             ChordRoots[r].Name + " " + types.Name + " (" + std::to_string(p + 1) + ")";
 
@@ -468,6 +463,10 @@ namespace MinMax
         {
             if (!v.IsObject()) return false;
 
+            ChordRoots.clear();
+            flatChords.clear();
+            indexTable.clear();
+
             if (v.HasMember("Tunings") && v["Tunings"].IsArray())
             {
                 Tunings.size = STRING_COUNT;
@@ -475,7 +474,7 @@ namespace MinMax
                 size_t i = 0;
                 for (auto& item : v["Tunings"].GetArray())
                 {
-                    if (i > Tunings.size) break;
+                    if (i >= Tunings.size) break;
                     Tunings.data[i++] = item.GetInt();
                 }
             }

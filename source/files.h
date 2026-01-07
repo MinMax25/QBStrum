@@ -27,9 +27,13 @@ namespace MinMax
         // プリセットパスを取得する
         inline static std::filesystem::path getPresetPath()
         {
-            const char* home = getenv(STR_USERPROFILE);
-            if (!home)
-                return std::filesystem::current_path();
+            const char* home =
+#ifdef _WIN32
+                getenv("USERPROFILE");
+#else
+                getenv("HOME");
+#endif
+            if (!home) return std::filesystem::current_path();
 
             return std::filesystem::path(home).append(PRESET_ROOT).make_preferred();
         }
@@ -47,13 +51,16 @@ namespace MinMax
         // プリセットファイルのパス一覧を取得する 
         inline static Steinberg::tresult getPresetFiles(std::vector<std::string>& file_names)
         {
+            auto path = getPresetPath();
+            if (!std::filesystem::exists(path)) return Steinberg::kResultFalse;
+
             std::filesystem::directory_iterator iter(getPresetPath()), end;
             std::error_code err;
 
             for (; iter != end && !err; iter.increment(err))
             {
                 const std::filesystem::directory_entry entry = *iter;
-                if (std::filesystem::path(entry.path().string()).extension() != ".json") continue;
+                if (entry.path().extension() != ".json") continue;
                 file_names.push_back(entry.path().string());
             }
 
