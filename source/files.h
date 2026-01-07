@@ -20,9 +20,9 @@ namespace MinMax
         inline static const char* STR_USERPROFILE = "USERPROFILE";
         inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum";
 
-        inline static const std::string TITLE = "QBStrum";
-        inline static const std::string FILTER = "Chord Preset(.json)";
-        inline static const std::string FILE_EXT = "json";
+        inline static const VSTGUI::UTF8String TITLE = "QBStrum";
+        inline static const VSTGUI::UTF8String FILTER = "Chord Preset(.json)";
+        inline static const VSTGUI::UTF8String FILE_EXT = "json";
 
         // プリセットパスを取得する
         inline static std::filesystem::path getPresetPath()

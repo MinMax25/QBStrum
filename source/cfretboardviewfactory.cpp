@@ -4,12 +4,15 @@
 #include <filesystem>
 #include <functional>
 #include <pluginterfaces/base/funknown.h>
+#include <pluginterfaces/vst/vsttypes.h>
 #include <string>
 #include <vector>
 #include <vstgui/lib/ccolor.h>
 #include <vstgui/lib/cfileselector.h>
+#include <vstgui/lib/cfont.h>
 #include <vstgui/lib/controls/ccontrol.h>
 #include <vstgui/lib/controls/coptionmenu.h>
+#include <vstgui/lib/controls/ctextlabel.h>
 #include <vstgui/lib/cpoint.h>
 #include <vstgui/lib/crect.h>
 #include <vstgui/lib/cstring.h>
@@ -29,6 +32,7 @@
 #include "chordmap.h"
 #include "cmenubutton.h"
 #include "files.h"
+#include "myparameters.h"
 
 namespace MinMax
 {
@@ -222,12 +226,11 @@ namespace MinMax
             showDialog(
                 fileButton,
                 VSTGUI::CNewFileSelector::kSelectSaveFile,
-                [this](const std::string& path)
+                [this](const VSTGUI::UTF8StringPtr path)
                 {
                     try
                     {
                         ChordMap::Instance().saveToFile(path);
-
                     }
                     catch (...)
                     {
@@ -273,27 +276,25 @@ namespace MinMax
             return ChordMap::Instance().getChordVoicing(value);
         }
 
-        void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(const std::string&)> fileSelected)
+        void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(VSTGUI::UTF8StringPtr path)> fileSelected)
         {
             Files::createPresetDirectory();
 
             auto* selector = VSTGUI::CNewFileSelector::create(p->getFrame(), style);
             if (!selector) return;
 
-            std::string presetPath = ChordMap::Instance().getPresetPath().u8string();
-            if (!presetPath.empty())
-                selector->setInitialDirectory(std::filesystem::path(presetPath).parent_path().string().c_str());
-
-            selector->setTitle(Files::TITLE.c_str());
-            selector->setDefaultSaveName(presetPath.c_str());
-            selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER.c_str(), Files::FILE_EXT.c_str()));
+            selector->setTitle(Files::TITLE);
+            selector->setInitialDirectory(Files::getPresetPath().string());
+            selector->setDefaultSaveName(ChordMap::Instance().getPresetPath().string());
+            selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER, Files::FILE_EXT));
 
             p->getFrame()->setFocusView(nullptr);
-
-            if (selector->runModal() && selector->getNumSelectedFiles() == 1) 
+            if (selector->runModal() && (int)selector->getNumSelectedFiles() == 1)
             {
-                fileSelected(presetPath);
+                auto filename = selector->getSelectedFile(0);
+                fileSelected(filename);
             }
+
             selector->forget();
         }
 

@@ -5,10 +5,12 @@
 
 #include <array>
 #include <chrono>
+#include <codecvt>
 #include <ctime>
 #include <filesystem>
 #include <fstream>
 #include <iomanip>
+#include <locale>
 #include <rapidjson//prettywriter.h>
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
@@ -18,6 +20,7 @@
 #include <stdexcept>
 #include <string>
 #include <vector>
+#include <vstgui4/vstgui/lib/vstguibase.h>
 
 namespace MinMax
 {
@@ -287,27 +290,20 @@ namespace MinMax
             auto& f = getByIndex(chordNumber);
             auto& v = ChordRoots[f.root].ChordTypes[f.valueType].Voicings[f.pos].Frets;
 
-            bool changed = false;
             for (size_t i = 0; i < frets.size && i < v.size(); ++i)
             {
                 if (v[i] != frets.data[i])
                 {
                     v[i] = frets.data[i];
-                    changed = true;
                 }
             }
-
-            if (changed)
-                modified = true;
         }
 
-        bool isModified() const { return modified; }
-
-        void saveToFile(std::string path)
+        void saveToFile(VSTGUI::UTF8StringPtr path)
         {
-            presetPath = std::filesystem::path(path);
+            std::wstring wpath = convertUtf8ToUtf16(path);
 
-            if (!modified) return; // 変更がないならスキップ
+            presetPath = std::filesystem::path(path);
 
             // 1. 元ファイルのバックアップ作成（日時付き）
             if (std::filesystem::exists(presetPath))
@@ -334,8 +330,6 @@ namespace MinMax
             rapidjson::Document doc;
             doc.SetObject();
             auto& allocator = doc.GetAllocator();
-
-            doc.AddMember("Name", rapidjson::Value(Name.c_str(), allocator), allocator);
 
             // Tunings
             rapidjson::Value notes(rapidjson::kArrayType);
@@ -392,8 +386,6 @@ namespace MinMax
             rapidjson::OStreamWrapper osw(ofs);
             rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
             doc.Accept(writer);
-
-            modified = false;
         }
 
         std::filesystem::path getPresetPath()
@@ -409,8 +401,6 @@ namespace MinMax
     protected:
         std::filesystem::path presetPath;
 
-        std::string Name;
-
         StringSet Tunings{};
 
         std::vector<ParamChordRoot> ChordRoots;
@@ -422,8 +412,6 @@ namespace MinMax
         ChordMap& operator=(const ChordMap&) = delete;
         ChordMap(ChordMap&&) = default;
         ChordMap& operator=(ChordMap&&) = default;
-
-        bool modified = false;
 
         void buildFlatTable()
         {
@@ -468,11 +456,6 @@ namespace MinMax
         bool Deserialize(const rapidjson::Value& v)
         {
             if (!v.IsObject()) return false;
-
-            if (v.HasMember("Name"))
-            {
-                Name = v["Name"].GetString();
-            }
 
             if (v.HasMember("Notes") && v["Notes"].IsArray())
             {
@@ -522,11 +505,17 @@ namespace MinMax
 
             std::string presetFileName = path.filename().string();
             size_t dot = presetFileName.find_last_of('.');
-            map.Name = presetFileName.substr(0, dot);
 
             map.presetPath = path;
 
             return map;
         }
-    };
+ 
+        // 文字列変換 UTF8 -> UTF16
+        static inline std::wstring convertUtf8ToUtf16(char const* str)
+        {
+            std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+            return converter.from_bytes(str);
+        }
+   };
 }
