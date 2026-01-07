@@ -303,8 +303,6 @@ namespace MinMax
         {
             std::wstring wpath = convertUtf8ToUtf16(path);
 
-            presetPath = std::filesystem::path(path);
-
             // 1. 元ファイルのバックアップ作成（日時付き）
             if (std::filesystem::exists(presetPath))
             {
