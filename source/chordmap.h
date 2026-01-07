@@ -301,10 +301,13 @@ namespace MinMax
 
         void saveToFile(VSTGUI::UTF8StringPtr path)
         {
+            namespace fs = std::filesystem;
+
             std::wstring wpath = convertUtf8ToUtf16(path);
+            fs::path filePath = fs::path(wpath);
 
             // 1. 元ファイルのバックアップ作成（日時付き）
-            if (std::filesystem::exists(presetPath))
+            if (std::filesystem::exists(filePath))
             {
                 auto t = std::chrono::system_clock::now();
                 auto time = std::chrono::system_clock::to_time_t(t);
@@ -316,12 +319,12 @@ namespace MinMax
 #endif
 
                 std::ostringstream oss;
-                oss << presetPath.stem().string() << "_"
+                oss << filePath.stem().string() << "_"
                     << std::put_time(&tm, "%Y%m%d_%H%M%S")
-                    << presetPath.extension().string();
+                    << filePath.extension().string();
 
-                std::filesystem::path backupPath = presetPath.parent_path() / oss.str();
-                std::filesystem::copy_file(presetPath, backupPath, std::filesystem::copy_options::overwrite_existing);
+                fs::path backupPath = filePath.parent_path() / oss.str();
+                fs::copy_file(filePath, backupPath, fs::copy_options::overwrite_existing);
             }
 
             // 2. JSON オブジェクト作成
@@ -375,10 +378,10 @@ namespace MinMax
             doc.AddMember("ChordRoots", chordRoots, allocator);
 
             // 3. ファイルに書き込み
-            std::ofstream ofs(presetPath);
+            std::ofstream ofs(filePath);
             if (!ofs.is_open())
             {
-                throw std::runtime_error("Cannot open file for writing: " + presetPath.string());
+                throw std::runtime_error("Cannot open file for writing: " + filePath.string());
             }
 
             rapidjson::OStreamWrapper osw(ofs);
