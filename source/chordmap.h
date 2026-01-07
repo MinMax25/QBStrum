@@ -307,7 +307,7 @@ namespace MinMax
             fs::path filePath = fs::path(wpath);
 
             // 1. 元ファイルのバックアップ作成（日時付き）
-            if (std::filesystem::exists(filePath))
+            if (!std::filesystem::exists(filePath))
             {
                 auto t = std::chrono::system_clock::now();
                 auto time = std::chrono::system_clock::to_time_t(t);
