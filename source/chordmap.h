@@ -164,7 +164,6 @@ namespace MinMax
 
         void initFromPreset(const std::filesystem::path& path)
         {
-            presetPath = path;
             Instance() = LoadPreset(path);
         }
 
@@ -307,7 +306,7 @@ namespace MinMax
             fs::path filePath = fs::path(wpath);
 
             // 1. 元ファイルのバックアップ作成（日時付き）
-            if (!std::filesystem::exists(filePath))
+            if (std::filesystem::exists(filePath))
             {
                 auto t = std::chrono::system_clock::now();
                 auto time = std::chrono::system_clock::to_time_t(t);
@@ -323,8 +322,16 @@ namespace MinMax
                     << std::put_time(&tm, "%Y%m%d_%H%M%S")
                     << filePath.extension().string();
 
-                fs::path backupPath = filePath.parent_path() / oss.str();
-                fs::copy_file(filePath, backupPath, fs::copy_options::overwrite_existing);
+
+                fs::path backupFolder = filePath.parent_path().append("backup");
+                fs::path backupFile = backupFolder / oss.str();
+
+                if (!fs::directory_entry(backupFolder).exists())
+                {
+                    fs::create_directory(backupFolder);
+                }
+
+                fs::copy_file(filePath, backupFile, fs::copy_options::overwrite_existing);
             }
 
             // 2. JSON オブジェクト作成
@@ -387,6 +394,9 @@ namespace MinMax
             rapidjson::OStreamWrapper osw(ofs);
             rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
             doc.Accept(writer);
+
+            presetPath.clear();
+            presetPath.replace_filename(filePath);
         }
 
         std::filesystem::path getPresetPath()
@@ -507,7 +517,8 @@ namespace MinMax
             std::string presetFileName = path.filename().string();
             size_t dot = presetFileName.find_last_of('.');
 
-            map.presetPath = path;
+            map.presetPath.clear();
+            map.presetPath.replace_filename(path);
 
             return map;
         }

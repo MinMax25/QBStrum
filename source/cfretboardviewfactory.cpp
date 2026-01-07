@@ -231,6 +231,7 @@ namespace MinMax
                     try
                     {
                         ChordMap::Instance().saveToFile(path);
+                        labelPreset->setText(ChordMap::Instance().getPresetName());
                     }
                     catch (...)
                     {
