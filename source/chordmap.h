@@ -345,7 +345,7 @@ namespace MinMax
             {
                 notes.PushBack(Tunings.data[i], allocator);
             }
-            doc.AddMember("Notes", notes, allocator);
+            doc.AddMember("Tunings", notes, allocator);
 
             // ChordRoots
             rapidjson::Value chordRoots(rapidjson::kArrayType);
@@ -468,12 +468,12 @@ namespace MinMax
         {
             if (!v.IsObject()) return false;
 
-            if (v.HasMember("Notes") && v["Notes"].IsArray())
+            if (v.HasMember("Tunings") && v["Tunings"].IsArray())
             {
                 Tunings.size = STRING_COUNT;
 
                 size_t i = 0;
-                for (auto& item : v["Notes"].GetArray())
+                for (auto& item : v["Tunings"].GetArray())
                 {
                     if (i > Tunings.size) break;
                     Tunings.data[i++] = item.GetInt();

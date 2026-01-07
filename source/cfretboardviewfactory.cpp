@@ -286,7 +286,7 @@ namespace MinMax
 
             selector->setTitle(Files::TITLE);
             selector->setInitialDirectory(Files::getPresetPath().string());
-            selector->setDefaultSaveName(ChordMap::Instance().getPresetPath().string());
+            selector->setDefaultSaveName(ChordMap::Instance().getPresetPath().filename().string());
             selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER, Files::FILE_EXT));
 
             p->getFrame()->setFocusView(nullptr);
