@@ -14,6 +14,7 @@
 #include <vector>
 
 #include "chordmap.h"
+#include "chordmapfixed.h"
 #include "parameterframework.h"	
 
 namespace MinMax
@@ -265,7 +266,12 @@ namespace MinMax
 		const char* STR_USERPROFILE = "USERPROFILE";
 		const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum/Standard 6Strings.json";
 		std::filesystem::path path = std::filesystem::path(getenv(STR_USERPROFILE)).append(PRESET_ROOT).make_preferred();
+		
 		ChordMap::Instance().initFromPreset(path);
+		ChordMapX::instance().loadFromJson(path);
+
+		std::filesystem::path sp = std::filesystem::path("d:/temp/test.json");
+		ChordMapX::instance().saveToJson(sp);
 
 		helper.setKindResolver(&rangeResolver);
 		helper.setOptionProvider(&optionProvider);

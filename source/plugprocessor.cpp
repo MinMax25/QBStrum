@@ -25,6 +25,7 @@
 #include <vector>
 
 #include "chordmap.h"
+#include "chordmapfixed.h"
 #include "cnotemsg.h"
 #include "EventScheduler.h"
 #include "myparameters.h"
