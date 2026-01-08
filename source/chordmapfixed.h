@@ -17,6 +17,7 @@
 
 namespace MinMax
 {
+    // 7弦まで対応可能とする
     inline constexpr int MAX_STRINGS = 7;
 
     //======================================================================
@@ -29,43 +30,8 @@ namespace MinMax
         Guitar7 = MAX_STRINGS,
     };
 
-    //struct StringCountEntry
-    //{
-    //    const char* name;
-    //    StringCount value;
-    //};
-
-    //inline constexpr StringCountEntry StringCountTable[] =
-    //{
-    //    { "Ukulele4", StringCount::Ukulele4 },
-    //    { "Guitar6",  StringCount::Guitar6 },
-    //    { "Guitar7",  StringCount::Guitar7 },
-    //};
-
-    //inline StringCount parseStringCount(const char* str)
-    //{
-    //    for (auto& e : StringCountTable)
-    //    {
-    //        if (std::strcmp(e.name, str) == 0)
-    //        {
-    //            return e.value;
-    //        }
-    //    }
-    //    return StringCount::Guitar6;
-    //}
-
     //======================================================================
-    // 定数
-    //======================================================================
-    //inline constexpr int MAX_DEFAULT_ROOTS = 12;
-    //inline constexpr int MAX_DEFAULT_TYPES = 29;
-    //inline constexpr int MAX_DEFAULT_VOICINGS = 3;
-    //inline constexpr int MAX_USER_TYPES = 5;
-    //inline constexpr int MAX_USER_VOICINGS = 24;
-    //inline constexpr int MAX_FLATENTRIES = MAX_DEFAULT_ROOTS * MAX_DEFAULT_TYPES * MAX_DEFAULT_VOICINGS + MAX_USER_TYPES * MAX_USER_VOICINGS;
-
-    //======================================================================
-    // ChordSpec
+    // ChordMap Spec
     //======================================================================
     struct ChordSpec
     {
@@ -73,10 +39,13 @@ namespace MinMax
         static constexpr int defaultTypeCount = 29;
         static constexpr int defaultVoicingCount = 3;
 
+        static constexpr int userRootCount = 1;
         static constexpr int userTypeCount = 5;
         static constexpr int userVoicingCount = 24;
 
-        static constexpr int flatEntryCount = (defaultRootCount * defaultTypeCount * defaultVoicingCount) + (userTypeCount * userVoicingCount);
+        static constexpr int flatEntryCount = 
+            (defaultRootCount * defaultTypeCount * defaultVoicingCount) + 
+            (userRootCount * userTypeCount * userVoicingCount);
 
         int defaultBlockSize() const
         {
@@ -84,30 +53,46 @@ namespace MinMax
         }
     };
 
-    //======================================================================
-    // ChordMap データ構造
-    //======================================================================
     struct StringSetX
     {
+        // fret position
         std::array<int, MAX_STRINGS> data{};
-        size_t size = 0; // 実際に使用する弦数
+
+        // valid strings
+        size_t size = 0;
     };
 
-    struct FlatChordEntry
+    //======================================================================
+    // ChordMap
+    //======================================================================
+    class ChordMapX
     {
-        int root = 0;
-        int type = 0;
-        int voicing = 0;
-        std::string displayName;
-
-        void generateDisplayName(const char* rootName, const char* typeName)
+    private:
+        struct FlatChordEntry
         {
-            displayName = std::string(rootName) + " " + typeName + " (" + std::to_string(voicing + 1) + ")";
-        }
-    };
+            int root = 0;
+            int type = 0;
+            int voicing = 0;
+            std::string displayName;
 
-    struct ChordMapX
-    {
+            void generateDisplayName(const char* rootName, const char* typeName)
+            {
+                displayName = std::string(rootName) + " " + typeName + " (" + std::to_string(voicing + 1) + ")";
+            }
+        };
+
+        // コンストラクターは private にして直接生成を禁止
+        ChordMapX() = default;
+
+        // コピー禁止
+        ChordMapX(const ChordMapX&) = delete;
+        ChordMapX& operator=(const ChordMapX&) = delete;
+
+        // ムーブ禁止
+        ChordMapX(ChordMapX&&) = delete;
+        ChordMapX& operator=(ChordMapX&&) = delete;
+
+    public:
         //==================================================================
         // シングルトン
         //==================================================================
@@ -123,9 +108,7 @@ namespace MinMax
         // フラット化されたコード
         std::array<FlatChordEntry, ChordSpec::flatEntryCount> flatChords{};
 
-        ChordSpec spec;
-
-        std::array<std::string, ChordSpec::defaultRootCount + 1> RootNames{};
+        std::array<std::string, (ChordSpec::defaultRootCount + ChordSpec::userRootCount)> RootNames{};
         std::array<std::string, ChordSpec::defaultTypeCount> DefaultTypeNames{};
         std::array<std::string, ChordSpec::userTypeCount> UserTypeNames{};
 
@@ -134,6 +117,8 @@ namespace MinMax
         //==================================================================
         inline uint16_t toFlatIndex(int root, int type, int voicing) const
         {
+            ChordSpec spec;
+
             if (root < spec.defaultRootCount)
             {
                 return (root * spec.defaultTypeCount + type) * spec.defaultVoicingCount + voicing;
@@ -146,6 +131,8 @@ namespace MinMax
         //==================================================================
         inline void getChordInfo(uint16_t index, int& root, int& type, int& voicing) const
         {
+            ChordSpec spec;
+
             if (index < spec.defaultBlockSize())
             {
                 root = index / (spec.defaultTypeCount * spec.defaultVoicingCount);
@@ -238,19 +225,6 @@ namespace MinMax
                 }
             }
         }
-
-    private:
-
-        // コンストラクターは private にして直接生成を禁止
-        ChordMapX() = default;
-
-        // コピー禁止
-        ChordMapX(const ChordMapX&) = delete;
-        ChordMapX& operator=(const ChordMapX&) = delete;
-
-        // ムーブ禁止
-        ChordMapX(ChordMapX&&) = delete;
-        ChordMapX& operator=(ChordMapX&&) = delete;
     };
 
 } // namespace MinMax
