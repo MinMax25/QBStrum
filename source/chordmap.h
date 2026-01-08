@@ -316,6 +316,9 @@ namespace MinMax
                     }
                 }
             }
+
+            presetPath.clear();
+            presetPath.replace_filename(path);
         }
 
         //==================================================================

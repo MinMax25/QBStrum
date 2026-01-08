@@ -268,9 +268,6 @@ namespace MinMax
 		
 		ChordMap::instance().loadChordPreset(path);
 
-		std::filesystem::path sp = std::filesystem::path("d:/temp/test.json");
-		ChordMap::instance().saveChordPreset(sp);
-
 		helper.setKindResolver(&rangeResolver);
 		helper.setOptionProvider(&optionProvider);
 	}

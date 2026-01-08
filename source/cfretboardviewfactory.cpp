@@ -195,7 +195,7 @@ namespace MinMax
 
             for (const auto& f : files)
             {
-                auto name = std::filesystem::path(f).filename().u8string();
+                auto name = std::filesystem::path(f).stem().u8string();
                 auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(name.c_str()));
 
                 item->setActions(
