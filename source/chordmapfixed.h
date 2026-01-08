@@ -53,10 +53,7 @@ namespace MinMax
             (defaultRootCount * defaultTypeCount * defaultVoicingCount) + 
             (userRootCount * userTypeCount * userVoicingCount);
 
-        int blockSize() const
-        {
-            return defaultRootCount * defaultTypeCount * defaultVoicingCount;
-        }
+        static constexpr int defaultBlockSize = defaultRootCount * defaultTypeCount * defaultVoicingCount;
     };
 
     struct StringSetX
@@ -168,12 +165,12 @@ namespace MinMax
   
         const int getFlatCount() const
         {
-            return spec.blockSize();
+            return spec.flatEntryCount;
         }
 
         const FlatChordEntry& getByIndex(int flatIndex) const
         {
-            return flatChords.at((flatIndex < 0 || flatIndex >= spec.blockSize()) ? 0 : flatIndex);
+            return flatChords.at((flatIndex < 0 || flatIndex >= spec.flatEntryCount) ? 0 : flatIndex);
         }
 
         const int getRootCount() const 
@@ -206,25 +203,17 @@ namespace MinMax
             return isDefault(r) ? spec.defaultVoicingCount : spec.userVoicingCount;
         }
 
-        //==================================================================
-        // flatIndex から root/type/voicing を取得
-        //==================================================================
-        inline void getChordInfo(uint16_t index, int& root, int& type, int& voicing) const
+        std::string& getVoicingName(int r, int t, int v)
         {
-            if (index < spec.blockSize())
-            {
-                root = index / (spec.defaultTypeCount * spec.defaultVoicingCount);
-                int rem = index % (spec.defaultTypeCount * spec.defaultVoicingCount);
-                type = rem / spec.defaultVoicingCount;
-                voicing = rem % spec.defaultVoicingCount;
-            }
-            else
-            {
-                int idx = index - spec.blockSize();
-                root = spec.defaultRootCount; // ユーザー定義ブロック
-                type = idx / spec.userVoicingCount;
-                voicing = idx % spec.userVoicingCount;
-            }
+            return std::to_string(v + 1);
+        }
+
+        int getFlatIndex(int r, int t, int v) const
+        {
+            return
+                isDefault(r)
+                ? (spec.defaultRootCount + spec.defaultTypeCount + spec.defaultVoicingCount) * r + (spec.defaultTypeCount + spec.defaultTypeCount + spec.defaultVoicingCount) * t + v
+                : spec.defaultBlockSize;
         }
 
         //==================================================================
