@@ -271,7 +271,7 @@ namespace MinMax
 		ChordMapX::instance().loadFromJson(path);
 
 		std::filesystem::path sp = std::filesystem::path("d:/temp/test.json");
-		ChordMapX::instance().saveToJson(sp);
+		//ChordMapX::instance().saveToJson(sp);
 
 		helper.setKindResolver(&rangeResolver);
 		helper.setOptionProvider(&optionProvider);

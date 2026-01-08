@@ -106,42 +106,17 @@ namespace MinMax
 
     struct ChordMapX
     {
-        // 使用弦数
-        StringCount stringCount = StringCount::Guitar6;
-
-        // Tunings (開放弦ピッチ)
-        StringSetX Tunings{ {64, 59, 55, 50, 45, 40, 0}, 6 };
-
-        // Root名
-        std::array<std::string, MAX_DEFAULT_ROOTS + 1> RootNames{};
-
-        // ルート別Type名
-        std::array<std::string, MAX_DEFAULT_TYPES> DefaultTypeNames{};
-        std::array<std::string, MAX_USER_TYPES> UserTypeNames{};
+        // Tunings
+        StringSetX Tunings{ 64, 59, 55, 50, 45, 40 };
 
         // フラット化されたコード
         std::array<FlatChordEntry, MAX_FLATENTRIES> flatChords{};
 
         ChordSpec spec;
 
-        // 使用する弦数に応じて Tunings をアクセスする例
-        int getTuning(size_t stringIndex) const
-        {
-            if (stringIndex >= Tunings.size)
-            {
-                throw std::out_of_range("stringIndex exceeds current stringCount");
-            }
-            return Tunings.data[stringIndex];
-        }
-
-        //==================================================================
-        // 弦数設定
-        //==================================================================
-        void setStringCount(StringCount sc)
-        {
-            stringCount = sc;
-            Tunings.size = static_cast<size_t>(sc);
-        }
+        std::array<std::string, MAX_DEFAULT_TYPES> DefaultTypeNames{};
+        std::array<std::string, MAX_USER_TYPES> UserTypeNames{};
+        std::array<std::string, MAX_DEFAULT_ROOTS + 1> RootNames{};
 
         //==================================================================
         // flatIndex への変換
@@ -177,43 +152,7 @@ namespace MinMax
         }
 
         //==================================================================
-        // ChordMap 初期化
-        //==================================================================
-        void initialize()
-        {
-            int index = 0;
-
-            // デフォルトブロック
-            for (int r = 0; r < spec.defaultRootCount; r++)
-            {
-                for (int t = 0; t < spec.defaultTypeCount; t++)
-                {
-                    for (int v = 0; v < spec.defaultVoicingCount; v++)
-                    {
-                        flatChords[index] = { r, t, v };
-                        flatChords[index].generateDisplayName(RootNames[r].c_str(), DefaultTypeNames[t].c_str());
-                        index++;
-                    }
-                }
-            }
-
-            // ユーザーブロック
-            for (int t = 0; t < spec.userTypeCount; t++)
-            {
-                for (int v = 0; v < spec.userVoicingCount; v++)
-                {
-                    if (index < MAX_FLATENTRIES)
-                    {
-                        flatChords[index] = { spec.defaultRootCount, t, v };
-                        flatChords[index].generateDisplayName(RootNames[spec.defaultRootCount].c_str(), UserTypeNames[t].c_str());
-                        index++;
-                    }
-                }
-            }
-        }
-
-        //==================================================================
-        // JSON から読み込み
+        // JSON から読み込みとフラット化統合
         //==================================================================
         void loadFromJson(const std::filesystem::path& path)
         {
@@ -238,7 +177,7 @@ namespace MinMax
                 auto& arr = doc["Tunings"].GetArray();
                 for (size_t i = 0; i < arr.Size() && i < Tunings.size; i++)
                 {
-                    Tunings.data[i] = arr[i].GetInt();
+                    Tunings.data[(int)i] = arr[(int)i].GetInt();
                 }
                 Tunings.size = MAX_STRINGS;
             }
@@ -248,7 +187,7 @@ namespace MinMax
             {
                 auto& roots = doc["ChordRoots"].GetArray();
 
-                for (size_t r = 0; r < roots.Size() && r < MAX_DEFAULT_ROOTS + 1; r++)
+                for (int r = 0; r < (int)roots.Size() && r < MAX_DEFAULT_ROOTS + 1; r++)
                 {
                     auto& rootObj = roots[r];
                     RootNames[r] = rootObj["Name"].GetString();
@@ -258,7 +197,7 @@ namespace MinMax
                     if (r < MAX_DEFAULT_ROOTS)
                     {
                         // システムルート
-                        for (size_t t = 0; t < types.Size() && t < MAX_DEFAULT_TYPES; t++)
+                        for (int t = 0; t < (int)types.Size() && t < MAX_DEFAULT_TYPES; t++)
                         {
                             DefaultTypeNames[t] = types[t]["Name"].GetString();
 
@@ -273,7 +212,7 @@ namespace MinMax
                     else
                     {
                         // ユーザールート（root=12）
-                        for (size_t t = 0; t < types.Size() && t < MAX_USER_TYPES; t++)
+                        for (int t = 0; t < (int)types.Size() && t < MAX_USER_TYPES; t++)
                         {
                             UserTypeNames[t] = types[t]["Name"].GetString();
 
@@ -290,61 +229,26 @@ namespace MinMax
         }
 
         //==================================================================
-        // JSON へ書き込み
-        //==================================================================
-        void saveToJson(const std::filesystem::path& path) const
-        {
-            rapidjson::Document doc;
-            doc.SetObject();
-            auto& allocator = doc.GetAllocator();
-
-            // 弦数
-            doc.AddMember("stringCount", static_cast<int>(stringCount), allocator);
-
-            // Tunings
-            rapidjson::Value tuningArray(rapidjson::kArrayType);
-            for (size_t i = 0; i < Tunings.size; i++)
-            {
-                tuningArray.PushBack(Tunings.data[i], allocator);
-            }
-            doc.AddMember("Tunings", tuningArray, allocator);
-
-            // system
-            rapidjson::Value systemObj(rapidjson::kObjectType);
-            systemObj.AddMember("rootCount", spec.defaultRootCount, allocator);
-            systemObj.AddMember("typeCount", spec.defaultTypeCount, allocator);
-            systemObj.AddMember("voicingCount", spec.defaultVoicingCount, allocator);
-            doc.AddMember("system", systemObj, allocator);
-
-            // user
-            rapidjson::Value userObj(rapidjson::kObjectType);
-            userObj.AddMember("typeCount", spec.userTypeCount, allocator);
-            userObj.AddMember("voicingCount", spec.userVoicingCount, allocator);
-            doc.AddMember("user", userObj, allocator);
-
-            // 書き込み
-            std::ofstream ofs(path);
-            if (!ofs.is_open())
-            {
-                throw std::runtime_error("Cannot open file for writing");
-            }
-
-            rapidjson::OStreamWrapper osw(ofs);
-            rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
-            doc.Accept(writer);
-        }
-
-        //==================================================================
-        // シングルトンアクセス
+        // シングルトン
         //==================================================================
         static ChordMapX& instance()
         {
-            static ChordMapX inst;
-            return inst;
+            static ChordMapX _instance;
+            return _instance;
         }
 
     private:
-        ChordMapX() { initialize(); } // private コンストラクタ
+
+        // コンストラクターは private にして直接生成を禁止
+        ChordMapX() = default;
+
+        // コピー禁止
+        ChordMapX(const ChordMapX&) = delete;
+        ChordMapX& operator=(const ChordMapX&) = delete;
+
+        // ムーブ禁止
+        ChordMapX(ChordMapX&&) = delete;
+        ChordMapX& operator=(ChordMapX&&) = delete;
     };
 
 } // namespace MinMax
