@@ -68,9 +68,9 @@ namespace MinMax
                     Name = v["Name"].GetString();
                 }
 
-                if (v.HasMember("Frets") && v["Frets"].IsArray())
+                if (v.HasMember("FretPosition") && v["FretPosition"].IsArray())
                 {
-                    for (auto& f : v["Frets"].GetArray())
+                    for (auto& f : v["FretPosition"].GetArray())
                     {
                         Frets.push_back(f.GetInt());
                     }
@@ -371,7 +371,7 @@ namespace MinMax
                         for (auto f : v.Frets)
                             frets.PushBack(f, allocator);
 
-                        vObj.AddMember("Frets", frets, allocator);
+                        vObj.AddMember("FretPosition", frets, allocator);
                         voicings.PushBack(vObj, allocator);
                     }
                     typeObj.AddMember("Voicings", voicings, allocator);

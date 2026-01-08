@@ -276,14 +276,44 @@ namespace MinMax
             doc.AddMember("Tunings", notes, allocator);
 
             //
-            for (int flatIndex = 0; flatIndex < spec.flatEntryCount; flatIndex++)
+            rapidjson::Value chordRoots(rapidjson::kArrayType);
+            for (int r = 0; r < spec.TotalRootCount; r++)
             {
-                int root;
-                int type;
-                int voicing;
-                getChordInfo(flatIndex, root, type, voicing);
+                bool isDefault = r < spec.defaultRootCount;
+                
+                rapidjson::Value rootObj(rapidjson::kObjectType);
+                rootObj.AddMember("Name", rapidjson::Value(RootNames[r].c_str(), allocator), allocator);
 
+                rapidjson::Value types(rapidjson::kArrayType);
+                int tmax = isDefault ? spec.defaultTypeCount : spec.userTypeCount;
+                for (int t = 0; t < tmax; t++)
+                {
+                    auto typeName = isDefault ? DefaultTypeNames[t] : UserTypeNames[t];
+                    rapidjson::Value typeObj(rapidjson::kObjectType);
+                    typeObj.AddMember("Name", rapidjson::Value(typeName.c_str(), allocator), allocator);
+
+                    rapidjson::Value voicings(rapidjson::kArrayType);
+                    int vmax = isDefault ? spec.defaultVoicingCount : spec.userVoicingCount;
+                    for (int v = 0; v < vmax; v++)
+                    {
+                        rapidjson::Value vObj(rapidjson::kObjectType);
+                        vObj.AddMember("Name", rapidjson::Value(std::to_string(v + 1).c_str(), allocator), allocator);
+
+                        rapidjson::Value frets(rapidjson::kArrayType);
+                        for (int f = 0; f < Tunings.size; f++)
+                        {
+                            frets.PushBack(f, allocator);
+                        }
+                        vObj.AddMember("FretPosition", frets, allocator);
+                        voicings.PushBack(vObj, allocator);
+                    }
+                    typeObj.AddMember("Voicings", voicings, allocator);
+                    types.PushBack(typeObj, allocator);
+                }
+                rootObj.AddMember("ChordTypes", types, allocator);
+                chordRoots.PushBack(rootObj, allocator);
             }
+            doc.AddMember("ChordRoots", chordRoots, allocator);
 
             // 3. ファイルに書き込み
             std::ofstream ofs(filePath);
