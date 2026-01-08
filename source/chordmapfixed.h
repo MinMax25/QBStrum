@@ -144,6 +144,8 @@ namespace MinMax
             return result;
         }
 
+        ChordSpec spec;
+
         float getPositionAverage(int chordNumber) const
         {
             //
@@ -166,14 +168,17 @@ namespace MinMax
   
         const int getFlatCount() const
         {
-            ChordSpec spec;
             return spec.blockSize();
         }
 
         const FlatChordEntry& getByIndex(int flatIndex) const
         {
-            ChordSpec spec;
             return flatChords.at((flatIndex < 0 || flatIndex >= spec.blockSize()) ? 0 : flatIndex);
+        }
+
+        const int getRootCount() const 
+        {
+            return (int)spec.TotalRootCount;
         }
 
         //==================================================================
@@ -181,8 +186,6 @@ namespace MinMax
         //==================================================================
         inline void getChordInfo(uint16_t index, int& root, int& type, int& voicing) const
         {
-            ChordSpec spec;
-
             if (index < spec.blockSize())
             {
                 root = index / (spec.defaultTypeCount * spec.defaultVoicingCount);
@@ -204,8 +207,6 @@ namespace MinMax
         //==================================================================
         void loadChordPreset(const std::filesystem::path& path)
         {
-            ChordSpec spec;
-
             std::ifstream ifs(path);
             if (!ifs.is_open())
             {
@@ -293,7 +294,6 @@ namespace MinMax
         void saveChordPreset(const std::filesystem::path& path)
         {
             namespace fs = std::filesystem;
-            ChordSpec spec;
 
             fs::path filePath = fs::path(path);
 
