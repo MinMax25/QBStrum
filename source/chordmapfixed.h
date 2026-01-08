@@ -213,7 +213,7 @@ namespace MinMax
             return
                 isDefault(r)
                 ? (spec.defaultRootCount + spec.defaultTypeCount + spec.defaultVoicingCount) * r + (spec.defaultTypeCount + spec.defaultTypeCount + spec.defaultVoicingCount) * t + v
-                : spec.defaultBlockSize;
+                : spec.defaultBlockSize + (spec.userRootCount + spec.userTypeCount + spec.userVoicingCount) * r + (spec.userTypeCount + spec.userVoicingCount) * t + v;
         }
 
         //==================================================================
