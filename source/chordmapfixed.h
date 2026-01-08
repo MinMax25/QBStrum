@@ -43,7 +43,7 @@ namespace MinMax
         static constexpr int userTypeCount = 5;
         static constexpr int userVoicingCount = 24;
 
-        static constexpr int RootCount = defaultRootCount + userRootCount;
+        static constexpr int TotalRootCount = defaultRootCount + userRootCount;
 
         static constexpr int flatEntryCount = 
             (defaultRootCount * defaultTypeCount * defaultVoicingCount) + 
@@ -115,20 +115,6 @@ namespace MinMax
         std::array<std::string, ChordSpec::userTypeCount> UserTypeNames{};
 
         //==================================================================
-        // flatIndex への変換
-        //==================================================================
-        inline uint16_t toFlatIndex(int root, int type, int voicing) const
-        {
-            ChordSpec spec;
-
-            if (root < spec.defaultRootCount)
-            {
-                return (root * spec.defaultTypeCount + type) * spec.defaultVoicingCount + voicing;
-            }
-            return spec.defaultBlockSize() + type * spec.userVoicingCount + voicing;
-        }
-
-        //==================================================================
         // flatIndex から root/type/voicing を取得
         //==================================================================
         inline void getChordInfo(uint16_t index, int& root, int& type, int& voicing) const
@@ -191,62 +177,49 @@ namespace MinMax
             {
                 auto& roots = doc["ChordRoots"].GetArray();
 
-                for (int r = 0; r < (int)roots.Size() && r < spec.defaultRootCount + 1; r++)
+                for (int r = 0; r < (int)roots.Size(); r++)
                 {
                     auto& rootObj = roots[r];
                     RootNames[r] = rootObj["Name"].GetString();
 
                     auto& types = rootObj["ChordTypes"].GetArray();
 
-                    auto fc = flatChords[flatIndex++];
-
-                    fc.root = r;
-
-                    if (r < spec.defaultRootCount)
+                    if (r > spec.TotalRootCount)
                     {
-                        // システムルート
-                        for (int t = 0; t < (int)types.Size() && t < spec.defaultTypeCount; t++)
-                        {
-                            fc.type = t;
+                        throw "ChordMap Format Error";
+                    }
 
-                            DefaultTypeNames[t] = types[t]["Name"].GetString();
+                    if (r < spec.TotalRootCount)
+                    {
+                        for (int t = 0; t < (int)types.Size(); t++)
+                        {
+                            auto typeName = types[t]["Name"].GetString();
+                            if (r < spec.defaultRootCount)
+                            {
+                                DefaultTypeNames[t] = typeName;
+                            }
+                            else if (r < spec.TotalRootCount)
+                            {
+                                UserTypeNames[t] = typeName;
+                            }
 
                             auto& voicings = types[t]["Voicings"].GetArray();
-                            for (size_t v = 0; v < voicings.Size() && v < spec.defaultVoicingCount; v++)
+                            for (size_t v = 0; v < voicings.Size(); v++)
                             {
+                                auto& fc = flatChords[flatIndex++];
+                                fc.root = r;
+                                fc.type = t;
                                 fc.voicing = v;
-
-                                flatChords[toFlatIndex((int)r, (int)t, (int)v)].
-                                    generateDisplayName(RootNames[r].c_str(), DefaultTypeNames[t].c_str());
+                                fc.displayName = 
+                                    RootNames[r] + " " +
+                                    typeName + " " +
+                                    "(" + std::to_string(v + 1) + ")";
                             }
                         }
-                    }
-                    else if (r < spec.RootCount)
-                    {
-                        // ユーザールート
-                        for (int t = 0; t < (int)types.Size() && t < spec.userTypeCount; t++)
-                        {
-                            fc.type = t;
-
-                            UserTypeNames[t] = types[t]["Name"].GetString();
-
-                            auto& voicings = types[t]["Voicings"].GetArray();
-                            for (size_t v = 0; v < voicings.Size() && v < spec.userVoicingCount; v++)
-                            {
-                                fc.voicing = v;
-
-                                flatChords[toFlatIndex((int)r, (int)t, (int)v)].
-                                    generateDisplayName(RootNames[r].c_str(), UserTypeNames[t].c_str());
-                            }
-                        }
-                    }
-                    else
-                    {
-                        //exception:json format error
                     }
                 }
             }
         }
     };
 
-} // namespace MinMax
+}
