@@ -5,15 +5,17 @@
 
 #include <array>
 #include <cstdint>
-#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <stdexcept>
 #include <string>
 #include <rapidjson/document.h>
 #include <rapidjson/istreamwrapper.h>
-#include <rapidjson/ostreamwrapper.h>
-#include <rapidjson/prettywriter.h>
+#include <codecvt>
+#include <ctime>
+#include <iomanip>
+#include <locale>
+#include <sstream>
 
 namespace MinMax
 {
@@ -95,6 +97,8 @@ namespace MinMax
         // ムーブ禁止
         ChordMapX(ChordMapX&&) = delete;
         ChordMapX& operator=(ChordMapX&&) = delete;
+
+        std::filesystem::path presetPath{};
 
     public:
         //==================================================================
@@ -219,12 +223,90 @@ namespace MinMax
                 }
             }
         }
-    };
 
-    //==================================================================
-    // コードプリセット書き出し
-    //==================================================================
-    void saveChordPreset(const std::filesystem::path& path)
-    {
-    }
+        //==================================================================
+        // コードプリセット書き出し
+        //==================================================================
+        void saveChordPreset(const std::filesystem::path& path)
+        {
+            namespace fs = std::filesystem;
+            ChordSpec spec;
+
+            fs::path filePath = fs::path(path);
+
+            if (std::filesystem::exists(filePath))
+            {
+                auto t = std::chrono::system_clock::now();
+                auto time = std::chrono::system_clock::to_time_t(t);
+                std::tm tm;
+#ifdef _WIN32
+                localtime_s(&tm, &time);
+#else
+                localtime_r(&time, &tm);
+#endif
+
+                std::ostringstream oss;
+
+                oss << path.stem().string() << "_"
+                    << std::put_time(&tm, "%Y%m%d_%H%M%S")
+                    << path.extension().string();
+
+                fs::path backupFolder = filePath.parent_path().append("backup");
+                fs::path backupFile = backupFolder / oss.str();
+
+                if (!fs::directory_entry(backupFolder).exists())
+                {
+                    fs::create_directory(backupFolder);
+                }
+
+                fs::copy_file(filePath, backupFile, fs::copy_options::overwrite_existing);
+            }
+
+            // 2. JSON オブジェクト作成
+            rapidjson::Document doc;
+            doc.SetObject();
+            auto& allocator = doc.GetAllocator();
+
+            // Tunings
+            rapidjson::Value notes(rapidjson::kArrayType);
+            for (size_t i = 0; i < Tunings.size; ++i)
+            {
+                notes.PushBack(Tunings.data[i], allocator);
+            }
+            doc.AddMember("Tunings", notes, allocator);
+
+            //
+            for (int flatIndex = 0; flatIndex < spec.flatEntryCount; flatIndex++)
+            {
+                int root;
+                int type;
+                int voicing;
+                getChordInfo(flatIndex, root, type, voicing);
+
+            }
+
+            // 3. ファイルに書き込み
+            std::ofstream ofs(filePath);
+            if (!ofs.is_open())
+            {
+                throw std::runtime_error("Cannot open file for writing: " + filePath.string());
+            }
+
+            rapidjson::OStreamWrapper osw(ofs);
+            rapidjson::PrettyWriter<rapidjson::OStreamWrapper> writer(osw);
+            doc.Accept(writer);
+
+            presetPath.clear();
+            presetPath.replace_filename(filePath);
+        }
+
+        // 文字列変換 UTF8 -> UTF16
+        static inline std::wstring convertUtf8ToUtf16(char const* str)
+        {
+#pragma warning(suppress : 4996)
+            std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+#pragma warning(suppress : 4996)
+            return converter.from_bytes(str);
+        }
+    };
 }
