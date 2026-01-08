@@ -21,7 +21,7 @@ namespace MinMax
     inline constexpr int MAX_STRINGS = 7;
 
     //======================================================================
-    // ギター/ウクレレの弦数
+    // 弦数定義
     //======================================================================
     enum class StringCount : uint8_t
     {
@@ -35,10 +35,12 @@ namespace MinMax
     //======================================================================
     struct ChordSpec
     {
+        // default table
         static constexpr int defaultRootCount = 12;
         static constexpr int defaultTypeCount = 29;
         static constexpr int defaultVoicingCount = 3;
 
+        // user table
         static constexpr int userRootCount = 1;
         static constexpr int userTypeCount = 5;
         static constexpr int userVoicingCount = 24;
