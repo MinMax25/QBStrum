@@ -142,7 +142,7 @@ namespace MinMax
                     {
                         int flatIndex = chordMap.getFlatIndex(r, t, v);
 
-                        auto* voicingItem = new VSTGUI::CMenuItem(chordMap.getVoicingName(r, t, v).c_str(), flatIndex);
+                        auto* voicingItem = new VSTGUI::CMenuItem(std::to_string(v + 1), flatIndex);
 
                         voicingMenu->addEntry(voicingItem);
                     }

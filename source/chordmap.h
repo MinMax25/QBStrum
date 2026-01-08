@@ -176,7 +176,7 @@ namespace MinMax
 
         const FlatChordEntry& getByIndex(int flatIndex) const
         {
-            return flatChords.at((flatIndex < 0 || flatIndex >= spec.flatEntryCount) ? 0 : flatIndex);
+            return flatChords[flatIndex];
         }
 
         const int getRootCount() const 
@@ -207,11 +207,6 @@ namespace MinMax
         int getVoicingCount(int r, int t) const
         {
             return isDefault(r) ? spec.defaultVoicingCount : spec.userVoicingCount;
-        }
-
-        std::string& getVoicingName(int r, int t, int v)
-        {
-            return std::to_string(v + 1);
         }
 
         int getFlatIndex(int r, int t, int v) const
