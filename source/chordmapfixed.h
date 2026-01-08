@@ -125,9 +125,9 @@ namespace MinMax
             return Tunings;
         }
 
-        StringSet getChordVoicing(int flatIndex) const
+        StringSetX getChordVoicing(int flatIndex) const
         {
-            StringSet result{};
+            StringSetX result{};
 
             auto& v = flatChords[flatIndex];
 
@@ -168,7 +168,7 @@ namespace MinMax
             return spec.flatEntryCount;
         }
 
-        const FlatChordEntry& getByIndex(int flatIndex) const
+        FlatChordEntry& getByIndex(int flatIndex)
         {
             return flatChords.at((flatIndex < 0 || flatIndex >= spec.flatEntryCount) ? 0 : flatIndex);
         }
@@ -214,6 +214,19 @@ namespace MinMax
                 isDefault(r)
                 ? (spec.defaultRootCount + spec.defaultTypeCount + spec.defaultVoicingCount) * r + (spec.defaultTypeCount + spec.defaultTypeCount + spec.defaultVoicingCount) * t + v
                 : spec.defaultBlockSize + (spec.userRootCount + spec.userTypeCount + spec.userVoicingCount) * r + (spec.userTypeCount + spec.userVoicingCount) * t + v;
+        }
+
+        void setVoicing(int flatIndex, StringSetX& frets)
+        {
+            auto& v = getByIndex(flatIndex).fretPosition;
+
+            for (size_t i = 0; i < frets.size && i < v.size(); ++i)
+            {
+                if (v[i] != frets.data[i])
+                {
+                    v[i] = frets.data[i];
+                }
+            }
         }
 
         //==================================================================
