@@ -43,6 +43,8 @@ namespace MinMax
         static constexpr int userTypeCount = 5;
         static constexpr int userVoicingCount = 24;
 
+        static constexpr int RootCount = defaultRootCount + userRootCount;
+
         static constexpr int flatEntryCount = 
             (defaultRootCount * defaultTypeCount * defaultVoicingCount) + 
             (userRootCount * userTypeCount * userVoicingCount);
@@ -103,7 +105,7 @@ namespace MinMax
         }
 
         // Tunings
-        StringSetX Tunings{ { 64, 59, 55, 50, 45, 40, 0 }, MAX_STRINGS };
+        StringSetX Tunings{};
 
         // フラット化されたコード
         std::array<FlatChordEntry, ChordSpec::flatEntryCount> flatChords{};
@@ -154,6 +156,8 @@ namespace MinMax
         //==================================================================
         void loadFromJson(const std::filesystem::path& path)
         {
+            ChordSpec spec;
+
             std::ifstream ifs(path);
             if (!ifs.is_open())
             {
@@ -173,54 +177,72 @@ namespace MinMax
             if (doc.HasMember("Tunings") && doc["Tunings"].IsArray())
             {
                 auto& arr = doc["Tunings"].GetArray();
-                for (size_t i = 0; i < arr.Size() && i < Tunings.size; i++)
+                for (size_t i = 0; i < arr.Size() && i < MAX_STRINGS; i++)
                 {
                     Tunings.data[(int)i] = arr[(int)i].GetInt();
                 }
-                Tunings.size = MAX_STRINGS;
+                Tunings.size = arr.Size();
             }
 
             // ChordRoots
+            int flatIndex = 0;
+
             if (doc.HasMember("ChordRoots") && doc["ChordRoots"].IsArray())
             {
                 auto& roots = doc["ChordRoots"].GetArray();
 
-                for (int r = 0; r < (int)roots.Size() && r < ChordSpec::defaultRootCount + 1; r++)
+                for (int r = 0; r < (int)roots.Size() && r < spec.defaultRootCount + 1; r++)
                 {
                     auto& rootObj = roots[r];
                     RootNames[r] = rootObj["Name"].GetString();
 
                     auto& types = rootObj["ChordTypes"].GetArray();
 
-                    if (r < ChordSpec::defaultRootCount)
+                    auto fc = flatChords[flatIndex++];
+
+                    fc.root = r;
+
+                    if (r < spec.defaultRootCount)
                     {
                         // システムルート
-                        for (int t = 0; t < (int)types.Size() && t < ChordSpec::defaultTypeCount; t++)
+                        for (int t = 0; t < (int)types.Size() && t < spec.defaultTypeCount; t++)
                         {
+                            fc.type = t;
+
                             DefaultTypeNames[t] = types[t]["Name"].GetString();
 
                             auto& voicings = types[t]["Voicings"].GetArray();
-                            for (size_t v = 0; v < voicings.Size() && v < ChordSpec::defaultVoicingCount; v++)
+                            for (size_t v = 0; v < voicings.Size() && v < spec.defaultVoicingCount; v++)
                             {
+                                fc.voicing = v;
+
                                 flatChords[toFlatIndex((int)r, (int)t, (int)v)].
                                     generateDisplayName(RootNames[r].c_str(), DefaultTypeNames[t].c_str());
                             }
                         }
                     }
-                    else
+                    else if (r < spec.RootCount)
                     {
-                        // ユーザールート（root=12）
-                        for (int t = 0; t < (int)types.Size() && t < ChordSpec::userTypeCount; t++)
+                        // ユーザールート
+                        for (int t = 0; t < (int)types.Size() && t < spec.userTypeCount; t++)
                         {
+                            fc.type = t;
+
                             UserTypeNames[t] = types[t]["Name"].GetString();
 
                             auto& voicings = types[t]["Voicings"].GetArray();
-                            for (size_t v = 0; v < voicings.Size() && v < ChordSpec::userVoicingCount; v++)
+                            for (size_t v = 0; v < voicings.Size() && v < spec.userVoicingCount; v++)
                             {
+                                fc.voicing = v;
+
                                 flatChords[toFlatIndex((int)r, (int)t, (int)v)].
                                     generateDisplayName(RootNames[r].c_str(), UserTypeNames[t].c_str());
                             }
                         }
+                    }
+                    else
+                    {
+                        //exception:json format error
                     }
                 }
             }
