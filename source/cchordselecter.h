@@ -173,7 +173,7 @@ namespace MinMax
 
             VSTGUI::UTF8String name =
                 (value >= 0 && value < map.getFlatCount())
-                ? map.getByIndex(value).displayName.c_str()
+                ? map.getChordInfoByIndex(value).displayName.c_str()
                 : "# undefined #";
 
             if (chordLabel) chordLabel->setText(name);

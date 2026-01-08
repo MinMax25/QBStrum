@@ -107,6 +107,8 @@ namespace MinMax
 
         std::filesystem::path presetPath{};
 
+        std::array<int, MAX_STRINGS> offset{};
+
     public:
         //==================================================================
         // シングルトン
@@ -175,7 +177,7 @@ namespace MinMax
             return spec.flatEntryCount;
         }
 
-        const FlatChordEntry& getByIndex(int flatIndex) const
+        const FlatChordEntry& getChordInfoByIndex(int flatIndex) const
         {
             return flatChords[flatIndex];
         }
@@ -220,6 +222,19 @@ namespace MinMax
                 {
                     v[i] = frets.data[i];
                 }
+            }
+        }
+
+        void setOffset(int stringindex, int value)
+        {
+            offset[stringindex] = value;
+        }
+
+        void clearOffset()
+        {
+            for (int i = 0; i < MAX_STRINGS; i++)
+            {
+                offset[i] = 0;
             }
         }
 
