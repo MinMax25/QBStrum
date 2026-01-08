@@ -53,7 +53,7 @@ namespace MinMax
             (defaultRootCount * defaultTypeCount * defaultVoicingCount) + 
             (userRootCount * userTypeCount * userVoicingCount);
 
-        int defaultBlockSize() const
+        int blockSize() const
         {
             return defaultRootCount * defaultTypeCount * defaultVoicingCount;
         }
@@ -163,11 +163,17 @@ namespace MinMax
 
             return count > 0 ? sum / float(count) : 0.0f;
         }
+  
+        const int getFlatCount() const
+        {
+            ChordSpec spec;
+            return spec.blockSize();
+        }
 
         const FlatChordEntry& getByIndex(int flatIndex) const
         {
             ChordSpec spec;
-            return flatChords.at((flatIndex < 0 || flatIndex >= spec.defaultBlockSize()) ? 0 : flatIndex);
+            return flatChords.at((flatIndex < 0 || flatIndex >= spec.blockSize()) ? 0 : flatIndex);
         }
 
         //==================================================================
@@ -177,7 +183,7 @@ namespace MinMax
         {
             ChordSpec spec;
 
-            if (index < spec.defaultBlockSize())
+            if (index < spec.blockSize())
             {
                 root = index / (spec.defaultTypeCount * spec.defaultVoicingCount);
                 int rem = index % (spec.defaultTypeCount * spec.defaultVoicingCount);
@@ -186,7 +192,7 @@ namespace MinMax
             }
             else
             {
-                int idx = index - spec.defaultBlockSize();
+                int idx = index - spec.blockSize();
                 root = spec.defaultRootCount; // ユーザー定義ブロック
                 type = idx / spec.userVoicingCount;
                 voicing = idx % spec.userVoicingCount;
