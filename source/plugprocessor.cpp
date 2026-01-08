@@ -451,7 +451,7 @@ namespace MinMax
 
 			Steinberg::uint64 onTime = baseOnTime + offsetSamples;
 
-			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + prm.get(PARAM::TRANSPOSE);
+			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + getOffset(i) + prm.get(PARAM::TRANSPOSE);
 			float velocity = baseVelocity * std::pow(BRUSH_DECAY, strcnt);
 
 			int channel = prm.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
@@ -494,7 +494,7 @@ namespace MinMax
 
 			Steinberg::uint64 onTime = baseOnTime + static_cast<Steinberg::uint64>(delayMs * samplesPerMs);
 
-			int pitch = chordMap.getTunings().data[i] + fretpos.data[i] + prm.get(PARAM::TRANSPOSE);
+			int pitch = chordMap.getTunings().data[i]  + fretpos.data[i] + getOffset(i) + prm.get(PARAM::TRANSPOSE);
 			float velocity = baseVelocity * std::pow(prm.get(PARAM::STRUM_DECAY) / 100.0f, strcnt);
 
 			int channel = prm.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
@@ -503,6 +503,11 @@ namespace MinMax
 			++strcnt;
 		}
 	}
+
+	int MyVSTProcessor::getOffset(int stringindex)
+	{
+		return (int)prm.get(PARAM::STR1_OFFSET + stringindex);
+	};
 
 	void MyVSTProcessor::trigMute(PARAM trigger, Steinberg::Vst::Event event)
 	{
@@ -548,7 +553,7 @@ namespace MinMax
 		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(PARAM::ARP_LENGTH)));
 		Steinberg::uint64 offTime = onTime + lengthSamples;
 
-		int pitch = chordMap.getTunings().data[stringindex] + fretpos.data[stringindex] + prm.get(PARAM::TRANSPOSE);
+		int pitch = chordMap.getTunings().data[stringindex] + fretpos.data[stringindex] + getOffset(stringindex) + prm.get(PARAM::TRANSPOSE);
 		float velocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
 		int channel = prm.get(PARAM::CHANNEL_SEPALATE) ? stringindex % 16 : 0;
