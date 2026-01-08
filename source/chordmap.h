@@ -145,6 +145,7 @@ namespace MinMax
             for (size_t i = 0; i < result.size; i++)
             {
                 result.data[i] = v.fretPosition[i];
+                result.offset[i] = offset[i];
             }
 
             return result;
