@@ -77,7 +77,7 @@ namespace MinMax
 		EventScheduler& scheduler = EventScheduler::Instance();
 
 		// コードマップ
-		ChordMap& chordMap = ChordMap::Instance();
+		ChordMap& chordMap = ChordMap::instance();
 
 		// プロセスデータの写し
 		Steinberg::Vst::ProcessData* processData{};

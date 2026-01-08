@@ -1,7 +1,8 @@
-//------------------------------------------------------------------------
-// Copyright(c) 2024 MinMax.
+Ôªø//------------------------------------------------------------------------
+// ChordMap.hÔºàÂü∫Ê∫ñÁâàÔºâ
 //------------------------------------------------------------------------
 #pragma once
+
 
 #include <array>
 #include <chrono>
@@ -19,182 +20,139 @@
 #include <sstream>
 #include <stdexcept>
 #include <string>
-#include <vector>
-#include <vstgui4/vstgui/lib/vstguibase.h>
 
 namespace MinMax
 {
-    inline constexpr int STRING_COUNT = 6;
+    // 7Âº¶„Åæ„ÅßÂØæÂøúÂèØËÉΩ„Å®„Åô„Çã
+    inline constexpr int MAX_STRINGS = 7;
+
+    //======================================================================
+    // Âº¶Êï∞ÂÆöÁæ©
+    //======================================================================
+    enum class StringCount : uint8_t
+    {
+        Ukulele4 = 4,
+        Guitar6 = 6,
+        Guitar7 = MAX_STRINGS,
+    };
+
+    inline constexpr int STRING_COUNT = (int)StringCount::Guitar6;
+
+    //======================================================================
+    // ChordMap Spec
+    //======================================================================
+    struct ChordSpec
+    {
+        // default table
+        static constexpr int defaultRootCount = 12;
+        static constexpr int defaultTypeCount = 29;
+        static constexpr int defaultVoicingCount = 3;
+
+        // user table
+        static constexpr int userRootCount = 1;
+        static constexpr int userTypeCount = 5;
+        static constexpr int userVoicingCount = 24;
+
+        static constexpr int TotalRootCount = defaultRootCount + userRootCount;
+
+        static constexpr int flatEntryCount = 
+            (defaultRootCount * defaultTypeCount * defaultVoicingCount) + 
+            (userRootCount * userTypeCount * userVoicingCount);
+
+        static constexpr int defaultBlockSize = defaultRootCount * defaultTypeCount * defaultVoicingCount;
+    };
 
     struct StringSet
     {
-        std::array<int, STRING_COUNT> data{};
+        // fret position
+        std::array<int, MAX_STRINGS> data{};
+
+        // valid strings
         size_t size = 0;
     };
 
+    //======================================================================
+    // ChordMap
+    //======================================================================
     class ChordMap
     {
     private:
-
-        class FlatChordEntry
+        struct FlatChordEntry
         {
-        public:
-
             int root = 0;
-            int valueType = 0;
-            int pos = 0;
-            std::string displayName{};
-        };
+            int type = 0;
+            int voicing = 0;
 
-        class Voicing
-        {
-        public:
+            std::array<int, MAX_STRINGS> fretPosition{};
 
-            int Id = 0;
-            std::string Name;
-            std::vector<int> Frets;
+            std::string displayName;
 
-            bool Deserialize(const rapidjson::Value& v)
+            void generateDisplayName(const char* rootName, const char* typeName)
             {
-                if (!v.IsObject()) return false;
-
-                if (v.HasMember("Id"))
-                {
-                    Id = v["Id"].GetInt();
-                }
-
-                if (v.HasMember("Name"))
-                {
-                    Name = v["Name"].GetString();
-                }
-
-                if (v.HasMember("FretPosition") && v["FretPosition"].IsArray())
-                {
-                    for (auto& f : v["FretPosition"].GetArray())
-                    {
-                        Frets.push_back(f.GetInt());
-                    }
-                }
-                return true;
+                displayName = std::string(rootName) + " " + typeName + " (" + std::to_string(voicing + 1) + ")";
             }
         };
 
-        class ParamChordType
-        {
-        public:
+        // „Ç≥„É≥„Çπ„Éà„É©„ÇØ„Çø„Éº„ÅØ private „Å´„Åó„Å¶Áõ¥Êé•ÁîüÊàê„ÇíÁ¶ÅÊ≠¢
+        ChordMap() = default;
 
-            int Id = 0;
-            std::string Name;
-            std::vector<Voicing> Voicings;
+        // „Ç≥„Éî„ÉºÁ¶ÅÊ≠¢
+        ChordMap(const ChordMap&) = delete;
+        ChordMap& operator=(const ChordMap&) = delete;
 
-            bool Deserialize(const rapidjson::Value& v)
-            {
-                if (!v.IsObject()) return false;
+        // „É†„Éº„ÉñÁ¶ÅÊ≠¢
+        ChordMap(ChordMap&&) = delete;
+        ChordMap& operator=(ChordMap&&) = delete;
 
-                if (v.HasMember("Id"))
-                {
-                    Id = v["Id"].GetInt();
-                }
-
-                if (v.HasMember("Name"))
-                {
-                    Name = v["Name"].GetString();
-                }
-
-                if (v.HasMember("Voicings") && v["Voicings"].IsArray())
-                {
-                    for (auto& item : v["Voicings"].GetArray())
-                    {
-                        Voicing vc;
-                        vc.Deserialize(item);
-                        Voicings.push_back(vc);
-                    }
-                }
-                return true;
-            }
-        };
-
-        class ParamChordRoot
-        {
-        public:
-
-            int Id = 0;
-            std::string Name;
-            std::vector<ParamChordType> ChordTypes;
-
-            bool Deserialize(const rapidjson::Value& v)
-            {
-                if (!v.IsObject()) return false;
-
-                if (v.HasMember("Id"))
-                {
-                    Id = v["Id"].GetInt();
-                }
-
-                if (v.HasMember("Name"))
-                {
-                    Name = v["Name"].GetString();
-                }
-
-                if (v.HasMember("ChordTypes") && v["ChordTypes"].IsArray())
-                {
-                    for (auto& item : v["ChordTypes"].GetArray())
-                    {
-                        ParamChordType c;
-                        c.Deserialize(item);
-                        ChordTypes.push_back(c);
-                    }
-                }
-                return true;
-            }
-        };
+        std::filesystem::path presetPath{};
 
     public:
-
-        static ChordMap& Instance()
+        //==================================================================
+        // „Ç∑„É≥„Ç∞„É´„Éà„É≥
+        //==================================================================
+        static ChordMap& instance()
         {
-            static ChordMap instance;
-            return instance;
+            static ChordMap _instance;
+            return _instance;
         }
 
-        void initFromPreset(const std::filesystem::path& path)
+        // Tunings
+        StringSet Tunings{};
+
+        // „Éï„É©„ÉÉ„ÉàÂåñ„Åï„Çå„Åü„Ç≥„Éº„Éâ
+        std::array<FlatChordEntry, ChordSpec::flatEntryCount> flatChords{};
+
+        std::array<std::string, (ChordSpec::defaultRootCount + ChordSpec::userRootCount)> RootNames{};
+        std::array<std::string, ChordSpec::defaultTypeCount> DefaultTypeNames{};
+        std::array<std::string, ChordSpec::userTypeCount> UserTypeNames{};
+
+        StringSet getTunings() const 
         {
-            auto loaded = LoadPreset(path);
-            Instance() = std::move(loaded);
+            return Tunings;
         }
 
-        StringSet getChordVoicing(int chordNumber) const
+        StringSet getChordVoicing(int flatIndex) const
         {
-            //
-            // ÉRÅ[ÉhÉ{ÉCÉVÉìÉOÇéÊìæÇ∑ÇÈ
-
             StringSet result{};
 
-            auto& s = getByIndex(chordNumber);
-            auto& v = ChordRoots[s.root].ChordTypes[s.valueType].Voicings[s.pos].Frets;
+            auto& v = flatChords[flatIndex];
 
-            result.size = STRING_COUNT;
+            result.size = (int)StringCount::Guitar6;
 
             for (size_t i = 0; i < result.size; i++)
             {
-                result.data[i] = v[i];
+                result.data[i] = v.voicing;
             }
 
             return result;
         }
 
-        StringSet getTunings() const
-        {
-            //
-            // äJï˙å∑ÇÃÉsÉbÉ`ÇéÊìæÇ∑ÇÈ
-
-            return Tunings;
-        }
+        ChordSpec spec;
 
         float getPositionAverage(int chordNumber) const
         {
             //
-            // ÉRÅ[ÉhÉ{ÉCÉVÉìÉOÇÃïΩãœÉtÉåÉbÉgà íuÇéÊìæÇ∑ÇÈ
+            // „Ç≥„Éº„Éâ„Éú„Ç§„Ç∑„É≥„Ç∞„ÅÆÂπ≥Âùá„Éï„É¨„ÉÉ„Éà‰ΩçÁΩÆ„ÇíÂèñÂæó„Åô„Çã
 
             auto& v = getChordVoicing(chordNumber);
 
@@ -210,82 +168,63 @@ namespace MinMax
 
             return count > 0 ? sum / float(count) : 0.0f;
         }
-
-        const FlatChordEntry& getByIndex(int index) const
+  
+        const int getFlatCount() const
         {
-            //
-            // ÉCÉìÉfÉbÉNÉXéwíËÇ…ÇÊÇÈÉRÅ[ÉhèÓïÒÇéÊìæÇ∑ÇÈ
-
-            return flatChords.at((index < 0 || index >= getFlatCount()) ? 0 : index);
+            return spec.flatEntryCount;
         }
 
-        int getFlatCount() const
+        const FlatChordEntry& getByIndex(int flatIndex) const
         {
-            //
-            // ìoò^Ç≥ÇÍÇƒÇ¢ÇÈÉRÅ[ÉhÇÃêîÇéÊìæÇ∑ÇÈ
-
-            return static_cast<int>(flatChords.size());
+            return flatChords.at((flatIndex < 0 || flatIndex >= spec.flatEntryCount) ? 0 : flatIndex);
         }
 
-        int getRootCount() const { return (int)ChordRoots.size(); }
+        const int getRootCount() const 
+        {
+            return (int)spec.TotalRootCount;
+        }
 
-        const std::string& getRootName(int r) const { return ChordRoots[r].Name; }
+        const std::string& getRootName(int r) const
+        {
+            return RootNames[r];
+        }
+
+        bool isDefault(int r) const
+        {
+            return r < spec.defaultRootCount;
+        }
 
         int getTypeCount(int r) const
         {
-            return (int)ChordRoots[r].ChordTypes.size();
+            return isDefault(r) ? spec.defaultTypeCount : spec.userTypeCount;
         }
 
-        const std::string& getTypeName(int r, int t) const
+        std::string& getTypeName(int r, int t)
         {
-            return ChordRoots[r].ChordTypes[t].Name;
+            return isDefault(r) ? DefaultTypeNames[t] : UserTypeNames[t];
         }
 
         int getVoicingCount(int r, int t) const
         {
-            return (int)ChordRoots[r].ChordTypes[t].Voicings.size();
+            return isDefault(r) ? spec.defaultVoicingCount : spec.userVoicingCount;
         }
 
-        const std::string& getVoicingName(int r, int t, int v) const
+        std::string& getVoicingName(int r, int t, int v)
         {
-            return ChordRoots[r].ChordTypes[t].Voicings[v].Name;
-        }
-
-        const StringSet getVoicing(int chordNumber)
-        {
-            StringSet result{};
-
-            if (chordNumber < 0 || chordNumber >= getFlatCount())
-            {
-                result.size = STRING_COUNT;
-                for (size_t i = 0; i < result.size; i++)
-                {
-                    result.data[i] = -1;
-                }
-                return result;
-            }
-
-            auto& f = getByIndex(chordNumber);
-            auto& v = ChordRoots[f.root].ChordTypes[f.valueType].Voicings[f.pos].Frets;
-
-            for (int i = 0; i < (int)v.size(); i++)
-            {
-                result.data[i] = v[i];
-                result.size++;
-            }
-
-            return result;
+            return std::to_string(v + 1);
         }
 
         int getFlatIndex(int r, int t, int v) const
         {
-            return indexTable[r][t][v];
+            return
+                isDefault(r)
+                ? (spec.defaultRootCount + spec.defaultTypeCount + spec.defaultVoicingCount) * r + (spec.defaultTypeCount + spec.defaultTypeCount + spec.defaultVoicingCount) * t + v
+                : spec.defaultBlockSize + (spec.userRootCount + spec.userTypeCount + spec.userVoicingCount) * r + (spec.userTypeCount + spec.userVoicingCount) * t + v;
         }
-        
-        void setVoicing(int chordNumber, const StringSet& frets)
+
+        void setVoicing(int flatIndex, StringSet& frets)
         {
-            auto& f = getByIndex(chordNumber);
-            auto& v = ChordRoots[f.root].ChordTypes[f.valueType].Voicings[f.pos].Frets;
+            auto& v = flatChords[flatIndex].fretPosition;
 
             for (size_t i = 0; i < frets.size && i < v.size(); ++i)
             {
@@ -296,14 +235,111 @@ namespace MinMax
             }
         }
 
-        void saveToFile(VSTGUI::UTF8StringPtr path)
+        std::string getPresetName()
+        {
+            return presetPath.stem().u8string();
+        }
+
+        std::filesystem::path getPresetPath()
+        {
+            return presetPath;
+        }
+
+        //==================================================================
+        // „Ç≥„Éº„Éâ„Éó„É™„Çª„ÉÉ„ÉàË™≠„ÅøËæº„Åø
+        //==================================================================
+        void loadChordPreset(const std::filesystem::path& path)
+        {
+            std::ifstream ifs(path);
+            if (!ifs.is_open())
+            {
+                throw std::runtime_error("Cannot open JSON file");
+            }
+
+            rapidjson::IStreamWrapper isw(ifs);
+            rapidjson::Document doc;
+            doc.ParseStream(isw);
+
+            if (!doc.IsObject())
+            {
+                throw std::runtime_error("Invalid JSON format");
+            }
+
+            // Tunings
+            if (doc.HasMember("Tunings") && doc["Tunings"].IsArray())
+            {
+                auto& arr = doc["Tunings"].GetArray();
+                for (size_t i = 0; i < arr.Size() && i < MAX_STRINGS; i++)
+                {
+                    Tunings.data[(int)i] = arr[(int)i].GetInt();
+                }
+                Tunings.size = arr.Size();
+            }
+
+            // ChordRoots
+            int flatIndex = 0;
+
+            if (doc.HasMember("ChordRoots") && doc["ChordRoots"].IsArray())
+            {
+                auto& roots = doc["ChordRoots"].GetArray();
+
+                for (int r = 0; r < (int)roots.Size(); r++)
+                {
+                    auto& rootObj = roots[r];
+                    RootNames[r] = rootObj["Name"].GetString();
+
+                    auto& types = rootObj["ChordTypes"].GetArray();
+
+                    if (r > spec.TotalRootCount)
+                    {
+                        throw "ChordMap Format Error";
+                    }
+
+                    if (r < spec.TotalRootCount)
+                    {
+                        for (int t = 0; t < (int)types.Size(); t++)
+                        {
+                            auto typeName = types[t]["Name"].GetString();
+                            if (r < spec.defaultRootCount)
+                            {
+                                DefaultTypeNames[t] = typeName;
+                            }
+                            else if (r < spec.TotalRootCount)
+                            {
+                                UserTypeNames[t] = typeName;
+                            }
+
+                            auto& voicings = types[t]["Voicings"].GetArray();
+                            for (size_t v = 0; v < voicings.Size(); v++)
+                            {
+                                auto& fc = flatChords[flatIndex++];
+                                fc.root = r;
+                                fc.type = t;
+                                fc.voicing = (int)v;
+                                fc.displayName = RootNames[r] + " " + typeName + " " + "(" + std::to_string(v + 1) + ")";
+
+                                int p = 0;
+                                for (auto& fp : voicings[(int)v]["FretPosition"].GetArray())
+                                {
+                                    fc.fretPosition[p] = fp.GetInt();
+                                    p++;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        //==================================================================
+        // „Ç≥„Éº„Éâ„Éó„É™„Çª„ÉÉ„ÉàÊõ∏„ÅçÂá∫„Åó
+        //==================================================================
+        void saveChordPreset(const std::filesystem::path& path)
         {
             namespace fs = std::filesystem;
 
-            std::wstring wpath = convertUtf8ToUtf16(path);
-            fs::path filePath = fs::path(wpath);
+            fs::path filePath = fs::path(path);
 
-            // 1. å≥ÉtÉ@ÉCÉãÇÃÉoÉbÉNÉAÉbÉvçÏê¨Åiì˙éûïtÇ´Åj
             if (std::filesystem::exists(filePath))
             {
                 auto t = std::chrono::system_clock::now();
@@ -316,10 +352,10 @@ namespace MinMax
 #endif
 
                 std::ostringstream oss;
-                oss << filePath.stem().string() << "_"
-                    << std::put_time(&tm, "%Y%m%d_%H%M%S")
-                    << filePath.extension().string();
 
+                oss << path.stem().string() << "_"
+                    << std::put_time(&tm, "%Y%m%d_%H%M%S")
+                    << path.extension().string();
 
                 fs::path backupFolder = filePath.parent_path().append("backup");
                 fs::path backupFile = backupFolder / oss.str();
@@ -332,7 +368,7 @@ namespace MinMax
                 fs::copy_file(filePath, backupFile, fs::copy_options::overwrite_existing);
             }
 
-            // 2. JSON ÉIÉuÉWÉFÉNÉgçÏê¨
+            // 2. JSON „Ç™„Éñ„Ç∏„Çß„ÇØ„Éà‰ΩúÊàê
             rapidjson::Document doc;
             doc.SetObject();
             auto& allocator = doc.GetAllocator();
@@ -345,34 +381,38 @@ namespace MinMax
             }
             doc.AddMember("Tunings", notes, allocator);
 
-            // ChordRoots
+            //
+            int flatIndex = 0;
             rapidjson::Value chordRoots(rapidjson::kArrayType);
-            for (auto& r : ChordRoots)
+            for (int r = 0; r < spec.TotalRootCount; r++)
             {
+                bool isDefault = r < spec.defaultRootCount;
+                
                 rapidjson::Value rootObj(rapidjson::kObjectType);
-                rootObj.AddMember("Id", r.Id, allocator);
-                rootObj.AddMember("Name", rapidjson::Value(r.Name.c_str(), allocator), allocator);
+                rootObj.AddMember("Name", rapidjson::Value(RootNames[r].c_str(), allocator), allocator);
 
                 rapidjson::Value types(rapidjson::kArrayType);
-                for (auto& t : r.ChordTypes)
+                int tmax = isDefault ? spec.defaultTypeCount : spec.userTypeCount;
+                for (int t = 0; t < tmax; t++)
                 {
+                    auto typeName = isDefault ? DefaultTypeNames[t] : UserTypeNames[t];
                     rapidjson::Value typeObj(rapidjson::kObjectType);
-                    typeObj.AddMember("Id", t.Id, allocator);
-                    typeObj.AddMember("Name", rapidjson::Value(t.Name.c_str(), allocator), allocator);
+                    typeObj.AddMember("Name", rapidjson::Value(typeName.c_str(), allocator), allocator);
 
                     rapidjson::Value voicings(rapidjson::kArrayType);
-                    for (auto& v : t.Voicings)
+                    int vmax = isDefault ? spec.defaultVoicingCount : spec.userVoicingCount;
+                    for (int v = 0; v < vmax; v++)
                     {
                         rapidjson::Value vObj(rapidjson::kObjectType);
-                        vObj.AddMember("Id", v.Id, allocator);
-                        vObj.AddMember("Name", rapidjson::Value(v.Name.c_str(), allocator), allocator);
-
                         rapidjson::Value frets(rapidjson::kArrayType);
-                        for (auto f : v.Frets)
+                        for (auto f : flatChords[flatIndex].fretPosition)
+                        {
                             frets.PushBack(f, allocator);
-
+                        }
                         vObj.AddMember("FretPosition", frets, allocator);
                         voicings.PushBack(vObj, allocator);
+
+                        flatIndex++;
                     }
                     typeObj.AddMember("Voicings", voicings, allocator);
                     types.PushBack(typeObj, allocator);
@@ -382,7 +422,7 @@ namespace MinMax
             }
             doc.AddMember("ChordRoots", chordRoots, allocator);
 
-            // 3. ÉtÉ@ÉCÉãÇ…èëÇ´çûÇ›
+            // 3. „Éï„Ç°„Ç§„É´„Å´Êõ∏„ÅçËæº„Åø
             std::ofstream ofs(filePath);
             if (!ofs.is_open())
             {
@@ -397,130 +437,7 @@ namespace MinMax
             presetPath.replace_filename(filePath);
         }
 
-        std::filesystem::path getPresetPath()
-        {
-            return presetPath;
-        }
-
-        std::string getPresetName()
-        {
-            return getPresetPath().stem().u8string();
-        }
-
-    protected:
-        std::filesystem::path presetPath;
-
-        StringSet Tunings{};
-
-        std::vector<ParamChordRoot> ChordRoots;
-        std::vector<FlatChordEntry> flatChords;
-        std::vector<std::vector<std::vector<int>>> indexTable;
-
-        ChordMap() = default;
-        ChordMap(const ChordMap&) = delete;
-        ChordMap& operator=(const ChordMap&) = delete;
-        ChordMap(ChordMap&&) = default;
-        ChordMap& operator=(ChordMap&&) = default;
-
-        void buildFlatTable()
-        {
-            //
-            // äKëwâªÇ≥ÇÍÇƒÇ¢ÇÈÉRÅ[ÉhÉ}ÉbÉvÇíºóÒÇ…ï¿Ç◊ë÷Ç¶ÇÈ
-
-            flatChords.clear();
-            indexTable.clear();
-
-            indexTable.resize(ChordRoots.size());
-
-            int index = 0;
-
-            for (int r = 0; r < (int)ChordRoots.size(); ++r)
-            {
-                indexTable[r].resize(ChordRoots[r].ChordTypes.size());
-
-                for (int t = 0; t < (int)ChordRoots[r].ChordTypes.size(); ++t)
-                {
-                    auto& types = ChordRoots[r].ChordTypes[t];
-                    indexTable[r][t].resize(types.Voicings.size());
-
-                    for (int p = 0; p < (int)types.Voicings.size(); ++p)
-                    {
-                        FlatChordEntry e;
-                        e.root = r;
-                        e.valueType = t;
-                        e.pos = p;
-                        e.displayName =
-                            ChordRoots[r].Name + " " + types.Name + " (" + std::to_string(p + 1) + ")";
-
-                        flatChords.push_back(e);
-                        indexTable[r][t][p] = index++;
-                    }
-                }
-            }
-        }
-
-        bool Deserialize(const rapidjson::Value& v)
-        {
-            if (!v.IsObject()) return false;
-
-            ChordRoots.clear();
-            flatChords.clear();
-            indexTable.clear();
-
-            if (v.HasMember("Tunings") && v["Tunings"].IsArray())
-            {
-                Tunings.size = STRING_COUNT;
-
-                size_t i = 0;
-                for (auto& item : v["Tunings"].GetArray())
-                {
-                    if (i >= Tunings.size) break;
-                    Tunings.data[i++] = item.GetInt();
-                }
-            }
-
-            if (v.HasMember("ChordRoots") && v["ChordRoots"].IsArray())
-            {
-                for (auto& item : v["ChordRoots"].GetArray())
-                {
-                    ParamChordRoot r;
-                    r.Deserialize(item);
-                    ChordRoots.push_back(r);
-                }
-            }
-
-            return true;
-        }
-
-        static ChordMap LoadPreset(std::filesystem::path path)
-        {
-            std::ifstream ifs(path);
-            if (!ifs.is_open())
-            {
-                throw std::runtime_error("Cannot open file: ");
-            }
-
-            rapidjson::IStreamWrapper isw(ifs);
-            rapidjson::Document doc;
-            doc.ParseStream(isw);
-
-            if (!doc.IsObject())
-            {
-                throw std::runtime_error("JSON format error in file: ");
-            }
-
-            ChordMap map;
-
-            map.Deserialize(doc);
-            map.buildFlatTable();
-
-            map.presetPath.clear();
-            map.presetPath.replace_filename(path);
-
-            return map;
-        }
- 
-        // ï∂éöóÒïœä∑ UTF8 -> UTF16
+        // ÊñáÂ≠óÂàóÂ§âÊèõ UTF8 -> UTF16
         static inline std::wstring convertUtf8ToUtf16(char const* str)
         {
 #pragma warning(suppress : 4996)
@@ -528,5 +445,5 @@ namespace MinMax
 #pragma warning(suppress : 4996)
             return converter.from_bytes(str);
         }
-   };
+    };
 }

@@ -118,7 +118,7 @@ namespace MinMax
 
         ChordOptionMenu* createChordOptionMenu(const VSTGUI::CRect& size, int32_t tag)
         {
-            auto& chordMap = ChordMap::Instance();
+            auto& chordMap = ChordMap::instance();
 
             // トップレベル OptionMenu
             auto* rootMenu = new ChordOptionMenu(size, [this](ChordOptionMenu* p, int value) { onSelectedChordChanged(value); });
@@ -170,7 +170,7 @@ namespace MinMax
 
         void setChordText(int value)
         {
-            const auto& map = ChordMap::Instance();
+            const auto& map = ChordMap::instance();
 
             VSTGUI::UTF8String name =
                 (value >= 0 && value < map.getFlatCount())

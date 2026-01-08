@@ -142,7 +142,7 @@ namespace MinMax
             labelPreset = new VSTGUI::CTextLabel(VSTGUI::CRect(140, 1, 340, 18));
             labelPreset->setBackColor(VSTGUI::kGreyCColor);
             labelPreset->setFont(VSTGUI::kNormalFontSmall);
-            labelPreset->setText(ChordMap::Instance().getPresetName());
+            labelPreset->setText(ChordMap::instance().getPresetName());
             addView(labelPreset);
         }
 
@@ -202,8 +202,9 @@ namespace MinMax
                     {
                         try
                         {
-                            auto& cm = ChordMap::Instance();
-                            cm.initFromPreset(f);
+                            auto& cm = ChordMap::instance();
+                            std::filesystem::path p(f);
+                            cm.loadChordPreset(p);
                             auto cn = chordSelecter->getCurrentChordNumber();
                             auto& pf = cm.getChordVoicing(cn);
                             fretBoard->setPressedFrets(pf);
@@ -230,8 +231,9 @@ namespace MinMax
                 {
                     try
                     {
-                        ChordMap::Instance().saveToFile(path);
-                        labelPreset->setText(ChordMap::Instance().getPresetName());
+                        std::filesystem::path p(path);
+                        ChordMap::instance().saveChordPreset(p);
+                        labelPreset->setText(ChordMap::instance().getPresetName());
                     }
                     catch (...)
                     {
@@ -253,7 +255,7 @@ namespace MinMax
         {
             auto pressed = fretBoard->getPressedFrets();
             int chordNum = chordSelecter->getCurrentChordNumber();
-            ChordMap::Instance().setVoicing(chordNum, pressed);
+            ChordMap::instance().setVoicing(chordNum, pressed);
 
             exitEditMode(false);
         }
@@ -274,7 +276,7 @@ namespace MinMax
 
         StringSet getVoicing(int value) const 
         {
-            return ChordMap::Instance().getChordVoicing(value);
+            return ChordMap::instance().getChordVoicing(value);
         }
 
         void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(VSTGUI::UTF8StringPtr path)> fileSelected)
@@ -286,7 +288,7 @@ namespace MinMax
 
             selector->setTitle(Files::TITLE);
             selector->setInitialDirectory(Files::getPresetPath().string());
-            selector->setDefaultSaveName(ChordMap::Instance().getPresetPath().filename().string());
+            selector->setDefaultSaveName(ChordMap::instance().getPresetPath().filename().string());
             selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER, Files::FILE_EXT));
 
             p->getFrame()->setFocusView(nullptr);

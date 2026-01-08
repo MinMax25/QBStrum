@@ -25,7 +25,6 @@
 #include <vector>
 
 #include "chordmap.h"
-#include "chordmapfixed.h"
 #include "cnotemsg.h"
 #include "EventScheduler.h"
 #include "myparameters.h"
@@ -151,7 +150,7 @@ namespace MinMax
 		if (io.readString(path))
 		{
 			std::filesystem::path p(path);
-			ChordMap::Instance().initFromPreset(path);
+			ChordMap::instance().loadChordPreset(path);
 		}
 
 		return Steinberg::kResultOk;
@@ -167,7 +166,7 @@ namespace MinMax
 			if (!io.writeDouble(plain)) return Steinberg::kResultFalse;
 		}
 
-		const std::string path = ChordMap::Instance().getPresetPath().u8string();
+		const std::string path = ChordMap::instance().getPresetPath().u8string();
 		if (!io.writeString(path)) return Steinberg::kResultFalse;
 
 		return Steinberg::kResultOk;
