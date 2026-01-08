@@ -29,30 +29,30 @@ namespace MinMax
         Guitar7 = MAX_STRINGS,
     };
 
-    struct StringCountEntry
-    {
-        const char* name;
-        StringCount value;
-    };
+    //struct StringCountEntry
+    //{
+    //    const char* name;
+    //    StringCount value;
+    //};
 
-    inline constexpr StringCountEntry StringCountTable[] =
-    {
-        { "Ukulele4", StringCount::Ukulele4 },
-        { "Guitar6",  StringCount::Guitar6 },
-        { "Guitar7",  StringCount::Guitar7 },
-    };
+    //inline constexpr StringCountEntry StringCountTable[] =
+    //{
+    //    { "Ukulele4", StringCount::Ukulele4 },
+    //    { "Guitar6",  StringCount::Guitar6 },
+    //    { "Guitar7",  StringCount::Guitar7 },
+    //};
 
-    inline StringCount parseStringCount(const char* str)
-    {
-        for (auto& e : StringCountTable)
-        {
-            if (std::strcmp(e.name, str) == 0)
-            {
-                return e.value;
-            }
-        }
-        return StringCount::Guitar6;
-    }
+    //inline StringCount parseStringCount(const char* str)
+    //{
+    //    for (auto& e : StringCountTable)
+    //    {
+    //        if (std::strcmp(e.name, str) == 0)
+    //        {
+    //            return e.value;
+    //        }
+    //    }
+    //    return StringCount::Guitar6;
+    //}
 
     //======================================================================
     // 定数
@@ -106,8 +106,17 @@ namespace MinMax
 
     struct ChordMapX
     {
+        //==================================================================
+        // シングルトン
+        //==================================================================
+        static ChordMapX& instance()
+        {
+            static ChordMapX _instance;
+            return _instance;
+        }
+
         // Tunings
-        StringSetX Tunings{ 64, 59, 55, 50, 45, 40 };
+        StringSetX Tunings{ { 64, 59, 55, 50, 45, 40, 0 }, MAX_STRINGS };
 
         // フラット化されたコード
         std::array<FlatChordEntry, MAX_FLATENTRIES> flatChords{};
@@ -226,15 +235,6 @@ namespace MinMax
                     }
                 }
             }
-        }
-
-        //==================================================================
-        // シングルトン
-        //==================================================================
-        static ChordMapX& instance()
-        {
-            static ChordMapX _instance;
-            return _instance;
         }
 
     private:
