@@ -327,9 +327,9 @@ namespace MinMax
         }
 
         // 押弦情報を上書きして再描画
-        void setPressedFrets(const StringSet& newFrets)
+        void setPressedFrets(const StringSet& set)
         {
-            pressed = newFrets;
+            pressed = set;
             invalid(); // 再描画
         }
 

@@ -66,6 +66,7 @@ namespace MinMax
     {
         // fret position
         std::array<int, MAX_STRINGS> data{};
+        std::array<int, MAX_STRINGS> offset{};
 
         // valid strings
         size_t size = 0;
