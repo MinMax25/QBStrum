@@ -63,6 +63,7 @@ namespace MinMax
         CLASS_METHODS(CFretBoardView, CViewContainer)
 
     protected:
+
         enum class MenuType 
         { 
             File, 
@@ -224,6 +225,7 @@ namespace MinMax
         void saveChordMap()
         {
             if (!fileButton) return;
+
             showDialog(
                 fileButton,
                 VSTGUI::CNewFileSelector::kSelectSaveFile,

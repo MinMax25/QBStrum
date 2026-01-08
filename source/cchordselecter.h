@@ -123,6 +123,7 @@ namespace MinMax
             // トップレベル OptionMenu
             auto* rootMenu = new ChordOptionMenu(size, [this](ChordOptionMenu* p, int value) { onSelectedChordChanged(value); });
 
+            int flatIndex = 0;
             for (int r = 0; r < chordMap.getRootCount(); ++r)
             {
                 // ルート項目
@@ -140,9 +141,7 @@ namespace MinMax
 
                     for (int v = 0; v < chordMap.getVoicingCount(r, t); ++v)
                     {
-                        int flatIndex = chordMap.getFlatIndex(r, t, v);
-
-                        auto* voicingItem = new VSTGUI::CMenuItem(std::to_string(v + 1), flatIndex);
+                        auto* voicingItem = new VSTGUI::CMenuItem(std::to_string(v + 1), flatIndex++);
 
                         voicingMenu->addEntry(voicingItem);
                     }

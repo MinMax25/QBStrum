@@ -141,7 +141,7 @@ namespace MinMax
 
             for (size_t i = 0; i < result.size; i++)
             {
-                result.data[i] = v.voicing;
+                result.data[i] = v.fretPosition[i];
             }
 
             return result;
@@ -207,14 +207,6 @@ namespace MinMax
         int getVoicingCount(int r, int t) const
         {
             return isDefault(r) ? spec.defaultVoicingCount : spec.userVoicingCount;
-        }
-
-        int getFlatIndex(int r, int t, int v) const
-        {
-            return
-                isDefault(r)
-                ? (spec.defaultRootCount + spec.defaultTypeCount + spec.defaultVoicingCount) * r + (spec.defaultTypeCount + spec.defaultTypeCount + spec.defaultVoicingCount) * t + v
-                : spec.defaultBlockSize + (spec.userRootCount + spec.userTypeCount + spec.userVoicingCount) * r + (spec.userTypeCount + spec.userVoicingCount) * t + v;
         }
 
         void setVoicing(int flatIndex, StringSet& frets)
