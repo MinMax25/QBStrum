@@ -79,6 +79,9 @@ namespace MinMax
             int root = 0;
             int type = 0;
             int voicing = 0;
+
+            std::array<int, MAX_STRINGS> fretPosition{};
+
             std::string displayName;
 
             void generateDisplayName(const char* rootName, const char* typeName)
@@ -119,6 +122,53 @@ namespace MinMax
         std::array<std::string, (ChordSpec::defaultRootCount + ChordSpec::userRootCount)> RootNames{};
         std::array<std::string, ChordSpec::defaultTypeCount> DefaultTypeNames{};
         std::array<std::string, ChordSpec::userTypeCount> UserTypeNames{};
+
+        StringSetX getTunings() const 
+        {
+            return Tunings;
+        }
+
+        StringSet getChordVoicing(int flatIndex) const
+        {
+            StringSet result{};
+
+            auto& v = flatChords[flatIndex];
+
+            result.size = STRING_COUNT;
+
+            for (size_t i = 0; i < result.size; i++)
+            {
+                result.data[i] = v.voicing;
+            }
+
+            return result;
+        }
+
+        float getPositionAverage(int chordNumber) const
+        {
+            //
+            // コードボイシングの平均フレット位置を取得する
+
+            auto& v = getChordVoicing(chordNumber);
+
+            int sum = 0;
+            int count = 0;
+
+            for (size_t i = 0; i < v.size; i++)
+            {
+                if (v.data[i] < 0) continue;
+                sum += v.data[i];
+                ++count;
+            }
+
+            return count > 0 ? sum / float(count) : 0.0f;
+        }
+
+        const FlatChordEntry& getByIndex(int flatIndex) const
+        {
+            ChordSpec spec;
+            return flatChords.at((flatIndex < 0 || flatIndex >= spec.defaultBlockSize()) ? 0 : flatIndex);
+        }
 
         //==================================================================
         // flatIndex から root/type/voicing を取得
@@ -217,6 +267,13 @@ namespace MinMax
                                 fc.type = t;
                                 fc.voicing = (int)v;
                                 fc.displayName = RootNames[r] + " " + typeName + " " + "(" + std::to_string(v + 1) + ")";
+
+                                int p = 0;
+                                for (auto& fp : voicings[(int)v]["FretPosition"].GetArray())
+                                {
+                                    fc.fretPosition[p] = fp.GetInt();
+                                    p++;
+                                }
                             }
                         }
                     }
@@ -276,6 +333,7 @@ namespace MinMax
             doc.AddMember("Tunings", notes, allocator);
 
             //
+            int flatIndex = 0;
             rapidjson::Value chordRoots(rapidjson::kArrayType);
             for (int r = 0; r < spec.TotalRootCount; r++)
             {
@@ -297,15 +355,15 @@ namespace MinMax
                     for (int v = 0; v < vmax; v++)
                     {
                         rapidjson::Value vObj(rapidjson::kObjectType);
-                        vObj.AddMember("Name", rapidjson::Value(std::to_string(v + 1).c_str(), allocator), allocator);
-
                         rapidjson::Value frets(rapidjson::kArrayType);
-                        for (int f = 0; f < Tunings.size; f++)
+                        for (auto f : flatChords[flatIndex].fretPosition)
                         {
                             frets.PushBack(f, allocator);
                         }
                         vObj.AddMember("FretPosition", frets, allocator);
                         voicings.PushBack(vObj, allocator);
+
+                        flatIndex++;
                     }
                     typeObj.AddMember("Voicings", voicings, allocator);
                     types.PushBack(typeObj, allocator);
