@@ -57,24 +57,26 @@ namespace MinMax
     //======================================================================
     // 定数
     //======================================================================
-    inline constexpr int MAX_DEFAULT_ROOTS = 12;
-    inline constexpr int MAX_DEFAULT_TYPES = 29;
-    inline constexpr int MAX_DEFAULT_VOICINGS = 3;
-    inline constexpr int MAX_USER_TYPES = 5;
-    inline constexpr int MAX_USER_VOICINGS = 24;
-    inline constexpr int MAX_FLATENTRIES = MAX_DEFAULT_ROOTS * MAX_DEFAULT_TYPES * MAX_DEFAULT_VOICINGS + MAX_USER_TYPES * MAX_USER_VOICINGS;
+    //inline constexpr int MAX_DEFAULT_ROOTS = 12;
+    //inline constexpr int MAX_DEFAULT_TYPES = 29;
+    //inline constexpr int MAX_DEFAULT_VOICINGS = 3;
+    //inline constexpr int MAX_USER_TYPES = 5;
+    //inline constexpr int MAX_USER_VOICINGS = 24;
+    //inline constexpr int MAX_FLATENTRIES = MAX_DEFAULT_ROOTS * MAX_DEFAULT_TYPES * MAX_DEFAULT_VOICINGS + MAX_USER_TYPES * MAX_USER_VOICINGS;
 
     //======================================================================
     // ChordSpec
     //======================================================================
     struct ChordSpec
     {
-        int defaultRootCount = MAX_DEFAULT_ROOTS;
-        int defaultTypeCount = MAX_DEFAULT_TYPES;
-        int defaultVoicingCount = MAX_DEFAULT_VOICINGS;
+        static constexpr int defaultRootCount = 12;
+        static constexpr int defaultTypeCount = 29;
+        static constexpr int defaultVoicingCount = 3;
 
-        int userTypeCount = MAX_USER_TYPES;
-        int userVoicingCount = MAX_USER_VOICINGS;
+        static constexpr int userTypeCount = 5;
+        static constexpr int userVoicingCount = 24;
+
+        static constexpr int flatEntryCount = (defaultRootCount * defaultTypeCount * defaultVoicingCount) + (userTypeCount * userVoicingCount);
 
         int defaultBlockSize() const
         {
@@ -119,13 +121,13 @@ namespace MinMax
         StringSetX Tunings{ { 64, 59, 55, 50, 45, 40, 0 }, MAX_STRINGS };
 
         // フラット化されたコード
-        std::array<FlatChordEntry, MAX_FLATENTRIES> flatChords{};
+        std::array<FlatChordEntry, ChordSpec::flatEntryCount> flatChords{};
 
         ChordSpec spec;
 
-        std::array<std::string, MAX_DEFAULT_TYPES> DefaultTypeNames{};
-        std::array<std::string, MAX_USER_TYPES> UserTypeNames{};
-        std::array<std::string, MAX_DEFAULT_ROOTS + 1> RootNames{};
+        std::array<std::string, ChordSpec::defaultRootCount + 1> RootNames{};
+        std::array<std::string, ChordSpec::defaultTypeCount> DefaultTypeNames{};
+        std::array<std::string, ChordSpec::userTypeCount> UserTypeNames{};
 
         //==================================================================
         // flatIndex への変換
@@ -196,22 +198,22 @@ namespace MinMax
             {
                 auto& roots = doc["ChordRoots"].GetArray();
 
-                for (int r = 0; r < (int)roots.Size() && r < MAX_DEFAULT_ROOTS + 1; r++)
+                for (int r = 0; r < (int)roots.Size() && r < ChordSpec::defaultRootCount + 1; r++)
                 {
                     auto& rootObj = roots[r];
                     RootNames[r] = rootObj["Name"].GetString();
 
                     auto& types = rootObj["ChordTypes"].GetArray();
 
-                    if (r < MAX_DEFAULT_ROOTS)
+                    if (r < ChordSpec::defaultRootCount)
                     {
                         // システムルート
-                        for (int t = 0; t < (int)types.Size() && t < MAX_DEFAULT_TYPES; t++)
+                        for (int t = 0; t < (int)types.Size() && t < ChordSpec::defaultTypeCount; t++)
                         {
                             DefaultTypeNames[t] = types[t]["Name"].GetString();
 
                             auto& voicings = types[t]["Voicings"].GetArray();
-                            for (size_t v = 0; v < voicings.Size() && v < MAX_DEFAULT_VOICINGS; v++)
+                            for (size_t v = 0; v < voicings.Size() && v < ChordSpec::defaultVoicingCount; v++)
                             {
                                 flatChords[toFlatIndex((int)r, (int)t, (int)v)].
                                     generateDisplayName(RootNames[r].c_str(), DefaultTypeNames[t].c_str());
@@ -221,12 +223,12 @@ namespace MinMax
                     else
                     {
                         // ユーザールート（root=12）
-                        for (int t = 0; t < (int)types.Size() && t < MAX_USER_TYPES; t++)
+                        for (int t = 0; t < (int)types.Size() && t < ChordSpec::userTypeCount; t++)
                         {
                             UserTypeNames[t] = types[t]["Name"].GetString();
 
                             auto& voicings = types[t]["Voicings"].GetArray();
-                            for (size_t v = 0; v < voicings.Size() && v < MAX_USER_VOICINGS; v++)
+                            for (size_t v = 0; v < voicings.Size() && v < ChordSpec::userVoicingCount; v++)
                             {
                                 flatChords[toFlatIndex((int)r, (int)t, (int)v)].
                                     generateDisplayName(RootNames[r].c_str(), UserTypeNames[t].c_str());
