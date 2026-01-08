@@ -268,7 +268,7 @@ namespace MinMax
 		std::filesystem::path path = std::filesystem::path(getenv(STR_USERPROFILE)).append(PRESET_ROOT).make_preferred();
 		
 		ChordMap::Instance().initFromPreset(path);
-		ChordMapX::instance().loadFromJson(path);
+		ChordMapX::instance().loadChordPreset(path);
 
 		std::filesystem::path sp = std::filesystem::path("d:/temp/test.json");
 		//ChordMapX::instance().saveToJson(sp);

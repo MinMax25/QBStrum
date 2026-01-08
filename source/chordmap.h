@@ -510,11 +510,9 @@ namespace MinMax
             }
 
             ChordMap map;
+
             map.Deserialize(doc);
             map.buildFlatTable();
-
-            std::string presetFileName = path.filename().string();
-            size_t dot = presetFileName.find_last_of('.');
 
             map.presetPath.clear();
             map.presetPath.replace_filename(path);
@@ -525,7 +523,9 @@ namespace MinMax
         // •¶Žš—ñ•ÏŠ· UTF8 -> UTF16
         static inline std::wstring convertUtf8ToUtf16(char const* str)
         {
+#pragma warning(suppress : 4996)
             std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
+#pragma warning(suppress : 4996)
             return converter.from_bytes(str);
         }
    };

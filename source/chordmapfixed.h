@@ -138,9 +138,9 @@ namespace MinMax
         }
 
         //==================================================================
-        // JSON から読み込みとフラット化統合
+        // コードプリセット読み込み
         //==================================================================
-        void loadFromJson(const std::filesystem::path& path)
+        void loadChordPreset(const std::filesystem::path& path)
         {
             ChordSpec spec;
 
@@ -209,11 +209,8 @@ namespace MinMax
                                 auto& fc = flatChords[flatIndex++];
                                 fc.root = r;
                                 fc.type = t;
-                                fc.voicing = v;
-                                fc.displayName = 
-                                    RootNames[r] + " " +
-                                    typeName + " " +
-                                    "(" + std::to_string(v + 1) + ")";
+                                fc.voicing = (int)v;
+                                fc.displayName = RootNames[r] + " " + typeName + " " + "(" + std::to_string(v + 1) + ")";
                             }
                         }
                     }
@@ -222,4 +219,10 @@ namespace MinMax
         }
     };
 
+    //==================================================================
+    // コードプリセット書き出し
+    //==================================================================
+    void saveChordPreset(const std::filesystem::path& path)
+    {
+    }
 }
