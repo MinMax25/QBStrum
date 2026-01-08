@@ -181,6 +181,31 @@ namespace MinMax
             return (int)spec.TotalRootCount;
         }
 
+        const std::string& getRootName(int r) const
+        {
+            return RootNames[r];
+        }
+
+        bool isDefault(int r) const
+        {
+            return r < spec.defaultRootCount;
+        }
+
+        int getTypeCount(int r) const
+        {
+            return isDefault(r) ? spec.defaultTypeCount : spec.userTypeCount;
+        }
+
+        std::string& getTypeName(int r, int t)
+        {
+            return isDefault(r) ? DefaultTypeNames[t] : UserTypeNames[t];
+        }
+
+        int getVoicingCount(int r, int t) const
+        {
+            return isDefault(r) ? spec.defaultVoicingCount : spec.userVoicingCount;
+        }
+
         //==================================================================
         // flatIndex から root/type/voicing を取得
         //==================================================================
