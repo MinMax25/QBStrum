@@ -1737,7 +1737,7 @@
 						"attributes": {
 							"class": "CSegmentButton",
 							"control-tag": "CTL_TABINDEX1",
-							"font": "~ NormalFontSmaller",
+							"font": "~ NormalFontVerySmall",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
 							"gradient": "Menu Button Gradient",

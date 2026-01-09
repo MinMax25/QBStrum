@@ -89,13 +89,14 @@ namespace MinMax
         void onParameterChordChanged(int value)
         {
             if (canEdit) return;
-            fretBoard->setPressedFrets(getVoicing(value));
-            chordSelecter->setChordNumber(value);
+            //fretBoard->setPressedFrets(getVoicing(value));
+            //chordSelecter->setChordNumber(value);
         }
 
         void onSelectedChordChanged(int value)
         {
             if (canEdit) return;
+
             auto* c = editor->getController();
             c->beginEdit(PARAM::CHORD_NUM);
             Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(PARAM::CHORD_NUM, value);
@@ -130,7 +131,7 @@ namespace MinMax
         {
             chordListner = 
                 new CChordListner(
-                    editor, PARAM::CHORD_NUM,
+                    editor, PARAM::CHORD_STATE_REVISION,
                     [this](CChordListner*, int v)
                     {
                         onParameterChordChanged(v);

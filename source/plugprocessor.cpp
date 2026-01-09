@@ -255,8 +255,8 @@ namespace MinMax
 			case PARAM::CHORD_MSB:
 			{
 				Steinberg::Vst::ParamValue num = prm.get(PARAM::CHORD_MSB) * 128 + prm.get(PARAM::CHORD_LSB);
-				notifyChordNumberChanged(num);
 				prm.set(PARAM::CHORD_NUM, num);
+				notifyChordNumberChanged((int)num);
 				break;
 			}
 			case PARAM::NEED_SAMPLEBLOCK_ADUST:
@@ -691,13 +691,32 @@ namespace MinMax
 		return result;
 	}
 
-	void MyVSTProcessor::notifyChordNumberChanged(int chordNumber)
+	void MyVSTProcessor::notifyChordNumberChanged(int flatIndex)
 	{
+		StringSet set{};
+
+		auto v = ChordMap::instance().getChordVoicing(flatIndex);
+
+		if (++chordState > 999999)
+		{
+			chordState = 0;
+		}
+
+		set.flatIndex = v.flatIndex;
+		set.state = chordState;
+		set.size = v.size;
+		
+		for (int i = 0; i < v.size; i++)
+		{
+			set.data[i] = v.data[i];
+			set.offset[i] = v.offset[i];
+		}
+
 		Steinberg::FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();
 		if (!msg) return;
 
 		msg->setMessageID(MSG_CHORD_CHANGED);
-		msg->getAttributes()->setBinary(MSG_CHORD_VALUE, &chordNumber, sizeof(int));
+		msg->getAttributes()->setBinary(MSG_CHORD_VALUE, &set, sizeof(StringSet));
 		sendMessage(msg);
 	}
 

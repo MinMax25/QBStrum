@@ -64,6 +64,10 @@ namespace MinMax
 
     struct StringSet
     {
+        //
+        int flatIndex = 0;
+        uint32_t state = 0;
+
         // fret position
         std::array<int, MAX_STRINGS> data{};
         std::array<int, MAX_STRINGS> offset{};
@@ -140,6 +144,7 @@ namespace MinMax
 
             auto& v = flatChords[flatIndex];
 
+            result.flatIndex = flatIndex;
             result.size = (int)StringCount::Guitar6;
 
             for (size_t i = 0; i < result.size; i++)
@@ -153,12 +158,12 @@ namespace MinMax
 
         ChordSpec spec;
 
-        float getPositionAverage(int chordNumber) const
+        float getPositionAverage(int flatIndex) const
         {
             //
             // コードボイシングの平均フレット位置を取得する
 
-            auto& v = getChordVoicing(chordNumber);
+            auto& v = getChordVoicing(flatIndex);
 
             int sum = 0;
             int count = 0;
