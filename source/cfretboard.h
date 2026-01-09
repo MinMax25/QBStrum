@@ -36,6 +36,7 @@ namespace MinMax
         VSTGUI::CColor markerColor;
         VSTGUI::CColor fretNumberColor;
         VSTGUI::CColor pressedColor;
+        VSTGUI::CColor pressedOffsetColor;
 
         VSTGUI::CRect frameSize;
         VSTGUI::CRect boardSize;
@@ -103,6 +104,7 @@ namespace MinMax
             markerColor = CColor(200, 200, 200, 255);
             fretNumberColor = CColor(220, 220, 220, 255);
             pressedColor = CColor(255, 140, 0, 255);
+            pressedOffsetColor = CColor(255, 0, 255, 255);
         }
 
         void draw(VSTGUI::CDrawContext* pContext) override
@@ -204,14 +206,22 @@ namespace MinMax
             // 押さえているフレットのマーカー表示（🔶）
             // ------------------------
             {
-                pContext->setFillColor(pressedColor);
-                pContext->setFrameColor(pressedColor);
-
-                for (unsigned int stringIndex = 0; stringIndex < pressed.size; ++stringIndex)
+                for (unsigned int stringindex = 0; stringindex < pressed.size; ++stringindex)
                 {
-                    int fret = pressed.data[stringIndex] + pressed.offset[stringIndex];
+                    int fret = pressed.data[stringindex] + pressed.offset[stringindex];
+                    bool hasOffset = pressed.offset[stringindex] > 0;
+                    double y = boardSize.top + outerMargin + stringSpacing * stringindex;
 
-                    double y = boardSize.top + outerMargin + stringSpacing * stringIndex;
+                    if (hasOffset)
+                    {
+                        pContext->setFillColor(pressedOffsetColor);
+                        pContext->setFrameColor(pressedOffsetColor);
+                    }
+                    else
+                    {
+                        pContext->setFillColor(pressedColor);
+                        pContext->setFrameColor(pressedColor);
+                    }
 
                     // --- (1) ミュート (-1) は X を描画 ---
                     if (fret == -1)
