@@ -112,6 +112,9 @@ namespace MinMax
 		DEAD,
 		HARMONICS,
 		SLIDE,
+
+		//
+		CHORD_STATE_REVISION = 9001,
 	};
 
 	// 共通レンジ定義取得
@@ -162,7 +165,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 54;
+	inline constexpr size_t PARAM_MAX = 55;
 
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
@@ -221,6 +224,7 @@ namespace MinMax
 		{ PARAM::DEAD, STR16("Dead"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::ARTICULATION, 0, 1, 27, 0, 0 },
 		{ PARAM::HARMONICS, STR16("Harmonics"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::ARTICULATION, 0, 1, 28, 0, 0 },
 		{ PARAM::SLIDE, STR16("Slide"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                UNIT::ARTICULATION, 0, 1, 33, 0, 0 },
+		{ PARAM::CHORD_STATE_REVISION, STR16("Chord State"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                           UNIT::CHORD, 0, 999999, 0, 0, 0 },
 	} };
 
 	// ユニット指定によるパラメータ定義取り出し
