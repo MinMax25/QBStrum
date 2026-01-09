@@ -129,7 +129,7 @@ namespace MinMax
 			case RANGE::TRANSPOSE_RANGE:     out = { -12, 12, false }; return true;
 			case RANGE::FRET_DISTANCE:       out = { 1, 6, false }; return true;
 			case RANGE::STRUM_STRINGS_RANGE: out = { 1, 5, false }; return true;
-			case RANGE::STRING_OFFSET:       out = { 0, 3, false }; return true;
+			case RANGE::STRING_OFFSET:       out = { -4, 4, false }; return true;
 			case RANGE::BEAT_LENGTH:         out = { 1, 8, false }; return true;
 			case RANGE::ARTICULATION_RANGE:  out = { 0, 1, true }; return true;
 			case RANGE::CTL_TABINDEX1_RANGE: out = { 0, 1, true }; return true;

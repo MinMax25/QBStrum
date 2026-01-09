@@ -112,7 +112,7 @@ namespace PF
     {
         SYS_BYPASS = Steinberg::Vst::ParameterInfo::kIsBypass | Steinberg::Vst::ParameterInfo::kCanAutomate,
         AUTOMATE = Steinberg::Vst::ParameterInfo::kCanAutomate,
-        HIDDEN = Steinberg::Vst::ParameterInfo::kIsHidden,
+        HIDDEN = Steinberg::Vst::ParameterInfo::kIsHidden | Steinberg::Vst::ParameterInfo::kIsReadOnly,
     };
 
 #pragma endregion

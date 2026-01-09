@@ -271,6 +271,7 @@ namespace MinMax
 				{
 					Steinberg::Vst::ParamValue offset = prm.get(tag);
 					ChordMap::instance().setOffset(tag - PARAM::STR1_OFFSET, offset);
+					notifyChordNumberChanged((int)prm.get(PARAM::CHORD_NUM));
 				}
 				break;
 			}
