@@ -40,6 +40,7 @@ namespace MinMax
 		STRING_OFFSET,
 		BEAT_LENGTH,
 		ARTICULATION_RANGE,
+		CTL_TABINDEX1_RANGE,
 	};
 
 	// パラメータ識別子
@@ -53,6 +54,7 @@ namespace MinMax
 		TRANSPOSE,
 		SELECTED_ARTICULATION,
 		NEED_SAMPLEBLOCK_ADUST,
+		CTL_TABINDEX1,
 
 		// CHORD
 		CHORD_LSB = 1101,	// DAW受信用
@@ -130,6 +132,7 @@ namespace MinMax
 			case RANGE::STRING_OFFSET:       out = { 0, 3, false }; return true;
 			case RANGE::BEAT_LENGTH:         out = { 1, 8, false }; return true;
 			case RANGE::ARTICULATION_RANGE:  out = { 0, 1, true }; return true;
+			case RANGE::CTL_TABINDEX1_RANGE: out = { 0, 1, true }; return true;
 			default: return false;
 			}
 		}
@@ -146,6 +149,8 @@ namespace MinMax
 			{
 			case RANGE::ARTICULATION_RANGE:
 				return { "Open 1", "Open 2", "Hammer/Legato", "Mute", "Dead", "Harmonics", "Slide" };
+			case RANGE::CTL_TABINDEX1_RANGE:
+				return { "Strum Strings", "Articulation", "Mute", "Fret Noize" };
 			default:
 				return { };
 			}
@@ -157,7 +162,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 53;
+	inline constexpr size_t PARAM_MAX = 54;
 
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
@@ -167,6 +172,7 @@ namespace MinMax
 		{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::TRANSPOSE_RANGE, PF::FLAG::AUTOMATE,                            UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::ARTICULATION_RANGE, PF::FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::NEED_SAMPLEBLOCK_ADUST, STR16("Need Sampleblock Adust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,             UNIT::SYSTEM, 0, 1, 0, 0, 0 },
+		{ PARAM::CTL_TABINDEX1, STR16("TabIndex1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, CTL_TABINDEX1_RANGE, PF::FLAG::AUTOMATE,                           UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN,                                    UNIT::CHORD,  0, 1, 0, 0, 0 },
 		{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN,                                    UNIT::CHORD,  0, 1, 0, 0, 0 },
 		{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                                     UNIT::CHORD,  0, 1163, 0, 0, 0 },

@@ -58,6 +58,7 @@
 			"CHORD_LSB": "1101",
 			"CHORD_MSB": "1102",
 			"CHORD_NUM": "1103",
+			"CTL_TABINDEX1": "1005",
 			"FNOISE_CHANNEL": "1241",
 			"FNOISE_DIST_FAR": "1245",
 			"FNOISE_DIST_NEAR": "1244",
@@ -93,18 +94,18 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "view"
+				"SelectedTemplate": "tab1"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
-				"EditorSize": "0, 0, 1920, 976",
-				"SplitViewSize_0_0": "0.5526315789473684736421432717179413884878",
-				"SplitViewSize_0_1": "0.426315789473684203514380897104274481535",
-				"SplitViewSize_1_0": "0.3800000000000000044408920985006261616945",
-				"SplitViewSize_1_1": "0.6157894736842105531948732277669478207827",
-				"SplitViewSize_2_0": "0.6999999999999999555910790149937383830547",
-				"SplitViewSize_2_1": "0.2973958333333333592385372412536526098847",
-				"TabSwitchValue": "0",
+				"EditorSize": "0, 0, 1677, 873",
+				"SplitViewSize_0_0": "0.49822904368358911231240426786825992167",
+				"SplitViewSize_0_1": "0.4781582054309326812457925370836164802313",
+				"SplitViewSize_1_0": "0.3659976387249114782029835168941644951701",
+				"SplitViewSize_1_1": "0.6304604486422668019329762501001823693514",
+				"SplitViewSize_2_0": "0.6565295169946332443089431762928143143654",
+				"SplitViewSize_2_1": "0.3404889683959451129879880681983195245266",
+				"TabSwitchValue": "1",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
@@ -112,7 +113,7 @@
 				"SelectedRow": "21"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "27"
+				"SelectedRow": "13"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -1716,16 +1717,18 @@
 					},
 					"UIViewSwitchContainer": {
 						"attributes": {
-							"animation-style": "fade",
+							"animation-style": "move",
 							"animation-time": "120",
 							"animation-timing-function": "linear",
-							"background-color": "~ BlackCColor",
+							"background-color": "Dark",
 							"background-color-draw-style": "filled and stroked",
 							"class": "UIViewSwitchContainer",
 							"mouse-enabled": "true",
 							"opacity": "1",
 							"origin": "240, 235",
 							"size": "565, 140",
+							"template-names": "tab1,tab2,tab3,tab4",
+							"template-switch-control": "CTL_TABINDEX1",
 							"transparent": "false",
 							"wants-focus": "false"
 						}
@@ -1733,19 +1736,16 @@
 					"CSegmentButton": {
 						"attributes": {
 							"class": "CSegmentButton",
-							"default-value": "0.5",
+							"control-tag": "CTL_TABINDEX1",
 							"font": "~ NormalFontSmall",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
 							"gradient": "Default TextButton Gradient Highlighted",
 							"icon-text-margin": "0",
-							"max-value": "1",
-							"min-value": "0",
-							"mouse-enabled": "true",
 							"opacity": "1",
 							"origin": "240, 221",
 							"round-radius": "0",
-							"segment-names": "Strum Strings,Articulatin,Mute,Fret noize",
+							"segment-names": "Strum Strings,Articulation,Mute,Fret Noize",
 							"selection-mode": "Single",
 							"size": "565, 15",
 							"style": "horizontal",
@@ -1759,9 +1759,9 @@
 					}
 				}
 			},
-			"tab 1": {
+			"tab1": {
 				"attributes": {
-					"background-color": "~ BlackCColor",
+					"background-color": "~ TransparentCColor",
 					"background-color-draw-style": "filled and stroked",
 					"class": "CViewContainer",
 					"mouse-enabled": "true",
@@ -2027,9 +2027,9 @@
 					}
 				}
 			},
-			"tab 2": {
+			"tab2": {
 				"attributes": {
-					"background-color": "~ BlackCColor",
+					"background-color": "~ TransparentCColor",
 					"background-color-draw-style": "filled and stroked",
 					"class": "CViewContainer",
 					"mouse-enabled": "true",
@@ -2821,9 +2821,9 @@
 					}
 				}
 			},
-			"tab 3": {
+			"tab3": {
 				"attributes": {
-					"background-color": "~ BlackCColor",
+					"background-color": "~ TransparentCColor",
 					"background-color-draw-style": "filled and stroked",
 					"class": "CViewContainer",
 					"mouse-enabled": "true",
@@ -3157,9 +3157,9 @@
 					}
 				}
 			},
-			"tab 4": {
+			"tab4": {
 				"attributes": {
-					"background-color": "~ BlackCColor",
+					"background-color": "~ TransparentCColor",
 					"background-color-draw-style": "filled and stroked",
 					"class": "CViewContainer",
 					"mouse-enabled": "true",
