@@ -89,8 +89,13 @@ namespace MinMax
         void onParameterChordChanged(int value)
         {
             if (canEdit) return;
-            //fretBoard->setPressedFrets(getVoicing(value));
-            //chordSelecter->setChordNumber(value);
+
+            auto* c = editor->getController();
+            auto norm = c->getParamNormalized(PARAM::CHORD_NUM);
+            auto v = c->normalizedParamToPlain(PARAM::CHORD_NUM, norm);
+
+            fretBoard->setPressedFrets(getVoicing(v));
+            chordSelecter->setChordNumber(v);
         }
 
         void onSelectedChordChanged(int value)
@@ -98,6 +103,7 @@ namespace MinMax
             if (canEdit) return;
 
             auto* c = editor->getController();
+
             c->beginEdit(PARAM::CHORD_NUM);
             Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(PARAM::CHORD_NUM, value);
             c->setParamNormalized(PARAM::CHORD_NUM, norm);
