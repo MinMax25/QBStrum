@@ -259,6 +259,11 @@ namespace MinMax
 				notifyChordNumberChanged((int)num);
 				break;
 			}
+			case PARAM::CHORD_NUM:
+			{
+				notifyChordNumberChanged();
+				break;
+			}
 			case PARAM::NEED_SAMPLEBLOCK_ADUST:
 			{
 				bool state = prm.get(PARAM::NEED_SAMPLEBLOCK_ADUST) > 0.5;
@@ -271,7 +276,7 @@ namespace MinMax
 				{
 					Steinberg::Vst::ParamValue offset = prm.get(tag);
 					ChordMap::instance().setOffset(tag - PARAM::STR1_OFFSET, offset);
-					notifyChordNumberChanged((int)prm.get(PARAM::CHORD_NUM));
+					notifyChordNumberChanged();
 				}
 				break;
 			}
@@ -695,14 +700,14 @@ namespace MinMax
 	{
 		StringSet set{};
 
-		auto v = ChordMap::instance().getChordVoicing(flatIndex);
+		auto v = ChordMap::instance().getChordVoicing(flatIndex < 0 ? (int)prm.get(PARAM::CHORD_NUM) : flatIndex);
 
 		if (++chordState > 999999)
 		{
 			chordState = 0;
 		}
 
-		set.flatIndex = v.flatIndex;
+		set.flatIndex = flatIndex;
 		set.state = chordState;
 		set.size = v.size;
 		

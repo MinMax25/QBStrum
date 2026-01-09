@@ -154,6 +154,7 @@ namespace MinMax
 
 		const StringSet* chord = reinterpret_cast<const StringSet*>(data);
 
+		if (chord->flatIndex >= 0)
 		{
 			beginEdit(static_cast<int>(PARAM::CHORD_NUM));
 			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_NUM, chord->flatIndex);
