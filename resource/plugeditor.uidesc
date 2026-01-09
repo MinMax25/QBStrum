@@ -94,7 +94,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab4"
+				"SelectedTemplate": "view"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -1505,21 +1505,19 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR1_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "25, 409",
+							"origin": "25, 408",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "25, 15",
@@ -1540,19 +1538,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR2_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "25, 430",
 							"round-rect-radius": "6",
@@ -1575,19 +1571,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR3_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "25, 453",
 							"round-rect-radius": "6",
@@ -1610,19 +1604,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR4_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "25, 476",
 							"round-rect-radius": "6",
@@ -1645,21 +1637,19 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR5_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "25, 500",
+							"origin": "25, 499",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "25, 15",
@@ -1680,21 +1670,19 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR6_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "25, 521",
+							"origin": "25, 522",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "25, 15",
