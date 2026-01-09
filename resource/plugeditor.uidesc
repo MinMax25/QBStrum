@@ -94,7 +94,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab1"
+				"SelectedTemplate": "tab4"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -1761,7 +1761,7 @@
 			},
 			"tab1": {
 				"attributes": {
-					"background-color": "~ TransparentCColor",
+					"background-color": "Dark",
 					"background-color-draw-style": "filled and stroked",
 					"class": "CViewContainer",
 					"mouse-enabled": "true",
@@ -1987,49 +1987,12 @@
 							"wants-focus": "true",
 							"wheel-inc-value": "0.1"
 						}
-					},
-					"CTextLabel": {
-						"attributes": {
-							"back-color": "Dark",
-							"background-offset": "0, 0",
-							"class": "CTextLabel",
-							"default-value": "0.5",
-							"font": "~ NormalFontSmall",
-							"font-antialias": "true",
-							"font-color": "~ WhiteCColor",
-							"frame-color": "~ BlackCColor",
-							"frame-width": "1",
-							"max-value": "1",
-							"min-value": "0",
-							"mouse-enabled": "true",
-							"opacity": "1",
-							"origin": "10, 10",
-							"round-rect-radius": "6",
-							"shadow-color": "~ RedCColor",
-							"size": "115, 15",
-							"style-3D-in": "false",
-							"style-3D-out": "false",
-							"style-no-draw": "false",
-							"style-no-frame": "false",
-							"style-no-text": "false",
-							"style-round-rect": "false",
-							"style-shadow-text": "false",
-							"text-alignment": "center",
-							"text-inset": "0, 0",
-							"text-rotation": "0",
-							"text-shadow-offset": "1, 1",
-							"title": "Strum Strings",
-							"transparent": "false",
-							"value-precision": "2",
-							"wants-focus": "false",
-							"wheel-inc-value": "0.1"
-						}
 					}
 				}
 			},
 			"tab2": {
 				"attributes": {
-					"background-color": "~ TransparentCColor",
+					"background-color": "Dark",
 					"background-color-draw-style": "filled and stroked",
 					"class": "CViewContainer",
 					"mouse-enabled": "true",
@@ -2572,43 +2535,6 @@
 					},
 					"CTextLabel": {
 						"attributes": {
-							"back-color": "Dark",
-							"background-offset": "0, 0",
-							"class": "CTextLabel",
-							"default-value": "0.5",
-							"font": "~ NormalFontSmall",
-							"font-antialias": "true",
-							"font-color": "~ WhiteCColor",
-							"frame-color": "~ BlackCColor",
-							"frame-width": "1",
-							"max-value": "1",
-							"min-value": "0",
-							"mouse-enabled": "true",
-							"opacity": "1",
-							"origin": "10, 10",
-							"round-rect-radius": "6",
-							"shadow-color": "~ RedCColor",
-							"size": "120, 15",
-							"style-3D-in": "false",
-							"style-3D-out": "false",
-							"style-no-draw": "false",
-							"style-no-frame": "false",
-							"style-no-text": "false",
-							"style-round-rect": "false",
-							"style-shadow-text": "false",
-							"text-alignment": "center",
-							"text-inset": "0, 0",
-							"text-rotation": "0",
-							"text-shadow-offset": "1, 1",
-							"title": "Articulation",
-							"transparent": "false",
-							"value-precision": "2",
-							"wants-focus": "false",
-							"wheel-inc-value": "0.1"
-						}
-					},
-					"CTextLabel": {
-						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
 							"class": "CTextLabel",
@@ -2823,7 +2749,7 @@
 			},
 			"tab3": {
 				"attributes": {
-					"background-color": "~ TransparentCColor",
+					"background-color": "Dark",
 					"background-color-draw-style": "filled and stroked",
 					"class": "CViewContainer",
 					"mouse-enabled": "true",
@@ -2834,43 +2760,6 @@
 					"wants-focus": "false"
 				},
 				"children": {
-					"CTextLabel": {
-						"attributes": {
-							"back-color": "Dark",
-							"background-offset": "0, 0",
-							"class": "CTextLabel",
-							"default-value": "0.5",
-							"font": "~ NormalFontSmall",
-							"font-antialias": "true",
-							"font-color": "~ WhiteCColor",
-							"frame-color": "~ BlackCColor",
-							"frame-width": "1",
-							"max-value": "1",
-							"min-value": "0",
-							"mouse-enabled": "true",
-							"opacity": "1",
-							"origin": "10, 10",
-							"round-rect-radius": "6",
-							"shadow-color": "~ RedCColor",
-							"size": "145, 15",
-							"style-3D-in": "false",
-							"style-3D-out": "false",
-							"style-no-draw": "false",
-							"style-no-frame": "false",
-							"style-no-text": "false",
-							"style-round-rect": "false",
-							"style-shadow-text": "false",
-							"text-alignment": "center",
-							"text-inset": "0, 0",
-							"text-rotation": "0",
-							"text-shadow-offset": "1, 1",
-							"title": "Mute",
-							"transparent": "false",
-							"value-precision": "2",
-							"wants-focus": "false",
-							"wheel-inc-value": "0.1"
-						}
-					},
 					"CTextLabel": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
@@ -3159,7 +3048,7 @@
 			},
 			"tab4": {
 				"attributes": {
-					"background-color": "~ TransparentCColor",
+					"background-color": "Dark",
 					"background-color-draw-style": "filled and stroked",
 					"class": "CViewContainer",
 					"mouse-enabled": "true",
@@ -3170,43 +3059,6 @@
 					"wants-focus": "false"
 				},
 				"children": {
-					"CTextLabel": {
-						"attributes": {
-							"back-color": "Dark",
-							"background-offset": "0, 0",
-							"class": "CTextLabel",
-							"default-value": "0.5",
-							"font": "~ NormalFontSmall",
-							"font-antialias": "true",
-							"font-color": "~ WhiteCColor",
-							"frame-color": "~ BlackCColor",
-							"frame-width": "1",
-							"max-value": "1",
-							"min-value": "0",
-							"mouse-enabled": "true",
-							"opacity": "1",
-							"origin": "10, 10",
-							"round-rect-radius": "6",
-							"shadow-color": "~ RedCColor",
-							"size": "145, 15",
-							"style-3D-in": "false",
-							"style-3D-out": "false",
-							"style-no-draw": "false",
-							"style-no-frame": "false",
-							"style-no-text": "false",
-							"style-round-rect": "false",
-							"style-shadow-text": "false",
-							"text-alignment": "center",
-							"text-inset": "0, 0",
-							"text-rotation": "0",
-							"text-shadow-offset": "1, 1",
-							"title": "Fret Noise",
-							"transparent": "false",
-							"value-precision": "2",
-							"wants-focus": "false",
-							"wheel-inc-value": "0.1"
-						}
-					},
 					"CTextLabel": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
