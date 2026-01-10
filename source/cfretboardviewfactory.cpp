@@ -111,31 +111,9 @@ namespace MinMax
             c->endEdit(PARAM::CHORD_NUM);
         }
 
-        void initFretBoard()
-        {
-            fretBoard = new CFretBoard(getViewSize());
-            fretBoard->setPressedFrets(getVoicing(0));
-            addView(fretBoard);
-        }
-
-        void initChordSelecter()
-        {
-            chordSelecter = new CChordSelecter({ 365,1,515,19 }, [this](CChordSelecter*, int v) { onSelectedChordChanged(v); });
-            addView(chordSelecter);
-        }
-
-        void initMenuButtons()
-        {
-            fileButton = new CMenuButton({ 1, 1, 59, 18 }, "Preset", [this](CMenuButton* b) { popupMenu(b, MenuType::File); });
-            addView(fileButton);
-
-            editButton = new CMenuButton({ 60, 1, 119, 18 }, "Edit", [this](CMenuButton* b) { popupMenu(b, MenuType::Edit); });
-            addView(editButton);
-        }
-
         void initChordListener()
         {
-            chordListner = 
+            chordListner =
                 new CChordListner(
                     editor, PARAM::CHORD_STATE_REVISION,
                     [this](CChordListner*, int v)
@@ -145,13 +123,35 @@ namespace MinMax
                 );
         }
 
+        void initFretBoard()
+        {
+            fretBoard = new CFretBoard(getViewSize());
+            fretBoard->setPressedFrets(getVoicing(0));
+            addView(fretBoard);
+        }
+
+        void initMenuButtons()
+        {
+            fileButton = new CMenuButton({ 101, 1, 160, 18 }, "Preset", [this](CMenuButton* b) { popupMenu(b, MenuType::File); });
+            addView(fileButton);
+
+            editButton = new CMenuButton({ 161, 1, 220, 18 }, "Edit", [this](CMenuButton* b) { popupMenu(b, MenuType::Edit); });
+            addView(editButton);
+        }
+
         void initLabelPreset()
         {
-            labelPreset = new VSTGUI::CTextLabel(VSTGUI::CRect(140, 1, 340, 18));
+            labelPreset = new VSTGUI::CTextLabel({ 261, 1, 550, 18 });
             labelPreset->setBackColor(VSTGUI::kGreyCColor);
             labelPreset->setFont(VSTGUI::kNormalFontSmall);
             labelPreset->setText(ChordMap::instance().getPresetName());
             addView(labelPreset);
+        }
+
+        void initChordSelecter()
+        {
+            chordSelecter = new CChordSelecter({ 551,1,700,19 }, [this](CChordSelecter*, int v) { onSelectedChordChanged(v); });
+            addView(chordSelecter);
         }
 
         void popupMenu(VSTGUI::CView* anchor, MenuType type)

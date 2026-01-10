@@ -110,10 +110,10 @@
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "9"
+				"SelectedRow": "3"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "13"
+				"SelectedRow": "9"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -1016,13 +1016,13 @@
 							"class": "CCheckBox",
 							"control-tag": "CHANNEL_SEPALATE",
 							"draw-crossbox": "false",
-							"font": "~ NormalFontVerySmall",
+							"font": "~ NormalFont",
 							"font-color": "~ WhiteCColor",
 							"frame-width": "1",
 							"opacity": "1",
-							"origin": "690, 335",
+							"origin": "665, 330",
 							"round-rect-radius": "0",
-							"size": "110, 15",
+							"size": "125, 15",
 							"title": "Sepalate Channel",
 							"transparent": "false",
 							"wants-focus": "true",
@@ -1264,13 +1264,13 @@
 							"class": "CCheckBox",
 							"control-tag": "TAG_NEED_SAMPLEBLOCK_ADUST",
 							"draw-crossbox": "false",
-							"font": "~ NormalFontVerySmall",
+							"font": "~ NormalFont",
 							"font-color": "~ WhiteCColor",
 							"frame-width": "1",
 							"opacity": "1",
-							"origin": "690, 355",
+							"origin": "665, 350",
 							"round-rect-radius": "0",
-							"size": "105, 15",
+							"size": "125, 15",
 							"title": "Sampleblock Adust",
 							"transparent": "false",
 							"wants-focus": "true",
@@ -1742,6 +1742,43 @@
 							"text-color-highlighted": "~ WhiteCColor",
 							"transparent": "false",
 							"wants-focus": "true",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CTextLabel": {
+						"attributes": {
+							"back-color": "~ TransparentCColor",
+							"background-offset": "0, 0",
+							"class": "CTextLabel",
+							"default-value": "0.5",
+							"font": "~ NormalFontVerySmall",
+							"font-antialias": "true",
+							"font-color": "~ WhiteCColor",
+							"frame-color": "~ TransparentCColor",
+							"frame-width": "1",
+							"max-value": "1",
+							"min-value": "0",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "10, 540",
+							"round-rect-radius": "6",
+							"shadow-color": "~ RedCColor",
+							"size": "55, 15",
+							"style-3D-in": "false",
+							"style-3D-out": "false",
+							"style-no-draw": "false",
+							"style-no-frame": "false",
+							"style-no-text": "false",
+							"style-round-rect": "false",
+							"style-shadow-text": "false",
+							"text-alignment": "center",
+							"text-inset": "0, 0",
+							"text-rotation": "0",
+							"text-shadow-offset": "1, 1",
+							"title": "Offset",
+							"transparent": "false",
+							"value-precision": "2",
+							"wants-focus": "false",
 							"wheel-inc-value": "0.1"
 						}
 					}
