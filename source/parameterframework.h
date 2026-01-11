@@ -28,7 +28,8 @@ namespace PF
 {
 #pragma region Custom Parameter
 
-    class ExpParameter : public Steinberg::Vst::Parameter
+    class ExpParameter 
+        : public Steinberg::Vst::RangeParameter
     {
     private:
         Steinberg::Vst::ParamValue min;
@@ -46,11 +47,9 @@ namespace PF
             Steinberg::int32 flags,
             Steinberg::Vst::UnitID unitID
         )
-            : Parameter(title, tag, units, 0.0, 0, flags, unitID)
+            : RangeParameter(title, tag, units,minPlain, maxPlain, defaultPlain, 0, flags, unitID)
             ,min(minPlain), max(maxPlain), def(defaultPlain)
         {
-            setPrecision(0);
-            setNormalized(toNormalized(def));
         }
 
         void toString(Steinberg::Vst::ParamValue valueNormalized, Steinberg::Vst::String128 string) const override
@@ -75,7 +74,7 @@ namespace PF
         Steinberg::Vst::ParamValue toNormalized(Steinberg::Vst::ParamValue plainValue) const override
         {
             assert(max != min && "ExpParameter: max and min cannot be equal");
-            if (max == min) return 0.0; // ˆÀ‘S‰ñ”ð
+            if (max == min) return 0.0;
 
             Steinberg::Vst::ParamValue norm = (plainValue - min) / (max - min);
             norm = std::clamp(norm, 0.0, 1.0);
@@ -85,13 +84,13 @@ namespace PF
         Steinberg::Vst::ParamValue toPlain(Steinberg::Vst::ParamValue valueNormalized) const override
         {
             assert(max != min && "ExpParameter: max and min cannot be equal");
-            if (max == min) return 0.0; // ˆÀ‘S‰ñ”ð
+            if (max == min) return 0.0;
 
             valueNormalized = std::clamp(valueNormalized, 0.0, 1.0);
             return ((max - min) * std::pow(valueNormalized, 3.0)) + min;
         }
 
-        OBJ_METHODS(ExpParameter, Parameter)
+        OBJ_METHODS(ExpParameter, Steinberg::Vst::RangeParameter)
     };
 
 #pragma endregion
