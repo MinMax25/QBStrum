@@ -33,6 +33,7 @@ namespace PF
     private:
         Steinberg::Vst::ParamValue min;
         Steinberg::Vst::ParamValue max;
+        Steinberg::Vst::ParamValue def;
 
     public:
         ExpParameter(
@@ -41,13 +42,15 @@ namespace PF
             const Steinberg::Vst::TChar* units,
             Steinberg::Vst::ParamValue minPlain,
             Steinberg::Vst::ParamValue maxPlain,
+            Steinberg::Vst::ParamValue defaultPlain,
             Steinberg::int32 flags,
             Steinberg::Vst::UnitID unitID
         )
-            : Parameter(title, tag, units, 0.0, 0, flags, unitID),
-            min(minPlain), max(maxPlain)
+            : Parameter(title, tag, units, 0.0, 0, flags, unitID)
+            ,min(minPlain), max(maxPlain), def(defaultPlain)
         {
             setPrecision(0);
+            setNormalized(toNormalized(def));
         }
 
         void toString(Steinberg::Vst::ParamValue valueNormalized, Steinberg::Vst::String128 string) const override
@@ -312,11 +315,11 @@ namespace PF
                                 def.units,
                                 min,
                                 max,
+                                defaultValue,
                                 def.flags,
                                 def.unitID
                             );
                         p->setPrecision(precision);
-                        p->setNormalized(p->toNormalized(defaultValue));
                         param = std::move(p);
                     }
 
