@@ -153,7 +153,7 @@ namespace MinMax
 			case RANGE::ARTICULATION_RANGE:
 				return { "Open 1", "Open 2", "Hammer/Legato", "Mute", "Dead", "Harmonics", "Slide" };
 			case RANGE::CTL_TABINDEX1_RANGE:
-				return { "Strum Strings", "Articulation", "Mute", "Fret Noize" };
+				return { "Strum Strings", "Articulation", "Mute", "Fret Noize", "Other"};
 			default:
 				return { };
 			}

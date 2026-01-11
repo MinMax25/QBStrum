@@ -1007,28 +1007,6 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"CCheckBox": {
-						"attributes": {
-							"autosize-to-fit": "false",
-							"boxfill-color": "~ WhiteCColor",
-							"boxframe-color": "~ BlackCColor",
-							"checkmark-color": "~ RedCColor",
-							"class": "CCheckBox",
-							"control-tag": "CHANNEL_SEPALATE",
-							"draw-crossbox": "false",
-							"font": "~ NormalFont",
-							"font-color": "~ WhiteCColor",
-							"frame-width": "1",
-							"opacity": "1",
-							"origin": "665, 330",
-							"round-rect-radius": "0",
-							"size": "125, 15",
-							"title": "Sepalate Channel",
-							"transparent": "false",
-							"wants-focus": "true",
-							"wheel-inc-value": "0.1"
-						}
-					},
 					"COptionMenu": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
@@ -1251,28 +1229,6 @@
 							"text-shadow-offset": "1, 1",
 							"transparent": "false",
 							"value-precision": "2",
-							"wants-focus": "true",
-							"wheel-inc-value": "0.1"
-						}
-					},
-					"CCheckBox": {
-						"attributes": {
-							"autosize-to-fit": "false",
-							"boxfill-color": "~ WhiteCColor",
-							"boxframe-color": "~ BlackCColor",
-							"checkmark-color": "~ RedCColor",
-							"class": "CCheckBox",
-							"control-tag": "TAG_NEED_SAMPLEBLOCK_ADUST",
-							"draw-crossbox": "false",
-							"font": "~ NormalFont",
-							"font-color": "~ WhiteCColor",
-							"frame-width": "1",
-							"opacity": "1",
-							"origin": "665, 350",
-							"round-rect-radius": "0",
-							"size": "125, 15",
-							"title": "Sampleblock Adust",
-							"transparent": "false",
 							"wants-focus": "true",
 							"wheel-inc-value": "0.1"
 						}
@@ -1725,9 +1681,9 @@
 							"class": "UIViewSwitchContainer",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "240, 270",
-							"size": "285, 85",
-							"template-names": "tab1,tab2,tab3,tab4",
+							"origin": "240, 290",
+							"size": "565, 85",
+							"template-names": "tab1,tab2,tab3,tab4,tab5",
 							"template-switch-control": "CTL_TABINDEX1",
 							"transparent": "false",
 							"wants-focus": "false"
@@ -1737,17 +1693,17 @@
 						"attributes": {
 							"class": "CSegmentButton",
 							"control-tag": "CTL_TABINDEX1",
-							"font": "~ NormalFontVerySmall",
+							"font": "~ NormalFontSmall",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
 							"gradient": "Menu Button Gradient",
 							"icon-text-margin": "0",
 							"opacity": "1",
-							"origin": "240, 256",
-							"round-radius": "0",
-							"segment-names": "Strum Strings,Articulation,Mute,Fret Noize",
+							"origin": "240, 271",
+							"round-radius": "4",
+							"segment-names": "Strum Strings,Articulation,Mute,Fret Noize,Other",
 							"selection-mode": "Single",
-							"size": "285, 15",
+							"size": "565, 20",
 							"style": "horizontal",
 							"text-alignment": "center",
 							"text-color": "~ BlackCColor",
@@ -3521,6 +3477,65 @@
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
+						}
+					}
+				}
+			},
+			"tab5": {
+				"attributes": {
+					"background-color": "Dark",
+					"background-color-draw-style": "filled and stroked",
+					"class": "CViewContainer",
+					"mouse-enabled": "true",
+					"opacity": "1",
+					"origin": "0, 0",
+					"size": "285, 85",
+					"transparent": "false",
+					"wants-focus": "false"
+				},
+				"children": {
+					"CCheckBox": {
+						"attributes": {
+							"autosize-to-fit": "false",
+							"boxfill-color": "~ WhiteCColor",
+							"boxframe-color": "~ BlackCColor",
+							"checkmark-color": "~ RedCColor",
+							"class": "CCheckBox",
+							"control-tag": "CHANNEL_SEPALATE",
+							"draw-crossbox": "false",
+							"font": "~ NormalFont",
+							"font-color": "~ WhiteCColor",
+							"frame-width": "1",
+							"opacity": "1",
+							"origin": "10, 10",
+							"round-rect-radius": "0",
+							"size": "125, 15",
+							"title": "Sepalate Channel",
+							"transparent": "false",
+							"wants-focus": "true",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CCheckBox": {
+						"attributes": {
+							"autosize-to-fit": "false",
+							"boxfill-color": "~ WhiteCColor",
+							"boxframe-color": "~ BlackCColor",
+							"checkmark-color": "~ RedCColor",
+							"class": "CCheckBox",
+							"control-tag": "TAG_NEED_SAMPLEBLOCK_ADUST",
+							"draw-crossbox": "false",
+							"font": "~ NormalFont",
+							"font-color": "~ WhiteCColor",
+							"frame-width": "1",
+							"opacity": "1",
+							"origin": "10, 30",
+							"round-rect-radius": "0",
+							"size": "125, 15",
+							"title": "Sampleblock Adust",
+							"transparent": "false",
+							"wants-focus": "true",
 							"wheel-inc-value": "0.1"
 						}
 					}
