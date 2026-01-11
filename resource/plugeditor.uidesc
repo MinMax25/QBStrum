@@ -1241,7 +1241,7 @@
 							"mouse-enabled": "true",
 							"opacity": "1",
 							"origin": "10, 385",
-							"size": "795, 170",
+							"size": "780, 170",
 							"transparent": "false",
 							"wants-focus": "false"
 						}
@@ -1461,21 +1461,19 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
-							"back-color": "~ TransparentCColor",
+							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR1_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
-							"font-color": "~ CyanCColor",
+							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "25, 408",
+							"origin": "30, 408",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "25, 15",
@@ -1496,21 +1494,19 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
-							"back-color": "~ TransparentCColor",
+							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR2_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
-							"font-color": "~ CyanCColor",
+							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "25, 430",
+							"origin": "30, 430",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "25, 15",
@@ -1531,21 +1527,19 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
-							"back-color": "~ TransparentCColor",
+							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR3_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
-							"font-color": "~ CyanCColor",
+							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "25, 453",
+							"origin": "30, 453",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "25, 15",
@@ -1566,21 +1560,19 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
-							"back-color": "~ TransparentCColor",
+							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR4_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
-							"font-color": "~ CyanCColor",
+							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "25, 476",
+							"origin": "30, 476",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "25, 15",
@@ -1601,21 +1593,19 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
-							"back-color": "~ TransparentCColor",
+							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR5_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
-							"font-color": "~ CyanCColor",
+							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "25, 499",
+							"origin": "30, 499",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "25, 15",
@@ -1636,21 +1626,19 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
-							"back-color": "~ TransparentCColor",
+							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR6_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
-							"font-color": "~ CyanCColor",
+							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "25, 522",
+							"origin": "30, 522",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "25, 15",
@@ -1728,7 +1716,7 @@
 							"min-value": "0",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "10, 540",
+							"origin": "15, 540",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "55, 15",
