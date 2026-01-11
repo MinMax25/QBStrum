@@ -230,11 +230,6 @@ namespace MinMax
             }
         }
 
-        void setOffset(int stringindex, int value)
-        {
-            offset[stringindex] = value;
-        }
-
         void clearOffset()
         {
             for (int i = 0; i < MAX_STRINGS; i++)
