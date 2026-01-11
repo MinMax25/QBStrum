@@ -47,11 +47,12 @@ namespace MinMax
 
             setBackgroundColor(VSTGUI::kTransparentCColor);
 
-            initFretBoard();
-            initChordSelecter();
-            initMenuButtons();
             initChordListener();
+
+            initFretBoard();
+            initMenuButtons();
             initLabelPreset();
+            initChordSelecter();
         }
 
         ~CFretBoardView() override
@@ -283,11 +284,6 @@ namespace MinMax
             chordSelecter->endEdit();
         }
 
-        StringSet getVoicing(int value) const 
-        {
-            return ChordMap::instance().getChordVoicing(value);
-        }
-
         void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(VSTGUI::UTF8StringPtr path)> fileSelected)
         {
             Files::createPresetDirectory();
@@ -321,6 +317,11 @@ namespace MinMax
             auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(title));
             item->setActions(std::forward<F>(cb));
             menu->addEntry(item);
+        }
+
+        StringSet getVoicing(int value) const
+        {
+            return ChordMap::instance().getChordVoicing(value);
         }
     };
 
