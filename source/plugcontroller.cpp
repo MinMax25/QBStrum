@@ -1,9 +1,7 @@
 ﻿//------------------------------------------------------------------------
 // Copyright(c) 2025 MinMax.
 //------------------------------------------------------------------------
-#pragma once
 
-#include <base/source/fstreamer.h>
 #include <pluginterfaces/base/fplatform.h>
 #include <pluginterfaces/base/fstrdefs.h>
 #include <pluginterfaces/base/ftypes.h>
