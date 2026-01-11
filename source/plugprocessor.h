@@ -97,6 +97,6 @@ namespace MinMax
 		// 内部MIDIイベントバッファ
 		RingBuff InnerEvents{ 32 };
 
-		uint32_t chordState = 0;
+		ChordState chordState{};
 	};
 }

@@ -25,6 +25,7 @@ namespace MinMax
     // 7弦まで対応可能とする
     inline constexpr int MAX_STRINGS = 7;
 
+
     //======================================================================
     // 弦数定義
     //======================================================================
@@ -59,6 +60,12 @@ namespace MinMax
             (userRootCount * userTypeCount * userVoicingCount);
 
         static constexpr int defaultBlockSize = defaultRootCount * defaultTypeCount * defaultVoicingCount;
+    };
+
+    struct ChordState
+    {
+        uint32_t seqnumber = 0;
+        int flatIndex = 0;
     };
 
     struct StringSet

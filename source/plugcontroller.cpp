@@ -143,16 +143,24 @@ namespace MinMax
 		const auto attr = message->getAttributes();
 		if (attr == nullptr) return Steinberg::kResultFalse;
 
-		if (!(attr->getBinary(MSG_CHORD_CHANGED, msgData, msgSize) == Steinberg::kResultTrue && msgSize == sizeof(uint32_t)))
+		if (!(attr->getBinary(MSG_CHORD_CHANGED, msgData, msgSize) == Steinberg::kResultTrue && msgSize == sizeof(ChordState)))
 		{
 			return Steinberg::kResultFalse;
 		}
 
-		const auto chordState = reinterpret_cast<const uint32_t*>(msgData);
+		const auto chordState = reinterpret_cast<const ChordState*>(msgData);
+
+		{
+			beginEdit(static_cast<int>(PARAM::CHORD_NUM));
+			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_NUM, chordState->flatIndex);
+			setParamNormalized(static_cast<int>(PARAM::CHORD_NUM), norm);
+			performEdit(static_cast<int>(PARAM::CHORD_NUM), norm);
+			endEdit(static_cast<int>(PARAM::CHORD_NUM));
+		}
 
 		{
 			beginEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION));
-			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_STATE_REVISION, *chordState);
+			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_STATE_REVISION, chordState->seqnumber);
 			setParamNormalized(static_cast<int>(PARAM::CHORD_STATE_REVISION), norm);
 			performEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION), norm);
 			endEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION));

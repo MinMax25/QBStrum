@@ -260,7 +260,11 @@ namespace MinMax
 			}
 			case PARAM::CHORD_NUM:
 			{
-				notifyChordNumberChanged();
+				if (prm.isChanged(PARAM::CHORD_NUM))
+				{
+					notifyChordNumberChanged();
+					prm.clearChangedFlags(PARAM::CHORD_NUM);
+				}
 				break;
 			}
 			case PARAM::NEED_SAMPLEBLOCK_ADUST:
@@ -695,20 +699,17 @@ namespace MinMax
 
 	void MyVSTProcessor::notifyChordNumberChanged(int flatIndex)
 	{
-		StringSet set{};
-
-		auto v = ChordMap::instance().getChordVoicing(flatIndex < 0 ? (int)prm.get(PARAM::CHORD_NUM) : flatIndex);
-
-		if (++chordState > 999999)
+		if (++chordState.seqnumber > 999999)
 		{
-			chordState = 0;
+			chordState.seqnumber = 0;
 		}
+		chordState.flatIndex = (int)prm.get(PARAM::CHORD_NUM);
 
 		Steinberg::FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();
 		if (!msg) return;
 
 		msg->setMessageID(MSG_CHORD_CHANGED);
-		msg->getAttributes()->setBinary(MSG_CHORD_CHANGED, &chordState, sizeof(uint32_t));
+		msg->getAttributes()->setBinary(MSG_CHORD_CHANGED, &chordState, sizeof(ChordState));
 		sendMessage(msg);
 	}
 
