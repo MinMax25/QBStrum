@@ -231,7 +231,7 @@ namespace MinMax
                     }
 
                     // --- (2) 開放弦 (0) は何も描かない ---
-                    if (fret == 0)
+                    if (fret == 0 && !hasOffset)
                     {
                         continue;
                     }
