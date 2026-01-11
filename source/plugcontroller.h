@@ -4,7 +4,6 @@
 #pragma once
 
 #include <base/source/fobject.h>
-#include <filesystem>
 #include <pluginterfaces/base/fplatform.h>
 #include <pluginterfaces/base/ftypes.h>
 #include <pluginterfaces/base/funknown.h>

@@ -1,10 +1,11 @@
+//------------------------------------------------------------------------
+// Copyright(c) 2025 MinMax.
+//------------------------------------------------------------------------
 #pragma once
 
 #include <cstdarg>
 #include <cstdio>
-#include <cstring>
-#include <vector>        // Å© í«â¡
-#include <string>
+#include <vector>
 
 #if defined(_WIN32)
 #include <windows.h>
