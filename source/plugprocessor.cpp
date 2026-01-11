@@ -33,6 +33,8 @@
 #include "plugprocessor.h"
 #include "stateio.h"
 
+#include "debug_log.h"
+
 namespace MinMax
 {
 #pragma region Implements
@@ -253,23 +255,30 @@ namespace MinMax
 			}
 			case PARAM::CHORD_MSB:
 			{
-				Steinberg::Vst::ParamValue num = prm.get(PARAM::CHORD_MSB) * 128 + prm.get(PARAM::CHORD_LSB);
-				prm.set(PARAM::CHORD_NUM, num);
-				notifyChordNumberChanged((int)num);
+				if (prm.isChanged(PARAM::CHORD_MSB) || prm.isChanged(PARAM::CHORD_LSB))
+				{
+					Steinberg::Vst::ParamValue num = prm.get(PARAM::CHORD_MSB) * 128 + prm.get(PARAM::CHORD_LSB);
+					prm.set(PARAM::CHORD_NUM, num);
+					DLogWriteLine("Processer::CHORD_MSB");
+					notifyChordNumberChanged();
+					prm.clearChangedFlags(PARAM::CHORD_MSB);
+					prm.clearChangedFlags(PARAM::CHORD_LSB);
+				}
 				break;
 			}
 			case PARAM::CHORD_NUM:
 			{
-				if (prm.isChanged(PARAM::CHORD_NUM))
+				if (prm.isChanged(tag))
 				{
+					DLogWriteLine("Processer::CHORD_NUM");
 					notifyChordNumberChanged();
-					prm.clearChangedFlags(PARAM::CHORD_NUM);
+					prm.clearChangedFlags(tag);
 				}
 				break;
 			}
 			case PARAM::NEED_SAMPLEBLOCK_ADUST:
 			{
-				bool state = prm.get(PARAM::NEED_SAMPLEBLOCK_ADUST) > 0.5;
+				bool state = prm.get(tag) > 0.5;
 				EventScheduler::Instance().setNeedSampleblockAdust(state);
 				break;
 			}
@@ -277,7 +286,15 @@ namespace MinMax
 			{
 				if (PARAM::STR1_OFFSET <= tag && tag <= PARAM::STR7_OFFSET)
 				{
-					notifyChordNumberChanged();
+					if (prm.isChanged(tag))
+					{
+						DLogWrite("Processer::STR");
+						DLogWrite(std::to_string(tag - PARAM::STR1_OFFSET + 1).c_str());
+						DLogWrite("_Offset -> ");
+						DLogWriteLine(std::to_string(prm.get(tag)).c_str());
+						notifyChordNumberChanged();
+						prm.clearChangedFlags(tag);
+					}
 				}
 				break;
 			}
@@ -697,20 +714,37 @@ namespace MinMax
 		return result;
 	}
 
-	void MyVSTProcessor::notifyChordNumberChanged(int flatIndex)
+	void MyVSTProcessor::notifyChordNumberChanged()
 	{
-		if (++chordState.seqnumber > 999999)
+		StringSet set{};
+
+		if (++chordseq > 999999)
 		{
-			chordState.seqnumber = 0;
+			chordseq = 0;
 		}
-		chordState.flatIndex = (int)prm.get(PARAM::CHORD_NUM);
+
+		set.state = chordseq;
+		set.flatIndex = (int)prm.get(PARAM::CHORD_NUM);
+
+		auto v = ChordMap::instance().getChordVoicing(set.flatIndex);
+
+		set.size = v.size;
+		for (int i = 0; i < v.size; i++)
+		{
+			set.data[i] = v.data[i];
+			set.offset[i] = (int)prm.get(PARAM::STR1_OFFSET + i);
+		}
 
 		Steinberg::FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();
 		if (!msg) return;
 
 		msg->setMessageID(MSG_CHORD_CHANGED);
-		msg->getAttributes()->setBinary(MSG_CHORD_CHANGED, &chordState, sizeof(ChordState));
-		sendMessage(msg);
+		msg->getAttributes()->setBinary(MSG_CHORD_CHANGED, &set, sizeof(StringSet));
+
+		DLogWriteLine("Processer::notifyChordNumberChanged -> SendMessage");
+		auto result = sendMessage(msg);
+		DLogWrite("Processer::notifyChordNumberChanged <- Result : ");
+		DLogWriteLine(std::to_string(result).c_str());
 	}
 
 	Steinberg::tresult PLUGIN_API MyVSTProcessor::notify(Steinberg::Vst::IMessage* message)

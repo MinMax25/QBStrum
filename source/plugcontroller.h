@@ -53,6 +53,8 @@ namespace MinMax
 
 		uint32_t chordStateCount = 0;
 
+		StringSet ChordInfo{};
+
 		// --------------
 
 		DEFINE_INTERFACES

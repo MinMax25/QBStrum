@@ -24,6 +24,8 @@
 #include "plugcontroller.h"
 #include "plugdefine.h"
 
+#include "debug_log.h"
+
 namespace MinMax
 {
 	Steinberg::tresult PLUGIN_API MyVSTController::initialize(FUnknown* context)
@@ -143,16 +145,28 @@ namespace MinMax
 		const auto attr = message->getAttributes();
 		if (attr == nullptr) return Steinberg::kResultFalse;
 
-		if (!(attr->getBinary(MSG_CHORD_CHANGED, msgData, msgSize) == Steinberg::kResultTrue && msgSize == sizeof(ChordState)))
+		if (!(attr->getBinary(MSG_CHORD_CHANGED, msgData, msgSize) == Steinberg::kResultTrue && msgSize == sizeof(StringSet)))
 		{
 			return Steinberg::kResultFalse;
 		}
 
-		const auto chordState = reinterpret_cast<const ChordState*>(msgData);
+		DLogWriteLine("Controller::onParameterChordChanged");
+
+		const auto set = reinterpret_cast<const StringSet*>(msgData);
+
+		ChordInfo.state = set->state;
+		ChordInfo.flatIndex = set->flatIndex;
+		ChordInfo.size = set->size;
+
+		for (int i = 0; i++; i < set->size)
+		{
+			ChordInfo.data[i] = set->data[i];
+			ChordInfo.offset[i] = set->offset[i];
+		}
 
 		{
 			beginEdit(static_cast<int>(PARAM::CHORD_NUM));
-			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_NUM, chordState->flatIndex);
+			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_NUM, set->flatIndex);
 			setParamNormalized(static_cast<int>(PARAM::CHORD_NUM), norm);
 			performEdit(static_cast<int>(PARAM::CHORD_NUM), norm);
 			endEdit(static_cast<int>(PARAM::CHORD_NUM));
@@ -160,7 +174,7 @@ namespace MinMax
 
 		{
 			beginEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION));
-			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_STATE_REVISION, chordState->seqnumber);
+			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_STATE_REVISION, set->state);
 			setParamNormalized(static_cast<int>(PARAM::CHORD_STATE_REVISION), norm);
 			performEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION), norm);
 			endEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION));

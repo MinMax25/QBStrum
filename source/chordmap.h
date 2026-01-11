@@ -62,12 +62,6 @@ namespace MinMax
         static constexpr int defaultBlockSize = defaultRootCount * defaultTypeCount * defaultVoicingCount;
     };
 
-    struct ChordState
-    {
-        uint32_t seqnumber = 0;
-        int flatIndex = 0;
-    };
-
     struct StringSet
     {
         //

@@ -36,6 +36,8 @@
 #include "files.h"
 #include "myparameters.h"
 
+#include "debug_log.h"
+
 namespace MinMax
 {
     class CFretBoardView : public VSTGUI::CViewContainer
@@ -216,7 +218,7 @@ namespace MinMax
             auto norm = c->getParamNormalized(PARAM::CHORD_NUM);
             auto flatIndex = c->normalizedParamToPlain(PARAM::CHORD_NUM, norm);
 
-            auto v = ChordMap::instance().getChordVoicing(flatIndex);
+            auto& v = ChordMap::instance().getChordVoicing(flatIndex);
 
             for (int i = 0; i < v.size; i++)
             {
@@ -225,6 +227,9 @@ namespace MinMax
                 v.offset[i] = offset;
             }
             fretBoard->setPressedFrets(v);
+
+            DLogWrite("FretBoardView::onParameterChordChanged -> ");
+            DLogWriteLine(std::to_string(v.offset[0]).c_str());
 
             chordSelecter->setChordNumber(flatIndex);
         }

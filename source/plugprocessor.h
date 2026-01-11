@@ -68,7 +68,7 @@ namespace MinMax
 		void PLUGIN_API trigFretNoise(Steinberg::Vst::Event event);
 		Steinberg::Vst::ParamID PLUGIN_API getParamIdByPitch(Steinberg::Vst::Event event);
 		StringSet PLUGIN_API getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings);
-		void PLUGIN_API notifyChordNumberChanged(int flatIndex = -1);
+		void PLUGIN_API notifyChordNumberChanged();
 		Steinberg::tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
 		Steinberg::tresult PLUGIN_API notifyStrumTrigger(Steinberg::Vst::IMessage* message);
 		void PLUGIN_API processAudio(Steinberg::Vst::ProcessData& data);
@@ -97,6 +97,6 @@ namespace MinMax
 		// 内部MIDIイベントバッファ
 		RingBuff InnerEvents{ 32 };
 
-		ChordState chordState{};
+		uint32_t chordseq = 0;
 	};
 }
