@@ -24,8 +24,6 @@
 #include "plugcontroller.h"
 #include "plugdefine.h"
 
-#include "debug_log.h"
-
 namespace MinMax
 {
 	Steinberg::tresult PLUGIN_API MyVSTController::initialize(FUnknown* context)
@@ -150,15 +148,13 @@ namespace MinMax
 			return Steinberg::kResultFalse;
 		}
 
-		DLogWriteLine("Controller::onParameterChordChanged");
-
 		const auto set = reinterpret_cast<const StringSet*>(msgData);
 
 		ChordInfo.state = set->state;
 		ChordInfo.flatIndex = set->flatIndex;
 		ChordInfo.size = set->size;
 
-		for (int i = 0; i++; i < set->size)
+		for (int i = 0; i < set->size; i++)
 		{
 			ChordInfo.data[i] = set->data[i];
 			ChordInfo.offset[i] = set->offset[i];

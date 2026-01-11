@@ -14,7 +14,6 @@
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
-
 #include "myvst3editor.h"
 
 namespace MinMax

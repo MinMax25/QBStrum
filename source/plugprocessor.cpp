@@ -33,8 +33,6 @@
 #include "plugprocessor.h"
 #include "stateio.h"
 
-#include "debug_log.h"
-
 namespace MinMax
 {
 #pragma region Implements
@@ -259,7 +257,6 @@ namespace MinMax
 				{
 					Steinberg::Vst::ParamValue num = prm.get(PARAM::CHORD_MSB) * 128 + prm.get(PARAM::CHORD_LSB);
 					prm.set(PARAM::CHORD_NUM, num);
-					DLogWriteLine("Processer::CHORD_MSB");
 					notifyChordNumberChanged();
 					prm.clearChangedFlags(PARAM::CHORD_MSB);
 					prm.clearChangedFlags(PARAM::CHORD_LSB);
@@ -270,7 +267,6 @@ namespace MinMax
 			{
 				if (prm.isChanged(tag))
 				{
-					DLogWriteLine("Processer::CHORD_NUM");
 					notifyChordNumberChanged();
 					prm.clearChangedFlags(tag);
 				}
@@ -288,10 +284,6 @@ namespace MinMax
 				{
 					if (prm.isChanged(tag))
 					{
-						DLogWrite("Processer::STR");
-						DLogWrite(std::to_string(tag - PARAM::STR1_OFFSET + 1).c_str());
-						DLogWrite("_Offset -> ");
-						DLogWriteLine(std::to_string(prm.get(tag)).c_str());
 						notifyChordNumberChanged();
 						prm.clearChangedFlags(tag);
 					}
@@ -646,7 +638,7 @@ namespace MinMax
 
 	Steinberg::Vst::ParamID MyVSTProcessor::getParamIdByPitch(Steinberg::Vst::Event event)
 	{
-		// ピッチからパラメータID取得
+		// キースイッチ -> ParamID
 		int pitch = -1;
 
 		if (event.type == Steinberg::Vst::Event::kNoteOnEvent)
@@ -741,10 +733,7 @@ namespace MinMax
 		msg->setMessageID(MSG_CHORD_CHANGED);
 		msg->getAttributes()->setBinary(MSG_CHORD_CHANGED, &set, sizeof(StringSet));
 
-		DLogWriteLine("Processer::notifyChordNumberChanged -> SendMessage");
-		auto result = sendMessage(msg);
-		DLogWrite("Processer::notifyChordNumberChanged <- Result : ");
-		DLogWriteLine(std::to_string(result).c_str());
+		sendMessage(msg);
 	}
 
 	Steinberg::tresult PLUGIN_API MyVSTProcessor::notify(Steinberg::Vst::IMessage* message)
@@ -795,7 +784,7 @@ namespace MinMax
 			event.noteOff.velocity = 0;
 		}
 
-		// プラグインプロセッサのノートバッファに追加
+		// 内部イベントバッファに追加
 		InnerEvents.push(event);
 
 		return Steinberg::kResultOk;

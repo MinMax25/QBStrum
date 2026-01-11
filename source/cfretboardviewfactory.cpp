@@ -27,6 +27,7 @@
 #include <vstgui/uidescription/iviewcreator.h>
 #include <vstgui/uidescription/uiattributes.h>
 #include <vstgui/uidescription/uiviewfactory.h>
+#include <base/source/fobject.h>
 
 #include "cchordlistener.h"
 #include "cchordselecter.h"
@@ -36,7 +37,7 @@
 #include "files.h"
 #include "myparameters.h"
 
-#include "debug_log.h"
+#include "plugcontroller.h"
 
 namespace MinMax
 {
@@ -213,25 +214,9 @@ namespace MinMax
         void onParameterChordChanged(int value)
         {
             if (canEdit) return;
-
-            auto* c = editor->getController();
-            auto norm = c->getParamNormalized(PARAM::CHORD_NUM);
-            auto flatIndex = c->normalizedParamToPlain(PARAM::CHORD_NUM, norm);
-
-            auto& v = ChordMap::instance().getChordVoicing(flatIndex);
-
-            for (int i = 0; i < v.size; i++)
-            {
-                auto norm = c->getParamNormalized(PARAM::STR1_OFFSET + i);
-                auto offset = (int)c->normalizedParamToPlain(PARAM::STR1_OFFSET + i, norm);
-                v.offset[i] = offset;
-            }
-            fretBoard->setPressedFrets(v);
-
-            DLogWrite("FretBoardView::onParameterChordChanged -> ");
-            DLogWriteLine(std::to_string(v.offset[0]).c_str());
-
-            chordSelecter->setChordNumber(flatIndex);
+            auto* c = Steinberg::FCast<MyVSTController>(editor->getController());
+            fretBoard->setPressedFrets(c->ChordInfo);
+            chordSelecter->setChordNumber(c->ChordInfo.flatIndex);
         }
 
         void onSelectedChordChanged(int value)
