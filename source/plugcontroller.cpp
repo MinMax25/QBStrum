@@ -137,37 +137,6 @@ namespace MinMax
 
 	Steinberg::tresult PLUGIN_API MyVSTController::notify(Steinberg::Vst::IMessage* message)
 	{
-		//if (!message) return Steinberg::kInvalidArgument;
-
-		//const char* value = message->getMessageID();
-
-		//if (strcmp(value, MSG_CHORD_CHANGED) != 0) return Steinberg::kResultFalse;
-		//Steinberg::Vst::IAttributeList* attr = message->getAttributes();
-		//if (!attr) return Steinberg::kResultFalse;
-
-		//const void* data = nullptr;
-		//Steinberg::uint32 size = 0;
-
-		//if (attr->getBinary(MSG_CHORD_VALUE, data, size) != Steinberg::kResultTrue) return Steinberg::kResultFalse;
-
-		//const StringSet* chord = reinterpret_cast<const StringSet*>(data);
-
-		//if (chord->flatIndex >= 0)
-		//{
-		//	beginEdit(static_cast<int>(PARAM::CHORD_NUM));
-		//	Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_NUM, chord->flatIndex);
-		//	setParamNormalized(static_cast<int>(PARAM::CHORD_NUM), norm);
-		//	performEdit(static_cast<int>(PARAM::CHORD_NUM), norm);
-		//	endEdit(static_cast<int>(PARAM::CHORD_NUM));
-		//}
-
-		//{
-		//	beginEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION));
-		//	Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_STATE_REVISION, chord->state);
-		//	setParamNormalized(static_cast<int>(PARAM::CHORD_STATE_REVISION), norm);
-		//	performEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION), norm);
-		//	endEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION));
-		//}
 		const void* msgData;
 		Steinberg::uint32 msgSize;
 
