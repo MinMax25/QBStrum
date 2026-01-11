@@ -113,7 +113,7 @@ namespace MinMax
 		HARMONICS,
 		SLIDE,
 
-		//
+		// コード変更通知用特殊パラメータ
 		CHORD_STATE_REVISION = 9001,
 	};
 
