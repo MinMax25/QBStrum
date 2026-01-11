@@ -49,12 +49,12 @@ namespace MinMax
 
             setBackgroundColor(VSTGUI::kTransparentCColor);
 
-            initChordListener();
-
             initFretBoard();
             initMenuButtons();
             initLabelPreset();
             initChordSelecter();
+
+            initChordListener();
         }
 
         ~CFretBoardView() override
@@ -114,18 +114,6 @@ namespace MinMax
             c->endEdit(PARAM::CHORD_NUM);
         }
 
-        void initChordListener()
-        {
-            chordListner =
-                new CChordListner(
-                    editor, PARAM::CHORD_STATE_REVISION,
-                    [this](CChordListner*, int v)
-                    {
-                        onParameterChordChanged(v);
-                    }
-                );
-        }
-
         void initFretBoard()
         {
             fretBoard = new CFretBoard(getViewSize());
@@ -155,6 +143,18 @@ namespace MinMax
         {
             chordSelecter = new CChordSelecter({ 551,1,700,19 }, [this](CChordSelecter*, int v) { onSelectedChordChanged(v); });
             addView(chordSelecter);
+        }
+
+        void initChordListener()
+        {
+            chordListner =
+                new CChordListner(
+                    editor, PARAM::CHORD_STATE_REVISION,
+                    [this](CChordListner*, int v)
+                    {
+                        onParameterChordChanged(v);
+                    }
+                );
         }
 
         void popupMenu(VSTGUI::CView* anchor, MenuType type)

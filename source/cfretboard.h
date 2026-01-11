@@ -29,14 +29,15 @@ namespace MinMax
         const int numFrets = (lastFret - firstFret + 1);
         const double outerMargin = 10.0;                    // 上部余白
 
-        VSTGUI::CColor bg;
-        VSTGUI::CColor stringColor;
-        VSTGUI::CColor fretColor;
-        VSTGUI::CColor nutColor;
-        VSTGUI::CColor markerColor;
-        VSTGUI::CColor fretNumberColor;
-        VSTGUI::CColor pressedColor;
-        VSTGUI::CColor pressedOffsetColor;
+        const VSTGUI::CColor bg = VSTGUI::CColor(60, 40, 20, 255);
+        const VSTGUI::CColor stringColor = VSTGUI::CColor(230, 230, 230, 255);
+        const VSTGUI::CColor fretColor = VSTGUI::CColor(180, 180, 180, 255);
+        const VSTGUI::CColor nutColor = VSTGUI::CColor(255, 255, 255, 255);
+        const VSTGUI::CColor markerColor = VSTGUI::CColor(200, 200, 200, 255);
+        const VSTGUI::CColor fretNumberColor = VSTGUI::CColor(220, 220, 220, 255);
+        const VSTGUI::CColor pressedColor = VSTGUI::CColor(255, 140, 0, 255);
+        const VSTGUI::CColor pressedOffsetColor = VSTGUI::CColor(255, 0, 255, 255);
+        const VSTGUI::CColor muteColor = VSTGUI::CColor(255, 0, 0, 255);
 
         VSTGUI::CRect frameSize;
         VSTGUI::CRect boardSize;
@@ -96,15 +97,6 @@ namespace MinMax
             usableHeight = boardSize.getHeight() - outerMargin * 2;
             stringSpacing = usableHeight / (STRING_COUNT - 1);
             fretSpacing = boardSize.getWidth() / numFrets;
-
-            bg = CColor(60, 40, 20, 255);
-            stringColor = CColor(230, 230, 230, 255);
-            fretColor = CColor(180, 180, 180, 255);
-            nutColor = CColor(255, 255, 255, 255);
-            markerColor = CColor(200, 200, 200, 255);
-            fretNumberColor = CColor(220, 220, 220, 255);
-            pressedColor = CColor(255, 140, 0, 255);
-            pressedOffsetColor = CColor(255, 0, 255, 255);
         }
 
         void draw(VSTGUI::CDrawContext* pContext) override
@@ -210,6 +202,7 @@ namespace MinMax
                 {
                     int fret = pressed.data[stringindex] + pressed.offset[stringindex];
                     bool hasOffset = pressed.offset[stringindex] != 0;
+                    bool outOfRange = hasOffset && (fret < 0 || fret > lastFret);
                     double y = boardSize.top + outerMargin + stringSpacing * stringindex;
 
                     if (hasOffset)
@@ -224,13 +217,14 @@ namespace MinMax
                     }
 
                     // --- (1) ミュート (-1) は X を描画 ---
-                    if (fret == -1)
+                    if (fret == -1 || outOfRange)
                     {
-                        // ナットの上に配置（画面内）
-                        double x = boardSize.left + fretSpacing * 0.5;  // ナットの少し右に置く
+                        double x = boardSize.left + fretSpacing * 0.5;
                         const double s = 6.0;
-
-                        pContext->setFrameColor(CColor(255, 0, 0, 255)); // 赤色など
+                        if (!hasOffset)
+                        {
+                            pContext->setFrameColor(muteColor);
+                        }
                         pContext->drawLine(CPoint(x - s, y - s), CPoint(x + s, y + s));
                         pContext->drawLine(CPoint(x - s, y + s), CPoint(x + s, y - s));
                         continue;
