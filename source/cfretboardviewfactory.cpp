@@ -147,6 +147,8 @@ namespace MinMax
 
         void initChordListener()
         {
+            if (!editor) return;
+
             chordListner =
                 new CChordListner(
                     editor, PARAM::CHORD_STATE_REVISION,
