@@ -89,35 +89,10 @@ namespace MinMax
 
         VSTGUI::CTextLabel* labelPreset = nullptr;
 
-        void onParameterChordChanged(int value)
-        {
-            if (canEdit) return;
-
-            auto* c = editor->getController();
-            auto norm = c->getParamNormalized(PARAM::CHORD_NUM);
-            auto v = c->normalizedParamToPlain(PARAM::CHORD_NUM, norm);
-
-            fretBoard->setPressedFrets(getVoicing(v));
-            chordSelecter->setChordNumber(v);
-        }
-
-        void onSelectedChordChanged(int value)
-        {
-            if (canEdit) return;
-
-            auto* c = editor->getController();
-
-            c->beginEdit(PARAM::CHORD_NUM);
-            Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(PARAM::CHORD_NUM, value);
-            c->setParamNormalized(PARAM::CHORD_NUM, norm);
-            c->performEdit(PARAM::CHORD_NUM, norm);
-            c->endEdit(PARAM::CHORD_NUM);
-        }
-
         void initFretBoard()
         {
             fretBoard = new CFretBoard(getViewSize());
-            fretBoard->setPressedFrets(getVoicing(0));
+            fretBoard->setPressedFrets(StringSet());
             addView(fretBoard);
         }
 
@@ -148,7 +123,6 @@ namespace MinMax
         void initChordListener()
         {
             if (!editor) return;
-
             chordListner =
                 new CChordListner(
                     editor, PARAM::CHORD_STATE_REVISION,
@@ -232,6 +206,40 @@ namespace MinMax
                 menu->addEntry(item);
             }
             return menu;
+        }
+
+        void onParameterChordChanged(int value)
+        {
+            if (canEdit) return;
+
+            auto* c = editor->getController();
+            auto norm = c->getParamNormalized(PARAM::CHORD_NUM);
+            auto flatIndex = c->normalizedParamToPlain(PARAM::CHORD_NUM, norm);
+
+            auto v = ChordMap::instance().getChordVoicing(flatIndex);
+
+            for (int i = 0; i < v.size; i++)
+            {
+                auto norm = c->getParamNormalized(PARAM::STR1_OFFSET + i);
+                auto offset = (int)c->normalizedParamToPlain(PARAM::STR1_OFFSET + i, norm);
+                v.offset[i] = offset;
+            }
+            fretBoard->setPressedFrets(v);
+
+            chordSelecter->setChordNumber(flatIndex);
+        }
+
+        void onSelectedChordChanged(int value)
+        {
+            if (canEdit) return;
+
+            auto* c = editor->getController();
+
+            c->beginEdit(PARAM::CHORD_NUM);
+            Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(PARAM::CHORD_NUM, value);
+            c->setParamNormalized(PARAM::CHORD_NUM, norm);
+            c->performEdit(PARAM::CHORD_NUM, norm);
+            c->endEdit(PARAM::CHORD_NUM);
         }
 
         void saveChordMap()
@@ -321,11 +329,6 @@ namespace MinMax
             auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(title));
             item->setActions(std::forward<F>(cb));
             menu->addEntry(item);
-        }
-
-        StringSet getVoicing(int value) const
-        {
-            return ChordMap::instance().getChordVoicing(value);
         }
     };
 

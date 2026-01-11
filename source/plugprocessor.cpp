@@ -704,21 +704,11 @@ namespace MinMax
 			chordState = 0;
 		}
 
-		set.flatIndex = flatIndex;
-		set.state = chordState;
-		set.size = v.size;
-		
-		for (int i = 0; i < v.size; i++)
-		{
-			set.data[i] = v.data[i];
-			set.offset[i] = v.offset[i];
-		}
-
 		Steinberg::FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();
 		if (!msg) return;
 
 		msg->setMessageID(MSG_CHORD_CHANGED);
-		msg->getAttributes()->setBinary(MSG_CHORD_VALUE, &set, sizeof(StringSet));
+		msg->getAttributes()->setBinary(MSG_CHORD_CHANGED, &chordState, sizeof(uint32_t));
 		sendMessage(msg);
 	}
 

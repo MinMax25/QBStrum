@@ -29,7 +29,10 @@ namespace MinMax
 
         void valueChanged() override
         {
-            if (vc) vc(this, (int)getValue());
+            if (vc)
+            {
+                vc(this, (int)getValue());
+            }
         }
 
         CLASS_METHODS(CChordListner, CParamDisplay)
