@@ -1042,19 +1042,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "ARP_LENGTH",
 							"font": "~ NormalFontSmaller",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
 							"frame-color": "~ TransparentCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "550, 132",
 							"round-rect-radius": "6",
@@ -1077,19 +1075,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STRUM_LENGTH",
 							"font": "~ NormalFontSmaller",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
 							"frame-color": "~ TransparentCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "400, 132",
 							"round-rect-radius": "6",
@@ -1426,19 +1422,17 @@
 							"zoom-factor": "1.5"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "FNOISE_VELOCITY",
 							"font": "~ NormalFontSmaller",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
 							"frame-color": "~ TransparentCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "625, 132",
 							"round-rect-radius": "6",

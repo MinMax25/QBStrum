@@ -295,13 +295,12 @@ namespace PF
                                 def.units,
                                 min,
                                 max,
-                                0,
+                                defaultValue,
                                 0,
                                 def.flags,
                                 def.unitID
                             );
                         p->setPrecision(precision);
-                        p->setNormalized(p->toNormalized(defaultValue));
                         param = std::move(p);
                     }
                     else
