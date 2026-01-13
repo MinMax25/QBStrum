@@ -24,15 +24,13 @@ namespace MinMax
     public:
         using SelectedChordChanged = std::function<void(CMenuButton*)>;
 
-        const VSTGUI::CColor NORMAL_TEXT_COLOR = VSTGUI::kGreyCColor;
-        const VSTGUI::CColor EDIT_TEXT_COLOR = VSTGUI::kCyanCColor;
-
         CMenuButton(const VSTGUI::CRect& size, const VSTGUI::UTF8String& title, SelectedChordChanged cb)
             : VSTGUI::CTextButton(size, nullptr, -1, title)
             , selectedChordChanged(cb)
         {
             setGradient(nullptr);
             setTextColor(NORMAL_TEXT_COLOR);
+            setTextColorHighlighted(VSTGUI::kWhiteCColor);
             setFont(VSTGUI::kNormalFontSmall);
         }
 
@@ -57,6 +55,11 @@ namespace MinMax
             {
                 ctx->setFillColor(VSTGUI::kGreyCColor);
                 ctx->drawRect(getViewSize(), VSTGUI::kDrawFilled);
+                setTextColor(VSTGUI::kWhiteCColor);
+            }
+            else
+            {
+                setTextColor(NORMAL_TEXT_COLOR);
             }
 
             // テキスト描画（親クラス任せ）
@@ -70,7 +73,11 @@ namespace MinMax
         }
 
     private:
+        const VSTGUI::CColor NORMAL_TEXT_COLOR = VSTGUI::kGreyCColor;
+        const VSTGUI::CColor EDIT_TEXT_COLOR = VSTGUI::kCyanCColor;
+
         bool mouseInside{ false };
+
         SelectedChordChanged selectedChordChanged;
     };
 }

@@ -150,8 +150,6 @@ namespace MinMax
             }
             else
             {
-                editButton->setTextColor(canEdit ? editButton->EDIT_TEXT_COLOR : editButton->NORMAL_TEXT_COLOR);
-
                 if (canEdit)
                 {
                     addMenuCommand(menu, "Commit Changes", [this](VSTGUI::CCommandMenuItem*) { commitEdits(); });
@@ -258,7 +256,6 @@ namespace MinMax
         void enterEditMode()
         {
             canEdit = true;
-            editButton->setTextColor(editButton->EDIT_TEXT_COLOR);
             fretBoard->beginEdit();
             chordSelecter->beginEdit();
         }
@@ -281,7 +278,6 @@ namespace MinMax
         void exitEditMode(bool isCancel)
         {
             canEdit = false;
-            editButton->setTextColor(editButton->NORMAL_TEXT_COLOR); 
             fretBoard->endEdit(isCancel);
             chordSelecter->endEdit();
         }
