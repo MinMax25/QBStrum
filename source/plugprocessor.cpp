@@ -481,7 +481,7 @@ namespace MinMax
 				fretpos.data[i] + 
 				getOffset(i) +
 				prm.get(PARAM::TRANSPOSE) +
-				prm.get(PARAM::OCTAVE) ? 0 : 12;
+				(prm.get(PARAM::OCTAVE) ? 12 : 0);
 
 			float velocity = baseVelocity * std::pow(BRUSH_DECAY, strcnt);
 
@@ -530,7 +530,7 @@ namespace MinMax
 				fretpos.data[i] +
 				getOffset(i) +
 				prm.get(PARAM::TRANSPOSE) +
-				prm.get(PARAM::OCTAVE) ? 0 : 12;
+				(prm.get(PARAM::OCTAVE) ? 12 : 0);
 
 			float velocity = baseVelocity * std::pow(prm.get(PARAM::STRUM_DECAY) / 100.0f, strcnt);
 
@@ -595,7 +595,7 @@ namespace MinMax
 			fretpos.data[stringindex] +
 			getOffset(stringindex) +
 			prm.get(PARAM::TRANSPOSE) +
-			prm.get(PARAM::OCTAVE) ? 0 : 12;
+			(prm.get(PARAM::OCTAVE) ? 12 : 0);
 
 		float velocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
