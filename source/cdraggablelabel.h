@@ -30,9 +30,6 @@ namespace MinMax
         {
         }
 
-        void setChordNumber(int n) { chordNumber = n; }
-        int  getChordNumber() const { return chordNumber; }
-
     protected:
         VSTGUI::CMouseEventResult onMouseDown(
             VSTGUI::CPoint& where,
@@ -88,7 +85,7 @@ namespace MinMax
         }
 
         VSTGUI::CPoint dragStart{};
-        int  chordNumber = -1;
+
         bool dragging = false;
 
         DragPathCallback dragPathCallback;

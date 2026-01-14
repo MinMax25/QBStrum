@@ -18,6 +18,7 @@
 #include "chordmap.h"
 #include "myparameters.h"
 #include "cdraggablelabel.h"
+#include "midiwriter.h"
 
 #include "debug_log.h"
 
@@ -77,9 +78,8 @@ namespace MinMax
                     VSTGUI::CRect(18, 1, 148, 17),
                     [this](CDraggableLabel* lbl)
                     {
-                        int selectedChord = lbl->getChordNumber();
-                        DLogWrite("Drag started for chord index: %d\n", selectedChord);
-                        return L"D:\\temp\\Pre Chorus 01.mid";
+                        DLogWrite("Drag started for chord index: %d\n", currentChordNumber);
+                        return dropVoicingMidiData(lbl);
                     }
                 );
             chordLabel->setBackColor(VSTGUI::kWhiteCColor);
@@ -199,8 +199,39 @@ namespace MinMax
             if (auto* lbl = dynamic_cast<CDraggableLabel*>(chordLabel))
             {
                 lbl->setText(name);
-                lbl->setChordNumber(flatIndex);
             }
+        }
+
+        std::wstring dropVoicingMidiData(CDraggableLabel* pControl)
+        {
+            std::wstring path = L"d:\\temp\\voicing.mid";
+            auto v = ChordMap::instance().getChordVoicing(currentChordNumber);
+            for (int i = 0; i < v.size; i++)
+            {
+                v.data[i] += ChordMap::instance().getTunings().data[i];
+            }
+            writeChordToMidi(v, path);
+            return path;
+        }
+        
+        bool writeChordToMidi(const StringSet& chord, const std::wstring& filepath)
+        {
+            // MidiWriter 初期化（480 ticks per quarter note）
+            MidiWriter writer(480);
+
+            uint32_t fullNoteLength = 480 * 4; // 全音符 = 1小節
+
+            for (int i = 0; i < MAX_STRINGS; ++i)
+            {
+                int note = chord.data[i];
+                if (note >= 0)
+                {
+                    writer.addNote(note, 100, 0, fullNoteLength); // velocity 100, startTick 0
+                }
+            }
+
+            // ファイル出力
+            return writer.write(filepath.c_str());
         }
     };
 }
