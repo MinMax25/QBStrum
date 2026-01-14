@@ -16,6 +16,9 @@
 
 #include "chordmap.h"
 #include "myparameters.h"
+#include "cdraggablelabel.h"
+
+#include "debug_log.h"
 
 namespace MinMax
 {
@@ -68,7 +71,7 @@ namespace MinMax
             addView(chordMenu);
 
             // コード名表示ラベル
-            chordLabel = new VSTGUI::CTextLabel(VSTGUI::CRect(18, 1, 148, 17));
+            chordLabel = new CDraggableLabel(VSTGUI::CRect(18, 1, 148, 17));
             chordLabel->setBackColor(VSTGUI::kWhiteCColor);
             chordLabel->setFontColor(VSTGUI::kBlackCColor);
             chordLabel->setFont(VSTGUI::kNormalFontSmaller);
@@ -112,7 +115,7 @@ namespace MinMax
 
         int currentChordNumber = 0;
 
-        VSTGUI::CTextLabel* chordLabel = nullptr;
+        CDraggableLabel* chordLabel = nullptr;
 
         SelectedChordChanged selectedChordChanged;
 
@@ -167,16 +170,20 @@ namespace MinMax
             if (selectedChordChanged) selectedChordChanged(this, value);
         }
 
-        void setChordText(int value)
+        void setChordText(int flatIndex)
         {
             const auto& map = ChordMap::instance();
 
             VSTGUI::UTF8String name =
-                (value >= 0 && value < map.getFlatCount())
-                ? map.getChordInfoByIndex(value).displayName.c_str()
+                (flatIndex >= 0 && flatIndex < map.getFlatCount())
+                ? map.getChordInfoByIndex(flatIndex).displayName.c_str()
                 : "# undefined #";
 
-            if (chordLabel) chordLabel->setText(name);
+            if (auto* lbl = dynamic_cast<CDraggableLabel*>(chordLabel))
+            {
+                lbl->setText(name);
+                lbl->setChordNumber(flatIndex);
+            }
         }
     };
 }
