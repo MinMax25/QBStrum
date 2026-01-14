@@ -2,11 +2,11 @@
 
 #if defined(_WIN32)
 
-#include <windows.h>
-#include <shlobj.h>
-#include <objidl.h>
+#include <ShlObj_core.h>
 #include <string>
 #include <vector>
+#include <wchar.h>
+#include <windows.h>
 
 namespace WinDND
 {

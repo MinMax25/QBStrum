@@ -7,11 +7,11 @@
 #include <cmath>
 #include <functional>
 #include <string>
-
 #include <vstgui/lib/cbuttonstate.h>
 #include <vstgui/lib/controls/ctextlabel.h>
 #include <vstgui/lib/cpoint.h>
 #include <vstgui/lib/crect.h>
+#include <vstgui/lib/vstguifwd.h>
 
 namespace MinMax
 {
