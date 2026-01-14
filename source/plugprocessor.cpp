@@ -27,7 +27,7 @@
 #include "cnotemsg.h"
 #include "EventScheduler.h"
 #include "myparameters.h"
-#include "parameterframework.h"
+#include "parameterhelper.h"
 #include "plugcids.h"
 #include "plugdefine.h"
 #include "plugprocessor.h"

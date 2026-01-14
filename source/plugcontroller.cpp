@@ -16,11 +16,10 @@
 #include <pluginterfaces/vst/ivstunits.h>
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
-#include <string.h>
 
 #include "myparameters.h"
 #include "myvst3editor.h"
-#include "parameterframework.h"
+#include "parameterhelper.h"
 #include "plugcontroller.h"
 #include "plugdefine.h"
 

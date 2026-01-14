@@ -34,7 +34,7 @@
 #include "cnotelabel.h"
 #include "cnotemsg.h"
 #include "myparameters.h"
-#include "parameterframework.h"
+#include "parameterhelper.h"
 #include "plugdefine.h"
 
 namespace MinMax

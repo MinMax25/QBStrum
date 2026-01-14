@@ -12,7 +12,7 @@
 #include <vector>
 
 #include "chordmap.h"
-#include "parameterframework.h"	
+#include "parameterhelper.h"	
 
 namespace MinMax
 {

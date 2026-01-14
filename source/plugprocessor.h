@@ -17,7 +17,7 @@
 #include "chordmap.h"
 #include "eventscheduler.h"
 #include "myparameters.h"
-#include "parameterframework.h"
+#include "parameterhelper.h"
 
 namespace MinMax
 {
