@@ -134,10 +134,18 @@ namespace WinDND
 
         HRESULT __stdcall EnumFormatEtc(
             DWORD dwDirection,
-            IEnumFORMATETC** ppenumFormatEtc
-        )
+            IEnumFORMATETC** ppenumFormatEtc) override
         {
-            return E_NOTIMPL;
+            if (dwDirection != DATADIR_GET)
+                return E_NOTIMPL;
+
+            FORMATETC fmt = {};
+            fmt.cfFormat = CF_HDROP;
+            fmt.dwAspect = DVASPECT_CONTENT;
+            fmt.lindex = -1;
+            fmt.tymed = TYMED_HGLOBAL;
+
+            return SHCreateStdEnumFmtEtc(1, &fmt, ppenumFormatEtc);
         }
 
         HRESULT __stdcall GetDataHere(FORMATETC*, STGMEDIUM*) { return E_NOTIMPL; }

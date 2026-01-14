@@ -13,6 +13,7 @@
 #include <vstgui/lib/cstring.h>
 #include <vstgui/lib/cviewcontainer.h>
 #include <vstgui/lib/vstguibase.h>
+#include <functional> 
 
 #include "chordmap.h"
 #include "myparameters.h"
@@ -78,6 +79,7 @@ namespace MinMax
                     {
                         int selectedChord = lbl->getChordNumber();
                         DLogWrite("Drag started for chord index: %d\n", selectedChord);
+                        return L"D:\\temp\\Pre Chorus 01.mid";
                     }
                 );
             chordLabel->setBackColor(VSTGUI::kWhiteCColor);
