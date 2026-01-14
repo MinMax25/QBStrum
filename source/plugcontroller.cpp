@@ -154,7 +154,7 @@ namespace MinMax
 		ChordInfo.flatIndex = set->flatIndex;
 		ChordInfo.size = set->size;
 
-		for (int i = 0; i < set->size; i++)
+		for (int i = 0; i < (int)set->size; i++)
 		{
 			ChordInfo.data[i] = set->data[i];
 			ChordInfo.offset[i] = set->offset[i];

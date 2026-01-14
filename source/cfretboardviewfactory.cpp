@@ -47,6 +47,8 @@ namespace MinMax
         CFretBoardView(const VSTGUI::UIAttributes& attr, const VSTGUI::IUIDescription* desc, const VSTGUI::CRect& size)
             : CViewContainer(size)
         {
+            Files::createPresetDirectory();
+            
             editor = dynamic_cast<VSTGUI::VST3Editor*>(desc->getController());
             assert(editor && "CFretBoardView requires VST3Editor");
 

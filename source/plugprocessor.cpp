@@ -721,7 +721,7 @@ namespace MinMax
 		auto v = ChordMap::instance().getChordVoicing(set.flatIndex);
 
 		set.size = v.size;
-		for (int i = 0; i < v.size; i++)
+		for (int i = 0; i < (int)v.size; i++)
 		{
 			set.data[i] = v.data[i];
 			set.offset[i] = (int)prm.get(PARAM::STR1_OFFSET + i);

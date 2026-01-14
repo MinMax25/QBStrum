@@ -10,6 +10,7 @@
 #include <string>
 #include <system_error>
 #include <vector>
+#include <vstgui/lib/cstring.h>
 
 namespace MinMax
 {
@@ -18,11 +19,36 @@ namespace MinMax
     {
         /// 定数
         inline static const char* STR_USERPROFILE = "USERPROFILE";
-        inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum";
+        inline static const char* PLUGIN_ROOT = "Documents/VST3 Presets/MinMax/QBStrum";
+        inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum/ChordPreset";
 
         inline static const VSTGUI::UTF8String TITLE = "QBStrum";
         inline static const VSTGUI::UTF8String FILTER = "Chord Preset(.json)";
         inline static const VSTGUI::UTF8String FILE_EXT = "json";
+
+        // プラグインパスを取得する
+        inline static std::filesystem::path getPluginPath()
+        {
+            const char* home =
+#ifdef _WIN32
+                getenv("USERPROFILE");
+#else
+                getenv("HOME");
+#endif
+            if (!home) return std::filesystem::current_path();
+
+            return std::filesystem::path(home).append(PLUGIN_ROOT).make_preferred();
+        }
+
+        // プラグインディレクトリを作成する
+        inline static void createPluginDirectory()
+        {
+            auto p = getPluginPath();
+            if (!std::filesystem::exists(p))
+            {
+                std::filesystem::create_directories(p);
+            }
+        }
 
         // プリセットパスを取得する
         inline static std::filesystem::path getPresetPath()

@@ -5,8 +5,6 @@
 
 #include <array>
 #include <cassert>
-#include <cstdlib>
-#include <filesystem>
 #include <optional>
 #include <pluginterfaces/base/fstrdefs.h>
 #include <pluginterfaces/base/ftypes.h>
@@ -271,11 +269,7 @@ namespace MinMax
 
 		auto& helper = PF::ParamHelper::get();
 
-		const char* STR_USERPROFILE = "USERPROFILE";
-		const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum/Standard 6Strings.json";
-		std::filesystem::path path = std::filesystem::path(getenv(STR_USERPROFILE)).append(PRESET_ROOT).make_preferred();
-		
-		ChordMap::instance().loadChordPreset(path);
+		ChordMap::instance().loadChordPreset();
 
 		helper.setKindResolver(&rangeResolver);
 		helper.setOptionProvider(&optionProvider);

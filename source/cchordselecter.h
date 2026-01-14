@@ -203,7 +203,7 @@ namespace MinMax
         {
             std::wstring path = L"d:\\temp\\voicing.mid";
             auto v = ChordMap::instance().getChordVoicing(currentChordNumber);
-            for (int i = 0; i < v.size; i++)
+            for (int i = 0; i < (int)v.size; i++)
             {
                 if (v.data[i] >= 0)
                 {
@@ -221,7 +221,7 @@ namespace MinMax
 
             uint32_t fullNoteLength = 480 * 4; // ëSâπïÑ = 1è¨êﬂ
 
-            for (int i = 0; i < chord.size; ++i)
+            for (int i = 0; i < (int)chord.size; ++i)
             {
                 int note = chord.data[i];
                 if (note >= 0)

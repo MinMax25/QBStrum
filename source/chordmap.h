@@ -20,11 +20,12 @@
 #include <stdexcept>
 #include <string>
 
+#include "files.h"
+
 namespace MinMax
 {
     // 7弦まで対応可能とする
     inline constexpr int MAX_STRINGS = 7;
-
 
     //======================================================================
     // 弦数定義
@@ -252,6 +253,11 @@ namespace MinMax
         //==================================================================
         // コードプリセット読み込み
         //==================================================================
+        void loadChordPreset()
+        {
+            loadChordPreset(Files::getPresetPath().append("Standard 6Strings.json"));
+        }
+
         void loadChordPreset(const std::filesystem::path& path)
         {
             std::ifstream ifs(path);
