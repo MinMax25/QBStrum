@@ -16,8 +16,11 @@ namespace MinMax
         : public VSTGUI::CTextLabel
     {
     public:
-        CDraggableLabel(const VSTGUI::CRect& size)
-            : CTextLabel(size)
+        CDraggableLabel(
+            const VSTGUI::CRect& size,
+            std::function<void(CDraggableLabel*)> dragCb = nullptr
+        )
+            : CTextLabel(size), dragCallback(dragCb)
         {
         }
 
@@ -32,6 +35,7 @@ namespace MinMax
         VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState& buttons) override
         {
             dragStart = where;
+            dragging = false;
             return VSTGUI::kMouseEventHandled;
         }
 
@@ -39,11 +43,23 @@ namespace MinMax
         {
             if ((buttons & VSTGUI::kLButton) && distance(dragStart, where) > 3)
             {
-                if (dragCallback)
-                    dragCallback(this);  // ドラッグ開始
+                if (!dragging) 
+                {
+                    dragging = true;
+                    if (dragCallback)
+                    {
+                        dragCallback(this);
+                    }
+                }
                 return VSTGUI::kMouseEventHandled;
             }
             return VSTGUI::kMouseEventNotHandled;
+        }
+
+        VSTGUI::CMouseEventResult onMouseUp(VSTGUI::CPoint& where, const VSTGUI::CButtonState& buttons) override
+        {
+            dragging = false;
+            return VSTGUI::kMouseEventHandled;
         }
 
         static float distance(const VSTGUI::CPoint& a, const VSTGUI::CPoint& b)
@@ -56,5 +72,6 @@ namespace MinMax
     private:
         VSTGUI::CPoint dragStart;
         int chordNumber = -1;
+        bool dragging = false;
     };
 }

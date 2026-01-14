@@ -71,7 +71,15 @@ namespace MinMax
             addView(chordMenu);
 
             // コード名表示ラベル
-            chordLabel = new CDraggableLabel(VSTGUI::CRect(18, 1, 148, 17));
+            chordLabel =
+                new CDraggableLabel(
+                    VSTGUI::CRect(18, 1, 148, 17),
+                    [this](CDraggableLabel* lbl)
+                    {
+                        int selectedChord = lbl->getChordNumber();
+                        DLogWrite("Drag started for chord index: %d\n", selectedChord);
+                    }
+                );
             chordLabel->setBackColor(VSTGUI::kWhiteCColor);
             chordLabel->setFontColor(VSTGUI::kBlackCColor);
             chordLabel->setFont(VSTGUI::kNormalFontSmaller);
@@ -124,7 +132,14 @@ namespace MinMax
             auto& chordMap = ChordMap::instance();
 
             // トップレベル OptionMenu
-            auto* rootMenu = new ChordOptionMenu(size, [this](ChordOptionMenu* p, int value) { onSelectedChordChanged(value); });
+            auto* rootMenu =
+                new ChordOptionMenu(
+                    size,
+                    [this](ChordOptionMenu* p, int value) 
+                    {
+                        onSelectedChordChanged(value);
+                    }
+                );
 
             int flatIndex = 0;
             for (int r = 0; r < chordMap.getRootCount(); ++r)
