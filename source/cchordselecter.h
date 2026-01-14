@@ -20,8 +20,6 @@
 #include "cdraggablelabel.h"
 #include "midiwriter.h"
 
-#include "debug_log.h"
-
 namespace MinMax
 {
     // コード選択
@@ -78,7 +76,6 @@ namespace MinMax
                     VSTGUI::CRect(18, 1, 148, 17),
                     [this](CDraggableLabel* lbl)
                     {
-                        DLogWrite("Drag started for chord index: %d\n", currentChordNumber);
                         return dropVoicingMidiData(lbl);
                     }
                 );
