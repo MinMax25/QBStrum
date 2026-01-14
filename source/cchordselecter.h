@@ -205,7 +205,10 @@ namespace MinMax
             auto v = ChordMap::instance().getChordVoicing(currentChordNumber);
             for (int i = 0; i < v.size; i++)
             {
-                v.data[i] += ChordMap::instance().getTunings().data[i];
+                if (v.data[i] >= 0)
+                {
+                    v.data[i] += ChordMap::instance().getTunings().data[i];
+                }
             }
             writeChordToMidi(v, path);
             return path;
@@ -218,7 +221,7 @@ namespace MinMax
 
             uint32_t fullNoteLength = 480 * 4; // ëSâπïÑ = 1è¨êﬂ
 
-            for (int i = 0; i < MAX_STRINGS; ++i)
+            for (int i = 0; i < chord.size; ++i)
             {
                 int note = chord.data[i];
                 if (note >= 0)
