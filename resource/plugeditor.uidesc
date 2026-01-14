@@ -82,6 +82,7 @@
 			"STRUM_SPEED": "1211",
 			"TAG_MUTE_CHANNEL": "1201",
 			"TAG_NEED_SAMPLEBLOCK_ADUST": "1004",
+			"TAG_OCTAVE": "1006",
 			"TAG_TRANSPOSE": "1002"
 		},
 		"custom": {
@@ -105,15 +106,15 @@
 				"SplitViewSize_1_1": "0.6304604486422668019329762501001823693514",
 				"SplitViewSize_2_0": "0.6565295169946332443089431762928143143654",
 				"SplitViewSize_2_1": "0.3404889683959451129879880681983195245266",
-				"TabSwitchValue": "0",
+				"TabSwitchValue": "1",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "9"
+				"SelectedRow": "3"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "9"
+				"SelectedRow": "37"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -3289,7 +3290,7 @@
 							"menu-check-style": "false",
 							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "475, 62",
+							"origin": "145, 157",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "70, 15",
@@ -3390,7 +3391,7 @@
 							"menu-check-style": "false",
 							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "475, 26",
+							"origin": "145, 126",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "70, 15",
@@ -3426,10 +3427,10 @@
 							"min-value": "0",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "475, 50",
+							"origin": "5, 155",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "70, 15",
+							"size": "140, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -3463,10 +3464,10 @@
 							"min-value": "0",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "475, 10",
+							"origin": "5, 125",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "70, 15",
+							"size": "140, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -3478,7 +3479,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "Sel.Artic",
+							"title": "Selected Articulation",
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
@@ -3620,6 +3621,28 @@
 							"text-shadow-offset": "1, 1",
 							"transparent": "false",
 							"value-precision": "2",
+							"wants-focus": "true",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CCheckBox": {
+						"attributes": {
+							"autosize-to-fit": "false",
+							"boxfill-color": "~ WhiteCColor",
+							"boxframe-color": "~ BlackCColor",
+							"checkmark-color": "~ RedCColor",
+							"class": "CCheckBox",
+							"control-tag": "TAG_OCTAVE",
+							"draw-crossbox": "false",
+							"font": "~ NormalFontSmall",
+							"font-color": "~ WhiteCColor",
+							"frame-width": "1",
+							"opacity": "1",
+							"origin": "10, 180",
+							"round-rect-radius": "0",
+							"size": "100, 20",
+							"title": "Octave Up",
+							"transparent": "false",
 							"wants-focus": "true",
 							"wheel-inc-value": "0.1"
 						}

@@ -53,30 +53,37 @@ namespace MinMax
 		SELECTED_ARTICULATION,
 		NEED_SAMPLEBLOCK_ADUST,
 		CTL_TABINDEX1,
+		OCTAVE,
 
-		// CHORD
-		CHORD_LSB = 1101,	// DAW受信用
-		CHORD_MSB,			// DAW受信用
+		// コード指定パラメータ
+		CHORD_LSB = 1101,		// DAW受信用
+		CHORD_MSB,				// DAW受信用
 		CHORD_NUM,
 
-		// STRUM
-		MUTE_CHANNEL = 1201,
+		// ストラムパラメータ
+		MUTE_CHANNEL = 1201,	// Mute Note送信チャンネル
 		MUTE_NOTE_1,
 		MUTE_NOTE_2,
+	
 		STRUM_SPEED = 1211,
 		STRUM_DECAY,
 		STRUM_LENGTH,
+		
 		BRUSH_TIME = 1221,
+		
 		ARP_LENGTH = 1231,
-		FNOISE_CHANNEL = 1241,
+		
+		FNOISE_CHANNEL = 1241,	// Fret Noize送信チャンネル
 		FNOISE_NOTE_NEAR,
 		FNOISE_NOTE_FAR,
 		FNOISE_DIST_NEAR,
 		FNOISE_DIST_FAR,
 		FNOISE_VELOCITY,
+		
 		STRINGS_UP_HIGH = 1251,
 		STRINGS_DOWN_HIGH,
 		STRINGS_DOWN_LOW,
+		
 		STR1_OFFSET = 1261,
 		STR2_OFFSET,
 		STR3_OFFSET,
@@ -85,6 +92,7 @@ namespace MinMax
 		STR6_OFFSET,
 		STR7_OFFSET,
 
+		// ストラムキースイッチ
 		ALL_NOTES_OFF = 1301,
 		BRUSH_UP,
 		BRUSH_DOWN,
@@ -102,7 +110,7 @@ namespace MinMax
 		ARPEGGIO_5,
 		ARPEGGIO_6,
 
-		// ARTICULATION
+		// アーティキュレーションキースイッチ
 		OPEN1 = 1401,
 		OPEN2,
 		HAM_LEG,
@@ -115,7 +123,7 @@ namespace MinMax
 		CHORD_STATE_REVISION = 9001,
 	};
 
-	// 共通レンジ定義取得
+	// レンジ定義
 	class RangeResolver
 		: public PF::IRangeResolver
 	{
@@ -127,11 +135,11 @@ namespace MinMax
 			case RANGE::MIDI_DATA:           out = { 0, 127, false }; return true;
 			case RANGE::PITCH:               out = { 0, 127, false }; return true;
 			case RANGE::MIDI_CHANNEL:        out = { 1, 16, false }; return true;
-			case RANGE::TRANSPOSE_RANGE:     out = { -12, 12, false }; return true;
+			case RANGE::TRANSPOSE_RANGE:     out = { -6, 6, false }; return true;
 			case RANGE::FRET_DISTANCE:       out = { 1, 6, false }; return true;
 			case RANGE::STRUM_STRINGS_RANGE: out = { 1, 5, false }; return true;
 			case RANGE::STRING_OFFSET:       out = { -4, 4, false }; return true;
-			case RANGE::BEAT_LENGTH:         out = { 1, 8, false }; return true;
+			case RANGE::BEAT_LENGTH:         out = { 0.25, 8, false }; return true;
 			case RANGE::ARTICULATION_RANGE:  out = { 0, 1, true }; return true;
 			case RANGE::CTL_TABINDEX1_RANGE: out = { 0, 1, true }; return true;
 			default: return false;
@@ -139,7 +147,7 @@ namespace MinMax
 		}
 	};
 
-	// オプションリスト取得
+	// オプションリスト定義
 	class OptionProvider
 		: public PF::IOptionProvider
 	{
@@ -163,7 +171,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 55;
+	inline constexpr size_t PARAM_MAX = 56;
 
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
@@ -174,17 +182,21 @@ namespace MinMax
 		{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::ARTICULATION_RANGE, PF::FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::NEED_SAMPLEBLOCK_ADUST, STR16("Need Sampleblock Adust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,             UNIT::SYSTEM, 0, 1, 0, 0, 0 },
 		{ PARAM::CTL_TABINDEX1, STR16("TabIndex1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, CTL_TABINDEX1_RANGE, PF::FLAG::HIDDEN,                             UNIT::SYSTEM, 0, 1, 0, 0, 0 },
+		{ PARAM::OCTAVE, STR16("Octabe Up"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,											 UNIT::SYSTEM, 0, 1, 0, 0, 0 },
+
 		{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN,                                    UNIT::CHORD,  0, 1, 0, 0, 0 },
 		{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN,                                    UNIT::CHORD,  0, 1, 0, 0, 0 },
 		{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                                     UNIT::CHORD,  0, 1163, 0, 0, 0 },
+		{ PARAM::CHORD_STATE_REVISION, STR16("Chord State"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                           UNIT::CHORD, 0, 999999, 0, 0, 0 },
+
 		{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_CHANNEL, PF::FLAG::HIDDEN,                          UNIT::STRUM,  0, 1, 1, 0, 0 },
 		{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::STRUM,  0, 1, 103, 0, 0 },
 		{ PARAM::MUTE_NOTE_2, STR16("Mite Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::STRUM,  0, 1, 102, 0, 0 },
 		{ PARAM::STRUM_SPEED, STR16("Strum Speed"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::STRUM,  1, 1000, 26, 1, 0 },
 		{ PARAM::STRUM_DECAY, STR16("Strum Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,                                UNIT::STRUM, 85, 100, 96, 1, 0 },
-		{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::STRUM,  0, 1, 4, 1, 0 },
-		{ PARAM::BRUSH_TIME, STR16("Brush Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                            UNIT::STRUM, 20, 300, 30, 1, 0 },
-		{ PARAM::ARP_LENGTH, STR16("Arpegio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::STRUM,  0, 1, 2, 1, 0 },
+		{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::STRUM,  0, 1, 4, 2, 0 },
+		{ PARAM::BRUSH_TIME, STR16("Brush Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                            UNIT::STRUM,  5, 300, 30, 1, 0 },
+		{ PARAM::ARP_LENGTH, STR16("Arpegio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::STRUM,  0, 1, 2, 2, 0 },
 		{ PARAM::FNOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_CHANNEL, PF::FLAG::HIDDEN,                   UNIT::STRUM,  0, 1, 1, 0, 0 },
 		{ PARAM::FNOISE_NOTE_NEAR, STR16("Fret Noise Note Near"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                      UNIT::STRUM,  0, 1, 120, 0, 0 },
 		{ PARAM::FNOISE_NOTE_FAR, STR16("Fret Noise Note Far"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                        UNIT::STRUM,  0, 1, 123, 0, 0 },
@@ -200,6 +212,7 @@ namespace MinMax
 		{ PARAM::STR4_OFFSET, STR16("String 4 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0, 1, 0, 0, 0 },
 		{ PARAM::STR5_OFFSET, STR16("String 5 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0, 1, 0, 0, 0 },
 		{ PARAM::STR6_OFFSET, STR16("String 6 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0, 1, 0, 0, 0 },
+		
 		{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                               UNIT::TRIGGER, 0, 1, 77, 0, 0 },
 		{ PARAM::BRUSH_DOWN, STR16("Brush"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                           UNIT::TRIGGER, 0, 1, 74, 0, 0 },
 		{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                            UNIT::TRIGGER, 0, 1, 63, 0, 0 },
@@ -215,14 +228,14 @@ namespace MinMax
 		{ PARAM::ARPEGGIO_4, STR16("String 4"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 67, 0, 0 },
 		{ PARAM::ARPEGGIO_5, STR16("String 5"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 65, 0, 0 },
 		{ PARAM::ARPEGGIO_6, STR16("String 6"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 64, 0, 0 },
+		
 		{ PARAM::OPEN1 , STR16("Open 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                              UNIT::ARTICULATION, 0, 1, 24, 0, 0 },
 		{ PARAM::OPEN2, STR16("Open 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                               UNIT::ARTICULATION, 0, 1, 0, 0, 0 },
 		{ PARAM::HAM_LEG, STR16("Hammer/Legato"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                      UNIT::ARTICULATION, 0, 1, 25, 0, 0 },
 		{ PARAM::MUTE, STR16("Mute"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::ARTICULATION, 0, 1, 26, 0, 0 },
 		{ PARAM::DEAD, STR16("Dead"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::ARTICULATION, 0, 1, 27, 0, 0 },
 		{ PARAM::HARMONICS, STR16("Harmonics"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::ARTICULATION, 0, 1, 28, 0, 0 },
-		{ PARAM::SLIDE, STR16("Slide"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                UNIT::ARTICULATION, 0, 1, 33, 0, 0 },
-		{ PARAM::CHORD_STATE_REVISION, STR16("Chord State"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                           UNIT::CHORD, 0, 999999, 0, 0, 0 },
+		{ PARAM::SLIDE, STR16("Slide"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                UNIT::ARTICULATION, 0, 1, 33, 0, 0 },	
 	} };
 
 	// ユニット指定によるパラメータ定義取り出し
