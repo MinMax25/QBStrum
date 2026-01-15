@@ -3641,7 +3641,7 @@
 							"origin": "205, 155",
 							"round-rect-radius": "0",
 							"size": "85, 15",
-							"title": "1 Octave+",
+							"title": "Octave+",
 							"transparent": "false",
 							"wants-focus": "true",
 							"wheel-inc-value": "0.1"
