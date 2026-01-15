@@ -52,9 +52,6 @@ namespace MinMax
             editor = dynamic_cast<VSTGUI::VST3Editor*>(desc->getController());
             assert(editor && "CFretBoardView requires VST3Editor");
 
-            auto* c = Steinberg::FCast<MyVSTController>(editor->getController());
-            c->ChordInfo = ChordMap::instance().getChordVoicing(0);
-
             setBackgroundColor(VSTGUI::kTransparentCColor);
 
             initFretBoard();
