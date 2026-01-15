@@ -50,6 +50,7 @@ namespace PF
             : RangeParameter(title, tag, units,minPlain, maxPlain, defaultPlain, 0, flags, unitID)
             ,min(minPlain), max(maxPlain), def(defaultPlain)
         {
+            info.defaultNormalizedValue = toNormalized(def);
         }
 
         void toString(Steinberg::Vst::ParamValue valueNormalized, Steinberg::Vst::String128 string) const override
