@@ -50,8 +50,6 @@ namespace MinMax
 
 		MyVST3Editor* view = nullptr;
 
-		uint32_t chordStateCount = 0;
-
 		StringSet ChordInfo{};
 
 		// --------------

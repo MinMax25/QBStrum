@@ -50,6 +50,7 @@ namespace PF
             : RangeParameter(title, tag, units,minPlain, maxPlain, defaultPlain, 0, flags, unitID)
             ,min(minPlain), max(maxPlain), def(defaultPlain)
         {
+            // Ctrl+Clickで初期値復帰するために必要
             info.defaultNormalizedValue = toNormalized(def);
         }
 
@@ -387,6 +388,11 @@ namespace PF
             return p->toPlain(it->second.current);
         }
 
+        int getInt(Steinberg::Vst::ParamID id) const
+        {
+            return (int)get(id);
+        }
+
         double getPrevious(Steinberg::Vst::ParamID id) const
         {
             auto it = storage.find(id);
@@ -402,6 +408,11 @@ namespace PF
         {
             Steinberg::Vst::ParamValue normalized = getNormalized(id, val);
             setNormalized(id, normalized);
+        }
+
+        void setInt(Steinberg::Vst::ParamID id, int val)
+        {
+            set(id, (double)val);
         }
 
         void setNormalized(Steinberg::Vst::ParamID id, Steinberg::Vst::ParamValue val)
@@ -440,7 +451,6 @@ namespace PF
         }
 
     private:
-
         struct ParamEntry
         {
             Steinberg::Vst::ParamValue current = 0.0;
