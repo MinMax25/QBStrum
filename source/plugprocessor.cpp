@@ -518,37 +518,24 @@ namespace MinMax
 
 			Steinberg::uint64 onTime = baseOnTime + static_cast<Steinberg::uint64>(delayMs * samplesPerMs);
 
+			int channel = prm.getInt(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
 			int pitch = getStringPitch(voicing, i);
-
-			//int pitch =
-			//	chordMap.getTunings().data[i] +
-			//	voicing.data[i] +
-			//	getOffset(i) +
-			//	prm.getInt(PARAM::TRANSPOSE) +
-			//	(prm.getInt(PARAM::OCTAVE) ? 12 : 0);
-
 			float velocity = baseVelocity * std::pow(prm.get(PARAM::STRUM_DECAY) / 100.0f, strcnt);
 
-			int channel = prm.getInt(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
 
 			++strcnt;
 		}
 	}
 
-	//int MyVSTProcessor::getOffset(int stringindex)
-	//{
-	//	return (int)prm.getInt(PARAM::STR1_OFFSET + stringindex) - 5;
-	//};
-
 	int MyVSTProcessor::getStringPitch(const StringSet& set, int stringNumber)
 	{
 		int result = chordMap.getTunings().data[stringNumber] + (prm.getInt(PARAM::TRANSPOSE) + (prm.getInt(PARAM::OCTAVE) ? 12 : 0));
-		int offset = (int)prm.getInt(PARAM::STR1_OFFSET + stringNumber) - 5;
+		int offset = (int)prm.getInt(PARAM::STR1_OFFSET + stringNumber);
 
 		if (offset != 0)
 		{
-			result += set.data[stringNumber] + offset;
+			result += set.data[stringNumber] + offset - StringSet::CENTER_OFFSET;
 		}
 		else
 		{
@@ -750,12 +737,11 @@ namespace MinMax
 			int o = (int)prm.getInt(PARAM::STR1_OFFSET + i);
 			if (o != 0)
 			{
-				set.data[i] = v.data[i];
+				set.data[i] += v.data[i];
 				set.setOffset(i, o - StringSet::CENTER_OFFSET);
 			}
 			else
 			{
-				set.data[i] = ChordMap::instance().getTunings().data[i];
 				set.setOffset(i, 0);
 			}
 
