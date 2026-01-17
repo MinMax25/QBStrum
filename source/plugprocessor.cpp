@@ -149,7 +149,7 @@ namespace MinMax
 		if (io.readString(path))
 		{
 			std::filesystem::path p(path);
-			ChordMap::instance().loadChordPreset(path);
+			chordMap.loadChordPreset(path);
 		}
 
 		return Steinberg::kResultOk;
@@ -165,7 +165,7 @@ namespace MinMax
 			if (!io.writeDouble(plain)) return Steinberg::kResultFalse;
 		}
 
-		const std::string path = ChordMap::instance().getPresetPath().u8string();
+		const std::string path = chordMap.getPresetPath().u8string();
 		if (!io.writeString(path)) return Steinberg::kResultFalse;
 
 		return Steinberg::kResultOk;
@@ -688,7 +688,7 @@ namespace MinMax
 		set.state = chordseq;
 		set.flatIndex = (int)prm.getInt(PARAM::CHORD_NUM);
 
-		auto v = ChordMap::instance().getChordVoicing(set.flatIndex);
+		auto v = chordMap.getChordVoicing(set.flatIndex);
 
 		set.size = v.size;
 		for (int i = 0; i < (int)v.size; i++)
