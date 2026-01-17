@@ -65,6 +65,8 @@ namespace MinMax
 
     struct StringSet
     {
+        static const int CENTER_OFFSET = 5;
+
         //
         int flatIndex = 0;
         uint32_t state = 0;
@@ -129,8 +131,6 @@ namespace MinMax
 
         std::filesystem::path presetPath{};
 
-        std::array<int, MAX_STRINGS> offset{};
-
     public:
         //==================================================================
         // シングルトン
@@ -168,7 +168,7 @@ namespace MinMax
             for (int i = 0; i < (int)result.size; i++)
             {
                 result.data[i] = v.fretPosition[i];
-                result.setOffset(i, offset[i]);
+                result.setOffset(i, 0);
             }
 
             return result;
@@ -246,14 +246,6 @@ namespace MinMax
                 {
                     v[i] = frets.data[i];
                 }
-            }
-        }
-
-        void clearOffset()
-        {
-            for (int i = 0; i < MAX_STRINGS; i++)
-            {
-                offset[i] = 0;
             }
         }
 

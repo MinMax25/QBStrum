@@ -62,7 +62,8 @@ namespace MinMax
 		void PLUGIN_API trigAllNotesOff();
 		void PLUGIN_API trigBrush(Steinberg::Vst::Event event, bool isDown);
 		void PLUGIN_API trigStrum(Steinberg::Vst::Event event, bool isAbove, bool isDown, int maxStrings);
-		int PLUGIN_API getOffset(int stringindex);
+		//int PLUGIN_API getOffset(int stringindex);
+		int getStringPitch(const StringSet& set, int stringNumber);
 		void PLUGIN_API trigMute(PARAM trigger, Steinberg::Vst::Event event);
 		void PLUGIN_API trigArpeggio(int stringindex, Steinberg::Vst::Event event);
 		void PLUGIN_API trigFretNoise(Steinberg::Vst::Event event);
