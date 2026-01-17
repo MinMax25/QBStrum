@@ -2,6 +2,9 @@
 	"vstgui-ui-description": {
 		"version": "1",
 		"bitmaps": {
+			"QB": {
+				"path": "F:\\projects\\QB\\QBStrum\\resource\\QB.png"
+			},
 			"licensing_6": {
 				"path": "F:\\projects\\QB\\QBStrum\\resource\\licensing_6.png"
 			}
@@ -106,16 +109,16 @@
 				"EditorSize": "0, 0, 1677, 873",
 				"SplitViewSize_0_0": "0.7591499409681228272006592305842787027359",
 				"SplitViewSize_0_1": "0.2172373081463990496242644212543382309377",
-				"SplitViewSize_1_0": "0.3659976387249114782029835168941644951701",
-				"SplitViewSize_1_1": "0.6304604486422668019329762501001823693514",
+				"SplitViewSize_1_0": "0.5525383707201888539017886614601593464613",
+				"SplitViewSize_1_1": "0.4439197166469893707230198742763604968786",
 				"SplitViewSize_2_0": "0.6565295169946332443089431762928143143654",
 				"SplitViewSize_2_1": "0.3404889683959451129879880681983195245266",
-				"TabSwitchValue": "0",
+				"TabSwitchValue": "4",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "29"
+				"SelectedRow": "9"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "37"
@@ -3680,6 +3683,217 @@
 					"size": "565, 275",
 					"transparent": "false",
 					"wants-focus": "false"
+				},
+				"children": {
+					"CView": {
+						"attributes": {
+							"bitmap": "licensing_6",
+							"class": "CView",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "375, 15",
+							"size": "177, 116",
+							"transparent": "false",
+							"wants-focus": "false"
+						}
+					},
+					"CTextLabel": {
+						"attributes": {
+							"back-color": "~ TransparentCColor",
+							"background-offset": "0, 0",
+							"class": "CTextLabel",
+							"default-value": "0.5",
+							"font": "~ NormalFontSmall",
+							"font-antialias": "true",
+							"font-color": "~ WhiteCColor",
+							"frame-color": "~ TransparentCColor",
+							"frame-width": "1",
+							"max-value": "1",
+							"min-value": "0",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "15, 185",
+							"round-rect-radius": "6",
+							"shadow-color": "~ RedCColor",
+							"size": "540, 15",
+							"style-3D-in": "false",
+							"style-3D-out": "false",
+							"style-no-draw": "false",
+							"style-no-frame": "false",
+							"style-no-text": "false",
+							"style-round-rect": "false",
+							"style-shadow-text": "false",
+							"text-alignment": "left",
+							"text-inset": "0, 0",
+							"text-rotation": "0",
+							"text-shadow-offset": "1, 1",
+							"title": "QBStrum is licensed under the MIT License.",
+							"transparent": "false",
+							"value-precision": "2",
+							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CTextLabel": {
+						"attributes": {
+							"back-color": "~ TransparentCColor",
+							"background-offset": "0, 0",
+							"class": "CTextLabel",
+							"default-value": "0.5",
+							"font": "~ NormalFontSmall",
+							"font-antialias": "true",
+							"font-color": "~ WhiteCColor",
+							"frame-color": "~ TransparentCColor",
+							"frame-width": "1",
+							"max-value": "1",
+							"min-value": "0",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "15, 200",
+							"round-rect-radius": "6",
+							"shadow-color": "~ RedCColor",
+							"size": "540, 15",
+							"style-3D-in": "false",
+							"style-3D-out": "false",
+							"style-no-draw": "false",
+							"style-no-frame": "false",
+							"style-no-text": "false",
+							"style-round-rect": "false",
+							"style-shadow-text": "false",
+							"text-alignment": "left",
+							"text-inset": "0, 0",
+							"text-rotation": "0",
+							"text-shadow-offset": "1, 1",
+							"title": "Steinberg VST3 SDK is licensed under the MIT License.",
+							"transparent": "false",
+							"value-precision": "2",
+							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CTextLabel": {
+						"attributes": {
+							"back-color": "~ TransparentCColor",
+							"background-offset": "0, 0",
+							"class": "CTextLabel",
+							"default-value": "0.5",
+							"font": "~ NormalFontSmall",
+							"font-antialias": "true",
+							"font-color": "~ WhiteCColor",
+							"frame-color": "~ TransparentCColor",
+							"frame-width": "1",
+							"max-value": "1",
+							"min-value": "0",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "15, 215",
+							"round-rect-radius": "6",
+							"shadow-color": "~ RedCColor",
+							"size": "540, 15",
+							"style-3D-in": "false",
+							"style-3D-out": "false",
+							"style-no-draw": "false",
+							"style-no-frame": "false",
+							"style-no-text": "false",
+							"style-round-rect": "false",
+							"style-shadow-text": "false",
+							"text-alignment": "left",
+							"text-inset": "0, 0",
+							"text-rotation": "0",
+							"text-shadow-offset": "1, 1",
+							"title": "RapidJSON is licensed under the MIT License.",
+							"transparent": "false",
+							"value-precision": "2",
+							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CTextLabel": {
+						"attributes": {
+							"back-color": "~ TransparentCColor",
+							"background-offset": "0, 0",
+							"class": "CTextLabel",
+							"default-value": "0.5",
+							"font": "~ NormalFontSmall",
+							"font-antialias": "true",
+							"font-color": "~ WhiteCColor",
+							"frame-color": "~ TransparentCColor",
+							"frame-width": "1",
+							"max-value": "1",
+							"min-value": "0",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "15, 230",
+							"round-rect-radius": "6",
+							"shadow-color": "~ RedCColor",
+							"size": "540, 15",
+							"style-3D-in": "false",
+							"style-3D-out": "false",
+							"style-no-draw": "false",
+							"style-no-frame": "false",
+							"style-no-text": "false",
+							"style-round-rect": "false",
+							"style-shadow-text": "false",
+							"text-alignment": "left",
+							"text-inset": "0, 0",
+							"text-rotation": "0",
+							"text-shadow-offset": "1, 1",
+							"title": "No components licensed under the JSON License are included in this product.",
+							"transparent": "false",
+							"value-precision": "2",
+							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CTextLabel": {
+						"attributes": {
+							"back-color": "~ TransparentCColor",
+							"background-offset": "0, 0",
+							"class": "CTextLabel",
+							"default-value": "0.5",
+							"font": "~ NormalFont",
+							"font-antialias": "true",
+							"font-color": "~ GreyCColor",
+							"frame-color": "~ TransparentCColor",
+							"frame-width": "1",
+							"max-value": "1",
+							"min-value": "0",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "15, 170",
+							"round-rect-radius": "6",
+							"shadow-color": "~ RedCColor",
+							"size": "540, 15",
+							"style-3D-in": "false",
+							"style-3D-out": "false",
+							"style-no-draw": "false",
+							"style-no-frame": "false",
+							"style-no-text": "false",
+							"style-round-rect": "false",
+							"style-shadow-text": "false",
+							"text-alignment": "left",
+							"text-inset": "0, 0",
+							"text-rotation": "0",
+							"text-shadow-offset": "1, 1",
+							"title": "License:",
+							"transparent": "false",
+							"value-precision": "2",
+							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CView": {
+						"attributes": {
+							"bitmap": "QB",
+							"class": "CView",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "10, 5",
+							"size": "128, 128",
+							"transparent": "false",
+							"wants-focus": "false"
+						}
+					}
 				}
 			}
 		}
