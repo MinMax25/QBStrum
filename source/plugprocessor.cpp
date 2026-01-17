@@ -44,7 +44,7 @@ namespace MinMax
 
 		Steinberg::Vst::Event event{};
 
-		event.flags = 0; //Event::kIsLive;
+		event.flags = 0;
 		event.busIndex = 0;
 		event.sampleOffset = e.sampleOffset;
 
@@ -179,22 +179,12 @@ namespace MinMax
 
 		scheduler.process(data);
 
-		// プロセスコンテキスト処理
 		processContext();
-
-		// パラメータ処理
 		processParameter();
-
-		// DAWからの受信イベント処理
 		processEvent();
-
-		// UIからの受信イベント処理（サウンドチェックトリガー etc.）
 		processInnerEvent();
-
-		// オーディオ処理
 		processAudio(data);
 
-		// 予約イベント処理
 		scheduler.dispatch();
 
 		processData = nullptr;
@@ -238,7 +228,7 @@ namespace MinMax
 
 			if (!(queue->getPoint(valueChangeCount - 1, sampleOffset, value) == Steinberg::kResultTrue)) continue;
 
-			// パラメータ値をキャッシュ
+			// cash parameter
 			prm.setNormalized(tag, value);
 
 			switch (tag)
@@ -334,14 +324,12 @@ namespace MinMax
 		if (!processData) return;
 		if (processData->inputEvents == NULL) return;
 
-		// イベント処理
 		Steinberg::Vst::Event event;
 
 		for (Steinberg::int32 i = 0; i < processData->inputEvents->getEventCount(); i++)
 		{
 			if (processData->inputEvents->getEvent(i, event) != Steinberg::kResultOk) continue;
 
-			// ピッチからパラメータＩＤ取得
 			if (event.type == Steinberg::Vst::Event::kNoteOnEvent)
 			{
 				Steinberg::Vst::ParamID tag = getParamIdByPitch(event);
@@ -357,12 +345,10 @@ namespace MinMax
 	{
 		if (!processData) return;
 
-		// イベント処理
 		Steinberg::Vst::Event event{};
 
 		while (InnerEvents.pop(event))
 		{
-			// ピッチからパラメータＩＤ取得
 			Steinberg::Vst::ParamID paramid = getParamIdByPitch(event);
 			if (paramid < 0) continue;
 
@@ -383,7 +369,6 @@ namespace MinMax
 
 	void PLUGIN_API MyVSTProcessor::routingProcess(Steinberg::Vst::ParamID paramid, Steinberg::Vst::Event event)
 	{
-		// ストラム処理振分け
 		switch (paramid)
 		{
 		case PARAM::ALL_NOTES_OFF:
@@ -448,12 +433,10 @@ namespace MinMax
 	{
 		const float BRUSH_DECAY = 0.98f;
 
-		// 現在鳴っている音をすべて消す
 		scheduler.allNotesOff();
 
 		trigFretNoise(event);
 
-		// コード情報を取得する
 		auto& voicing = chordMap.getChordVoicing(prm.get(PARAM::CHORD_NUM));
 		auto& strnum = getTargetStrings(voicing, false, isDown, STRING_COUNT);
 
@@ -462,11 +445,9 @@ namespace MinMax
 
 		float baseVelocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
-		// 発音弦のカウンタ
 		int strcnt = 0;
 
-		// 音価はms指定のパラメータ
-		Steinberg::uint64 offTime = baseOnTime + samplesPerMs * prm.get(PARAM::BRUSH_TIME); // brushTime;
+		Steinberg::uint64 offTime = baseOnTime + samplesPerMs * prm.get(PARAM::BRUSH_TIME);
 
 		for (size_t s = 0; s < strnum.size; s++)
 		{
@@ -489,22 +470,18 @@ namespace MinMax
 	{
 		trigFretNoise(event);
 
-		// コード情報を取得する
 		auto& voicing = chordMap.getChordVoicing(prm.getInt(PARAM::CHORD_NUM));
 		auto& strnum = getTargetStrings(voicing, isAbove, isDown, maxStrings);
 		
-		Steinberg::uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
-
 		double samplesPerMs = scheduler.getSamplesPerMs();
+		Steinberg::uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 
 		float baseVelocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
-		// 音価はビート数指定のパラメータ
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
 		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(PARAM::STRUM_LENGTH)));
 		Steinberg::uint64 offTime = baseOnTime + lengthSamples;
 
-		// 発音弦のカウンタ
 		int strcnt = 0;
 
 		for (size_t s = 0; s < strnum.size; s++)
@@ -548,12 +525,10 @@ namespace MinMax
 	{
 		const double NOTE_LENGTH = 40.0;
 
-		// 現在鳴っている音をすべて消す
 		scheduler.allNotesOff();
 
 		trigFretNoise(event);
 
-		// ミュート用ノート選択
 		int muteNote =
 			(trigger == PARAM::MUTE_1)
 			? prm.getInt(PARAM::MUTE_NOTE_1)
@@ -561,11 +536,8 @@ namespace MinMax
 
 		float velocity = std::clamp(event.noteOn.velocity, 0.01f, 1.0f);
 
-		// 音価は固定
 		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
-
 		Steinberg::uint64 offTime = onTime + static_cast<Steinberg::uint64>(NOTE_LENGTH * scheduler.getSamplesPerMs());
-
 		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, prm.getInt(PARAM::MUTE_CHANNEL) - 1);
 	}
 
@@ -575,7 +547,6 @@ namespace MinMax
 
 		auto& voicing = chordMap.getChordVoicing(prm.getInt(PARAM::CHORD_NUM));
 
-		// 弦が鳴らせない場合
 		if (stringNumber < 0 || stringNumber >= STRING_COUNT || voicing.data[stringNumber] < 0)
 		{
 			return;
@@ -583,7 +554,6 @@ namespace MinMax
 
 		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 
-		// 音価はビート数指定のパラメータ
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
 		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(PARAM::ARP_LENGTH)));
 		Steinberg::uint64 offTime = onTime + lengthSamples;
@@ -601,19 +571,15 @@ namespace MinMax
 
 		float distance = 0.0f;
 
-		// コード変更
 		if (lastChordNum != prm.getInt(PARAM::CHORD_NUM))
 		{
-			// ヴォイシングの平均フレットポジションの差分（移動距離）を計算
+			trigAllNotesOff();
+
 			distance =
 				std::abs(
 					chordMap.getPositionAverage(lastChordNum) -
 					chordMap.getPositionAverage(prm.get(PARAM::CHORD_NUM)));
 
-			// コード変更時は全消音
-			trigAllNotesOff();
-
-			// 現在のコードを記録
 			lastChordNum = prm.getInt(PARAM::CHORD_NUM);
 		}
 
@@ -649,7 +615,7 @@ namespace MinMax
 
 	Steinberg::Vst::ParamID MyVSTProcessor::getParamIdByPitch(Steinberg::Vst::Event event)
 	{
-		// キースイッチ -> ParamID
+		// key switch -> ParamID
 		int pitch = -1;
 
 		if (event.type == Steinberg::Vst::Event::kNoteOnEvent)
@@ -677,15 +643,8 @@ namespace MinMax
 		return 0;
 	}
 
-	StringSet MyVSTProcessor::getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
+	StringSet MyVSTProcessor::getTargetStrings(StringSet voicing, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
 	{
-		//
-		// 鳴らす弦の番号を昇順に取得する
-		// fretPos        : コードフォーム
-		// isDown = true  : ６弦方向から
-		// isDown = false : １弦方向から
-		// maxStrings     : 弦数
-
 		StringSet result{};
 
 		std::vector<int> values{};
@@ -695,7 +654,7 @@ namespace MinMax
 		for (int i = 0; i < STRING_COUNT; i++)
 		{
 			int s = isAbove ? i : STRING_COUNT - i - 1;
-			if (fretPos.data[s] < 0) continue;
+			if (voicing.data[s] < 0) continue;
 
 			values.push_back(s);
 			++cnt;
@@ -804,7 +763,6 @@ namespace MinMax
 			event.noteOff.velocity = 0;
 		}
 
-		// 内部イベントバッファに追加
 		InnerEvents.push(event);
 
 		return Steinberg::kResultOk;
