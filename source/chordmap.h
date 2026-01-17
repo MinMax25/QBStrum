@@ -85,7 +85,7 @@ namespace MinMax
             offset[stringNumber] = value;
         }
 
-        bool hasOffset(int stringNubmer)
+        bool hasOffset(int stringNubmer) const
         {
             return offset[stringNubmer] != 0;
         }

@@ -454,8 +454,8 @@ namespace MinMax
 		trigFretNoise(event);
 
 		// コード情報を取得する
-		auto& fretpos = chordMap.getChordVoicing(prm.get(PARAM::CHORD_NUM));
-		auto& strnum = getTargetStrings(fretpos, false, isDown, STRING_COUNT);
+		auto& voicing = chordMap.getChordVoicing(prm.get(PARAM::CHORD_NUM));
+		auto& strnum = getTargetStrings(voicing, false, isDown, STRING_COUNT);
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
 		Steinberg::uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
@@ -478,7 +478,7 @@ namespace MinMax
 
 			int pitch = 
 				chordMap.getTunings().data[i] + 
-				fretpos.data[i] + 
+				voicing.data[i] + 
 				getOffset(i) +
 				prm.getInt(PARAM::TRANSPOSE) +
 				(prm.getInt(PARAM::OCTAVE) ? 12 : 0);
@@ -543,7 +543,7 @@ namespace MinMax
 
 	int MyVSTProcessor::getOffset(int stringindex)
 	{
-		return (int)prm.getInt(PARAM::STR1_OFFSET + stringindex);
+		return (int)prm.getInt(PARAM::STR1_OFFSET + stringindex) - 5;
 	};
 
 	void MyVSTProcessor::trigMute(PARAM trigger, Steinberg::Vst::Event event)
@@ -744,7 +744,7 @@ namespace MinMax
 		{
 			set.data[i] = v.data[i];
 			int o = (int)prm.getInt(PARAM::STR1_OFFSET + i);
-			set.setOffset(i, (int)prm.getInt(PARAM::STR1_OFFSET + i) - 5);
+			set.setOffset(i, getOffset(i));
 		}
 
 		Steinberg::FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();
