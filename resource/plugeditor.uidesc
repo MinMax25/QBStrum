@@ -95,7 +95,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab1"
+				"SelectedTemplate": "tab3"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -106,12 +106,12 @@
 				"SplitViewSize_1_1": "0.6304604486422668019329762501001823693514",
 				"SplitViewSize_2_0": "0.6565295169946332443089431762928143143654",
 				"SplitViewSize_2_1": "0.3404889683959451129879880681983195245266",
-				"TabSwitchValue": "1",
+				"TabSwitchValue": "0",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "3"
+				"SelectedRow": "19"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "37"
