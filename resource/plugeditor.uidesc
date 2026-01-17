@@ -1,7 +1,11 @@
 {
 	"vstgui-ui-description": {
 		"version": "1",
-		"bitmaps": {},
+		"bitmaps": {
+			"licensing_6": {
+				"path": "F:\\projects\\QB\\QBStrum\\resource\\licensing_6.png"
+			}
+		},
 		"fonts": {
 			"FONT_TITLE": {
 				"font-name": "Impact",
@@ -95,7 +99,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab3"
+				"SelectedTemplate": "tab4"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -111,7 +115,7 @@
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "19"
+				"SelectedRow": "29"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "37"
@@ -124,6 +128,9 @@
 			},
 			"UIGradientsDataSource": {
 				"SelectedRow": "2"
+			},
+			"UIBitmapsDataSource": {
+				"SelectedRow": "0"
 			}
 		},
 		"templates": {

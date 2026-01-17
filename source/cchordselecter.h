@@ -92,14 +92,12 @@ namespace MinMax
         {
             canEdit_ = true;
             chordMenu->setMouseEnabled(false);
-            chordLabel->setBackColor(VSTGUI::kCyanCColor);
         }
 
         void endEdit()
         {
             canEdit_ = false;
             chordMenu->setMouseEnabled(true);
-            chordLabel->setBackColor(VSTGUI::kWhiteCColor);
         }
 
         int getCurrentChordNumber()
