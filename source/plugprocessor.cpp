@@ -743,7 +743,8 @@ namespace MinMax
 		for (int i = 0; i < (int)v.size; i++)
 		{
 			set.data[i] = v.data[i];
-			set.offset[i] = (int)prm.getInt(PARAM::STR1_OFFSET + i);
+			int o = (int)prm.getInt(PARAM::STR1_OFFSET + i);
+			set.setOffset(i, (int)prm.getInt(PARAM::STR1_OFFSET + i) - 5);
 		}
 
 		Steinberg::FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();

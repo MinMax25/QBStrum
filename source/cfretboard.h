@@ -200,8 +200,8 @@ namespace MinMax
             {
                 for (unsigned int stringindex = 0; stringindex < pressed.size; ++stringindex)
                 {
-                    int fret = pressed.data[stringindex] + pressed.offset[stringindex];
-                    bool hasOffset = pressed.offset[stringindex] != 0;
+                    int fret = pressed.data[stringindex] + pressed.getOffset(stringindex);
+                    bool hasOffset = pressed.hasOffset(stringindex);
                     bool outOfRange = hasOffset && (fret < 0 || fret > lastFret);
                     double y = boardSize.top + outerMargin + stringSpacing * stringindex;
 

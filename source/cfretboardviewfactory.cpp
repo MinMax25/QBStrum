@@ -213,6 +213,7 @@ namespace MinMax
 
         void onParameterChordChanged(int value)
         {
+            if (!editor) return;
             if (canEdit) return;
             auto* c = Steinberg::FCast<MyVSTController>(editor->getController());
             fretBoard->setPressedFrets(c->ChordInfo);
@@ -221,6 +222,7 @@ namespace MinMax
 
         void onSelectedChordChanged(int value)
         {
+            if (!editor) return;
             if (canEdit) return;
 
             auto* c = editor->getController();

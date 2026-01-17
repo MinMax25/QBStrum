@@ -79,7 +79,7 @@ namespace MinMax
 				for (int i = 0; i < MAX_STRINGS; i++)
 				{
 					ChordInfo.data[i] = c.data[i];
-					ChordInfo.offset[i] = c.offset[i];
+					ChordInfo.setOffset(i, c.getOffset(i));
 				}
 			}
 		}
@@ -164,7 +164,7 @@ namespace MinMax
 		for (int i = 0; i < (int)set->size; i++)
 		{
 			ChordInfo.data[i] = set->data[i];
-			ChordInfo.offset[i] = set->offset[i];
+			ChordInfo.setOffset(i, set->getOffset(i));
 		}
 
 		{

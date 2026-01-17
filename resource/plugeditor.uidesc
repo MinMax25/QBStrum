@@ -296,7 +296,7 @@
 							"origin": "10, 85",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "220, 265",
+							"size": "220, 290",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -377,22 +377,24 @@
 							"wants-focus": "false"
 						}
 					},
-					"CParamDisplay": {
+					"COptionMenu": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "CParamDisplay",
+							"class": "COptionMenu",
 							"control-tag": "STR1_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
+							"menu-check-style": "false",
+							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "30, 408",
+							"origin": "15, 408",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "25, 15",
+							"size": "55, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -410,22 +412,24 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"CParamDisplay": {
+					"COptionMenu": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "CParamDisplay",
+							"class": "COptionMenu",
 							"control-tag": "STR2_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
+							"menu-check-style": "false",
+							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "30, 430",
+							"origin": "15, 430",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "25, 15",
+							"size": "55, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -443,22 +447,24 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"CParamDisplay": {
+					"COptionMenu": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "CParamDisplay",
+							"class": "COptionMenu",
 							"control-tag": "STR3_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
+							"menu-check-style": "false",
+							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "30, 453",
+							"origin": "15, 453",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "25, 15",
+							"size": "55, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -476,22 +482,24 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"CParamDisplay": {
+					"COptionMenu": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "CParamDisplay",
+							"class": "COptionMenu",
 							"control-tag": "STR4_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
+							"menu-check-style": "false",
+							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "30, 476",
+							"origin": "15, 476",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "25, 15",
+							"size": "55, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -509,22 +517,24 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"CParamDisplay": {
+					"COptionMenu": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "CParamDisplay",
+							"class": "COptionMenu",
 							"control-tag": "STR5_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
+							"menu-check-style": "false",
+							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "30, 499",
+							"origin": "15, 499",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "25, 15",
+							"size": "55, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -542,22 +552,24 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"CParamDisplay": {
+					"COptionMenu": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "CParamDisplay",
+							"class": "COptionMenu",
 							"control-tag": "STR6_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
+							"menu-check-style": "false",
+							"menu-popup-style": "false",
 							"opacity": "1",
-							"origin": "30, 522",
+							"origin": "15, 522",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "25, 15",
+							"size": "55, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -580,7 +592,7 @@
 							"animation-style": "move",
 							"animation-time": "120",
 							"animation-timing-function": "linear",
-							"background-color": "Dark",
+							"background-color": "Dark Deep",
 							"background-color-draw-style": "filled and stroked",
 							"class": "UIViewSwitchContainer",
 							"mouse-enabled": "true",
@@ -605,6 +617,7 @@
 							"opacity": "1",
 							"origin": "240, 81",
 							"round-radius": "4",
+							"segment-names": "Strum Parameters,Setings,Plugin Info",
 							"selection-mode": "Single",
 							"size": "565, 20",
 							"style": "horizontal",
@@ -3677,7 +3690,7 @@
 							"class": "CView",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "375, 15",
+							"origin": "295, 15",
 							"size": "177, 116",
 							"transparent": "false",
 							"wants-focus": "false"
@@ -3874,7 +3887,7 @@
 							"class": "CView",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "10, 5",
+							"origin": "105, 10",
 							"size": "128, 128",
 							"transparent": "false",
 							"wants-focus": "false"

@@ -71,10 +71,27 @@ namespace MinMax
 
         // fret position
         std::array<int, MAX_STRINGS> data{};
-        std::array<int, MAX_STRINGS> offset{};
 
         // valid strings
         size_t size = 0;
+
+        int getOffset(int stringNubmer) const
+        {
+            return offset[stringNubmer];
+        }
+
+        void setOffset(int stringNumber, int value)
+        {
+            offset[stringNumber] = value;
+        }
+
+        bool hasOffset(int stringNubmer)
+        {
+            return offset[stringNubmer] != 0;
+        }
+
+    protected:
+        std::array<int, MAX_STRINGS> offset{};
     };
 
     //======================================================================
@@ -148,10 +165,10 @@ namespace MinMax
             result.flatIndex = flatIndex;
             result.size = (int)StringCount::Guitar6;
 
-            for (size_t i = 0; i < result.size; i++)
+            for (int i = 0; i < (int)result.size; i++)
             {
                 result.data[i] = v.fretPosition[i];
-                result.offset[i] = offset[i];
+                result.setOffset(i, offset[i]);
             }
 
             return result;
