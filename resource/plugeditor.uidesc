@@ -587,7 +587,7 @@
 							"opacity": "1",
 							"origin": "240, 100",
 							"size": "565, 275",
-							"template-names": "tab1,tab2,tab3,tab4",
+							"template-names": "tab1,tab2,tab3",
 							"template-switch-control": "CTL_TABINDEX1",
 							"transparent": "false",
 							"wants-focus": "false"
@@ -605,7 +605,6 @@
 							"opacity": "1",
 							"origin": "240, 81",
 							"round-radius": "4",
-							"segment-names": "Strum Parameters,Setings,Pattern,Plugin Info",
 							"selection-mode": "Single",
 							"size": "565, 20",
 							"style": "horizontal",
@@ -3660,19 +3659,6 @@
 				}
 			},
 			"tab3": {
-				"attributes": {
-					"background-color": "Dark Deep",
-					"background-color-draw-style": "filled and stroked",
-					"class": "CViewContainer",
-					"mouse-enabled": "true",
-					"opacity": "1",
-					"origin": "0, 0",
-					"size": "565, 275",
-					"transparent": "false",
-					"wants-focus": "false"
-				}
-			},
-			"tab4": {
 				"attributes": {
 					"background-color": "Dark Deep",
 					"background-color-draw-style": "filled and stroked",
