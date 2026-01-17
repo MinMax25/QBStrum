@@ -66,6 +66,8 @@
 			"CHORD_MSB": "1102",
 			"CHORD_NUM": "1103",
 			"CTL_TABINDEX1": "1005",
+			"ENSBLED_ARTICULATION": "1008",
+			"ENSBLED_MUTE_FNOIZE": "1007",
 			"FNOISE_CHANNEL": "1241",
 			"FNOISE_DIST_FAR": "1245",
 			"FNOISE_DIST_NEAR": "1244",
@@ -102,7 +104,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "view"
+				"SelectedTemplate": "tab2"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -113,7 +115,7 @@
 				"SplitViewSize_1_1": "0.4439197166469893707230198742763604968786",
 				"SplitViewSize_2_0": "0.6565295169946332443089431762928143143654",
 				"SplitViewSize_2_1": "0.3404889683959451129879880681983195245266",
-				"TabSwitchValue": "4",
+				"TabSwitchValue": "1",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
@@ -121,7 +123,7 @@
 				"SelectedRow": "9"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "37"
+				"SelectedRow": "14"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -2364,7 +2366,7 @@
 							"font-color": "~ WhiteCColor",
 							"frame-width": "1",
 							"opacity": "1",
-							"origin": "10, 165",
+							"origin": "10, 225",
 							"round-rect-radius": "0",
 							"size": "125, 15",
 							"title": "Sepalate Channel",
@@ -2386,7 +2388,7 @@
 							"font-color": "~ WhiteCColor",
 							"frame-width": "1",
 							"opacity": "1",
-							"origin": "10, 185",
+							"origin": "10, 245",
 							"round-rect-radius": "0",
 							"size": "125, 15",
 							"title": "Sampleblock Adust",
@@ -2540,6 +2542,50 @@
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CCheckBox": {
+						"attributes": {
+							"autosize-to-fit": "false",
+							"boxfill-color": "~ WhiteCColor",
+							"boxframe-color": "~ BlackCColor",
+							"checkmark-color": "~ RedCColor",
+							"class": "CCheckBox",
+							"control-tag": "ENSBLED_MUTE_FNOIZE",
+							"draw-crossbox": "false",
+							"font": "~ NormalFontSmall",
+							"font-color": "~ WhiteCColor",
+							"frame-width": "1",
+							"opacity": "1",
+							"origin": "10, 170",
+							"round-rect-radius": "0",
+							"size": "160, 15",
+							"title": "Enabled Mute/Fret Noize",
+							"transparent": "false",
+							"wants-focus": "true",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CCheckBox": {
+						"attributes": {
+							"autosize-to-fit": "false",
+							"boxfill-color": "~ WhiteCColor",
+							"boxframe-color": "~ BlackCColor",
+							"checkmark-color": "~ RedCColor",
+							"class": "CCheckBox",
+							"control-tag": "ENSBLED_ARTICULATION",
+							"draw-crossbox": "false",
+							"font": "~ NormalFontSmall",
+							"font-color": "~ WhiteCColor",
+							"frame-width": "1",
+							"opacity": "1",
+							"origin": "10, 190",
+							"round-rect-radius": "0",
+							"size": "125, 15",
+							"title": "Enabled Articulation",
+							"transparent": "false",
+							"wants-focus": "true",
 							"wheel-inc-value": "0.1"
 						}
 					}
