@@ -112,7 +112,7 @@ namespace MinMax
 
         void initLabelPreset()
         {
-            labelPreset = new VSTGUI::CTextLabel({ 301, 1, 550, 18 });
+            labelPreset = new VSTGUI::CTextLabel({ 221, 1, 400, 18 });
             labelPreset->setBackColor(VSTGUI::kGreyCColor);
             labelPreset->setFont(VSTGUI::kNormalFontSmall);
             labelPreset->setText(ChordMap::instance().getPresetName());

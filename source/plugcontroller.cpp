@@ -17,6 +17,7 @@
 #include <pluginterfaces/vst/vsttypes.h>
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
+#include "chordmap.h"
 #include "myparameters.h"
 #include "myvst3editor.h"
 #include "parameterhelper.h"
@@ -68,12 +69,19 @@ namespace MinMax
 		{
 			double plain = 0.0;
 			if (state->read(&plain, sizeof(double), nullptr) != Steinberg::kResultOk) return Steinberg::kResultFalse;
-
-			// 正規化値に変換
 			Steinberg::Vst::ParamValue normalized = plainParamToNormalized(def.tag, plain);
-
-			// EditControllerに値をセット
 			setParamNormalized(def.tag, normalized);
+			if (def.tag == PARAM::CHORD_NUM)
+			{
+				auto c = ChordMap::instance().getChordVoicing(0);
+				ChordInfo.size = c.size;
+				ChordInfo.flatIndex = c.flatIndex;
+				for (int i = 0; i < MAX_STRINGS; i++)
+				{
+					ChordInfo.data[i] = c.data[i];
+					ChordInfo.offset[i] = c.offset[i];
+				}
+			}
 		}
 
 		return Steinberg::kResultOk;
