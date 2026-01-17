@@ -121,7 +121,7 @@ namespace MinMax
 
         void initChordSelecter()
         {
-            chordSelecter = new CChordSelecter({ 551,1,700,19 }, [this](CChordSelecter*, int v) { onSelectedChordChanged(v); });
+            chordSelecter = new CChordSelecter({ 651,1,800,19 }, [this](CChordSelecter*, int v) { onSelectedChordChanged(v); });
             addView(chordSelecter);
         }
 
