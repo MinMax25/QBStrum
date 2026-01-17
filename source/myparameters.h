@@ -214,7 +214,7 @@ namespace MinMax
 		{ PARAM::STR4_OFFSET, STR16("String 4 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0, 1, 5, 0, 0 },
 		{ PARAM::STR5_OFFSET, STR16("String 5 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0, 1, 5, 0, 0 },
 		{ PARAM::STR6_OFFSET, STR16("String 6 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0, 1, 5, 0, 0 },
-		{ PARAM::STR7_OFFSET, STR16("String 6 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0, 1, 5, 0, 0 },
+		{ PARAM::STR7_OFFSET, STR16("String 7 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0, 1, 5, 0, 0 },
 
 		{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                               UNIT::TRIGGER, 0, 1, 77, 0, 0 },
 		{ PARAM::BRUSH_DOWN, STR16("Brush"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                           UNIT::TRIGGER, 0, 1, 74, 0, 0 },
