@@ -11,7 +11,6 @@
 #include <pluginterfaces/vst/vsttypes.h>
 #include <string>
 
-#include "chordmap.h"
 #include "timequeue.h"
 
 namespace MinMax
@@ -24,24 +23,13 @@ namespace MinMax
 		Off,
 	};
 
-	// NoteEvent:
-	//   Scheduler から Processor へ渡される
-	//   送信用の MIDI ノートイベント。
-	//   状態やロジックは持たない。
-	class NoteEvent
+	struct NoteEvent
 	{
-	public:
 		NoteEventType eventType;
-
 		int channel;
 		int noteId;
-
-		// 現在の ProcessBlock 先頭からのサンプルオフセット
 		int sampleOffset;
-
 		int pitch;
-
-		// 0.0f – 1.0f 正規化ベロシティ
 		float velocity;
 	};
 
@@ -224,8 +212,15 @@ namespace MinMax
 			return buf;
 		}
 
-		bool isPlaying() const { return state & Steinberg::Vst::ProcessContext::kPlaying; }
-		Steinberg::uint64 getCurrentSampleTime() const { return currentSampleTime; }
+		bool isPlaying() const
+		{ 
+			return state & Steinberg::Vst::ProcessContext::kPlaying;
+		}
+
+		Steinberg::uint64 getCurrentSampleTime() const
+		{ 
+			return currentSampleTime;
+		}
 
 		void setNeedSampleblockAdust(bool value)
 		{
