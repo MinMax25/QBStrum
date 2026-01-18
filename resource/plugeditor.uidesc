@@ -104,7 +104,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "view"
+				"SelectedTemplate": "tab2"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -2561,7 +2561,7 @@
 							"origin": "10, 170",
 							"round-rect-radius": "0",
 							"size": "160, 15",
-							"title": "Enabled Mute/Fret Noize",
+							"title": "Enabled Mute / Fret Noize",
 							"transparent": "false",
 							"wants-focus": "true",
 							"wheel-inc-value": "0.1"
