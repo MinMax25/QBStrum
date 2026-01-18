@@ -104,7 +104,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab2"
+				"SelectedTemplate": "tab3"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -3736,7 +3736,7 @@
 							"class": "CView",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "295, 15",
+							"origin": "290, 35",
 							"size": "177, 116",
 							"transparent": "false",
 							"wants-focus": "false"
@@ -3933,7 +3933,7 @@
 							"class": "CView",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "105, 10",
+							"origin": "100, 30",
 							"size": "128, 128",
 							"transparent": "false",
 							"wants-focus": "false"
