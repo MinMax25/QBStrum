@@ -261,8 +261,6 @@ namespace MinMax
             canEdit = true;
             fretBoard->beginEdit();
             chordSelecter->beginEdit();
-            labelPreset->setBackColor(VSTGUI::kCyanCColor);
-            labelPreset->setFontColor(VSTGUI::kBlackCColor);
         }
 
         void commitEdits()
@@ -285,8 +283,6 @@ namespace MinMax
             canEdit = false;
             fretBoard->endEdit(isCancel);
             chordSelecter->endEdit();
-            labelPreset->setBackColor(VSTGUI::kGreyCColor);
-            labelPreset->setFontColor(VSTGUI::kWhiteCColor);
         }
 
         void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(std::filesystem::path path)> fileSelected)
