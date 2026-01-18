@@ -88,7 +88,7 @@ namespace MinMax
             for (; iter != end && !err; iter.increment(err))
             {
                 const std::filesystem::directory_entry entry = *iter;
-                if (entry.path().extension() != ".json") continue;
+                if (entry.path().extension() != std::string("." + Files::FILE_EXT)) continue;
                 file_names.push_back(entry.path().string());
             }
 

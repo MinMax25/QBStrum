@@ -362,6 +362,8 @@ namespace MinMax
 
             fs::path filePath = fs::path(path);
 
+            filePath.replace_extension(std::string(Files::FILE_EXT));
+
             if (std::filesystem::exists(filePath))
             {
                 auto t = std::chrono::system_clock::now();
