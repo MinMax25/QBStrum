@@ -183,8 +183,6 @@ namespace PF
 
         double defaultValue = 0.0;
         Steinberg::int32 precision = 0;
- 
-        //Steinberg::int32 defaultIndex = 0;
     };
 
     class ParamHelper
