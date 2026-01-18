@@ -137,7 +137,7 @@ namespace MinMax
 			case RANGE::MIDI_DATA:           out = { 0, 127, false }; return true;
 			case RANGE::PITCH:               out = { 0, 127, false }; return true;
 			case RANGE::MIDI_CHANNEL:        out = { 1, 16, false }; return true;
-			case RANGE::TRANSPOSE_RANGE:     out = { -6, 6, false }; return true;
+			case RANGE::TRANSPOSE_RANGE:     out = { -6, 6, true }; return true;
 			case RANGE::FRET_DISTANCE:       out = { 1, 6, false }; return true;
 			case RANGE::STRUM_STRINGS_RANGE: out = { 1, 5, false }; return true;
 			case RANGE::STRING_OFFSET:       out = { -5, 4, true }; return true;
@@ -160,6 +160,8 @@ namespace MinMax
 			{
 			case RANGE::ARTICULATION_RANGE:
 				return { "Open 1", "Open 2", "Hammer/Legato", "Mute", "Dead", "Harmonics", "Slide" };
+			case RANGE::TRANSPOSE_RANGE:
+				return { "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6"};
 			case RANGE::STRING_OFFSET:
 				return { "Open", "-4 fret", "-3 fret", "-2 fret", "-1 fret", "0", "1 fret", "2 fret", "3 fret", "4 fret" };
 			case RANGE::CTL_TABINDEX1_RANGE:
@@ -183,7 +185,7 @@ namespace MinMax
 	{ PARAM::BYPASS, STR16("Bypass"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::SYS_BYPASS,                                         UNIT::SYSTEM, 0, 1, 0, 0 },
 
 	{ PARAM::CHANNEL_SEPALATE, STR16("Channel Sepalate"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                         UNIT::SYSTEM, 0, 1, 0, 0 },
-	{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::TRANSPOSE_RANGE, PF::FLAG::AUTOMATE,                            UNIT::SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::TRANSPOSE_RANGE, PF::FLAG::AUTOMATE,                            UNIT::SYSTEM, 0, 1, 6, 0 },
 	{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::ARTICULATION_RANGE, PF::FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0 },
 	{ PARAM::NEED_SAMPLEBLOCK_ADUST, STR16("Need Sampleblock Adust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,             UNIT::SYSTEM, 0, 1, 0, 0 },
 	{ PARAM::CTL_TABINDEX1, STR16("TabIndex1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, CTL_TABINDEX1_RANGE, PF::FLAG::HIDDEN,                             UNIT::SYSTEM, 0, 1, 0, 0 },
