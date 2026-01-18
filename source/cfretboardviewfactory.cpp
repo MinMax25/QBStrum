@@ -267,9 +267,9 @@ namespace MinMax
 
         void commitEdits()
         {
-            auto pressed = fretBoard->getPressedFrets();
+            auto currentSet = fretBoard->getPressedFrets();
             int chordNum = chordSelecter->getCurrentChordNumber();
-            ChordMap::instance().setVoicing(chordNum, pressed);
+            ChordMap::instance().setVoicing(chordNum, currentSet);
 
             exitEditMode(false);
         }

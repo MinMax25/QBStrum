@@ -49,9 +49,9 @@ namespace MinMax
         bool canEdit_ = false;
 
         // 押さえているフレット
-        StringSet pressed{};
+        StringSet currentSet{};
 
-        StringSet editPressed{};
+        StringSet workingSet{};
 
         bool isMarkerFret(int f)
         {
@@ -67,21 +67,24 @@ namespace MinMax
                 );
         }
 
-        void savePressedFrets()
+        void saveStringSet()
         {
-            editPressed.size = pressed.size;
-            for (size_t i = 0; i < pressed.size; i++)
+            workingSet.size = currentSet.size;
+            for (int i = 0; i < (int)currentSet.size; i++)
             {
-                editPressed.data[i] = pressed.data[i];
+                workingSet.data[i] = currentSet.data[i];
+                workingSet.setOffset(i, currentSet.getOffset(i));
+                currentSet.setOffset(i, 0);
             }
         }
 
-        void restorePressedFrets()
+        void restoreStringSet()
         {
-            pressed.size = editPressed.size;
-            for (size_t i = 0; i < editPressed.size; i++)
+            currentSet.size = workingSet.size;
+            for (int i = 0; i < (int)workingSet.size; i++)
             {
-                pressed.data[i] = editPressed.data[i];
+                currentSet.data[i] = workingSet.data[i];
+                currentSet.setOffset(i, workingSet.getOffset(i));
             }
         }
 
@@ -198,10 +201,10 @@ namespace MinMax
             // 押さえているフレットのマーカー表示（🔶）
             // ------------------------
             {
-                for (unsigned int stringindex = 0; stringindex < pressed.size; ++stringindex)
+                for (unsigned int stringindex = 0; stringindex < currentSet.size; ++stringindex)
                 {
-                    int fret = pressed.data[stringindex] + pressed.getOffset(stringindex);
-                    bool hasOffset = pressed.hasOffset(stringindex);
+                    int fret = currentSet.data[stringindex] + currentSet.getOffset(stringindex);
+                    bool hasOffset = currentSet.hasOffset(stringindex);
                     bool outOfRange = hasOffset && (fret < 0 || fret > lastFret);
                     double y = boardSize.top + outerMargin + stringSpacing * stringindex;
 
@@ -278,7 +281,7 @@ namespace MinMax
             if (fret < firstFret || fret > lastFret - 1)
                 return VSTGUI::kMouseEventNotHandled;
 
-            int& current = pressed.data[stringIndex];
+            int& current = currentSet.data[stringIndex];
 
             // ---- ナット左 ----
             if (fret < 0)
@@ -313,27 +316,27 @@ namespace MinMax
         void beginEdit()
         {
             canEdit_ = true;
-            savePressedFrets();
+            saveStringSet();
             invalid();
         }
 
         void endEdit(bool isCancel)
         {
             canEdit_ = false;
-            if (isCancel) restorePressedFrets();
+            if (isCancel) restoreStringSet();
             invalid();
         }
 
         // 現在の押弦情報
         StringSet getPressedFrets() const
         {
-            return pressed;
+            return currentSet;
         }
 
         // 押弦情報を上書きして再描画
         void setPressedFrets(const StringSet& set)
         {
-            pressed = set;
+            currentSet = set;
             invalid(); // 再描画
         }
 

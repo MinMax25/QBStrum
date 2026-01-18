@@ -104,7 +104,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab2"
+				"SelectedTemplate": "view"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -379,19 +379,17 @@
 							"wants-focus": "false"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR1_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "15, 408",
 							"round-rect-radius": "6",
@@ -414,19 +412,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR2_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "15, 430",
 							"round-rect-radius": "6",
@@ -449,19 +445,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR3_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "15, 453",
 							"round-rect-radius": "6",
@@ -484,19 +478,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR4_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "15, 476",
 							"round-rect-radius": "6",
@@ -519,19 +511,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR5_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "15, 499",
 							"round-rect-radius": "6",
@@ -554,19 +544,17 @@
 							"wheel-inc-value": "0.1"
 						}
 					},
-					"COptionMenu": {
+					"CParamDisplay": {
 						"attributes": {
 							"back-color": "Dark",
 							"background-offset": "0, 0",
-							"class": "COptionMenu",
+							"class": "CParamDisplay",
 							"control-tag": "STR6_OFFSET",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ WhiteCColor",
 							"frame-color": "~ BlackCColor",
 							"frame-width": "1",
-							"menu-check-style": "false",
-							"menu-popup-style": "false",
 							"opacity": "1",
 							"origin": "15, 522",
 							"round-rect-radius": "6",
