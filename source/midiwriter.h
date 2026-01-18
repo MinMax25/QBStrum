@@ -28,7 +28,7 @@ namespace MinMax
             if (!ofs) return false;
 
             // --- MThd ヘッダ ---
-            writeString(ofs, "MThd");
+            writeWString(ofs, "MThd");
             writeBE32(ofs, 6);
             writeBE16(ofs, 0);
             writeBE16(ofs, 1);
@@ -64,7 +64,7 @@ namespace MinMax
             trackData.push_back(0x00);
 
             // トラックチャンク
-            writeString(ofs, "MTrk");
+            writeWString(ofs, "MTrk");
             writeBE32(ofs, static_cast<uint32_t>(trackData.size()));
             ofs.write(reinterpret_cast<const char*>(trackData.data()), trackData.size());
 
@@ -84,7 +84,7 @@ namespace MinMax
         int ticksPerQuarter;
 
         // --- 書き込みユーティリティ ---
-        static void writeString(std::ofstream& ofs, const std::string& s)
+        static void writeWString(std::ofstream& ofs, const std::string& s)
         {
             ofs.write(s.c_str(), s.size());
         }

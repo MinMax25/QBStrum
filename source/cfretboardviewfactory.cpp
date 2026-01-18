@@ -241,12 +241,11 @@ namespace MinMax
             showDialog(
                 fileButton,
                 VSTGUI::CNewFileSelector::kSelectSaveFile,
-                [this](const VSTGUI::UTF8StringPtr path)
+                [this](const std::filesystem::path path)
                 {
                     try
                     {
-                        std::filesystem::path p(path);
-                        ChordMap::instance().saveChordPreset(p);
+                        ChordMap::instance().saveChordPreset(path);
                         labelPreset->setText(ChordMap::instance().getPresetName());
                     }
                     catch (...)
@@ -290,7 +289,7 @@ namespace MinMax
             labelPreset->setFontColor(VSTGUI::kWhiteCColor);
         }
 
-        void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(VSTGUI::UTF8StringPtr path)> fileSelected)
+        void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(std::filesystem::path path)> fileSelected)
         {
             Files::createPresetDirectory();
 
@@ -298,15 +297,16 @@ namespace MinMax
             if (!selector) return;
 
             selector->setTitle(Files::TITLE);
-            selector->setInitialDirectory(Files::getPresetPath().string());
-            selector->setDefaultSaveName(ChordMap::instance().getPresetPath().filename().string());
+            selector->setInitialDirectory(Files::getPresetPath().u8string());
+            selector->setDefaultSaveName(ChordMap::instance().getPresetPath().filename().u8string());
             selector->addFileExtension(VSTGUI::CFileExtension(Files::FILTER, Files::FILE_EXT));
 
             p->getFrame()->setFocusView(nullptr);
             if (selector->runModal() && (int)selector->getNumSelectedFiles() == 1)
             {
-                auto filename = selector->getSelectedFile(0);
-                fileSelected(filename);
+                auto p = ChordMap::convertUtf8ToUtf16(selector->getSelectedFile(0));
+                auto path = std::filesystem::path(p);
+                fileSelected(path);
             }
 
             selector->forget();

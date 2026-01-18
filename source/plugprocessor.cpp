@@ -136,6 +136,7 @@ namespace MinMax
 
 	Steinberg::tresult PLUGIN_API MyVSTProcessor::setState(Steinberg::IBStream* state)
 	{
+		if (!state) return Steinberg::kResultFalse;
 		StateIO io(state);
 
 		for (const auto& def : paramTable)
@@ -145,11 +146,11 @@ namespace MinMax
 			prm.set(def.tag, plain);
 		}
 
-		std::string path{};
-		if (io.readString(path))
+		std::wstring path{};
+		if (io.readWString(path))
 		{
 			std::filesystem::path p(path);
-			chordMap.loadChordPreset(path);
+			chordMap.loadChordPreset(p);
 		}
 
 		return Steinberg::kResultOk;
@@ -157,6 +158,7 @@ namespace MinMax
 
 	Steinberg::tresult PLUGIN_API MyVSTProcessor::getState(Steinberg::IBStream* state)
 	{
+		if (!state) return Steinberg::kResultFalse;
 		StateIO io(state);
 
 		for (const auto& def : paramTable)
@@ -165,8 +167,8 @@ namespace MinMax
 			if (!io.writeDouble(plain)) return Steinberg::kResultFalse;
 		}
 
-		const std::string path = chordMap.getPresetPath().u8string();
-		if (!io.writeString(path)) return Steinberg::kResultFalse;
+		const std::wstring path = chordMap.getPresetPath().wstring();
+		if (!io.writeWString(path)) return Steinberg::kResultFalse;
 
 		return Steinberg::kResultOk;
 	}

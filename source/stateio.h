@@ -42,22 +42,17 @@ namespace MinMax {
 
 		// ---- UTF-8 string (length + raw bytes) ----
 
-		bool writeString(const std::string& s)
+		bool writeWString(const std::wstring& s)
 		{
-			const std::int32_t len =
-				static_cast<std::int32_t>(s.size());
-
-			if (!streamer.writeInt32(len))
-				return false;
-
-			return (len == 0) || streamer.writeRaw(s.data(), len);
+			const std::int32_t len = static_cast<std::int32_t>(s.size());
+			if (!streamer.writeInt32(len)) return false;
+			return (len == 0) || streamer.writeRaw(s.data(), len * 2);
 		}
 
-		bool readString(std::string& out)
+		bool readWString(std::wstring& out)
 		{
 			std::int32_t len = 0;
-			if (!streamer.readInt32(len))
-				return false;
+			if (!streamer.readInt32(len)) return false;
 
 			if (len <= 0)
 			{
@@ -66,11 +61,10 @@ namespace MinMax {
 			}
 
 			// ˆÀ‘S•Ù
-			if (len > 4096)
-				return false;
+			if (len > 4096) return false;
 
 			out.resize(static_cast<size_t>(len));
-			return streamer.readRaw(out.data(), len);
+			return streamer.readRaw(out.data(), len * 2);
 		}
 
 	private:

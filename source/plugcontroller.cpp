@@ -23,6 +23,7 @@
 #include "parameterhelper.h"
 #include "plugcontroller.h"
 #include "plugdefine.h"
+#include "stateio.h"
 
 namespace MinMax
 {
@@ -64,11 +65,13 @@ namespace MinMax
 	Steinberg::tresult PLUGIN_API MyVSTController::setComponentState(Steinberg::IBStream* state)
 	{
 		if (!state) return Steinberg::kInvalidArgument;
+		StateIO io(state);
 
 		for (const auto& def : paramTable)
 		{
 			double plain = 0.0;
-			if (state->read(&plain, sizeof(double), nullptr) != Steinberg::kResultOk) return Steinberg::kResultFalse;
+
+			if (!io.readDouble(plain)) return Steinberg::kResultFalse;
 			Steinberg::Vst::ParamValue normalized = plainParamToNormalized(def.tag, plain);
 			setParamNormalized(def.tag, normalized);
 			if (def.tag == PARAM::CHORD_NUM)
