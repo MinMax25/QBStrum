@@ -189,7 +189,7 @@ namespace MinMax
 	{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::ARTICULATION_RANGE, PF::FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0 },
 	{ PARAM::NEED_SAMPLEBLOCK_ADUST, STR16("Need Sampleblock Adust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,             UNIT::SYSTEM, 0, 1, 0, 0 },
 	{ PARAM::CTL_TABINDEX1, STR16("TabIndex1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, CTL_TABINDEX1_RANGE, PF::FLAG::HIDDEN,                             UNIT::SYSTEM, 0, 1, 0, 0 },
-	{ PARAM::OCTAVE, STR16("Octabe Up"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,											 UNIT::SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::OCTAVE, STR16("Octabe+"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,											 UNIT::SYSTEM, 0, 1, 0, 0 },
 	{ PARAM::ENABLED_MUTE_FNOIZE, STR16("Enabled Mute/Fret Noize"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,				 UNIT::SYSTEM, 0, 1, 1, 0 },
 	{ PARAM::ENABLED_ARTICULATION, STR16("Enabled Articulation"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,				 UNIT::SYSTEM, 0, 1, 1, 0 },
 
