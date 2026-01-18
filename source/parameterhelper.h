@@ -28,6 +28,27 @@ namespace PF
 {
 #pragma region Custom Parameter
 
+    class StringListParameterEx
+        : public Steinberg::Vst::StringListParameter
+    {
+    public:
+        StringListParameterEx(
+            const  Steinberg::Vst::TChar* title,
+            Steinberg::Vst::ParamID tag, 
+            const  Steinberg::Vst::TChar* units = nullptr,
+            Steinberg::int32 flags = Steinberg::Vst::ParameterInfo::kCanAutomate | Steinberg::Vst::ParameterInfo::kIsList,
+            Steinberg::Vst::UnitID unitID = Steinberg::Vst::kRootUnitId,
+            const Steinberg::Vst::TChar* shortTitle = nullptr)
+            : StringListParameter(title, tag, units, flags, unitID, shortTitle)
+        {    
+        }
+
+        void setDefaultNormalizedValue(Steinberg::Vst::ParamValue value)
+        {
+            info.defaultNormalizedValue = value;
+        }
+    };
+
     class ExpParameter 
         : public Steinberg::Vst::RangeParameter
     {
@@ -163,7 +184,7 @@ namespace PF
         double defaultValue = 0.0;
         Steinberg::int32 precision = 0;
  
-        Steinberg::int32 defaultIndex = 0;
+        //Steinberg::int32 defaultIndex = 0;
     };
 
     class ParamHelper
@@ -212,7 +233,7 @@ namespace PF
             if (hasOption && def.valueType != VALUE::Bool)
             {   // Bool ‚Í enumerated ‚ð‘z’è‚µ‚È‚¢
                 auto p =
-                    std::make_unique<Steinberg::Vst::StringListParameter>(
+                    std::make_unique<StringListParameterEx>(
                         def.name,
                         def.tag,
                         def.units,
@@ -235,15 +256,14 @@ namespace PF
                     p->appendString(u16str);
                 }               
 
-                Steinberg::int32 index = std::clamp(def.defaultIndex, 0, static_cast<Steinberg::int32>(options.size() - 1));
-
+                Steinberg::int32 index = std::clamp((int)def.defaultValue, 0, static_cast<Steinberg::int32>(options.size() - 1));
                 Steinberg::Vst::ParamValue norm =
                     options.size() > 1
                     ? static_cast<Steinberg::Vst::ParamValue>(index) / static_cast<Steinberg::Vst::ParamValue>(options.size() - 1)
                     : 0.0;
 
                 p->setNormalized(norm);
-
+                p->setDefaultNormalizedValue(norm);
                 param = std::move(p);
             }
             else
@@ -263,11 +283,8 @@ namespace PF
                             def.flags,
                             def.unitID
                         );
-
                     p->setPrecision(0);
-
                     param = std::move(p);
-
                     break;
                 }
                 case VALUE::Int:
@@ -284,7 +301,6 @@ namespace PF
                             def.flags,
                             def.unitID
                         );
-
                     param = std::move(p);
                     break;
                 }
