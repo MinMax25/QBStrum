@@ -245,7 +245,7 @@ namespace PF
 
                 if (options.empty())
                 {   // ç≈í·å¿É_É~Å[Ç1Ç¬
-                    options.push_back("-");
+                    options.push_back("# undefined #");
                 }
 
                 for (auto& s : options)
