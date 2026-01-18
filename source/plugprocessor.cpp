@@ -719,7 +719,7 @@ namespace MinMax
 
 		}
 
-		Steinberg::FUnknownPtr<Steinberg::Vst::IMessage> msg = allocateMessage();
+		auto* msg = allocateMessage();
 		if (!msg) return;
 
 		msg->setMessageID(MSG_CHORD_CHANGED);
