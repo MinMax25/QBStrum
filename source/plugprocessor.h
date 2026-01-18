@@ -51,6 +51,7 @@ namespace MinMax
 
 		// IScheduledEventListenerの実装
 		void PLUGIN_API sendNoteEvent(const NoteEvent& ev) override;
+		void PLUGIN_API chordChanged(const Steinberg::Vst::Chord chord) override;
 
 		// 追加メソッド
 		void PLUGIN_API processContext();

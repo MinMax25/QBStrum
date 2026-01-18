@@ -37,6 +37,7 @@ namespace MinMax
 	{
 		virtual ~IScheduledEventListener() = default;
 		virtual void sendNoteEvent(const NoteEvent& ev) = 0;
+		virtual void chordChanged(const Steinberg::Vst::Chord chord) = 0;
 	};
 
 	struct EventScheduler
@@ -167,7 +168,7 @@ namespace MinMax
 			{
  				auto& note = outQueue.current();
 				int sampleOffset = static_cast<int>((note.isSendNoteOn ? note.offTime : note.onTime) - currentSampleTime);
-				sendNoteEventCommon(!note.isSendNoteOn, sampleOffset, note, note.velocity);
+				onSendNoteEvent(!note.isSendNoteOn, sampleOffset, note, note.velocity);
 				outQueue.eraseCurrent();
 			}
 
@@ -181,7 +182,7 @@ namespace MinMax
 				while (!q.empty())
 				{
 					auto& note = q.current();
-					sendNoteEventCommon(false, 0, note, note.velocity);
+					onSendNoteEvent(false, 0, note, note.velocity);
 					q.eraseCurrent();
 				}
 			}
@@ -189,7 +190,7 @@ namespace MinMax
 			while (!specialQueue.empty())
 			{
 				auto& note = specialQueue.current();
-				sendNoteEventCommon(false, 0, note, note.velocity);
+				onSendNoteEvent(false, 0, note, note.velocity);
 				specialQueue.eraseCurrent();
 			}
 		}
@@ -335,13 +336,16 @@ namespace MinMax
 				timeSigDenominator = den;
 			}
 
-			if (chord.keyNote != ctx->chord.keyNote ||
+			if (
+				chord.keyNote != ctx->chord.keyNote ||
 				chord.chordMask != ctx->chord.chordMask ||
-				chord.rootNote != ctx->chord.rootNote)
+				chord.rootNote != ctx->chord.rootNote
+			)
 			{
 				chord.keyNote = ctx->chord.keyNote;
 				chord.chordMask = ctx->chord.chordMask;
 				chord.rootNote = ctx->chord.rootNote;
+				if (listener) listener->chordChanged(chord);
 			}
 
 			if (smpteOffsetSubframes != ctx->smpteOffsetSubframes)
@@ -374,7 +378,7 @@ namespace MinMax
 			return time >= currentSampleTime && time < currentSampleTime + numSamples;
 		}
 
-		void sendNoteEventCommon(bool on, Steinberg::uint32 sampleOffset, const ScheduledNote& note, float velocity)
+		void onSendNoteEvent(bool on, Steinberg::uint32 sampleOffset, const ScheduledNote& note, float velocity)
 		{
 			NoteEvent e{};
 

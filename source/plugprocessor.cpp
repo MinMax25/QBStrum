@@ -33,6 +33,8 @@
 #include "plugprocessor.h"
 #include "stateio.h"
 
+#include "debug_log.h"
+
 namespace MinMax
 {
 #pragma region Implements
@@ -66,6 +68,11 @@ namespace MinMax
 		}
 
 		processData->outputEvents->addEvent(event);
+	}
+
+	void PLUGIN_API MyVSTProcessor::chordChanged(const Steinberg::Vst::Chord chord)
+	{
+		DLogWriteLine("keyNote = %d", chord.keyNote);
 	}
 
 #pragma endregion
