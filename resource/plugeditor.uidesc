@@ -104,7 +104,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab3"
+				"SelectedTemplate": "view"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -221,10 +221,10 @@
 							"min-value": "0",
 							"mouse-enabled": "true",
 							"opacity": "1",
-							"origin": "505, 45",
+							"origin": "525, 45",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "100, 20",
+							"size": "135, 20",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
@@ -236,7 +236,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "for Studio One",
+							"title": "for Fender Studio Pro",
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
