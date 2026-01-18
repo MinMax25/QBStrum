@@ -357,7 +357,7 @@ namespace PF
         }
 
     private:
-        // Resolver
+        // Resolvers
         const IRangeResolver* rangeResolver = nullptr;
         const IOptionProvider* optionProvider = nullptr;
     };
