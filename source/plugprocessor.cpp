@@ -511,7 +511,7 @@ namespace MinMax
 
 	int MyVSTProcessor::getStringPitch(const StringSet& set, int stringNumber)
 	{
-		int result = chordMap.getTunings().data[stringNumber] + (prm.getInt(PARAM::TRANSPOSE) + (prm.getInt(PARAM::OCTAVE) ? 12 : 0));
+		int result = chordMap.getTunings().data[stringNumber] + (prm.getInt(PARAM::TRANSPOSE) - 6) + (prm.getInt(PARAM::OCTAVE) ? 12 : 0);
 		int offset = (int)prm.getInt(PARAM::STR1_OFFSET + stringNumber);
 
 		if (offset != 0)
