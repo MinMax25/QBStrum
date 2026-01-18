@@ -20,7 +20,7 @@ using namespace MinMax;
 
 BEGIN_FACTORY_DEF ("MinMax", 
 			       "https://github.com/MinMax25", 
-			       "mailto:info@mycompanyname.com")
+			       "")
 
 	//---First Plug-in included in this factory-------
 	// its kVstAudioEffectClass component
