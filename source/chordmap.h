@@ -264,7 +264,7 @@ namespace MinMax
         //==================================================================
         void loadChordPreset()
         {
-            loadChordPreset(Files::getPresetPath().append("Standard 6Strings.json"));
+            loadChordPreset(Files::getPresetPath().append(Files::DEFAULT_PRESET));
         }
 
         void loadChordPreset(const std::filesystem::path& path)

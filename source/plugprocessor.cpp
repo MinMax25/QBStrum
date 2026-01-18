@@ -290,6 +290,8 @@ namespace MinMax
 	{
 		constexpr int SPECIAL_NOTES_SAMPLES = 3;
 
+		if (!prm.getInt(PARAM::ENABLED_ARTICULATION)) return;
+
 		int newArtic = prm.getInt(PARAM::SELECTED_ARTICULATION);
 
 		std::array<const PF::ParamDef*, PARAM_ARTICULATION_COUNT> artics;
@@ -527,6 +529,8 @@ namespace MinMax
 	{
 		const double NOTE_LENGTH = 40.0;
 
+		if (!prm.getInt(PARAM::ENABLED_MUTE_FNOIZE)) return;
+
 		scheduler.allNotesOff();
 
 		trigFretNoise(event);
@@ -570,6 +574,8 @@ namespace MinMax
 	void MyVSTProcessor::trigFretNoise(Steinberg::Vst::Event event)
 	{
 		constexpr double FRET_NOISE_LENGTH = 40.0;
+
+		if (!prm.getInt(PARAM::ENABLED_MUTE_FNOIZE)) return;
 
 		float distance = 0.0f;
 
