@@ -1,4 +1,4 @@
-# QBStrum for Fender Studio Pro
+# QBStrum
 
 **QBStrum** は、DAW 上でギターのストラム・アルペジオ演奏を  
 **直感的かつ演奏的にコントロールするための MIDI 制御プラグイン**です。  
