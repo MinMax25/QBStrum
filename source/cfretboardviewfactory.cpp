@@ -227,11 +227,23 @@ namespace MinMax
 
             auto* c = editor->getController();
 
-            c->beginEdit(PARAM::CHORD_NUM);
-            Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(PARAM::CHORD_NUM, value);
-            c->setParamNormalized(PARAM::CHORD_NUM, norm);
-            c->performEdit(PARAM::CHORD_NUM, norm);
-            c->endEdit(PARAM::CHORD_NUM);
+            for (int i = 0; i < MAX_STRINGS; i++)
+            {
+                Steinberg::Vst::ParamID tag = PARAM::STR1_OFFSET + i;
+                c->beginEdit(tag);
+                Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(tag, StringSet::CENTER_OFFSET);
+                c->setParamNormalized(tag, norm);
+                c->performEdit(tag, norm);
+                c->endEdit(tag);
+            }
+
+            {
+                c->beginEdit(PARAM::CHORD_NUM);
+                Steinberg::Vst::ParamValue norm = c->plainParamToNormalized(PARAM::CHORD_NUM, value);
+                c->setParamNormalized(PARAM::CHORD_NUM, norm);
+                c->performEdit(PARAM::CHORD_NUM, norm);
+                c->endEdit(PARAM::CHORD_NUM);
+            }
         }
 
         void saveChordMap()

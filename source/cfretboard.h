@@ -29,7 +29,7 @@ namespace MinMax
         const int numFrets = (lastFret - firstFret + 1);
         const double outerMargin = 10.0;                    // 上部余白
 
-        const VSTGUI::CColor bg = VSTGUI::CColor(60, 40, 20, 255);
+        const VSTGUI::CColor bg = VSTGUI::CColor(55, 35, 18, 255);
         const VSTGUI::CColor stringColor = VSTGUI::CColor(230, 230, 230, 255);
         const VSTGUI::CColor fretColor = VSTGUI::CColor(180, 180, 180, 255);
         const VSTGUI::CColor nutColor = VSTGUI::CColor(255, 255, 255, 255);
