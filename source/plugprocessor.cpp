@@ -269,7 +269,7 @@ namespace MinMax
 				}
 				break;
 			}
-			case PARAM::NEED_SAMPLEBLOCK_ADUST:
+			case PARAM::NEED_SAMPLEBLOCK_ADJUST:
 			{
 				bool state = prm.get(tag) > 0.5;
 				EventScheduler::Instance().setNeedSampleblockAdust(state);
@@ -320,7 +320,7 @@ namespace MinMax
 		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + sampleOffset;
 		Steinberg::uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
 
-		for (int i = 0; i < (prm.get(PARAM::CHANNEL_SEPALATE) ? STRING_COUNT : 1); i++)
+		for (int i = 0; i < (prm.get(PARAM::CHANNEL_SEPARATE) ? STRING_COUNT : 1); i++)
 		{
 			scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, keySW, 127, i);
 		}
@@ -465,7 +465,7 @@ namespace MinMax
 			Steinberg::uint64 offsetSamples = samplesPerMs * strcnt;
 			Steinberg::uint64 onTime = baseOnTime + offsetSamples;
 
-			int channel = prm.get(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
+			int channel = prm.get(PARAM::CHANNEL_SEPARATE) ? i % 16 : 0;
 			int pitch = getStringPitch(voicing, i);
 			float velocity = baseVelocity * std::pow(BRUSH_DECAY, strcnt);
 
@@ -504,7 +504,7 @@ namespace MinMax
 
 			Steinberg::uint64 onTime = baseOnTime + static_cast<Steinberg::uint64>(delayMs * samplesPerMs);
 
-			int channel = prm.getInt(PARAM::CHANNEL_SEPALATE) ? i % 16 : 0;
+			int channel = prm.getInt(PARAM::CHANNEL_SEPARATE) ? i % 16 : 0;
 			int pitch = getStringPitch(voicing, i);
 			float velocity = baseVelocity * std::pow(prm.get(PARAM::STRUM_DECAY) / 100.0f, strcnt);
 
@@ -522,10 +522,6 @@ namespace MinMax
 		if (offset != 0)
 		{
 			result += set.data[stringNumber] + offset - StringSet::CENTER_OFFSET;
-		}
-		else
-		{
-			result;
 		}
 		return result;
 	}
@@ -569,7 +565,7 @@ namespace MinMax
 		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(PARAM::ARP_LENGTH)));
 		Steinberg::uint64 offTime = onTime + lengthSamples;
 
-		int channel = prm.getInt(PARAM::CHANNEL_SEPALATE) ? stringNumber % 16 : 0;
+		int channel = prm.getInt(PARAM::CHANNEL_SEPARATE) ? stringNumber % 16 : 0;
 		int pitch = getStringPitch(voicing, stringNumber);
 		float velocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 

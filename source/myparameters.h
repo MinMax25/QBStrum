@@ -48,10 +48,10 @@ namespace MinMax
 		BYPASS = 0,
 
 		// GENERAL
-		CHANNEL_SEPALATE = 1001,
+		CHANNEL_SEPARATE = 1001,
 		TRANSPOSE,
 		SELECTED_ARTICULATION,
-		NEED_SAMPLEBLOCK_ADUST,
+		NEED_SAMPLEBLOCK_ADJUST,
 		CTL_TABINDEX1,
 		OCTAVE,
 		ENABLED_MUTE_FNOIZE,
@@ -165,7 +165,7 @@ namespace MinMax
 			case RANGE::STRING_OFFSET:
 				return { "Open", "-4 fret", "-3 fret", "-2 fret", "-1 fret", "0", "1 fret", "2 fret", "3 fret", "4 fret" };
 			case RANGE::CTL_TABINDEX1_RANGE:
-				return { "Strum Parameters", "Setings", "Plugin Info" };
+				return { "Strum Parameters", "Settings", "Plugin Info" };
 			default:
 				return { };
 			}
@@ -184,12 +184,12 @@ namespace MinMax
 	{ {
 	{ PARAM::BYPASS, STR16("Bypass"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::SYS_BYPASS,                                         UNIT::SYSTEM, 0, 1, 0, 0 },
 
-	{ PARAM::CHANNEL_SEPALATE, STR16("Channel Sepalate"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                         UNIT::SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::CHANNEL_SEPARATE, STR16("Channel Separate"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                         UNIT::SYSTEM, 0, 1, 0, 0 },
 	{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::TRANSPOSE_RANGE, PF::FLAG::AUTOMATE,                            UNIT::SYSTEM, 0, 1, 6, 0 },
 	{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::ARTICULATION_RANGE, PF::FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0 },
-	{ PARAM::NEED_SAMPLEBLOCK_ADUST, STR16("Need Sampleblock Adust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,             UNIT::SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::NEED_SAMPLEBLOCK_ADJUST, STR16("Need Sampleblock Adjust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,           UNIT::SYSTEM, 0, 1, 0, 0 },
 	{ PARAM::CTL_TABINDEX1, STR16("TabIndex1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, CTL_TABINDEX1_RANGE, PF::FLAG::HIDDEN,                             UNIT::SYSTEM, 0, 1, 0, 0 },
-	{ PARAM::OCTAVE, STR16("Octabe+"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,											 UNIT::SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::OCTAVE, STR16("Octave+"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,											 UNIT::SYSTEM, 0, 1, 0, 0 },
 	{ PARAM::ENABLED_MUTE_FNOIZE, STR16("Enabled Mute/Fret Noize"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,				 UNIT::SYSTEM, 0, 1, 1, 0 },
 	{ PARAM::ENABLED_ARTICULATION, STR16("Enabled Articulation"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,				 UNIT::SYSTEM, 0, 1, 1, 0 },
 
@@ -200,7 +200,7 @@ namespace MinMax
 
 	{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_CHANNEL, PF::FLAG::HIDDEN,                          UNIT::STRUM,  0,    1,   1, 0 },
 	{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::STRUM,  0,    1, 103, 0 },
-	{ PARAM::MUTE_NOTE_2, STR16("Mite Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::STRUM,  0,    1, 102, 0 },
+	{ PARAM::MUTE_NOTE_2, STR16("Mute Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::STRUM,  0,    1, 102, 0 },
 
 	{ PARAM::STRUM_SPEED, STR16("Strum Speed"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::STRUM,  1, 1000,  26, 1},
 	{ PARAM::STRUM_DECAY, STR16("Strum Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,                                UNIT::STRUM, 85,  100,  96, 1},
@@ -208,7 +208,7 @@ namespace MinMax
 
 	{ PARAM::BRUSH_TIME, STR16("Brush Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                            UNIT::STRUM,  5,  300,  30, 1},
 
-	{ PARAM::ARP_LENGTH, STR16("Arpegio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::STRUM,  0,    1,   2, 2},
+	{ PARAM::ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                    UNIT::STRUM,  0,    1,   2, 2},
 
 	{ PARAM::FNOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_CHANNEL, PF::FLAG::HIDDEN,                   UNIT::STRUM,  0,    1,   1, 0 },
 	{ PARAM::FNOISE_NOTE_NEAR, STR16("Fret Noise Note Near"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                      UNIT::STRUM,  0,    1, 120, 0 },

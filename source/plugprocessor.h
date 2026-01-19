@@ -96,7 +96,7 @@ namespace MinMax
 		bool isPlaying = false;
 
 		// 内部MIDIイベントバッファ
-		RingBuff InnerEvents{ 32 };
+		RingBuff InnerEvents{ 64 };
 
 		uint32_t chordseq = 0;
 	};
