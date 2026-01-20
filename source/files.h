@@ -18,8 +18,8 @@ namespace MinMax
     const struct Files
     {
         /// 定数
-        inline static const char* STR_USERPROFILE = "USERPROFILE";
         inline static const char* PLUGIN_ROOT = "Documents/VST3 Presets/MinMax/QBStrum";
+        inline static const char* PLUGIN_TEMP = "Documents/VST3 Presets/MinMax/QBStrum/Temp";
         inline static const char* PRESET_ROOT = "Documents/VST3 Presets/MinMax/QBStrum/ChordPreset";
 
         inline static const VSTGUI::UTF8String TITLE = "QBStrum";
@@ -28,8 +28,8 @@ namespace MinMax
 
         inline static const std::string DEFAULT_PRESET = "Standard 6Strings.qbs";
 
-        // プラグインパスを取得する
-        inline static std::filesystem::path getPluginPath()
+        // プラグインルートパスを取得する
+        inline static std::filesystem::path getRootPath()
         {
             const char* home =
 #ifdef _WIN32
@@ -42,14 +42,18 @@ namespace MinMax
             return std::filesystem::path(home).append(PLUGIN_ROOT).make_preferred();
         }
 
-        // プラグインディレクトリを作成する
-        inline static void createPluginDirectory()
+        // プラグイン一時パスを取得する
+        inline static std::filesystem::path getTempPath()
         {
-            auto p = getPluginPath();
-            if (!std::filesystem::exists(p))
-            {
-                std::filesystem::create_directories(p);
-            }
+            const char* home =
+#ifdef _WIN32
+                getenv("USERPROFILE");
+#else
+                getenv("HOME");
+#endif
+            if (!home) return std::filesystem::current_path();
+
+            return std::filesystem::path(home).append(PLUGIN_TEMP).make_preferred();
         }
 
         // プリセットパスを取得する
@@ -66,13 +70,59 @@ namespace MinMax
             return std::filesystem::path(home).append(PRESET_ROOT).make_preferred();
         }
 
-        // プリセットディレクトリを作成する
-        inline static void createPresetDirectory()
+        // プラグインディレクトリを作成する
+        inline static void createPluginDirectory()
         {
-            auto p = getPresetPath();
-            if (!std::filesystem::exists(p))
             {
-                std::filesystem::create_directories(p);
+                auto path = getRootPath();
+                if (!std::filesystem::exists(path))
+                {
+                    std::filesystem::create_directories(path);
+                }
+            }
+
+            {
+                auto path = getTempPath();
+                if (!std::filesystem::exists(path))
+                {
+                    std::filesystem::create_directories(path);
+                }
+            }
+
+            {
+                auto path = getPresetPath();
+                if (!std::filesystem::exists(path))
+                {
+                    std::filesystem::create_directories(path);
+                }
+            }
+        }
+
+		// 一時パスのファイルを削除する
+        inline static void clearTempFiles()
+        {
+            auto path = getTempPath();
+            if (!std::filesystem::exists(path)) return;
+
+            const auto now = std::filesystem::file_time_type::clock::now();
+            constexpr auto limit = std::chrono::hours(24);
+
+            std::error_code err;
+            std::filesystem::directory_iterator iter(path), end;
+
+            for (; iter != end && !err; iter.increment(err))
+            {
+                const std::filesystem::directory_entry& entry = *iter;
+
+                if (!entry.is_regular_file(err)) continue;
+
+                const auto lastTime = entry.last_write_time(err);
+                if (err) continue;
+
+                if (now - lastTime >= limit)
+                {
+                    std::filesystem::remove(entry.path(), err);
+                }
             }
         }
 

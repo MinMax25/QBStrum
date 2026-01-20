@@ -47,7 +47,7 @@ namespace MinMax
         CFretBoardView(const VSTGUI::UIAttributes& attr, const VSTGUI::IUIDescription* desc, const VSTGUI::CRect& size)
             : CViewContainer(size)
         {
-            Files::createPresetDirectory();
+            Files::createPluginDirectory();
             
             editor = dynamic_cast<VSTGUI::VST3Editor*>(desc->getController());
             assert(editor && "CFretBoardView requires VST3Editor");
@@ -299,7 +299,7 @@ namespace MinMax
 
         void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(std::filesystem::path path)> fileSelected)
         {
-            Files::createPresetDirectory();
+            Files::createPluginDirectory();
 
             auto* selector = VSTGUI::CNewFileSelector::create(p->getFrame(), style);
             if (!selector) return;
