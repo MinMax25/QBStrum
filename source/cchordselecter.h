@@ -82,7 +82,6 @@ namespace MinMax
             chordLabel->setBackColor(VSTGUI::kWhiteCColor);
             chordLabel->setFontColor(VSTGUI::kBlackCColor);
             chordLabel->setFont(VSTGUI::kNormalFontSmaller);
-            setChordText(0);
             addView(chordLabel);
         }
 

@@ -76,7 +76,7 @@ namespace MinMax
 			setParamNormalized(def.tag, normalized);
 			if (def.tag == PARAM::CHORD_NUM)
 			{
-				auto c = ChordMap::instance().getChordVoicing(0);
+				auto c = ChordMap::instance().getChordVoicing((int)plain);
 				ChordInfo.size = c.size;
 				ChordInfo.flatIndex = c.flatIndex;
 				for (int i = 0; i < MAX_STRINGS; i++)
