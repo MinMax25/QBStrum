@@ -18,6 +18,7 @@
 #include <public.sdk/source/vst/vsteditcontroller.h>
 
 #include "chordmap.h"
+#include "files.h"
 #include "myparameters.h"
 #include "myvst3editor.h"
 #include "parameterhelper.h"
@@ -35,6 +36,9 @@ namespace MinMax
 		{
 			return result;
 		}
+
+		Files::createPluginDirectory();
+		Files::clearTempFiles();
 
 		// ユニット登録
 		addUnit(new Steinberg::Vst::Unit(STR16("Chord"), UNIT::CHORD));

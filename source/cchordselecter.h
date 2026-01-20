@@ -202,19 +202,45 @@ namespace MinMax
 
         std::wstring dropVoicingMidiData(CDraggableLabel* pControl)
         {
-            std::wstring path = L"d:\\temp\\voicing.mid";
+            // 1. 一時フォルダを取得
+            auto tempPath = MinMax::Files::getTempPath();
+
+            // 2. ファイル名ベース
+            std::wstring baseName = L"voicing";
+            std::wstring filename;
+            int counter = 0;
+
+            // 3. 衝突回避ループ
+            while (true)
+            {
+                if (counter == 0)
+                    filename = baseName + L".mid";
+                else
+                    filename = baseName + L"_" + std::to_wstring(counter) + L".mid";
+
+                auto fullpath = tempPath / std::filesystem::path(filename.begin(), filename.end());
+                if (!std::filesystem::exists(fullpath))
+                    break; // 存在しなければ使用可能
+
+                ++counter;
+            }
+
+            auto fullpath = tempPath / std::filesystem::path(filename.begin(), filename.end());
+
+            // 4. コードボイシング取得
             auto v = ChordMap::instance().getChordVoicing(currentChordNumber);
             for (int i = 0; i < (int)v.size; i++)
             {
                 if (v.data[i] >= 0)
-                {
                     v.data[i] += ChordMap::instance().getTunings().data[i];
-                }
             }
-            writeChordToMidi(v, path);
-            return path;
+
+            // 5. MIDI出力
+            writeChordToMidi(v, fullpath.wstring());
+
+            return fullpath.wstring();
         }
-        
+
         bool writeChordToMidi(const StringSet& chord, const std::wstring& filepath)
         {
             // MidiWriter 初期化（480 ticks per quarter note）
