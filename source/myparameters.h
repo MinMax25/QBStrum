@@ -83,6 +83,7 @@ namespace MinMax
 		FNOISE_VELOCITY,
 		
 		STRINGS_UP_HIGH = 1251,
+		STRINGS_UP_LOW,
 		STRINGS_DOWN_HIGH,
 		STRINGS_DOWN_LOW,
 		
@@ -178,7 +179,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 60;
+	inline constexpr size_t PARAM_MAX = 61;
 
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
@@ -218,7 +219,8 @@ namespace MinMax
 	{ PARAM::FNOISE_DIST_FAR, STR16("Fret Noise Distance Far"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::FRET_DISTANCE, PF::FLAG::HIDDEN,        UNIT::STRUM,  0,    1,   3, 0 },
 	{ PARAM::FNOISE_VELOCITY, STR16("Fret Noise Velocity"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,  127, 100, 0 },
 
-	{ PARAM::STRINGS_UP_HIGH, STR16("Strings Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   3, 0 },
+	{ PARAM::STRINGS_UP_HIGH, STR16("Strings Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   1, 0 },
+	{ PARAM::STRINGS_UP_LOW, STR16("Strings Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,				 UNIT::STRUM,  0,    1,   3, 0 },
 	{ PARAM::STRINGS_DOWN_HIGH, STR16("Strings Down High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,        UNIT::STRUM,  0,    1,   3, 0 },
 	{ PARAM::STRINGS_DOWN_LOW, STR16("Strings Down Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,          UNIT::STRUM,  0,    1,   1, 0 },
 
