@@ -100,6 +100,7 @@ namespace MinMax
 		BRUSH_DOWN,
 		UP_HIGH,
 		UP,
+		UP_LOW,
 		DOWN_HIGH,
 		DOWN,
 		DOWN_LOW,
@@ -177,7 +178,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 59;
+	inline constexpr size_t PARAM_MAX = 60;
 
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
@@ -233,6 +234,7 @@ namespace MinMax
 	{ PARAM::BRUSH_DOWN, STR16("Brush"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                           UNIT::TRIGGER, 0, 1, 74, 0 },
 	{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                            UNIT::TRIGGER, 0, 1, 63, 0 },
 	{ PARAM::UP, STR16("Up"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                      UNIT::TRIGGER, 0, 1, 62, 0 },
+	{ PARAM::UP_LOW, STR16("Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,												 UNIT::TRIGGER, 0, 1,  0, 0 },
 	{ PARAM::DOWN_HIGH, STR16("Down High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 61, 0 },
 	{ PARAM::DOWN, STR16("Down"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::TRIGGER, 0, 1, 60, 0 },
 	{ PARAM::DOWN_LOW, STR16("Down Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                          UNIT::TRIGGER, 0, 1, 59, 0 },

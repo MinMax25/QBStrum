@@ -324,7 +324,7 @@
 							"mouse-enabled": "true",
 							"opacity": "1",
 							"origin": "10, 110",
-							"size": "220, 235",
+							"size": "220, 250",
 							"transparent": "false",
 							"wants-focus": "false"
 						}
