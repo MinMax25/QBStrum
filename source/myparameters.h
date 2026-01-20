@@ -302,6 +302,9 @@ namespace MinMax
 
 		auto& helper = PF::ParamHelper::get();
 
+		Files::createPluginDirectory();
+		Files::clearTempFiles();
+
 		ChordMap::instance().loadChordPreset();
 
 		helper.setKindResolver(&rangeResolver);
