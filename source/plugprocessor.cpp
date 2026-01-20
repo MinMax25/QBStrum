@@ -395,6 +395,9 @@ namespace MinMax
 		case PARAM::UP:
 			trigStrum(event, true, false, STRING_COUNT);
 			break;
+		case PARAM::UP_LOW:
+			trigStrum(event, true, false, prm.getInt(PARAM::STRINGS_UP_LOW));
+			break;
 		case PARAM::DOWN_HIGH:
 			trigStrum(event, true, true, prm.getInt(PARAM::STRINGS_DOWN_HIGH));
 			break;
