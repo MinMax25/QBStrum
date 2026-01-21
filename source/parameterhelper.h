@@ -387,7 +387,23 @@ namespace PF
                 entry.current = entry.previous = getNormalized(def.tag, def.defaultValue);
                 entry.changed = false;
 
-				entry.defaultPlainValue = def.defaultValue;
+                double min = def.minValue;
+                double max = def.maxValue;
+
+                ValueRange rs;
+                if (rangeResolver && def.rangeKind.has_value() && rangeResolver->resolve(*def.rangeKind, rs))
+                {
+                    min = rs.minValue;
+                    max = rs.maxValue;
+                }
+               
+				entry.minPlainValue = min;
+				entry.maxPlainValue = max;
+                entry.defaultPlainValue = def.defaultValue;
+                if (entry.defaultPlainValue < min || entry.defaultPlainValue > max)
+                {
+                    entry.defaultPlainValue = min;
+                }
 
                 storage.emplace(def.tag, entry);
             }
@@ -468,8 +484,6 @@ namespace PF
 
         void setRangeResolver(const IRangeResolver* r) { rangeResolver = r; }
 
-        void setOptionProvider(const IOptionProvider* p) { optionProvider = p; }
-
     private:
         struct ParamEntry
         {
@@ -494,7 +508,6 @@ namespace PF
 
         // Resolvers
         const IRangeResolver* rangeResolver = nullptr;
-        const IOptionProvider* optionProvider = nullptr;
     };
 
 #pragma endregion

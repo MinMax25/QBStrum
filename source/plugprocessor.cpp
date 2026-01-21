@@ -96,9 +96,8 @@ namespace MinMax
 		helper.setRangeResolver(&rangeResolver);
 		helper.setOptionProvider(&optionProvider);
 	
-		prm.initialize(paramTable);
 		prm.setRangeResolver(&rangeResolver);
-		prm.setOptionProvider(&optionProvider);
+		prm.initialize(paramTable);
 	}
 
 	MyVSTProcessor::~MyVSTProcessor()
