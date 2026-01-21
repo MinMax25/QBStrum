@@ -211,10 +211,10 @@ namespace MinMax
 	{ PARAM::MUTE_NOTE_2, STR16("Mute Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::STRUM,  0,    1, 102, 0 },
 
 	{ PARAM::STRUM_SPEED, STR16("Strum Speed"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::STRUM,  1, 1000,  26, 1},
-	{ PARAM::STRUM_DECAY, STR16("Strum Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,                                UNIT::STRUM, 85,  100,  96, 1},
+	{ PARAM::STRUM_DECAY, STR16("Strum Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,                                UNIT::STRUM, 85,  100,  94, 1},
 	{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::STRUM,  0,    1,   4, 2},
 
-	{ PARAM::BRUSH_DECAY, STR16("Brush Decay"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,								 UNIT::STRUM, 85,  100,  98, 1},
+	{ PARAM::BRUSH_DECAY, STR16("Brush Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,								 UNIT::STRUM, 85,  100,  98, 1},
 	{ PARAM::BRUSH_1_TIME, STR16("Brush 1 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                        UNIT::STRUM,  5,  300,  10, 1},
 	{ PARAM::BRUSH_2_TIME, STR16("Brush 2 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                        UNIT::STRUM,  5,  300,  80, 1},
 
