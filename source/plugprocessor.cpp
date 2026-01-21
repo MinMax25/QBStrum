@@ -467,7 +467,10 @@ namespace MinMax
 			Steinberg::uint64 onTime = baseOnTime + offsetSamples;
 
 			int channel = prm.get(PARAM::CHANNEL_SEPARATE) ? i % 16 : 0;
+			
 			int pitch = getStringPitch(voicing, i);
+			if (pitch < 0) continue;
+
 			float velocity = baseVelocity * std::pow(prm.get(PARAM::BRUSH_DECAY), strcnt);
 
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
@@ -506,7 +509,10 @@ namespace MinMax
 			Steinberg::uint64 onTime = baseOnTime + static_cast<Steinberg::uint64>(delayMs * samplesPerMs);
 
 			int channel = prm.getInt(PARAM::CHANNEL_SEPARATE) ? i % 16 : 0;
+			
 			int pitch = getStringPitch(voicing, i);
+			if (pitch < 0) continue;
+
 			float velocity = baseVelocity * std::pow(prm.get(PARAM::STRUM_DECAY) / 100.0f, strcnt);
 
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
@@ -520,10 +526,18 @@ namespace MinMax
 		int result = chordMap.getTunings().data[stringNumber] + (prm.getInt(PARAM::TRANSPOSE) - 6) + (prm.getInt(PARAM::OCTAVE) ? 12 : 0);
 		int offset = (int)prm.getInt(PARAM::STR1_OFFSET + stringNumber);
 
-		if (offset != 0)
+		switch (offset)
 		{
+		case 0:	// mute
+			result -1;
+			break;
+		case 1:	// open
+			break;
+		default:
 			result += set.data[stringNumber] + offset - StringSet::CENTER_OFFSET;
+			break;
 		}
+
 		return result;
 	}
 
@@ -567,7 +581,10 @@ namespace MinMax
 		Steinberg::uint64 offTime = onTime + lengthSamples;
 
 		int channel = prm.getInt(PARAM::CHANNEL_SEPARATE) ? stringNumber % 16 : 0;
+
 		int pitch = getStringPitch(voicing, stringNumber);
+		if (pitch < 0) return;
+
 		float velocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
 		scheduler.addNoteOn(onTime, offTime, stringNumber, pitch, velocity, channel);
