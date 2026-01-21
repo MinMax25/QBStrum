@@ -87,7 +87,9 @@ namespace MinMax
 		STRINGS_UP_LOW,
 		STRINGS_DOWN_HIGH,
 		STRINGS_DOWN_LOW,
-		
+		STRINGS_BRUSH_1,
+		STRINGS_BRUSH_2,
+
 		STR1_OFFSET = 1261,
 		STR2_OFFSET,
 		STR3_OFFSET,
@@ -142,7 +144,7 @@ namespace MinMax
 			case RANGE::MIDI_CHANNEL:        out = { 1, 16, false }; return true;
 			case RANGE::TRANSPOSE_RANGE:     out = { -6, 6, true }; return true;
 			case RANGE::FRET_DISTANCE:       out = { 1, 6, false }; return true;
-			case RANGE::STRUM_STRINGS_RANGE: out = { 1, 5, false }; return true;
+			case RANGE::STRUM_STRINGS_RANGE: out = { 1, MAX_STRINGS, false }; return true;
 			case RANGE::STRING_OFFSET:       out = { -6, 4, true }; return true;
 			case RANGE::BEAT_LENGTH:         out = { 0.25, 8, false }; return true;
 			case RANGE::ARTICULATION_RANGE:  out = { 0, 1, true }; return true;
@@ -180,7 +182,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 63;
+	inline constexpr size_t PARAM_MAX = 65;
 
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
@@ -210,7 +212,7 @@ namespace MinMax
 	{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::STRUM,  0,    1,   4, 2},
 
 	{ PARAM::BRUSH_1_TIME, STR16("Brush Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::STRUM,  5,  300,  10, 1},
-	{ PARAM::BRUSH_2_TIME, STR16("Brush Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::STRUM,  5,  300,  10, 1},
+	{ PARAM::BRUSH_2_TIME, STR16("Brush Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::STRUM,  5,  300, 100, 1},
 
 	{ PARAM::ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                    UNIT::STRUM,  0,    1,   2, 2},
 
@@ -225,6 +227,8 @@ namespace MinMax
 	{ PARAM::STRINGS_UP_LOW, STR16("Strings Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,				 UNIT::STRUM,  0,    1,   2, 0 },
 	{ PARAM::STRINGS_DOWN_HIGH, STR16("Strings Down High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,        UNIT::STRUM,  0,    1,   3, 0 },
 	{ PARAM::STRINGS_DOWN_LOW, STR16("Strings Down Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,          UNIT::STRUM,  0,    1,   1, 0 },
+	{ PARAM::STRINGS_BRUSH_1, STR16("Strings Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   MAX_STRINGS, 0 },
+	{ PARAM::STRINGS_BRUSH_2, STR16("Strings Brush 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   MAX_STRINGS, 0 },
 
 	{ PARAM::STR1_OFFSET, STR16("String 1 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
 	{ PARAM::STR2_OFFSET, STR16("String 2 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
@@ -235,7 +239,7 @@ namespace MinMax
 	{ PARAM::STR7_OFFSET, STR16("String 7 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
 
 	{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                               UNIT::TRIGGER, 0, 1, 53, 0 },
-	{ PARAM::BRUSH_1, STR16("Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,											 UNIT::TRIGGER, 0, 1, 61, 0 },
+	{ PARAM::BRUSH_1, STR16("Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,											 UNIT::TRIGGER, 0, 1, 63, 0 },
 	{ PARAM::BRUSH_2, STR16("Brush 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,											 UNIT::TRIGGER, 0, 1, 61, 0 },
 	{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                            UNIT::TRIGGER, 0, 1, 64, 0 },
 	{ PARAM::UP, STR16("Up"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                      UNIT::TRIGGER, 0, 1, 62, 0 },
