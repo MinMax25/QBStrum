@@ -87,11 +87,6 @@ namespace MinMax
             offset[stringNumber] = value;
         }
 
-        bool hasOffset(int stringNubmer) const
-        {
-            return offset[stringNubmer] != 0;
-        }
-
     protected:
         std::array<int, MAX_STRINGS> offset{};
     };

@@ -529,7 +529,7 @@ namespace MinMax
 		switch (offset)
 		{
 		case 0:	// mute
-			result -1;
+			result = -1;
 			break;
 		case 1:	// open
 			break;
@@ -721,16 +721,8 @@ namespace MinMax
 		for (int i = 0; i < (int)v.size; i++)
 		{
 			int o = (int)prm.getInt(PARAM::STR1_OFFSET + i);
-			if (o != 0)
-			{
-				set.data[i] += v.data[i];
-				set.setOffset(i, o - StringSet::CENTER_OFFSET);
-			}
-			else
-			{
-				set.setOffset(i, 0);
-			}
-
+			set.data[i] += v.data[i];
+			set.setOffset(i, o - StringSet::CENTER_OFFSET);
 		}
 
 		auto* msg = allocateMessage();

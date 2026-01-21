@@ -203,9 +203,27 @@ namespace MinMax
             {
                 for (unsigned int stringindex = 0; stringindex < currentSet.size; ++stringindex)
                 {
-                    int fret = currentSet.data[stringindex] + currentSet.getOffset(stringindex);
-                    bool hasOffset = currentSet.hasOffset(stringindex);
+                    int fret = currentSet.data[stringindex];
+                    int offset = currentSet.getOffset(stringindex);
+                    bool hasOffset = offset != 0;
+
+                    switch (offset + StringSet::CENTER_OFFSET)
+                    {
+                    case 0: // mute
+						fret = -1;
+                        hasOffset = false;
+                        break;
+                    case 1: // open
+                        fret = 0;
+                        hasOffset = false;
+                        break;
+                    default:
+                        fret += offset;
+                        break;
+                    }
+
                     bool outOfRange = hasOffset && (fret < 0 || fret > lastFret);
+
                     double y = boardSize.top + outerMargin + stringSpacing * stringindex;
 
                     if (hasOffset)
