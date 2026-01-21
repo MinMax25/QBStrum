@@ -71,7 +71,8 @@ namespace MinMax
 		STRUM_DECAY,
 		STRUM_LENGTH,
 		
-		BRUSH_1_TIME = 1221,
+		BRUSH_DECAY = 1221,
+		BRUSH_1_TIME,
 		BRUSH_2_TIME,
 
 		ARP_LENGTH = 1231,
@@ -184,7 +185,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 65;
+	inline constexpr size_t PARAM_MAX = 66;
 
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
@@ -213,8 +214,9 @@ namespace MinMax
 	{ PARAM::STRUM_DECAY, STR16("Strum Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,                                UNIT::STRUM, 85,  100,  96, 1},
 	{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::STRUM,  0,    1,   4, 2},
 
-	{ PARAM::BRUSH_1_TIME, STR16("Brush Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::STRUM,  5,  300,  10, 1},
-	{ PARAM::BRUSH_2_TIME, STR16("Brush Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::STRUM,  5,  300, 100, 1},
+	{ PARAM::BRUSH_DECAY, STR16("Brush Decay"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,								 UNIT::STRUM, 85,  100,  98, 1},
+	{ PARAM::BRUSH_1_TIME, STR16("Brush 1 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                        UNIT::STRUM,  5,  300,  10, 1},
+	{ PARAM::BRUSH_2_TIME, STR16("Brush 2 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                        UNIT::STRUM,  5,  300,  80, 1},
 
 	{ PARAM::ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                    UNIT::STRUM,  0,    1,   2, 2},
 
