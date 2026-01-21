@@ -443,8 +443,6 @@ namespace MinMax
 
 	void MyVSTProcessor::trigBrush(Steinberg::Vst::Event event, int maxStrings, Steinberg::Vst::ParamValue time)
 	{
-		const float BRUSH_DECAY = 0.98f;
-
 		scheduler.allNotesOff();
 
 		trigFretNoise(event);
@@ -470,7 +468,7 @@ namespace MinMax
 
 			int channel = prm.get(PARAM::CHANNEL_SEPARATE) ? i % 16 : 0;
 			int pitch = getStringPitch(voicing, i);
-			float velocity = baseVelocity * std::pow(BRUSH_DECAY, strcnt);
+			float velocity = baseVelocity * std::pow(prm.get(PARAM::BRUSH_DECAY), strcnt);
 
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
 
