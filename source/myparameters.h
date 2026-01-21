@@ -225,12 +225,12 @@ namespace MinMax
 	{ PARAM::FNOISE_DIST_FAR, STR16("Fret Noise Distance Far"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::FRET_DISTANCE, PF::FLAG::HIDDEN,        UNIT::STRUM,  0,    1,   3, 0 },
 	{ PARAM::FNOISE_VELOCITY, STR16("Fret Noise Velocity"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,  127, 100, 0 },
 
-	{ PARAM::STRINGS_UP_HIGH, STR16("Strings Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   3, 0 },
-	{ PARAM::STRINGS_UP_LOW, STR16("Strings Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,				 UNIT::STRUM,  0,    1,   2, 0 },
-	{ PARAM::STRINGS_DOWN_HIGH, STR16("Strings Down High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,        UNIT::STRUM,  0,    1,   3, 0 },
-	{ PARAM::STRINGS_DOWN_LOW, STR16("Strings Down Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,          UNIT::STRUM,  0,    1,   1, 0 },
-	{ PARAM::STRINGS_BRUSH_1, STR16("Strings Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   MAX_STRINGS, 0 },
-	{ PARAM::STRINGS_BRUSH_2, STR16("Strings Brush 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   MAX_STRINGS, 0 },
+	{ PARAM::STRINGS_UP_HIGH, STR16("Strings Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   3 - 1, 0 },
+	{ PARAM::STRINGS_UP_LOW, STR16("Strings Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,				 UNIT::STRUM,  0,    1,   2 - 1, 0 },
+	{ PARAM::STRINGS_DOWN_HIGH, STR16("Strings Down High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,        UNIT::STRUM,  0,    1,   3 - 1, 0 },
+	{ PARAM::STRINGS_DOWN_LOW, STR16("Strings Down Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,          UNIT::STRUM,  0,    1,   1 - 1, 0 },
+	{ PARAM::STRINGS_BRUSH_1, STR16("Strings Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   MAX_STRINGS - 1, 0 },
+	{ PARAM::STRINGS_BRUSH_2, STR16("Strings Brush 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   MAX_STRINGS - 1, 0 },
 
 	{ PARAM::STR1_OFFSET, STR16("String 1 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
 	{ PARAM::STR2_OFFSET, STR16("String 2 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },

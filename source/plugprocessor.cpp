@@ -384,10 +384,10 @@ namespace MinMax
 			trigAllNotesOff();
 			break;
 		case PARAM::BRUSH_1:
-			trigBrush(event);
+			trigBrush(event, prm.getInt(PARAM::STRINGS_BRUSH_1) + 1, prm.get(PARAM::BRUSH_1_TIME));
 			break;
 		case PARAM::BRUSH_2:
-			trigBrush(event);
+			trigBrush(event, prm.getInt(PARAM::STRINGS_BRUSH_2) + 1, prm.get(PARAM::BRUSH_2_TIME));
 			break;
 		case PARAM::UP_HIGH:
 			trigStrum(event, true, false, prm.getInt(PARAM::STRINGS_UP_HIGH) + 1);
@@ -441,7 +441,7 @@ namespace MinMax
 		scheduler.allNotesOff();
 	}
 
-	void MyVSTProcessor::trigBrush(Steinberg::Vst::Event event)
+	void MyVSTProcessor::trigBrush(Steinberg::Vst::Event event, int maxStrings, Steinberg::Vst::ParamValue time)
 	{
 		const float BRUSH_DECAY = 0.98f;
 
@@ -450,7 +450,7 @@ namespace MinMax
 		trigFretNoise(event);
 
 		auto& voicing = chordMap.getChordVoicing(prm.get(PARAM::CHORD_NUM));
-		auto& strnum = getTargetStrings(voicing, false, true, STRING_COUNT);
+		auto& strnum = getTargetStrings(voicing, true, true, maxStrings);
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
 		Steinberg::uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
@@ -459,7 +459,7 @@ namespace MinMax
 
 		int strcnt = 0;
 
-		Steinberg::uint64 offTime = baseOnTime + samplesPerMs * prm.get(PARAM::BRUSH_1_TIME);
+		Steinberg::uint64 offTime = baseOnTime + samplesPerMs * time;
 
 		for (size_t s = 0; s < strnum.size; s++)
 		{
