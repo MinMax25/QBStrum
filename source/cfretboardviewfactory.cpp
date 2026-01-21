@@ -82,8 +82,6 @@ namespace MinMax
 
         CFretBoard* fretBoard = nullptr;
 
-        CChordSelecter* chordSelecter = nullptr;
-
         CChordListner* chordListner = nullptr;
 
         CMenuButton* fileButton = nullptr;
@@ -91,6 +89,8 @@ namespace MinMax
         CMenuButton* editButton = nullptr;
 
         VSTGUI::CTextLabel* labelPreset = nullptr;
+
+        CChordSelecter* chordSelecter = nullptr;
 
         void initFretBoard()
         {
@@ -271,6 +271,8 @@ namespace MinMax
             canEdit = true;
             fretBoard->beginEdit();
             chordSelecter->beginEdit();
+            labelPreset->setFontColor(VSTGUI::kRedCColor);
+			labelPreset->setBackColor(VSTGUI::kBlackCColor);
         }
 
         void commitEdits()
@@ -293,6 +295,8 @@ namespace MinMax
             canEdit = false;
             fretBoard->endEdit(isCancel);
             chordSelecter->endEdit();
+            labelPreset->setFontColor(VSTGUI::kWhiteCColor);
+            labelPreset->setBackColor(VSTGUI::kGreyCColor);
         }
 
         void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(std::filesystem::path path)> fileSelected)

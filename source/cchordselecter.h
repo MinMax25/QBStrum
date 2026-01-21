@@ -92,8 +92,8 @@ namespace MinMax
         {
             canEdit_ = true;
             chordMenu->setVisible(false);
-            chordLabel->setFontColor(VSTGUI::kCyanCColor);
-            chordLabel->setBackColor(VSTGUI::kGreyCColor);
+            chordLabel->setFontColor(VSTGUI::kRedCColor);
+            chordLabel->setBackColor(VSTGUI::kBlackCColor);
         }
 
         void endEdit()
