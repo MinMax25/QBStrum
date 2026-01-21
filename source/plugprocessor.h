@@ -61,7 +61,7 @@ namespace MinMax
 		void PLUGIN_API processInnerEvent();
 		void PLUGIN_API routingProcess(Steinberg::Vst::ParamID parmid, Steinberg::Vst::Event event);
 		void PLUGIN_API trigAllNotesOff();
-		void PLUGIN_API trigBrush(Steinberg::Vst::Event event, bool isDown);
+		void PLUGIN_API trigBrush(Steinberg::Vst::Event event);
 		void PLUGIN_API trigStrum(Steinberg::Vst::Event event, bool isAbove, bool isDown, int maxStrings);
 		int getStringPitch(const StringSet& set, int stringNumber);
 		void PLUGIN_API trigMute(PARAM trigger, Steinberg::Vst::Event event);

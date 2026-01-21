@@ -12,6 +12,8 @@
 #include <vector>
 #include <vstgui/lib/cstring.h>
 
+#pragma warning(disable : 4996)
+
 namespace MinMax
 {
     // プリセットファイル操作
