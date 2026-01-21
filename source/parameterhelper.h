@@ -194,7 +194,7 @@ namespace PF
             return instance;
         }
 
-        void setKindResolver(const IRangeResolver* r) { rangeResolver = r; }
+        void setRangeResolver(const IRangeResolver* r) { rangeResolver = r; }
 
         void setOptionProvider(const IOptionProvider* p) { optionProvider = p; }
 
@@ -387,6 +387,8 @@ namespace PF
                 entry.current = entry.previous = getNormalized(def.tag, def.defaultValue);
                 entry.changed = false;
 
+				entry.defaultPlainValue = def.defaultValue;
+
                 storage.emplace(def.tag, entry);
             }
         }
@@ -464,11 +466,20 @@ namespace PF
             it->second.changed = false;
         }
 
+        void setRangeResolver(const IRangeResolver* r) { rangeResolver = r; }
+
+        void setOptionProvider(const IOptionProvider* p) { optionProvider = p; }
+
     private:
         struct ParamEntry
         {
             Steinberg::Vst::ParamValue current = 0.0;
             Steinberg::Vst::ParamValue previous = 0.0;
+
+            Steinberg::Vst::ParamValue minPlainValue = 0.0;
+            Steinberg::Vst::ParamValue maxPlainValue = 0.0;
+            Steinberg::Vst::ParamValue defaultPlainValue = 0.0;
+            
             bool changed = false;
         };
 
@@ -480,6 +491,10 @@ namespace PF
             auto it = paramInstances.find(id);
             return it != paramInstances.end() ? it->second.get() : nullptr;
         }
+
+        // Resolvers
+        const IRangeResolver* rangeResolver = nullptr;
+        const IOptionProvider* optionProvider = nullptr;
     };
 
 #pragma endregion

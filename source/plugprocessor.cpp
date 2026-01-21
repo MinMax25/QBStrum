@@ -83,7 +83,22 @@ namespace MinMax
 
 		setControllerClass(kMyVSTControllerUID);
 
-		initParameters();
+		//initParameters();
+		Files::createPluginDirectory();
+		Files::clearTempFiles();
+
+		chordMap.loadChordPreset();
+
+		static RangeResolver rangeResolver;
+		static OptionProvider optionProvider;
+
+		auto& helper = PF::ParamHelper::get();
+		helper.setRangeResolver(&rangeResolver);
+		helper.setOptionProvider(&optionProvider);
+	
+		prm.initialize(paramTable);
+		prm.setRangeResolver(&rangeResolver);
+		prm.setOptionProvider(&optionProvider);
 	}
 
 	MyVSTProcessor::~MyVSTProcessor()
@@ -98,9 +113,6 @@ namespace MinMax
 		addAudioOutput(STR16("Stereo Out"), Steinberg::Vst::SpeakerArr::kStereo);
 		addEventInput(STR16("Event In"), 1);
 		addEventOutput(STR16("Event Out"), 16);
-
-		// init parameter strage
-		prm.initialize(paramTable);
 
 		return Steinberg::kResultOk;
 	}

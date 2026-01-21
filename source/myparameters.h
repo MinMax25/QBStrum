@@ -304,21 +304,4 @@ namespace MinMax
 	{
 		return getParamsByUnit(outResult, outCount, UNIT::ARTICULATION);
 	}
-
-	// パラメータヘルパー初期化
-	inline const void initParameters()
-	{
-		static RangeResolver rangeResolver;
-		static OptionProvider optionProvider;
-
-		auto& helper = PF::ParamHelper::get();
-
-		Files::createPluginDirectory();
-		Files::clearTempFiles();
-
-		ChordMap::instance().loadChordPreset();
-
-		helper.setKindResolver(&rangeResolver);
-		helper.setOptionProvider(&optionProvider);
-	}
 }
