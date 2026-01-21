@@ -390,22 +390,22 @@ namespace MinMax
 			trigBrush(event, false);
 			break;
 		case PARAM::UP_HIGH:
-			trigStrum(event, true, false, prm.getInt(PARAM::STRINGS_UP_HIGH));
+			trigStrum(event, true, false, prm.getInt(PARAM::STRINGS_UP_HIGH) + 1);
 			break;
 		case PARAM::UP:
 			trigStrum(event, true, false, STRING_COUNT);
 			break;
 		case PARAM::UP_LOW:
-			trigStrum(event, false, false, prm.getInt(PARAM::STRINGS_UP_LOW));
+			trigStrum(event, false, false, prm.getInt(PARAM::STRINGS_UP_LOW) + 1);
 			break;
 		case PARAM::DOWN_HIGH:
-			trigStrum(event, true, true, prm.getInt(PARAM::STRINGS_DOWN_HIGH));
+			trigStrum(event, true, true, prm.getInt(PARAM::STRINGS_DOWN_HIGH) + 1);
 			break;
 		case PARAM::DOWN:
 			trigStrum(event, false, true, STRING_COUNT);
 			break;
 		case PARAM::DOWN_LOW:
-			trigStrum(event, false, true, prm.getInt(PARAM::STRINGS_DOWN_LOW));
+			trigStrum(event, false, true, prm.getInt(PARAM::STRINGS_DOWN_LOW) + 1);
 			break;
 		case PARAM::MUTE_1:
 			trigMute(PARAM::MUTE_1, event);

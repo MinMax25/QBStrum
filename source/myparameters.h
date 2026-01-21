@@ -144,7 +144,7 @@ namespace MinMax
 			case RANGE::MIDI_CHANNEL:        out = { 1, 16, false }; return true;
 			case RANGE::TRANSPOSE_RANGE:     out = { -6, 6, true }; return true;
 			case RANGE::FRET_DISTANCE:       out = { 1, 6, false }; return true;
-			case RANGE::STRUM_STRINGS_RANGE: out = { 1, MAX_STRINGS, false }; return true;
+			case RANGE::STRUM_STRINGS_RANGE: out = { 1, 6, true }; return true;
 			case RANGE::STRING_OFFSET:       out = { -6, 4, true }; return true;
 			case RANGE::BEAT_LENGTH:         out = { 0.25, 8, false }; return true;
 			case RANGE::ARTICULATION_RANGE:  out = { 0, 1, true }; return true;
@@ -167,6 +167,8 @@ namespace MinMax
 				return { "Open 1", "Open 2", "Hammer/Legato", "Mute", "Dead", "Harmonics", "Slide" };
 			case RANGE::TRANSPOSE_RANGE:
 				return { "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6"};
+			case RANGE::STRUM_STRINGS_RANGE:
+				return { "1", "2", "3", "4", "5", "Max" };
 			case RANGE::STRING_OFFSET:
 				return { "Mute", "Open", "-4 fret", "-3 fret", "-2 fret", "-1 fret", "0", "1 fret", "2 fret", "3 fret", "4 fret" };
 			case RANGE::CTL_TABINDEX1_RANGE:
