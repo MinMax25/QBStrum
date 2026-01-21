@@ -383,11 +383,11 @@ namespace MinMax
 		case PARAM::ALL_NOTES_OFF:
 			trigAllNotesOff();
 			break;
-		case PARAM::BRUSH_UP:
-			trigBrush(event, false);
-			break;
-		case PARAM::BRUSH_DOWN:
+		case PARAM::BRUSH_1:
 			trigBrush(event, true);
+			break;
+		case PARAM::BRUSH_2:
+			trigBrush(event, false);
 			break;
 		case PARAM::UP_HIGH:
 			trigStrum(event, true, false, prm.getInt(PARAM::STRINGS_UP_HIGH));
@@ -459,7 +459,7 @@ namespace MinMax
 
 		int strcnt = 0;
 
-		Steinberg::uint64 offTime = baseOnTime + samplesPerMs * prm.get(PARAM::BRUSH_TIME);
+		Steinberg::uint64 offTime = baseOnTime + samplesPerMs * prm.get(PARAM::BRUSH_1_TIME);
 
 		for (size_t s = 0; s < strnum.size; s++)
 		{

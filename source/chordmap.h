@@ -65,7 +65,7 @@ namespace MinMax
 
     struct StringSet
     {
-        static const int CENTER_OFFSET = 5;
+        static const int CENTER_OFFSET = 6;
 
         //
         int flatIndex = 0;
