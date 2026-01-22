@@ -135,10 +135,10 @@ namespace PF
 
     enum FLAG
     {
-        SYS_BYPASS = Steinberg::Vst::ParameterInfo::kIsBypass | Steinberg::Vst::ParameterInfo::kCanAutomate,
-        AUTOMATE = Steinberg::Vst::ParameterInfo::kCanAutomate,
-        HIDDEN = Steinberg::Vst::ParameterInfo::kIsHidden,
-        READONLY = Steinberg::Vst::ParameterInfo::kIsHidden | Steinberg::Vst::ParameterInfo::kIsReadOnly,
+        FLAG_SYS_BYPASS = Steinberg::Vst::ParameterInfo::kIsBypass | Steinberg::Vst::ParameterInfo::kCanAutomate,
+        FLAG_AUTOMATE = Steinberg::Vst::ParameterInfo::kCanAutomate,
+        FLAG_HIDDEN = Steinberg::Vst::ParameterInfo::kIsHidden,
+        FLAG_READONLY = Steinberg::Vst::ParameterInfo::kIsHidden | Steinberg::Vst::ParameterInfo::kIsReadOnly,
     };
 
 #pragma endregion
