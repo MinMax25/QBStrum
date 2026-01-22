@@ -37,10 +37,15 @@ namespace MinMax
 		}
 
 		// ユニット登録
-		addUnit(new Steinberg::Vst::Unit(STR16("Chord"), UNIT::CHORD));
-		addUnit(new Steinberg::Vst::Unit(STR16("Strum"), UNIT::STRUM));
-		addUnit(new Steinberg::Vst::Unit(STR16("Trigger"), UNIT::TRIGGER));
-		addUnit(new Steinberg::Vst::Unit(STR16("Articulation"), UNIT::ARTICULATION));
+		addUnit(new Steinberg::Vst::Unit(STR16("Chord"), U_CHORD));
+		addUnit(new Steinberg::Vst::Unit(STR16("Strum"), U_STRUM));
+		addUnit(new Steinberg::Vst::Unit(STR16("Brush"), U_BRUSH));
+		addUnit(new Steinberg::Vst::Unit(STR16("Arpeggio"), U_ARP));
+		addUnit(new Steinberg::Vst::Unit(STR16("Strings"), U_STRINGS));
+		addUnit(new Steinberg::Vst::Unit(STR16("Mute"), U_MUTE));
+		addUnit(new Steinberg::Vst::Unit(STR16("Fret Noize"), U_NOIZE));
+		addUnit(new Steinberg::Vst::Unit(STR16("Trigger"), U_TRIGGER));
+		addUnit(new Steinberg::Vst::Unit(STR16("Articulation"), U_ARTIC));
 
 		// パラメータ登録
 		auto& helper = PF::ParamHelper::get();
@@ -74,7 +79,7 @@ namespace MinMax
 			if (!io.readDouble(plain)) return Steinberg::kResultFalse;
 			Steinberg::Vst::ParamValue normalized = plainParamToNormalized(def.tag, plain);
 			setParamNormalized(def.tag, normalized);
-			if (def.tag == PARAM::CHORD_NUM)
+			if (def.tag == CHORD_NUM)
 			{
 				auto c = ChordMap::instance().getChordVoicing((int)plain);
 				ChordInfo.size = c.size;
@@ -121,11 +126,11 @@ namespace MinMax
 		switch (midiControllerNumber)
 		{
 		case Steinberg::Vst::kCtrlNRPNSelectLSB:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::CHORD_LSB);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(CHORD_LSB);
 			return Steinberg::kResultTrue;
 
 		case Steinberg::Vst::kCtrlNRPNSelectMSB:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(PARAM::CHORD_MSB);
+			value = static_cast<Steinberg::Vst::CtrlNumber>(CHORD_MSB);
 			return Steinberg::kResultTrue;
 		}
 
@@ -171,19 +176,19 @@ namespace MinMax
 		}
 
 		{
-			beginEdit(static_cast<int>(PARAM::CHORD_NUM));
-			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_NUM, set->flatIndex);
-			setParamNormalized(static_cast<int>(PARAM::CHORD_NUM), norm);
-			performEdit(static_cast<int>(PARAM::CHORD_NUM), norm);
-			endEdit(static_cast<int>(PARAM::CHORD_NUM));
+			beginEdit(static_cast<int>(CHORD_NUM));
+			Steinberg::Vst::ParamValue norm = plainParamToNormalized(CHORD_NUM, set->flatIndex);
+			setParamNormalized(static_cast<int>(CHORD_NUM), norm);
+			performEdit(static_cast<int>(CHORD_NUM), norm);
+			endEdit(static_cast<int>(CHORD_NUM));
 		}
 
 		{
-			beginEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION));
-			Steinberg::Vst::ParamValue norm = plainParamToNormalized(PARAM::CHORD_STATE_REVISION, set->state);
-			setParamNormalized(static_cast<int>(PARAM::CHORD_STATE_REVISION), norm);
-			performEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION), norm);
-			endEdit(static_cast<int>(PARAM::CHORD_STATE_REVISION));
+			beginEdit(static_cast<int>(CHORD_STATE_REVISION));
+			Steinberg::Vst::ParamValue norm = plainParamToNormalized(CHORD_STATE_REVISION, set->state);
+			setParamNormalized(static_cast<int>(CHORD_STATE_REVISION), norm);
+			performEdit(static_cast<int>(CHORD_STATE_REVISION), norm);
+			endEdit(static_cast<int>(CHORD_STATE_REVISION));
 		}
 
 		return Steinberg::kResultOk;

@@ -19,11 +19,16 @@ namespace MinMax
 	// ユニット識別子
 	enum UNIT
 	{
-		SYSTEM = 0,
-		CHORD,
-		STRUM,
-		TRIGGER,
-		ARTICULATION,
+		U_SYSTEM = 0,
+		U_CHORD,
+		U_STRUM,
+		U_BRUSH,
+		U_ARP,
+		U_STRINGS,
+		U_MUTE,
+		U_NOIZE,
+		U_TRIGGER,
+		U_ARTIC,
 	};
 
 	// 共通レンジ識別子
@@ -190,83 +195,83 @@ namespace MinMax
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
 	{ {
-	{ PARAM::BYPASS, STR16("Bypass"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::SYS_BYPASS,                                         UNIT::SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::BYPASS, STR16("Bypass"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::SYS_BYPASS,                                         UNIT::U_SYSTEM, 0, 1, 0, 0 },
 
-	{ PARAM::CHANNEL_SEPARATE, STR16("Channel Separate"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                         UNIT::SYSTEM, 0, 1, 0, 0 },
-	{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::TRANSPOSE_RANGE, PF::FLAG::AUTOMATE,                            UNIT::SYSTEM, 0, 1, 6, 0 },
-	{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::ARTICULATION_RANGE, PF::FLAG::AUTOMATE, UNIT::SYSTEM, 0, 1, 0, 0 },
-	{ PARAM::NEED_SAMPLEBLOCK_ADJUST, STR16("Need Sampleblock Adjust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,           UNIT::SYSTEM, 0, 1, 0, 0 },
-	{ PARAM::CTL_TABINDEX1, STR16("TabIndex1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, CTL_TABINDEX1_RANGE, PF::FLAG::HIDDEN,                             UNIT::SYSTEM, 0, 1, 0, 0 },
-	{ PARAM::OCTAVE, STR16("Octave+"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,											 UNIT::SYSTEM, 0, 1, 0, 0 },
-	{ PARAM::ENABLED_MUTE_FNOIZE, STR16("Enabled Mute/Fret Noize"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,				 UNIT::SYSTEM, 0, 1, 1, 0 },
-	{ PARAM::ENABLED_ARTICULATION, STR16("Enabled Articulation"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,				 UNIT::SYSTEM, 0, 1, 1, 0 },
+	{ PARAM::CHANNEL_SEPARATE, STR16("Channel Separate"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                         UNIT::U_SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::TRANSPOSE, STR16("Transpose"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::TRANSPOSE_RANGE, PF::FLAG::AUTOMATE,                            UNIT::U_SYSTEM, 0, 1, 6, 0 },
+	{ PARAM::SELECTED_ARTICULATION, STR16("Selected Articulation"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::ARTICULATION_RANGE, PF::FLAG::AUTOMATE, UNIT::U_SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::NEED_SAMPLEBLOCK_ADJUST, STR16("Need Sampleblock Adjust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,           UNIT::U_SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::CTL_TABINDEX1, STR16("TabIndex1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, CTL_TABINDEX1_RANGE, PF::FLAG::HIDDEN,                             UNIT::U_SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::OCTAVE, STR16("Octave+"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,											 UNIT::U_SYSTEM, 0, 1, 0, 0 },
+	{ PARAM::ENABLED_MUTE_FNOIZE, STR16("Enabled Mute/Fret Noize"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,				 UNIT::U_SYSTEM, 0, 1, 1, 0 },
+	{ PARAM::ENABLED_ARTICULATION, STR16("Enabled Articulation"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,				 UNIT::U_SYSTEM, 0, 1, 1, 0 },
 
-	{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN,                                    UNIT::CHORD,  0,      1, 0, 0 },
-	{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN,                                    UNIT::CHORD,  0,      1, 0, 0 },
-	{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                                     UNIT::CHORD,  0,   1163, 0, 0 },
-	{ PARAM::CHORD_STATE_REVISION, STR16("Chord State"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                           UNIT::CHORD,  0, 999999, 0, 0 },
+	{ PARAM::CHORD_LSB, STR16("Chord LSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN,                                    UNIT::U_CHORD,  0,      1, 0, 0 },
+	{ PARAM::CHORD_MSB, STR16("Chord MSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::HIDDEN,                                    UNIT::U_CHORD,  0,      1, 0, 0 },
+	{ PARAM::CHORD_NUM, STR16("Chord Number"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                                     UNIT::U_CHORD,  0,   1163, 0, 0 },
+	{ PARAM::CHORD_STATE_REVISION, STR16("Chord State"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, std::nullopt, PF::FLAG::HIDDEN,                           UNIT::U_CHORD,  0, 999999, 0, 0 },
 
-	{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_CHANNEL, PF::FLAG::HIDDEN,                          UNIT::STRUM,  0,    1,   1, 0 },
-	{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::STRUM,  0,    1, 103, 0 },
-	{ PARAM::MUTE_NOTE_2, STR16("Mute Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::STRUM,  0,    1, 102, 0 },
+	{ PARAM::MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_CHANNEL, PF::FLAG::HIDDEN,                          UNIT::U_STRUM,  0,    1,   1, 0 },
+	{ PARAM::MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::U_STRUM,  0,    1, 103, 0 },
+	{ PARAM::MUTE_NOTE_2, STR16("Mute Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                    UNIT::U_STRUM,  0,    1, 102, 0 },
 
-	{ PARAM::STRUM_SPEED, STR16("Strum Speed"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::STRUM,  1, 1000,  26, 1},
-	{ PARAM::STRUM_DECAY, STR16("Strum Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,                                UNIT::STRUM, 85,  100,  94, 1},
-	{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::STRUM,  0,    1,   4, 2},
+	{ PARAM::STRUM_SPEED, STR16("Strum Speed"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                          UNIT::U_STRUM,  1, 1000,  26, 1},
+	{ PARAM::STRUM_DECAY, STR16("Strum Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,                                UNIT::U_STRUM, 85,  100,  94, 1},
+	{ PARAM::STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                     UNIT::U_STRUM,  0,    1,   4, 2},
 
-	{ PARAM::BRUSH_DECAY, STR16("Brush Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,								 UNIT::STRUM, 85,  100,  98, 1},
-	{ PARAM::BRUSH_1_TIME, STR16("Brush 1 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                        UNIT::STRUM,  5,  300,  10, 1},
-	{ PARAM::BRUSH_2_TIME, STR16("Brush 2 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                        UNIT::STRUM,  5,  300,  80, 1},
+	{ PARAM::BRUSH_DECAY, STR16("Brush Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::AUTOMATE,								 UNIT::U_STRUM, 85,  100,  98, 1},
+	{ PARAM::BRUSH_1_TIME, STR16("Brush 1 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                        UNIT::U_STRUM,  5,  300,  10, 1},
+	{ PARAM::BRUSH_2_TIME, STR16("Brush 2 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::AUTOMATE,                        UNIT::U_STRUM,  5,  300,  80, 1},
 
-	{ PARAM::ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                    UNIT::STRUM,  0,    1,   2, 2},
+	{ PARAM::ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, RANGE::BEAT_LENGTH, PF::FLAG::AUTOMATE,                    UNIT::U_STRUM,  0,    1,   2, 2},
 
-	{ PARAM::FNOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_CHANNEL, PF::FLAG::HIDDEN,                   UNIT::STRUM,  0,    1,   1, 0 },
-	{ PARAM::FNOISE_NOTE_NEAR, STR16("Fret Noise Note Near"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                      UNIT::STRUM,  0,    1, 120, 0 },
-	{ PARAM::FNOISE_NOTE_FAR, STR16("Fret Noise Note Far"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                        UNIT::STRUM,  0,    1, 123, 0 },
-	{ PARAM::FNOISE_DIST_NEAR, STR16("Fret Noise Distance Near"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::FRET_DISTANCE, PF::FLAG::HIDDEN,      UNIT::STRUM,  0,    1,   1, 0 },
-	{ PARAM::FNOISE_DIST_FAR, STR16("Fret Noise Distance Far"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::FRET_DISTANCE, PF::FLAG::HIDDEN,        UNIT::STRUM,  0,    1,   3, 0 },
-	{ PARAM::FNOISE_VELOCITY, STR16("Fret Noise Velocity"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,  127, 100, 0 },
+	{ PARAM::FNOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_CHANNEL, PF::FLAG::HIDDEN,                   UNIT::U_STRUM,  0,    1,   1, 0 },
+	{ PARAM::FNOISE_NOTE_NEAR, STR16("Fret Noise Note Near"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                      UNIT::U_STRUM,  0,    1, 120, 0 },
+	{ PARAM::FNOISE_NOTE_FAR, STR16("Fret Noise Note Far"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                        UNIT::U_STRUM,  0,    1, 123, 0 },
+	{ PARAM::FNOISE_DIST_NEAR, STR16("Fret Noise Distance Near"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::FRET_DISTANCE, PF::FLAG::HIDDEN,      UNIT::U_STRUM,  0,    1,   1, 0 },
+	{ PARAM::FNOISE_DIST_FAR, STR16("Fret Noise Distance Far"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::FRET_DISTANCE, PF::FLAG::HIDDEN,        UNIT::U_STRUM,  0,    1,   3, 0 },
+	{ PARAM::FNOISE_VELOCITY, STR16("Fret Noise Velocity"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::MIDI_DATA, PF::FLAG::AUTOMATE,                  UNIT::U_STRUM,  0,  127, 100, 0 },
 
-	{ PARAM::STRINGS_UP_HIGH, STR16("Strings Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   3 - 1, 0 },
-	{ PARAM::STRINGS_UP_LOW, STR16("Strings Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,				 UNIT::STRUM,  0,    1,   2 - 1, 0 },
-	{ PARAM::STRINGS_DOWN_HIGH, STR16("Strings Down High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,        UNIT::STRUM,  0,    1,   3 - 1, 0 },
-	{ PARAM::STRINGS_DOWN_LOW, STR16("Strings Down Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,          UNIT::STRUM,  0,    1,   1 - 1, 0 },
-	{ PARAM::STRINGS_BRUSH_1, STR16("Strings Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   MAX_STRINGS - 1, 0 },
-	{ PARAM::STRINGS_BRUSH_2, STR16("Strings Brush 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::STRUM,  0,    1,   MAX_STRINGS - 1, 0 },
+	{ PARAM::STRINGS_UP_HIGH, STR16("Strings Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::U_STRUM,  0,    1,   3 - 1, 0 },
+	{ PARAM::STRINGS_UP_LOW, STR16("Strings Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,				 UNIT::U_STRUM,  0,    1,   2 - 1, 0 },
+	{ PARAM::STRINGS_DOWN_HIGH, STR16("Strings Down High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,        UNIT::U_STRUM,  0,    1,   3 - 1, 0 },
+	{ PARAM::STRINGS_DOWN_LOW, STR16("Strings Down Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,          UNIT::U_STRUM,  0,    1,   1 - 1, 0 },
+	{ PARAM::STRINGS_BRUSH_1, STR16("Strings Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::U_STRUM,  0,    1,   MAX_STRINGS - 1, 0 },
+	{ PARAM::STRINGS_BRUSH_2, STR16("Strings Brush 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRUM_STRINGS_RANGE, PF::FLAG::AUTOMATE,            UNIT::U_STRUM,  0,    1,   MAX_STRINGS - 1, 0 },
 
-	{ PARAM::STR1_OFFSET, STR16("String 1 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
-	{ PARAM::STR2_OFFSET, STR16("String 2 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
-	{ PARAM::STR3_OFFSET, STR16("String 3 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
-	{ PARAM::STR4_OFFSET, STR16("String 4 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
-	{ PARAM::STR5_OFFSET, STR16("String 5 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
-	{ PARAM::STR6_OFFSET, STR16("String 6 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
-	{ PARAM::STR7_OFFSET, STR16("String 7 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
+	{ PARAM::STR1_OFFSET, STR16("String 1 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::U_STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
+	{ PARAM::STR2_OFFSET, STR16("String 2 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::U_STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
+	{ PARAM::STR3_OFFSET, STR16("String 3 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::U_STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
+	{ PARAM::STR4_OFFSET, STR16("String 4 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::U_STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
+	{ PARAM::STR5_OFFSET, STR16("String 5 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::U_STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
+	{ PARAM::STR6_OFFSET, STR16("String 6 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::U_STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
+	{ PARAM::STR7_OFFSET, STR16("String 7 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, RANGE::STRING_OFFSET, PF::FLAG::AUTOMATE,                  UNIT::U_STRUM,  0,    1,   StringSet::CENTER_OFFSET, 0 },
 
-	{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                               UNIT::TRIGGER, 0, 1, 53, 0 },
-	{ PARAM::BRUSH_1, STR16("Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,											 UNIT::TRIGGER, 0, 1, 63, 0 },
-	{ PARAM::BRUSH_2, STR16("Brush 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,											 UNIT::TRIGGER, 0, 1, 61, 0 },
-	{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                            UNIT::TRIGGER, 0, 1, 64, 0 },
-	{ PARAM::UP, STR16("Up"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                      UNIT::TRIGGER, 0, 1, 62, 0 },
-	{ PARAM::UP_LOW, STR16("Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,												 UNIT::TRIGGER, 0, 1, 60, 0 },
-	{ PARAM::DOWN_HIGH, STR16("Down High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 59, 0 },
-	{ PARAM::DOWN, STR16("Down"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::TRIGGER, 0, 1, 57, 0 },
-	{ PARAM::DOWN_LOW, STR16("Down Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                          UNIT::TRIGGER, 0, 1, 55, 0 },
-	{ PARAM::MUTE_1, STR16("Mute 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                              UNIT::TRIGGER, 0, 1, 58, 0 },
-	{ PARAM::MUTE_2, STR16("Mute 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                              UNIT::TRIGGER, 0, 1, 56, 0 },
-	{ PARAM::ARPEGGIO_1, STR16("String 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 52, 0 },
-	{ PARAM::ARPEGGIO_2, STR16("String 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 50, 0 },
-	{ PARAM::ARPEGGIO_3, STR16("String 3"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 48, 0 },
-	{ PARAM::ARPEGGIO_4, STR16("String 4"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 47, 0 },
-	{ PARAM::ARPEGGIO_5, STR16("String 5"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 45, 0 },
-	{ PARAM::ARPEGGIO_6, STR16("String 6"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::TRIGGER, 0, 1, 43, 0 },
+	{ PARAM::ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                               UNIT::U_TRIGGER, 0, 1, 53, 0 },
+	{ PARAM::BRUSH_1, STR16("Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,											 UNIT::U_TRIGGER, 0, 1, 63, 0 },
+	{ PARAM::BRUSH_2, STR16("Brush 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,											 UNIT::U_TRIGGER, 0, 1, 61, 0 },
+	{ PARAM::UP_HIGH, STR16("Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                            UNIT::U_TRIGGER, 0, 1, 64, 0 },
+	{ PARAM::UP, STR16("Up"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                      UNIT::U_TRIGGER, 0, 1, 62, 0 },
+	{ PARAM::UP_LOW, STR16("Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,												 UNIT::U_TRIGGER, 0, 1, 60, 0 },
+	{ PARAM::DOWN_HIGH, STR16("Down High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::U_TRIGGER, 0, 1, 59, 0 },
+	{ PARAM::DOWN, STR16("Down"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::U_TRIGGER, 0, 1, 57, 0 },
+	{ PARAM::DOWN_LOW, STR16("Down Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                          UNIT::U_TRIGGER, 0, 1, 55, 0 },
+	{ PARAM::MUTE_1, STR16("Mute 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                              UNIT::U_TRIGGER, 0, 1, 58, 0 },
+	{ PARAM::MUTE_2, STR16("Mute 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                              UNIT::U_TRIGGER, 0, 1, 56, 0 },
+	{ PARAM::ARPEGGIO_1, STR16("String 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::U_TRIGGER, 0, 1, 52, 0 },
+	{ PARAM::ARPEGGIO_2, STR16("String 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::U_TRIGGER, 0, 1, 50, 0 },
+	{ PARAM::ARPEGGIO_3, STR16("String 3"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::U_TRIGGER, 0, 1, 48, 0 },
+	{ PARAM::ARPEGGIO_4, STR16("String 4"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::U_TRIGGER, 0, 1, 47, 0 },
+	{ PARAM::ARPEGGIO_5, STR16("String 5"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::U_TRIGGER, 0, 1, 45, 0 },
+	{ PARAM::ARPEGGIO_6, STR16("String 6"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::U_TRIGGER, 0, 1, 43, 0 },
 		
-	{ PARAM::OPEN1 , STR16("Open 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                              UNIT::ARTICULATION, 0, 1, 24, 0 },
-	{ PARAM::OPEN2, STR16("Open 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                               UNIT::ARTICULATION, 0, 1,  0, 0 },
-	{ PARAM::HAM_LEG, STR16("Hammer/Legato"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                      UNIT::ARTICULATION, 0, 1, 25, 0 },
-	{ PARAM::MUTE, STR16("Mute"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::ARTICULATION, 0, 1, 26, 0 },
-	{ PARAM::DEAD, STR16("Dead"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::ARTICULATION, 0, 1, 27, 0 },
-	{ PARAM::HARMONICS, STR16("Harmonics"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::ARTICULATION, 0, 1, 28, 0 },
-	{ PARAM::SLIDE, STR16("Slide"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                UNIT::ARTICULATION, 0, 1, 33, 0 },	
+	{ PARAM::OPEN1 , STR16("Open 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                              UNIT::U_ARTIC, 0, 1, 24, 0 },
+	{ PARAM::OPEN2, STR16("Open 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                               UNIT::U_ARTIC, 0, 1,  0, 0 },
+	{ PARAM::HAM_LEG, STR16("Hammer/Legato"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                      UNIT::U_ARTIC, 0, 1, 25, 0 },
+	{ PARAM::MUTE, STR16("Mute"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::U_ARTIC, 0, 1, 26, 0 },
+	{ PARAM::DEAD, STR16("Dead"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                  UNIT::U_ARTIC, 0, 1, 27, 0 },
+	{ PARAM::HARMONICS, STR16("Harmonics"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                        UNIT::U_ARTIC, 0, 1, 28, 0 },
+	{ PARAM::SLIDE, STR16("Slide"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, RANGE::PITCH, PF::FLAG::HIDDEN,                                                UNIT::U_ARTIC, 0, 1, 33, 0 },	
 	} };
 
 	// ユニット指定によるパラメータ定義取り出し
@@ -293,7 +298,7 @@ namespace MinMax
 
 	inline bool getTriggerParams(std::array<const PF::ParamDef*, PARAM_TRIGGER_COUNT>& outResult, size_t& outCount)
 	{
-		return getParamsByUnit(outResult, outCount, UNIT::TRIGGER);
+		return getParamsByUnit(outResult, outCount, UNIT::U_TRIGGER);
 	}
 
 	// アーティキュレーション系
@@ -302,6 +307,6 @@ namespace MinMax
 
 	inline bool getArticulationParams(std::array<const PF::ParamDef*, PARAM_ARTICULATION_COUNT>& outResult, size_t& outCount)
 	{
-		return getParamsByUnit(outResult, outCount, UNIT::ARTICULATION);
+		return getParamsByUnit(outResult, outCount, UNIT::U_ARTIC);
 	}
 }
