@@ -99,5 +99,8 @@ namespace MinMax
 		RingBuff InnerEvents{ 64 };
 
 		uint32_t chordseq = 0;
+
+		RangeResolver rangeResolver;
+		OptionProvider optionProvider;
 	};
 }

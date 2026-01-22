@@ -83,14 +83,11 @@ namespace MinMax
 
 		setControllerClass(kMyVSTControllerUID);
 
-		//initParameters();
+		// Initialize Parameters
 		Files::createPluginDirectory();
 		Files::clearTempFiles();
 
 		chordMap.loadChordPreset();
-
-		static RangeResolver rangeResolver;
-		static OptionProvider optionProvider;
 
 		auto& helper = PF::ParamHelper::get();
 		helper.setRangeResolver(&rangeResolver);
