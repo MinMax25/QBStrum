@@ -70,8 +70,8 @@
 			"P1212_STRUM_DECAY": "1212",
 			"P1213_STRUM_LENGTH": "1213",
 			"P1221_BRUSH_DECAY": "1221",
-			"P1222_BRUSH_1_TIME": "1222",
-			"P1223_BRUSH_2_TIME": "1223",
+			"P1222_BRUSH_DOWN_TIME": "1222",
+			"P1223_BRUSH_UP_TIME": "1223",
 			"P1231_ARP_LENGTH": "1231",
 			"P1241_FNOISE_CHANNEL": "1241",
 			"P1242_FNOISE_NOTE_NEAR": "1242",
@@ -129,7 +129,7 @@
 				"SelectedRow": "9"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "46"
+				"SelectedRow": "19"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -3039,7 +3039,7 @@
 							"angle-start": "135",
 							"circle-drawing": "false",
 							"class": "CKnob",
-							"control-tag": "P1222_BRUSH_1_TIME",
+							"control-tag": "P1222_BRUSH_DOWN_TIME",
 							"corona-color": "~ GreyCColor",
 							"corona-dash-dot": "true",
 							"corona-dash-dot-lengths": "1.26,0.1",
@@ -3132,7 +3132,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "Brush 1",
+							"title": "Brush Down",
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
@@ -3385,7 +3385,7 @@
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
 							"class": "CTextLabel",
-							"control-tag": "P1222_BRUSH_1_TIME",
+							"control-tag": "P1222_BRUSH_DOWN_TIME",
 							"font": "~ NormalFontSmaller",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",
@@ -4012,7 +4012,7 @@
 							"angle-start": "135",
 							"circle-drawing": "false",
 							"class": "CKnob",
-							"control-tag": "P1223_BRUSH_2_TIME",
+							"control-tag": "P1223_BRUSH_UP_TIME",
 							"corona-color": "~ GreyCColor",
 							"corona-dash-dot": "true",
 							"corona-dash-dot-lengths": "1.26,0.1",
@@ -4068,7 +4068,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "Brush 2",
+							"title": "Brush Up",
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
@@ -4080,7 +4080,7 @@
 							"back-color": "~ TransparentCColor",
 							"background-offset": "0, 0",
 							"class": "CTextLabel",
-							"control-tag": "P1223_BRUSH_2_TIME",
+							"control-tag": "P1223_BRUSH_UP_TIME",
 							"font": "~ NormalFontSmaller",
 							"font-antialias": "true",
 							"font-color": "~ CyanCColor",

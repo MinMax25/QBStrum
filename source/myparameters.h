@@ -108,8 +108,8 @@ namespace MinMax
 
 		// ストラムキースイッチ
 		ALL_NOTES_OFF = 1301,
-		BRUSH_1,
-		BRUSH_2,
+		BRUSH_DOWN,
+		BRUSH_UP,
 		UP_HIGH,
 		UP,
 		UP_LOW,
@@ -250,8 +250,8 @@ namespace MinMax
 	{ STR7_OFFSET, STR16("String 7 Offset"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, STRING_OFFSET, PF::FLAG::FLAG_AUTOMATE,					U_OFFSET,  0,    1,   StringSet::CENTER_OFFSET, 0 },
 
 	{ ALL_NOTES_OFF , STR16("All Notes Off"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,								U_TRIGGER, 0, 1, 53, 0 },
-	{ BRUSH_1, STR16("Brush 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,											U_TRIGGER, 0, 1, 63, 0 },
-	{ BRUSH_2, STR16("Brush 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,											U_TRIGGER, 0, 1, 61, 0 },
+	{ BRUSH_DOWN, STR16("Brush Down"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,										U_TRIGGER, 0, 1, 63, 0 },
+	{ BRUSH_UP, STR16("Brush Up"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,											U_TRIGGER, 0, 1, 61, 0 },
 	{ UP_HIGH, STR16("Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,											U_TRIGGER, 0, 1, 64, 0 },
 	{ UP, STR16("Up"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,														U_TRIGGER, 0, 1, 62, 0 },
 	{ UP_LOW, STR16("Up Low"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,												U_TRIGGER, 0, 1, 60, 0 },
