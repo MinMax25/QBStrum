@@ -623,34 +623,34 @@ namespace MinMax
 			lastChordNum = prm.getInt(CHORD_NUM);
 		}
 
-		if (prm.get(FNOISE_NOTE_NEAR) == 0 && prm.get(FNOISE_NOTE_FAR) == 0) return;
+		if (prm.get(NOISE_NOTE_NEAR) == 0 && prm.get(NOISE_NOTE_FAR) == 0) return;
 
 		int pitch = 0;
 
-		if (distance < prm.getInt(FNOISE_NOTE_NEAR)) return;
+		if (distance < prm.getInt(NOISE_NOTE_NEAR)) return;
 
-		if (distance < prm.getInt(FNOISE_NOTE_FAR))
+		if (distance < prm.getInt(NOISE_NOTE_FAR))
 		{
 			pitch =
-				prm.getInt(FNOISE_NOTE_NEAR) == 0
-				? prm.getInt(FNOISE_NOTE_FAR)
-				: prm.getInt(FNOISE_NOTE_NEAR);
+				prm.getInt(NOISE_NOTE_NEAR) == 0
+				? prm.getInt(NOISE_NOTE_FAR)
+				: prm.getInt(NOISE_NOTE_NEAR);
 		}
 		else
 		{
 			pitch = 
-				prm.getInt(FNOISE_NOTE_FAR) == 0
-				? prm.getInt(FNOISE_NOTE_NEAR)
-				: prm.getInt(FNOISE_NOTE_FAR);
+				prm.getInt(NOISE_NOTE_FAR) == 0
+				? prm.getInt(NOISE_NOTE_NEAR)
+				: prm.getInt(NOISE_NOTE_FAR);
 		}
 
 		if (pitch == 0) return;
 
 		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 		Steinberg::uint64 offTime = onTime + static_cast<Steinberg::uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
-		float velocity = prm.get(FNOISE_VELOCITY) / 127;
+		float velocity = prm.get(NOISE_VELOCITY) / 127;
 
-		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, velocity, prm.get(FNOISE_CHANNEL) - 1);
+		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, velocity, prm.get(NOISE_CHANNEL) - 1);
 	}
 
 	Steinberg::Vst::ParamID MyVSTProcessor::getParamIdByPitch(Steinberg::Vst::Event event)

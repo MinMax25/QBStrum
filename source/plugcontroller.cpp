@@ -37,6 +37,7 @@ namespace MinMax
 		}
 
 		// ユニット登録
+		addUnit(new Steinberg::Vst::Unit(STR16("General"), U_GENERAL));
 		addUnit(new Steinberg::Vst::Unit(STR16("Chord"), U_CHORD));
 		addUnit(new Steinberg::Vst::Unit(STR16("Strum"), U_STRUM));
 		addUnit(new Steinberg::Vst::Unit(STR16("Brush"), U_BRUSH));
@@ -44,6 +45,7 @@ namespace MinMax
 		addUnit(new Steinberg::Vst::Unit(STR16("Strings"), U_STRINGS));
 		addUnit(new Steinberg::Vst::Unit(STR16("Mute"), U_MUTE));
 		addUnit(new Steinberg::Vst::Unit(STR16("Fret Noize"), U_NOIZE));
+		addUnit(new Steinberg::Vst::Unit(STR16("String Offset"), U_OFFSET));
 		addUnit(new Steinberg::Vst::Unit(STR16("Trigger"), U_TRIGGER));
 		addUnit(new Steinberg::Vst::Unit(STR16("Articulation"), U_ARTIC));
 
