@@ -79,8 +79,8 @@ namespace MinMax
 		STRUM_LENGTH,
 		
 		BRUSH_DECAY = 1221,
-		BRUSH_1_TIME,
-		BRUSH_2_TIME,
+		BRUSH_DOWN_TIME,
+		BRUSH_UP_TIME,
 
 		ARP_LENGTH = 1231,
 		
@@ -218,8 +218,8 @@ namespace MinMax
 	{ STRUM_LENGTH, STR16("Strum Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, BEAT_LENGTH, PF::FLAG::FLAG_AUTOMATE,						U_STRUM,  0,    1,   4, 2},
 
 	{ BRUSH_DECAY, STR16("Brush Decay"), STR16("%"), PF::VALUE::Real, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_AUTOMATE,							U_BRUSH, 85,  100,  98, 1},
-	{ BRUSH_1_TIME, STR16("Brush 1 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::FLAG_AUTOMATE,                 U_BRUSH,  5,  300,  10, 1},
-	{ BRUSH_2_TIME, STR16("Brush 2 Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::FLAG_AUTOMATE,                 U_BRUSH,  5,  300,  80, 1},
+	{ BRUSH_DOWN_TIME, STR16("Brush Down Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::FLAG_AUTOMATE,           U_BRUSH,  5,  300,  10, 1},
+	{ BRUSH_UP_TIME, STR16("Brush Up Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::FLAG_AUTOMATE,               U_BRUSH,  5,  300,  80, 1},
 
 	{ ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, BEAT_LENGTH, PF::FLAG::FLAG_AUTOMATE,					U_ARP,  0,    1,   2, 2},
 

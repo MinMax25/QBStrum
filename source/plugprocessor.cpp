@@ -395,10 +395,10 @@ namespace MinMax
 			trigAllNotesOff();
 			break;
 		case BRUSH_1:
-			trigBrush(event, prm.getInt(STRINGS_BRUSH_1) + 1, prm.get(BRUSH_1_TIME));
+			trigBrush(event, prm.getInt(STRINGS_BRUSH_1) + 1, prm.get(BRUSH_DOWN_TIME));
 			break;
 		case BRUSH_2:
-			trigBrush(event, prm.getInt(STRINGS_BRUSH_2) + 1, prm.get(BRUSH_2_TIME));
+			trigBrush(event, prm.getInt(STRINGS_BRUSH_2) + 1, prm.get(BRUSH_UP_TIME));
 			break;
 		case UP_HIGH:
 			trigStrum(event, true, false, prm.getInt(STRINGS_UP_HIGH) + 1);
