@@ -110,7 +110,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab2"
+				"SelectedTemplate": "view"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -1799,7 +1799,7 @@
 							"origin": "310, 30",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "25, 15",
+							"size": "55, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "true",
 							"style-no-draw": "false",
@@ -2009,7 +2009,7 @@
 							"origin": "430, 30",
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
-							"size": "25, 15",
+							"size": "55, 15",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",

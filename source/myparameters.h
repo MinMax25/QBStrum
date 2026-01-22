@@ -149,9 +149,9 @@ namespace MinMax
 			{
 			case MIDI_DATA:           out = {    0, 127, false }; return true;
 			case PITCH:               out = {    0, 127, false }; return true;
-			case MIDI_CHANNEL:        out = {    1,  16, false }; return true;	//
+			case MIDI_CHANNEL:        out = {    1,  16, true  }; return true;
 			case TRANSPOSE_RANGE:     out = {   -6,   6, true  }; return true;
-			case FRET_DISTANCE:       out = {    1,   6, false }; return true;	//
+			case FRET_DISTANCE:       out = {    1,   6, true  }; return true;
 			case STRUM_STRINGS_RANGE: out = {    1,   6, true  }; return true;
 			case STRING_OFFSET:       out = {   -6,   4, true  }; return true;
 			case BEAT_LENGTH:         out = { 0.25,   8, false }; return true;
@@ -171,14 +171,18 @@ namespace MinMax
 		{
 			switch (rangeKind)
 			{
-			case ARTICULATION_RANGE:
-				return { "Open 1", "Open 2", "Hammer/Legato", "Mute", "Dead", "Harmonics", "Slide" };
+			case MIDI_CHANNEL:
+				return { "Ch 1", "Ch 2", "Ch 3", "Ch 4", "Ch 5", "Ch 6", "Ch 7", "Ch 8", "Ch 9", "Ch10", "Ch11", "Ch12", "Ch13", "Ch14", "Ch15", "Ch16" };
 			case TRANSPOSE_RANGE:
 				return { "-6", "-5", "-4", "-3", "-2", "-1", "0", "1", "2", "3", "4", "5", "6"};
+			case FRET_DISTANCE:
+				return { "1", "2", "3", "4", "5", "6" };
 			case STRUM_STRINGS_RANGE:
 				return { "1", "2", "3", "4", "5", "Max" };
 			case STRING_OFFSET:
 				return { "Mute", "Open", "-4 fret", "-3 fret", "-2 fret", "-1 fret", "0", "1 fret", "2 fret", "3 fret", "4 fret" };
+			case ARTICULATION_RANGE:
+				return { "Open 1", "Open 2", "Hammer/Legato", "Mute", "Dead", "Harmonics", "Slide" };
 			case CTL_TABINDEX1_RANGE:
 				return { "Strum Parameters", "Settings", "Plugin Info" };
 			default:
@@ -223,15 +227,15 @@ namespace MinMax
 
 	{ ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, BEAT_LENGTH, PF::FLAG::FLAG_AUTOMATE,					U_ARP,  0,    1,   2, 2},
 
-	{ MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_CHANNEL, PF::FLAG::FLAG_HIDDEN,							U_MUTE,  0,    1,   1, 0 },
+	{ MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_CHANNEL, PF::FLAG::FLAG_HIDDEN,							U_MUTE,  0,    1,   0, 0 },
 	{ MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,									U_MUTE,  0,    1, 103, 0 },
 	{ MUTE_NOTE_2, STR16("Mute Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,									U_MUTE,  0,    1, 102, 0 },
 
-	{ NOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_CHANNEL, PF::FLAG::FLAG_HIDDEN,					U_NOIZE,  0,    1,   1, 0 },
+	{ NOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_CHANNEL, PF::FLAG::FLAG_HIDDEN,					U_NOIZE,  0,    1,   0, 0 },
 	{ NOISE_NOTE_NEAR, STR16("Fret Noise Note Near"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,						U_NOIZE,  0,    1, 120, 0 },
 	{ NOISE_NOTE_FAR, STR16("Fret Noise Note Far"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,							U_NOIZE,  0,    1, 123, 0 },
-	{ NOISE_DIST_NEAR, STR16("Fret Noise Distance Near"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, FRET_DISTANCE, PF::FLAG::FLAG_HIDDEN,		U_NOIZE,  0,    1,   1, 0 },
-	{ NOISE_DIST_FAR, STR16("Fret Noise Distance Far"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, FRET_DISTANCE, PF::FLAG::FLAG_HIDDEN,			U_NOIZE,  0,    1,   3, 0 },
+	{ NOISE_DIST_NEAR, STR16("Fret Noise Distance Near"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, FRET_DISTANCE, PF::FLAG::FLAG_HIDDEN,		U_NOIZE,  0,    1,   0, 0 },
+	{ NOISE_DIST_FAR, STR16("Fret Noise Distance Far"), STR16("fret"), PF::VALUE::Int, PF::SCALE::Linear, FRET_DISTANCE, PF::FLAG::FLAG_HIDDEN,			U_NOIZE,  0,    1,   2, 0 },
 	{ NOISE_VELOCITY, STR16("Fret Noise Velocity"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_DATA, PF::FLAG::FLAG_AUTOMATE,					U_NOIZE,  0,  127, 100, 0 },
 
 	{ STRINGS_UP_HIGH, STR16("Strings Up High"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, STRUM_STRINGS_RANGE, PF::FLAG::FLAG_AUTOMATE,			U_STRINGS,  0,    1,   3 - 1, 0 },
