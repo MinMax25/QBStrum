@@ -51,6 +51,7 @@ namespace MinMax
             assert(editor && "CFretBoardView requires VST3Editor");
 
             setBackgroundColor(VSTGUI::kTransparentCColor);
+			setWantsFocus(false);
 
             initFretBoard();
             initMenuButtons();
@@ -95,6 +96,7 @@ namespace MinMax
         void initFretBoard()
         {
             fretBoard = new CFretBoard(getViewSize());
+			fretBoard->setWantsFocus(false);
             fretBoard->setPressedFrets(StringSet());
             addView(fretBoard);
         }

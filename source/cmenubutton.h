@@ -32,6 +32,7 @@ namespace MinMax
             setTextColor(NORMAL_TEXT_COLOR);
             setTextColorHighlighted(VSTGUI::kWhiteCColor);
             setFont(VSTGUI::kNormalFontSmall);
+            setWantsFocus(false);
         }
 
         VSTGUI::CMouseEventResult onMouseEntered(VSTGUI::CPoint& where, const VSTGUI::CButtonState& buttons) override

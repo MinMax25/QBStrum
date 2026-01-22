@@ -69,6 +69,7 @@ namespace MinMax
             chordMenu = createChordOptionMenu(VSTGUI::CRect(1, 1, 17, 17), PARAM::CHORD_NUM);
 			chordMenu->setFontColor(VSTGUI::kTransparentCColor);
             chordMenu->setBackColor(VSTGUI::kGreyCColor);
+			chordMenu->setWantsFocus(false);
             addView(chordMenu);
 
             // コード名表示ラベル
