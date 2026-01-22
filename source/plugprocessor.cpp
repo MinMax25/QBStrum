@@ -570,7 +570,7 @@ namespace MinMax
 
 		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 		Steinberg::uint64 offTime = onTime + static_cast<Steinberg::uint64>(NOTE_LENGTH * scheduler.getSamplesPerMs());
-		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, prm.getInt(MUTE_CHANNEL) - 1);
+		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, prm.getInt(MUTE_CHANNEL));
 	}
 
 	void MyVSTProcessor::trigArpeggio(int stringNumber, Steinberg::Vst::Event event)
@@ -647,7 +647,7 @@ namespace MinMax
 		Steinberg::uint64 offTime = onTime + static_cast<Steinberg::uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
 		float velocity = prm.get(NOISE_VELOCITY) / 127;
 
-		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, velocity, prm.get(NOISE_CHANNEL) - 1);
+		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, velocity, prm.get(NOISE_CHANNEL));
 	}
 
 	Steinberg::Vst::ParamID MyVSTProcessor::getParamIdByPitch(Steinberg::Vst::Event event)
