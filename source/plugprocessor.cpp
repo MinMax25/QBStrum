@@ -251,7 +251,7 @@ namespace MinMax
 
 			switch (tag)
 			{
-			case PARAM::SELECTED_ARTICULATION:
+			case SELECTED_ARTICULATION:
 			{
 				if (prm.isChanged(tag))
 				{
@@ -259,19 +259,19 @@ namespace MinMax
 				}
 				break;
 			}
-			case PARAM::CHORD_MSB:
+			case CHORD_MSB:
 			{
-				if (prm.isChanged(PARAM::CHORD_MSB) || prm.isChanged(PARAM::CHORD_LSB))
+				if (prm.isChanged(CHORD_MSB) || prm.isChanged(CHORD_LSB))
 				{
-					Steinberg::Vst::ParamValue num = prm.get(PARAM::CHORD_MSB) * 128 + prm.get(PARAM::CHORD_LSB);
-					prm.setInt(PARAM::CHORD_NUM, num);
+					Steinberg::Vst::ParamValue num = prm.get(CHORD_MSB) * 128 + prm.get(CHORD_LSB);
+					prm.setInt(CHORD_NUM, num);
 					notifyChordNumberChanged();
-					prm.clearChangedFlags(PARAM::CHORD_MSB);
-					prm.clearChangedFlags(PARAM::CHORD_LSB);
+					prm.clearChangedFlags(CHORD_MSB);
+					prm.clearChangedFlags(CHORD_LSB);
 				}
 				break;
 			}
-			case PARAM::CHORD_NUM:
+			case CHORD_NUM:
 			{
 				if (prm.isChanged(tag))
 				{
@@ -280,7 +280,7 @@ namespace MinMax
 				}
 				break;
 			}
-			case PARAM::NEED_SAMPLEBLOCK_ADJUST:
+			case NEED_SAMPLEBLOCK_ADJUST:
 			{
 				bool state = prm.get(tag) > 0.5;
 				EventScheduler::Instance().setNeedSampleblockAdust(state);
@@ -288,7 +288,7 @@ namespace MinMax
 			}
 			default:
 			{
-				if (PARAM::STR1_OFFSET <= tag && tag <= PARAM::STR7_OFFSET)
+				if (STR1_OFFSET <= tag && tag <= STR7_OFFSET)
 				{
 					if (prm.isChanged(tag))
 					{
@@ -306,9 +306,9 @@ namespace MinMax
 	{
 		constexpr int SPECIAL_NOTES_SAMPLES = 3;
 
-		if (!prm.getInt(PARAM::ENABLED_ARTICULATION)) return;
+		if (!prm.getInt(ENABLED_ARTICULATION)) return;
 
-		int newArtic = prm.getInt(PARAM::SELECTED_ARTICULATION);
+		int newArtic = prm.getInt(SELECTED_ARTICULATION);
 
 		std::array<const PF::ParamDef*, PARAM_ARTICULATION_COUNT> artics;
 		size_t articCount = 0;
@@ -331,12 +331,12 @@ namespace MinMax
 		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + sampleOffset;
 		Steinberg::uint64 offTime = onTime + SPECIAL_NOTES_SAMPLES;
 
-		for (int i = 0; i < (prm.get(PARAM::CHANNEL_SEPARATE) ? STRING_COUNT : 1); i++)
+		for (int i = 0; i < (prm.get(CHANNEL_SEPARATE) ? STRING_COUNT : 1); i++)
 		{
 			scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, keySW, 127, i);
 		}
 
-		prm.clearChangedFlags(PARAM::SELECTED_ARTICULATION);
+		prm.clearChangedFlags(SELECTED_ARTICULATION);
 	}
 
 	void PLUGIN_API MyVSTProcessor::processEvent()
@@ -391,55 +391,55 @@ namespace MinMax
 	{
 		switch (paramid)
 		{
-		case PARAM::ALL_NOTES_OFF:
+		case ALL_NOTES_OFF:
 			trigAllNotesOff();
 			break;
-		case PARAM::BRUSH_1:
-			trigBrush(event, prm.getInt(PARAM::STRINGS_BRUSH_1) + 1, prm.get(PARAM::BRUSH_1_TIME));
+		case BRUSH_1:
+			trigBrush(event, prm.getInt(STRINGS_BRUSH_1) + 1, prm.get(BRUSH_1_TIME));
 			break;
-		case PARAM::BRUSH_2:
-			trigBrush(event, prm.getInt(PARAM::STRINGS_BRUSH_2) + 1, prm.get(PARAM::BRUSH_2_TIME));
+		case BRUSH_2:
+			trigBrush(event, prm.getInt(STRINGS_BRUSH_2) + 1, prm.get(BRUSH_2_TIME));
 			break;
-		case PARAM::UP_HIGH:
-			trigStrum(event, true, false, prm.getInt(PARAM::STRINGS_UP_HIGH) + 1);
+		case UP_HIGH:
+			trigStrum(event, true, false, prm.getInt(STRINGS_UP_HIGH) + 1);
 			break;
-		case PARAM::UP:
+		case UP:
 			trigStrum(event, true, false, STRING_COUNT);
 			break;
-		case PARAM::UP_LOW:
-			trigStrum(event, false, false, prm.getInt(PARAM::STRINGS_UP_LOW) + 1);
+		case UP_LOW:
+			trigStrum(event, false, false, prm.getInt(STRINGS_UP_LOW) + 1);
 			break;
-		case PARAM::DOWN_HIGH:
-			trigStrum(event, true, true, prm.getInt(PARAM::STRINGS_DOWN_HIGH) + 1);
+		case DOWN_HIGH:
+			trigStrum(event, true, true, prm.getInt(STRINGS_DOWN_HIGH) + 1);
 			break;
-		case PARAM::DOWN:
+		case DOWN:
 			trigStrum(event, false, true, STRING_COUNT);
 			break;
-		case PARAM::DOWN_LOW:
-			trigStrum(event, false, true, prm.getInt(PARAM::STRINGS_DOWN_LOW) + 1);
+		case DOWN_LOW:
+			trigStrum(event, false, true, prm.getInt(STRINGS_DOWN_LOW) + 1);
 			break;
-		case PARAM::MUTE_1:
-			trigMute(PARAM::MUTE_1, event);
+		case MUTE_1:
+			trigMute(MUTE_1, event);
 			break;
-		case PARAM::MUTE_2:
-			trigMute(PARAM::MUTE_2, event);
+		case MUTE_2:
+			trigMute(MUTE_2, event);
 			break;
-		case PARAM::ARPEGGIO_1:
+		case ARPEGGIO_1:
 			trigArpeggio(0, event);
 			break;
-		case PARAM::ARPEGGIO_2:
+		case ARPEGGIO_2:
 			trigArpeggio(1, event);
 			break;
-		case PARAM::ARPEGGIO_3:
+		case ARPEGGIO_3:
 			trigArpeggio(2, event);
 			break;
-		case PARAM::ARPEGGIO_4:
+		case ARPEGGIO_4:
 			trigArpeggio(3, event);
 			break;
-		case PARAM::ARPEGGIO_5:
+		case ARPEGGIO_5:
 			trigArpeggio(4, event);
 			break;
-		case PARAM::ARPEGGIO_6:
+		case ARPEGGIO_6:
 			trigArpeggio(5, event);
 			break;
 		default:
@@ -454,13 +454,13 @@ namespace MinMax
 
 	void MyVSTProcessor::trigBrush(Steinberg::Vst::Event event, int maxStrings, Steinberg::Vst::ParamValue time)
 	{
-		float decay = prm.get(PARAM::BRUSH_DECAY) / 100.0f;
+		float decay = prm.get(BRUSH_DECAY) / 100.0f;
 
 		scheduler.allNotesOff();
 
 		trigFretNoise(event);
 
-		auto& voicing = chordMap.getChordVoicing(prm.get(PARAM::CHORD_NUM));
+		auto& voicing = chordMap.getChordVoicing(prm.get(CHORD_NUM));
 		auto& strnum = getTargetStrings(voicing, true, true, maxStrings);
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
@@ -479,7 +479,7 @@ namespace MinMax
 			Steinberg::uint64 offsetSamples = samplesPerMs * strcnt;
 			Steinberg::uint64 onTime = baseOnTime + offsetSamples;
 
-			int channel = prm.get(PARAM::CHANNEL_SEPARATE) ? i % 16 : 0;
+			int channel = prm.get(CHANNEL_SEPARATE) ? i % 16 : 0;
 			
 			int pitch = getStringPitch(voicing, i);
 			if (pitch < 0) continue;
@@ -496,7 +496,7 @@ namespace MinMax
 	{
 		trigFretNoise(event);
 
-		auto& voicing = chordMap.getChordVoicing(prm.getInt(PARAM::CHORD_NUM));
+		auto& voicing = chordMap.getChordVoicing(prm.getInt(CHORD_NUM));
 		auto& strnum = getTargetStrings(voicing, isAbove, isDown, maxStrings);
 		
 		double samplesPerMs = scheduler.getSamplesPerMs();
@@ -505,7 +505,7 @@ namespace MinMax
 		float baseVelocity = std::clamp(event.noteOn.velocity, 0.0f, 1.0f);
 
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
-		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(PARAM::STRUM_LENGTH)));
+		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(STRUM_LENGTH)));
 		Steinberg::uint64 offTime = baseOnTime + lengthSamples;
 
 		int strcnt = 0;
@@ -516,17 +516,17 @@ namespace MinMax
 
 			double delayMs =
 				(strnum.size > 1)
-				? (prm.get(PARAM::STRUM_SPEED) / double(STRING_COUNT)) * strcnt
+				? (prm.get(STRUM_SPEED) / double(STRING_COUNT)) * strcnt
 				: 0.0;
 
 			Steinberg::uint64 onTime = baseOnTime + static_cast<Steinberg::uint64>(delayMs * samplesPerMs);
 
-			int channel = prm.getInt(PARAM::CHANNEL_SEPARATE) ? i % 16 : 0;
+			int channel = prm.getInt(CHANNEL_SEPARATE) ? i % 16 : 0;
 			
 			int pitch = getStringPitch(voicing, i);
 			if (pitch < 0) continue;
 
-			float velocity = baseVelocity * std::pow(prm.get(PARAM::STRUM_DECAY) / 100.0f, strcnt);
+			float velocity = baseVelocity * std::pow(prm.get(STRUM_DECAY) / 100.0f, strcnt);
 
 			scheduler.addNoteOn(onTime, offTime, i, pitch, velocity, channel);
 
@@ -536,8 +536,8 @@ namespace MinMax
 
 	int MyVSTProcessor::getStringPitch(const StringSet& set, int stringNumber)
 	{
-		int result = chordMap.getTunings().data[stringNumber] + (prm.getInt(PARAM::TRANSPOSE) - 6) + (prm.getInt(PARAM::OCTAVE) ? 12 : 0);
-		int offset = (int)prm.getInt(PARAM::STR1_OFFSET + stringNumber);
+		int result = chordMap.getTunings().data[stringNumber] + (prm.getInt(TRANSPOSE) - 6) + (prm.getInt(OCTAVE) ? 12 : 0);
+		int offset = (int)prm.getInt(STR1_OFFSET + stringNumber);
 
 		switch (offset)
 		{
@@ -558,29 +558,29 @@ namespace MinMax
 	{
 		const double NOTE_LENGTH = 40.0;
 
-		if (!prm.getInt(PARAM::ENABLED_MUTE_FNOIZE)) return;
+		if (!prm.getInt(ENABLED_MUTE_FNOIZE)) return;
 
 		scheduler.allNotesOff();
 
 		trigFretNoise(event);
 
 		int muteNote =
-			(trigger == PARAM::MUTE_1)
-			? prm.getInt(PARAM::MUTE_NOTE_1)
-			: prm.getInt(PARAM::MUTE_NOTE_2);
+			(trigger == MUTE_1)
+			? prm.getInt(MUTE_NOTE_1)
+			: prm.getInt(MUTE_NOTE_2);
 
 		float velocity = std::clamp(event.noteOn.velocity, 0.01f, 1.0f);
 
 		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 		Steinberg::uint64 offTime = onTime + static_cast<Steinberg::uint64>(NOTE_LENGTH * scheduler.getSamplesPerMs());
-		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, prm.getInt(PARAM::MUTE_CHANNEL) - 1);
+		scheduler.addNoteOn(onTime, offTime, 0, muteNote, velocity, prm.getInt(MUTE_CHANNEL) - 1);
 	}
 
 	void MyVSTProcessor::trigArpeggio(int stringNumber, Steinberg::Vst::Event event)
 	{
 		trigFretNoise(event);
 
-		auto& voicing = chordMap.getChordVoicing(prm.getInt(PARAM::CHORD_NUM));
+		auto& voicing = chordMap.getChordVoicing(prm.getInt(CHORD_NUM));
 
 		if (stringNumber < 0 || stringNumber >= STRING_COUNT || voicing.data[stringNumber] < 0)
 		{
@@ -590,10 +590,10 @@ namespace MinMax
 		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 
 		double samplesPerBeat = scheduler.getSampleRate() * 60.0 / scheduler.getTempo();
-		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(PARAM::ARP_LENGTH)));
+		Steinberg::uint64 lengthSamples = static_cast<Steinberg::uint64>(std::lround(samplesPerBeat * prm.get(ARP_LENGTH)));
 		Steinberg::uint64 offTime = onTime + lengthSamples;
 
-		int channel = prm.getInt(PARAM::CHANNEL_SEPARATE) ? stringNumber % 16 : 0;
+		int channel = prm.getInt(CHANNEL_SEPARATE) ? stringNumber % 16 : 0;
 
 		int pitch = getStringPitch(voicing, stringNumber);
 		if (pitch < 0) return;
@@ -607,50 +607,50 @@ namespace MinMax
 	{
 		constexpr double FRET_NOISE_LENGTH = 40.0;
 
-		if (!prm.getInt(PARAM::ENABLED_MUTE_FNOIZE)) return;
+		if (!prm.getInt(ENABLED_MUTE_FNOIZE)) return;
 
 		float distance = 0.0f;
 
-		if (lastChordNum != prm.getInt(PARAM::CHORD_NUM))
+		if (lastChordNum != prm.getInt(CHORD_NUM))
 		{
 			trigAllNotesOff();
 
 			distance =
 				std::abs(
 					chordMap.getPositionAverage(lastChordNum) -
-					chordMap.getPositionAverage(prm.get(PARAM::CHORD_NUM)));
+					chordMap.getPositionAverage(prm.get(CHORD_NUM)));
 
-			lastChordNum = prm.getInt(PARAM::CHORD_NUM);
+			lastChordNum = prm.getInt(CHORD_NUM);
 		}
 
-		if (prm.get(PARAM::FNOISE_NOTE_NEAR) == 0 && prm.get(PARAM::FNOISE_NOTE_FAR) == 0) return;
+		if (prm.get(FNOISE_NOTE_NEAR) == 0 && prm.get(FNOISE_NOTE_FAR) == 0) return;
 
 		int pitch = 0;
 
-		if (distance < prm.getInt(PARAM::FNOISE_NOTE_NEAR)) return;
+		if (distance < prm.getInt(FNOISE_NOTE_NEAR)) return;
 
-		if (distance < prm.getInt(PARAM::FNOISE_NOTE_FAR))
+		if (distance < prm.getInt(FNOISE_NOTE_FAR))
 		{
 			pitch =
-				prm.getInt(PARAM::FNOISE_NOTE_NEAR) == 0
-				? prm.getInt(PARAM::FNOISE_NOTE_FAR)
-				: prm.getInt(PARAM::FNOISE_NOTE_NEAR);
+				prm.getInt(FNOISE_NOTE_NEAR) == 0
+				? prm.getInt(FNOISE_NOTE_FAR)
+				: prm.getInt(FNOISE_NOTE_NEAR);
 		}
 		else
 		{
 			pitch = 
-				prm.getInt(PARAM::FNOISE_NOTE_FAR) == 0
-				? prm.getInt(PARAM::FNOISE_NOTE_NEAR)
-				: prm.getInt(PARAM::FNOISE_NOTE_FAR);
+				prm.getInt(FNOISE_NOTE_FAR) == 0
+				? prm.getInt(FNOISE_NOTE_NEAR)
+				: prm.getInt(FNOISE_NOTE_FAR);
 		}
 
 		if (pitch == 0) return;
 
 		Steinberg::uint64 onTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
 		Steinberg::uint64 offTime = onTime + static_cast<Steinberg::uint64>(FRET_NOISE_LENGTH * scheduler.getSamplesPerMs());
-		float velocity = prm.get(PARAM::FNOISE_VELOCITY) / 127;
+		float velocity = prm.get(FNOISE_VELOCITY) / 127;
 
-		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, velocity, prm.get(PARAM::FNOISE_CHANNEL) - 1);
+		scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, pitch, velocity, prm.get(FNOISE_CHANNEL) - 1);
 	}
 
 	Steinberg::Vst::ParamID MyVSTProcessor::getParamIdByPitch(Steinberg::Vst::Event event)
@@ -726,14 +726,14 @@ namespace MinMax
 		}
 
 		set.state = chordseq;
-		set.flatIndex = (int)prm.getInt(PARAM::CHORD_NUM);
+		set.flatIndex = (int)prm.getInt(CHORD_NUM);
 
 		auto v = chordMap.getChordVoicing(set.flatIndex);
 
 		set.size = v.size;
 		for (int i = 0; i < (int)v.size; i++)
 		{
-			int o = (int)prm.getInt(PARAM::STR1_OFFSET + i);
+			int o = (int)prm.getInt(STR1_OFFSET + i);
 			set.data[i] += v.data[i];
 			set.setOffset(i, o - StringSet::CENTER_OFFSET);
 		}
