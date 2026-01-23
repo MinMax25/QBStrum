@@ -188,7 +188,7 @@ namespace PF
     class ParamHelper
     {
     public:
-        static ParamHelper& get()
+        static ParamHelper& instance()
         {
             static ParamHelper instance;
             return instance;
@@ -378,7 +378,7 @@ namespace PF
             for (const auto& def : paramTable)
             {
                 // 正規化処理はパラメータメソッドを利用
-                std::unique_ptr<Steinberg::Vst::Parameter> p = ParamHelper::get().createParameter(def);
+                std::unique_ptr<Steinberg::Vst::Parameter> p = ParamHelper::instance().createParameter(def);
                 if (!p) continue;
                 paramInstances.emplace(def.tag, std::move(p));
 

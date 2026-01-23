@@ -89,7 +89,7 @@ namespace MinMax
 
 		chordMap.loadChordPreset();
 
-		auto& helper = PF::ParamHelper::get();
+		auto& helper = PF::ParamHelper::instance();
 		helper.setRangeResolver(&rangeResolver);
 		helper.setOptionProvider(&optionProvider);
 	
