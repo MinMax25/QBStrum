@@ -225,7 +225,7 @@ namespace MinMax
 	{ BRUSH_DOWN_TIME, STR16("Brush Down Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::FLAG_AUTOMATE,           U_BRUSH,  5,  300,  10, 1},
 	{ BRUSH_UP_TIME, STR16("Brush Up Time"), STR16("ms"), PF::VALUE::Real, PF::SCALE::Exponential, std::nullopt, PF::FLAG::FLAG_AUTOMATE,               U_BRUSH,  5,  300,  80, 1},
 
-	{ ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, BEAT_LENGTH, PF::FLAG::FLAG_AUTOMATE,					U_ARP,  0,    1,   2, 2},
+	{ ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, BEAT_LENGTH, PF::FLAG::FLAG_AUTOMATE,					U_ARP, 0, 1, 2, 2},
 
 	{ MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_CHANNEL, PF::FLAG::FLAG_HIDDEN,							U_MUTE, 0, 1,   0, 0 },
 	{ MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,									U_MUTE, 0, 1, 103, 0 },
