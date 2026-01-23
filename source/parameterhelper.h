@@ -180,8 +180,8 @@ namespace PF
 
         double minValue = 0.0;
         double maxValue = 1.0;
-
         double defaultValue = 0.0;
+
         Steinberg::int32 precision = 0;
     };
 
