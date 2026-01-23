@@ -227,9 +227,9 @@ namespace MinMax
 
 	{ ARP_LENGTH, STR16("Arpeggio Length"), STR16("beat"), PF::VALUE::Real, PF::SCALE::Linear, BEAT_LENGTH, PF::FLAG::FLAG_AUTOMATE,					U_ARP,  0,    1,   2, 2},
 
-	{ MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_CHANNEL, PF::FLAG::FLAG_HIDDEN,							U_MUTE,  0,    1,   0, 0 },
-	{ MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,									U_MUTE,  0,    1, 103, 0 },
-	{ MUTE_NOTE_2, STR16("Mute Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,									U_MUTE,  0,    1, 102, 0 },
+	{ MUTE_CHANNEL , STR16("Mute Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_CHANNEL, PF::FLAG::FLAG_HIDDEN,							U_MUTE, 0, 1,   0, 0 },
+	{ MUTE_NOTE_1, STR16("Mute Note 1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,									U_MUTE, 0, 1, 103, 0 },
+	{ MUTE_NOTE_2, STR16("Mute Note 2"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,									U_MUTE, 0, 1, 102, 0 },
 
 	{ NOISE_CHANNEL, STR16("Fret Noise Channel"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_CHANNEL, PF::FLAG::FLAG_HIDDEN,					U_NOIZE, 0,   1,   0, 0 },
 	{ NOISE_NOTE_NEAR, STR16("Fret Noise Note Near"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,						U_NOIZE, 0,   1, 120, 0 },
