@@ -50,11 +50,9 @@ namespace MinMax
 		addUnit(new Steinberg::Vst::Unit(STR16("Articulation"), U_ARTIC));
 
 		// パラメータ登録
-		auto& helper = PF::ParamHelper::instance();
-
 		for (auto& def : paramTable)
 		{
-			auto param = helper.createParameter(def);
+			auto param = PF::ParamHelper::instance().createParameter(def);
 			if (param)
 			{
 				parameters.addParameter(param.release());
