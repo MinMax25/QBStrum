@@ -175,10 +175,10 @@ namespace MinMax
                 note.tag = tag;
                 note.isOn = onoff;
 
-				int vel = (223 - where.x) * 2;
-                if (vel > 127) vel = 127;
-                if (vel < 1) vel = 1;
-                note.velocity = vel;
+
+                int mouseX = where.x;
+				mouseX = std::clamp(mouseX, 135, 198);
+                note.velocity = 127 - (mouseX - 135) * 2;
 
                 // プラグインプロセッサにノートメッセージを送信
                 message->setMessageID(MSG_SOUND_CHECK);

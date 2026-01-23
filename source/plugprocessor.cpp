@@ -779,7 +779,7 @@ namespace MinMax
 		{
 			event.noteOn.noteId = -1;
 			event.noteOn.pitch = pitch;
-			event.noteOn.velocity = note->velocity / (float)128;
+			event.noteOn.velocity = note->velocity / (float)127;
 		}
 		else
 		{
