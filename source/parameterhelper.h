@@ -194,9 +194,11 @@ namespace PF
             return instance;
         }
 
-        void setRangeResolver(const IRangeResolver* r) { rangeResolver = r; }
-
-        void setOptionProvider(const IOptionProvider* p) { optionProvider = p; }
+        void initialize(const IRangeResolver* r, const IOptionProvider* c)
+        {
+            rangeResolver = r;
+			optionProvider = c;
+        }
 
         std::unique_ptr<Steinberg::Vst::Parameter> createParameter(const ParamDef& def)
         {
