@@ -370,7 +370,7 @@ namespace PF
         ProcessorParamStorage() = default;
 
         template <size_t N>
-        void initialize(const std::array<ParamDef, N>& paramTable)
+        void initialize(const std::array<ParamDef, N>& paramTable, const IRangeResolver* rangeResolver)
         {
             storage.clear();
             paramInstances.clear();
@@ -482,8 +482,6 @@ namespace PF
             it->second.changed = false;
         }
 
-        void setRangeResolver(const IRangeResolver* r) { rangeResolver = r; }
-
     private:
         struct ParamEntry
         {
@@ -505,9 +503,6 @@ namespace PF
             auto it = paramInstances.find(id);
             return it != paramInstances.end() ? it->second.get() : nullptr;
         }
-
-        // Resolvers
-        const IRangeResolver* rangeResolver = nullptr;
     };
 
 #pragma endregion
