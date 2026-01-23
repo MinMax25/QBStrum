@@ -88,6 +88,7 @@ namespace MinMax
 		Files::clearTempFiles();
 
 		chordMap.loadChordPreset();
+
 		PF::ParamHelper::instance().initialize(&rangeResolver, &optionProvider);
 		prm.initialize(paramTable, &rangeResolver);
 	}

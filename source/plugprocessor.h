@@ -100,7 +100,7 @@ namespace MinMax
 
 		uint32_t chordseq = 0;
 
-		RangeResolver rangeResolver;
-		OptionProvider optionProvider;
+		const RangeResolver rangeResolver;
+		const OptionProvider optionProvider;
 	};
 }
