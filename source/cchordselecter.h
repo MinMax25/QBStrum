@@ -260,7 +260,7 @@ namespace MinMax
             }
 
             // ファイル出力
-            return writer.write(filepath.c_str());
+            return writer.write(filepath.c_str(), chordLabel->getText());
         }
     };
 }

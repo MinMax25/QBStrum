@@ -22,7 +22,7 @@ namespace MinMax
         }
 
         // MIDI ファイルを書き出す
-        bool write(const std::wstring& filename)
+        bool write(const std::wstring& filename, const VSTGUI::UTF8String& trackName = "")
         {
             std::ofstream ofs(filename, std::ios::binary);
             if (!ofs) return false;
@@ -30,12 +30,22 @@ namespace MinMax
             // --- MThd ヘッダ ---
             writeWString(ofs, "MThd");
             writeBE32(ofs, 6);
-            writeBE16(ofs, 0);
+            writeBE16(ofs, 1);
             writeBE16(ofs, 1);
             writeBE16(ofs, ticksPerQuarter);
 
             // --- トラックデータ ---
             std::vector<uint8_t> trackData;
+
+            // トラック名イベントを追加
+            if (!trackName.empty())
+            {
+                writeDelta(trackData, 0);       // Delta-time
+                trackData.push_back(0xFF);      // Meta event
+                trackData.push_back(0x03);      // トラック名
+                trackData.push_back(static_cast<uint8_t>(trackName.getString().size())); // 長さ
+                trackData.insert(trackData.end(), trackName.begin(), trackName.end());
+            }
 
             // ノートイベントをオン／オフに分解して時間順に並べる
             struct MidiEvent { uint32_t tick; uint8_t status; uint8_t note; uint8_t vel; };
@@ -120,7 +130,9 @@ namespace MinMax
 
             // 逆順に buf へ追加
             for (auto it = tmp.rbegin(); it != tmp.rend(); ++it)
+            {
                 buf.push_back(*it);
+            }
         }
     };
 }
