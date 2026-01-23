@@ -110,7 +110,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab2"
+				"SelectedTemplate": "view"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -242,7 +242,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "designed for Fender® Studio Pro",
+							"title": "designed for Fender Studio© Pro",
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
