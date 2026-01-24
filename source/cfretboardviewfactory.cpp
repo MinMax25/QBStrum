@@ -74,10 +74,16 @@ namespace MinMax
         enum class MenuType 
         { 
             File, 
-            Edit
+            Action
         };
 
-        bool canEdit = false;
+        enum class ActionType
+        {
+            PlayMode,
+			SearchMode,
+			EditMode
+        };
+		ActionType currentAction = ActionType::PlayMode;
 
         VSTGUI::VST3Editor* editor = nullptr;
 
@@ -106,7 +112,7 @@ namespace MinMax
             fileButton = new CMenuButton({ 101, 1, 160, 18 }, "Preset", [this](CMenuButton* b) { popupMenu(b, MenuType::File); });
             addView(fileButton);
 
-            editButton = new CMenuButton({ 161, 1, 220, 18 }, "Edit", [this](CMenuButton* b) { popupMenu(b, MenuType::Edit); });
+            editButton = new CMenuButton({ 161, 1, 220, 18 }, "Action", [this](CMenuButton* b) { popupMenu(b, MenuType::Action); });
             addView(editButton);
         }
 
@@ -152,14 +158,42 @@ namespace MinMax
             }
             else
             {
-                if (canEdit)
-                {
-                    addMenuCommand(menu, "Commit Changes", [this](VSTGUI::CCommandMenuItem*) { commitEdits(); });
-                    addMenuCommand(menu, "Cancel Changes", [this](VSTGUI::CCommandMenuItem*) { cancelEdits(); });
-                }
-                else
-                {
-                    addMenuCommand(menu, "Enter Edit Mode", [this](VSTGUI::CCommandMenuItem*) { enterEditMode(); });
+                switch (currentAction)
+				{
+				case ActionType::PlayMode:
+                    addMenuCommand(menu, "Enter Edit Mode",
+                        [this](auto*)
+                        {
+                            setAction(ActionType::EditMode);
+                        });
+                    addMenuCommand(menu, "Enter Search Mode",
+                        [this](auto*)
+                        {
+                            setAction(ActionType::SearchMode);
+                        });
+                    break;
+                case ActionType::SearchMode:
+                    addMenuCommand(menu, "Cancel Search",
+                        [this](auto*)
+                        {
+                            setAction(ActionType::PlayMode);
+                        });
+                    break;
+				case ActionType::EditMode:
+                    addMenuCommand(menu, "Commit Changes",
+                        [this](auto*)
+                        {
+                            auto set = fretBoard->getPressedFrets();
+                            int chordNum = chordSelecter->getCurrentChordNumber();
+                            ChordMap::instance().setVoicing(chordNum, set);
+                            setAction(ActionType::PlayMode, true);
+                        });
+                    addMenuCommand(menu, "Cancel Changes",
+                        [this](auto*)
+                        {
+                            setAction(ActionType::PlayMode, false);
+                        });
+                    break;
                 }
             }
 
@@ -167,6 +201,55 @@ namespace MinMax
             anchor->localToFrame(p);
             menu->popup(getFrame(), p);
             menu->forget();
+        }
+
+        void setAction(ActionType next, bool commitEdit = false)
+        {
+            if (currentAction == next)
+                return;
+
+            // --- exit current action ---
+            switch (currentAction)
+            {
+            case ActionType::EditMode:
+            {
+                bool isCancel = !commitEdit;
+                fretBoard->endEdit(isCancel);
+                chordSelecter->endEdit();
+                labelPreset->setFontColor(VSTGUI::kWhiteCColor);
+                labelPreset->setBackColor(VSTGUI::kGreyCColor);
+            }
+            break;
+
+            case ActionType::SearchMode:
+                // TODO: search cleanup
+                break;
+
+            case ActionType::PlayMode:
+                break;
+            }
+
+            currentAction = next;
+
+            // --- enter next action ---
+            switch (currentAction)
+            {
+            case ActionType::EditMode:
+                fretBoard->beginEdit();
+                chordSelecter->beginEdit();
+
+                labelPreset->setFontColor(VSTGUI::kRedCColor);
+                labelPreset->setBackColor(VSTGUI::kBlackCColor);
+                break;
+
+            case ActionType::SearchMode:
+                // TODO: search init
+                break;
+
+            case ActionType::PlayMode:
+                // 特に何もしない（Playは基準状態）
+                break;
+            }
         }
 
         VSTGUI::COptionMenu* createOpenPresetMenu()
@@ -214,7 +297,7 @@ namespace MinMax
         void onParameterChordChanged(int value)
         {
             if (!editor) return;
-            if (canEdit) return;
+            if (currentAction != ActionType::PlayMode) return;
             auto* c = Steinberg::FCast<MyVSTController>(editor->getController());
             fretBoard->setPressedFrets(c->ChordInfo);
             chordSelecter->setChordNumber(c->ChordInfo.flatIndex);
@@ -223,7 +306,7 @@ namespace MinMax
         void onSelectedChordChanged(int value)
         {
             if (!editor) return;
-            if (canEdit) return;
+            if (currentAction != ActionType::PlayMode) return;
 
             auto* c = editor->getController();
 
@@ -266,39 +349,6 @@ namespace MinMax
                     }
                 }
             );
-        }
-
-        void enterEditMode()
-        {
-            canEdit = true;
-            fretBoard->beginEdit();
-            chordSelecter->beginEdit();
-            labelPreset->setFontColor(VSTGUI::kRedCColor);
-			labelPreset->setBackColor(VSTGUI::kBlackCColor);
-        }
-
-        void commitEdits()
-        {
-            auto currentSet = fretBoard->getPressedFrets();
-            int chordNum = chordSelecter->getCurrentChordNumber();
-            ChordMap::instance().setVoicing(chordNum, currentSet);
-
-            exitEditMode(false);
-        }
-
-        void cancelEdits()
-        {
-            if (!canEdit) return;
-            exitEditMode(true);
-        }
-
-        void exitEditMode(bool isCancel)
-        {
-            canEdit = false;
-            fretBoard->endEdit(isCancel);
-            chordSelecter->endEdit();
-            labelPreset->setFontColor(VSTGUI::kWhiteCColor);
-            labelPreset->setBackColor(VSTGUI::kGreyCColor);
         }
 
         void showDialog(VSTGUI::CControl* p, VSTGUI::CNewFileSelector::Style style, std::function<void(std::filesystem::path path)> fileSelected)

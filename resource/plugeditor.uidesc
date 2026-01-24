@@ -110,7 +110,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "view"
+				"SelectedTemplate": "tab2"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -2721,7 +2721,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "Brush 1",
+							"title": "Brush Up",
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
@@ -2793,7 +2793,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "Brush 2",
+							"title": "Brush Down",
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
