@@ -84,8 +84,8 @@
 			"P1252_STRINGS_UP_LOW": "1252",
 			"P1253_STRINGS_DOWN_HIGH": "1253",
 			"P1254_STRINGS_DOWN_LOW": "1254",
-			"P1255_STRINGS_BRUSH_1": "1255",
-			"P1256_STRINGS_BRUSH_2": "1256",
+			"P1255_STRINGS_DOWN": "1255",
+			"P1256_STRINGS_UP": "1256",
 			"P1261_STR1_OFFSET": "1261",
 			"P1262_STR2_OFFSET": "1262",
 			"P1263_STR3_OFFSET": "1263",
@@ -130,7 +130,7 @@
 				"SelectedRow": "9"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "7"
+				"SelectedRow": "33"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -2722,7 +2722,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "Brush Up",
+							"title": "Brush Down",
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
@@ -2734,7 +2734,7 @@
 							"back-color": "~ WhiteCColor",
 							"background-offset": "0, 0",
 							"class": "COptionMenu",
-							"control-tag": "P1255_STRINGS_BRUSH_1",
+							"control-tag": "P1255_STRINGS_DOWN",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ BlackCColor",
@@ -2794,7 +2794,7 @@
 							"text-inset": "0, 0",
 							"text-rotation": "0",
 							"text-shadow-offset": "1, 1",
-							"title": "Brush Down",
+							"title": "Brush Up",
 							"transparent": "false",
 							"value-precision": "2",
 							"wants-focus": "false",
@@ -2806,7 +2806,7 @@
 							"back-color": "~ WhiteCColor",
 							"background-offset": "0, 0",
 							"class": "COptionMenu",
-							"control-tag": "P1256_STRINGS_BRUSH_2",
+							"control-tag": "P1256_STRINGS_UP",
 							"font": "~ NormalFontSmall",
 							"font-antialias": "true",
 							"font-color": "~ BlackCColor",
