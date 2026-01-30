@@ -16,8 +16,6 @@
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/lib/vstguifwd.h>
 
-#include "debug_log.h"
-
 namespace MinMax
 {
     enum class FretBoardContext
@@ -40,9 +38,7 @@ namespace MinMax
     {
     private:
         // 設定
-        static constexpr int kMaxFret = 19;
-
-        const int lastFret = kMaxFret;                      // 最大フレット数
+        static constexpr int lastFret = 19;                 // 最大フレット数
         const int firstFret = -1;                           // -1フレット（ナット外側）
         const int numFrets = (lastFret - firstFret + 1);
         const double outerMargin = 10.0;                    // 上部余白
@@ -57,7 +53,7 @@ namespace MinMax
         const VSTGUI::CColor pressedColor = VSTGUI::CColor(255, 140, 0, 255);
         const VSTGUI::CColor pressedOffsetColor = VSTGUI::CColor(255, 0, 255, 255);
         const VSTGUI::CColor muteColor = VSTGUI::CColor(255, 0, 0, 255);
-        const VSTGUI::CColor kBarreColor = VSTGUI::CColor(255, 140, 0, 160);
+        const VSTGUI::CColor kBarreColor = VSTGUI::CColor(255, 140, 0, 80);
 
         VSTGUI::CRect frameSize;
         VSTGUI::CRect boardSize;
@@ -67,7 +63,7 @@ namespace MinMax
         double fretSpacing;
 
         using BarreFlags = std::array<bool, STRING_COUNT>;
-        using BarreInfoArray = std::array<BarreFlags, kMaxFret>;
+        using BarreInfoArray = std::array<BarreFlags, lastFret>;
 
         // 押さえているフレット
         StringSet currentSet{};
@@ -116,7 +112,7 @@ namespace MinMax
             BarreInfoArray info{};
 
             // --- 第1段：フレットごとの初期バレー判定 ---
-            for (int fret = 0; fret < kMaxFret; ++fret)
+            for (int fret = 0; fret < lastFret; ++fret)
             {
                 bool barreSW = false;
 
@@ -147,7 +143,7 @@ namespace MinMax
                 int count = 0;
 
                 // 候補フレット探索
-                for (int f = 0; f < kMaxFret; ++f)
+                for (int f = 0; f < lastFret; ++f)
                 {
                     if (info[f][s])
                     {
@@ -161,7 +157,7 @@ namespace MinMax
                     continue;
 
                 // minFret より上で「実際に押さえていない」ものを除外
-                for (int f = minFret + 1; f < kMaxFret; ++f)
+                for (int f = minFret + 1; f < lastFret; ++f)
                 {
                     if (pressed.data[s] != f)
                         info[f][s] = false;
@@ -181,7 +177,7 @@ namespace MinMax
         {
             std::vector<BarreSpan> result;
 
-            for (int fret = 0; fret < kMaxFret; ++fret)
+            for (int fret = 0; fret < lastFret; ++fret)
             {
                 if (fret <= 0)
                     continue;
