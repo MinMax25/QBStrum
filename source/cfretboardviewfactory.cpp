@@ -162,11 +162,11 @@ namespace MinMax
                 switch (currentAction)
 				{
 				case ActionType::PlayMode:
-                    addMenuCommand(menu, "Guess the Chord",
-                        [this](auto*)
-                        {
-                            setAction(ActionType::GuessMode);
-                        });
+                    //addMenuCommand(menu, "Guess the Chord",
+                    //    [this](auto*)
+                    //    {
+                    //        setAction(ActionType::GuessMode);
+                    //    });
                     addMenuCommand(menu, "Enter Edit Mode",
                         [this](auto*)
                         {
@@ -223,7 +223,7 @@ namespace MinMax
             break;
 
             case ActionType::GuessMode:
-                // TODO: search cleanup
+                // TODO: guess cleanup
                 break;
 
             case ActionType::PlayMode:
@@ -243,7 +243,7 @@ namespace MinMax
                 break;
 
             case ActionType::GuessMode:
-                // TODO: search init
+                // TODO: guess init
                 break;
 
             case ActionType::PlayMode:
