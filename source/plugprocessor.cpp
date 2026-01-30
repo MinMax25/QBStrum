@@ -551,7 +551,7 @@ namespace MinMax
 	{
 		const double NOTE_LENGTH = 40.0;
 
-		if (!prm.getInt(ENABLED_MUTE_FNOIZE)) return;
+		if (!prm.getInt(ENABLED_MUTE)) return;
 
 		scheduler.allNotesOff();
 
@@ -600,7 +600,7 @@ namespace MinMax
 	{
 		constexpr double FRET_NOISE_LENGTH = 40.0;
 
-		if (!prm.getInt(ENABLED_MUTE_FNOIZE)) return;
+		if (!prm.getInt(ENABLED_NOIZE)) return;
 
 		float distance = 0.0f;
 

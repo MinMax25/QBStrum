@@ -58,8 +58,9 @@
 			"P1004_NEED_SAMPLEBLOCK_ADUST": "1004",
 			"P1005_TABINDEX1": "1005",
 			"P1006_OCTAVE": "1006",
-			"P1007_ENSBLED_MUTE_FNOIZE": "1007",
-			"P1008_ENSBLED_ARTICULATION": "1008",
+			"P1007_ENSBLED_MUTE": "1007",
+			"P1008_ENSBLED_NOIZE": "1008",
+			"P1009_ENSBLED_ARTICULATION": "1009",
 			"P1101_CHORD_LSB": "1101",
 			"P1102_CHORD_MSB": "1102",
 			"P1103_CHORD_NUM": "1103",
@@ -110,7 +111,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab3"
+				"SelectedTemplate": "tab2"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -121,7 +122,7 @@
 				"SplitViewSize_1_1": "0.4273907910271546595204483764973701909184",
 				"SplitViewSize_2_0": "0.6565295169946332443089431762928143143654",
 				"SplitViewSize_2_1": "0.3404889683959451129879880681983195245266",
-				"TabSwitchValue": "0",
+				"TabSwitchValue": "1",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
@@ -129,7 +130,7 @@
 				"SelectedRow": "9"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "19"
+				"SelectedRow": "7"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -2582,16 +2583,16 @@
 							"boxframe-color": "~ BlackCColor",
 							"checkmark-color": "~ RedCColor",
 							"class": "CCheckBox",
-							"control-tag": "P1007_ENSBLED_MUTE_FNOIZE",
+							"control-tag": "P1007_ENSBLED_MUTE",
 							"draw-crossbox": "false",
 							"font": "~ NormalFontSmall",
 							"font-color": "~ WhiteCColor",
 							"frame-width": "1",
 							"opacity": "1",
-							"origin": "20, 170",
+							"origin": "20, 180",
 							"round-rect-radius": "0",
-							"size": "160, 15",
-							"title": "Enabled Mute / Fret Noize",
+							"size": "105, 15",
+							"title": "Enabled Mute",
 							"transparent": "false",
 							"wants-focus": "false",
 							"wheel-inc-value": "0.1"
@@ -2604,15 +2605,15 @@
 							"boxframe-color": "~ BlackCColor",
 							"checkmark-color": "~ RedCColor",
 							"class": "CCheckBox",
-							"control-tag": "P1008_ENSBLED_ARTICULATION",
+							"control-tag": "P1009_ENSBLED_ARTICULATION",
 							"draw-crossbox": "false",
 							"font": "~ NormalFontSmall",
 							"font-color": "~ WhiteCColor",
 							"frame-width": "1",
 							"opacity": "1",
-							"origin": "20, 190",
+							"origin": "20, 160",
 							"round-rect-radius": "0",
-							"size": "125, 15",
+							"size": "120, 15",
 							"title": "Enabled Articulation",
 							"transparent": "false",
 							"wants-focus": "false",
@@ -2831,6 +2832,28 @@
 							"text-shadow-offset": "1, 1",
 							"transparent": "false",
 							"value-precision": "2",
+							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
+						}
+					},
+					"CCheckBox": {
+						"attributes": {
+							"autosize-to-fit": "false",
+							"boxfill-color": "~ WhiteCColor",
+							"boxframe-color": "~ BlackCColor",
+							"checkmark-color": "~ RedCColor",
+							"class": "CCheckBox",
+							"control-tag": "P1008_ENSBLED_NOIZE",
+							"draw-crossbox": "false",
+							"font": "~ NormalFontSmall",
+							"font-color": "~ WhiteCColor",
+							"frame-width": "1",
+							"opacity": "1",
+							"origin": "20, 200",
+							"round-rect-radius": "0",
+							"size": "160, 15",
+							"title": "Enabled Fret Noize",
+							"transparent": "false",
 							"wants-focus": "false",
 							"wheel-inc-value": "0.1"
 						}

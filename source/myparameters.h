@@ -61,7 +61,8 @@ namespace MinMax
 		NEED_SAMPLEBLOCK_ADJUST,
 		CTL_TABINDEX1,
 		OCTAVE,
-		ENABLED_MUTE_FNOIZE,
+		ENABLED_MUTE,
+		ENABLED_NOIZE,
 		ENABLED_ARTICULATION,
 
 		// コード指定パラメータ
@@ -196,7 +197,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 66;
+	inline constexpr size_t PARAM_MAX = 67;
 
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
@@ -209,7 +210,8 @@ namespace MinMax
 	{ NEED_SAMPLEBLOCK_ADJUST, STR16("Need Sampleblock Adjust"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_HIDDEN,	U_GENERAL, 0, 1, 0, 0 },
 	{ CTL_TABINDEX1, STR16("TabIndex1"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, CTL_TABINDEX1_RANGE, PF::FLAG::FLAG_HIDDEN,						U_GENERAL, 0, 1, 0, 0 },
 	{ OCTAVE, STR16("Octave+"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_HIDDEN,										U_GENERAL, 0, 1, 0, 0 },
-	{ ENABLED_MUTE_FNOIZE, STR16("Enabled Mute/Fret Noize"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_HIDDEN,		U_GENERAL, 0, 1, 1, 0 },
+	{ ENABLED_MUTE, STR16("Enabled Mute/Fret Noize"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_HIDDEN,				U_GENERAL, 0, 1, 1, 0 },
+	{ ENABLED_NOIZE, STR16("Enabled Mute/Fret Noize"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_HIDDEN,				U_GENERAL, 0, 1, 1, 0 },
 	{ ENABLED_ARTICULATION, STR16("Enabled Articulation"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_HIDDEN,			U_GENERAL, 0, 1, 1, 0 },
 
 	{ CHORD_LSB, STR16("Chord LSB"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, MIDI_DATA, PF::FLAG::FLAG_HIDDEN,									U_CHORD,  0,      1, 0, 0 },
