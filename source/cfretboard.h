@@ -16,8 +16,24 @@
 #include <vstgui/lib/vstguibase.h>
 #include <vstgui/lib/vstguifwd.h>
 
+#include "debug_log.h"
+
 namespace MinMax
 {
+    enum class FretBoardContext
+    {
+        View,   // 通常時
+        Edit,   // コード編集
+        Guess   // コード推定
+    };
+
+    struct BarreSpan
+    {
+        int fret;
+        int stringFrom; // inclusive
+        int stringTo;   // inclusive
+    };
+
     // ギターフレット表示コントロール
     class CFretBoard
         : public VSTGUI::CControl
@@ -28,6 +44,7 @@ namespace MinMax
         const int firstFret = -1;                           // -1フレット（ナット外側）
         const int numFrets = (lastFret - firstFret + 1);
         const double outerMargin = 10.0;                    // 上部余白
+        const float markerRadius = 8.0f;
 
         const VSTGUI::CColor bg = VSTGUI::CColor(55, 35, 18, 255);
         const VSTGUI::CColor stringColor = VSTGUI::CColor(230, 230, 230, 255);
@@ -38,6 +55,7 @@ namespace MinMax
         const VSTGUI::CColor pressedColor = VSTGUI::CColor(255, 140, 0, 255);
         const VSTGUI::CColor pressedOffsetColor = VSTGUI::CColor(255, 0, 255, 255);
         const VSTGUI::CColor muteColor = VSTGUI::CColor(255, 0, 0, 255);
+        const VSTGUI::CColor kBarreColor = VSTGUI::CColor(255, 140, 0, 160);
 
         VSTGUI::CRect frameSize;
         VSTGUI::CRect boardSize;
@@ -46,7 +64,8 @@ namespace MinMax
         double stringSpacing;
         double fretSpacing;
 
-        bool canEdit_ = false;
+        using BarreFlags = std::array<bool, STRING_COUNT>;
+        using BarreInfoMap = std::map<int, BarreFlags>;
 
         // 押さえているフレット
         StringSet currentSet{};
@@ -86,6 +105,109 @@ namespace MinMax
                 currentSet.data[i] = workingSet.data[i];
                 currentSet.setOffset(i, workingSet.getOffset(i));
             }
+        }
+
+        FretBoardContext context{ FretBoardContext::View };
+
+        BarreInfoMap buildBarreInfo(const StringSet& pressed)
+        {
+            BarreInfoMap info;
+
+            for (int fret = 0; fret < 19; ++fret)
+            {
+                BarreFlags flags{};
+                bool barreSW = false;
+
+                // どこかの弦がこの fret を押しているか
+                for (int s = 0; s < STRING_COUNT; ++s)
+                {
+                    if (pressed.data[s] == fret)
+                    {
+                        barreSW = true;
+                        break;
+                    }
+                }
+
+                for (int s = 0; s < STRING_COUNT; ++s)
+                {
+                    // ミュート弦があれば以降不可
+                    if (pressed.data[s] == -1)
+                        barreSW = false;
+
+                    flags[s] = barreSW;
+                }
+
+                info[fret] = flags;
+            }
+
+            // 弦ごとの後処理（C# の2段目ループ）
+            for (int s = 0; s < STRING_COUNT; ++s)
+            {
+                std::vector<int> candidates;
+                for (auto& [f, flags] : info)
+                {
+                    if (flags[s])
+                        candidates.push_back(f);
+                }
+
+                if (candidates.size() <= 1)
+                    continue;
+
+                int minFret = *std::min_element(candidates.begin(), candidates.end());
+
+                for (int f = minFret + 1; f < 19; ++f)
+                {
+                    if (pressed.data[s] != f)
+                        info[f][s] = false;
+                }
+
+                // 開放弦との矛盾除去
+                if (info[0][s] && pressed.data[s] != 0)
+                {
+                    info[0][s] = false;
+                }
+            }
+
+            return info;
+        }
+
+        std::vector<BarreSpan> extractBarreSpans(const BarreInfoMap& info)
+        {
+            std::vector<BarreSpan> result;
+
+            for (const auto& [fret, flags] : info)
+            {
+                if (fret <= 0) continue;
+
+                int start = -1;
+
+                for (int s = 0; s < STRING_COUNT; ++s)
+                {
+                    if (flags[s])
+                    {
+                        if (start < 0)
+                            start = s;
+                    }
+                    else
+                    {
+                        if (start >= 0)
+                        {
+                            if (s - start >= 2)
+                            {
+                                result.push_back({ fret, start, s - 1 });
+                            }
+                            start = -1;
+                        }
+                    }
+                }
+
+                if (start >= 0 && STRING_COUNT - start >= 2)
+                {
+                    result.push_back({ fret, start, STRING_COUNT - 1 });
+                }
+            }
+
+            return result;
         }
 
     public:
@@ -201,6 +323,22 @@ namespace MinMax
             // 押さえているフレットのマーカー表示（🔶）
             // ------------------------
             {
+                auto barreInfo = buildBarreInfo(currentSet);
+                auto barreSpans = extractBarreSpans(barreInfo);
+
+                DrawBarres(pContext, barreSpans, markerRadius);
+#if DEBUG
+                // デバッグ表示
+                for (const auto& s : currentSet.data)
+                {
+                    DLogWriteLine("Pressed Fret: %d", s);
+                }
+                for (const auto& span : barreSpans)
+                {
+                    DLogWriteLine("Barre Fret %d: Strings %d to %d", span.fret, span.stringFrom + 1, span.stringTo + 1);
+				}
+#endif
+
                 for (unsigned int stringindex = 0; stringindex < currentSet.size; ++stringindex)
                 {
                     int fret = currentSet.data[stringindex];
@@ -284,9 +422,58 @@ namespace MinMax
             }
         }
 
+        void DrawBarres(VSTGUI::CDrawContext* ctx, const std::vector<BarreSpan>& spans, float markerRadius)
+        {
+            if (!ctx)
+                return;
+
+            for (const auto& span : spans)
+            {
+                // フレットX（押弦マーカーと同じ基準）
+                float x = GetFretX(span.fret);
+
+                // 弦Y
+                float y1 = GetStringY(span.stringFrom);
+                float y2 = GetStringY(span.stringTo);
+
+                // バレーは「太い横線」
+                VSTGUI::CRect barreRect(
+                    x - markerRadius,
+                    y1 - markerRadius * 0.6f,
+                    x + markerRadius,
+                    y2 + markerRadius * 0.6f
+                );
+
+                ctx->setFillColor(kBarreColor);
+                ctx->drawRect(barreRect, VSTGUI::kDrawFilled);
+            }
+        }
+
+        float GetFretX(int fret)
+        {
+            // fret: 押弦フレット番号（1,2,3...）
+            // 押弦マーカーと同じ計算基準に合わせる
+            int internalFret = fret - 1;
+
+            return static_cast<float>(
+                boardSize.left
+                + fretSpacing * (internalFret - firstFret)
+                + fretSpacing * 0.5
+                );
+        }
+
+        float GetStringY(int stringIndex)
+        {
+            return static_cast<float>(
+                boardSize.top
+                + outerMargin
+                + stringSpacing * stringIndex
+                );
+        }
+
         VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
         {
-            if (!canEdit_) return VSTGUI::kMouseEventNotHandled;
+            if (context != FretBoardContext::Edit) return VSTGUI::kMouseEventNotHandled;
 
             int stringIndex =
                 int((where.y - (boardSize.top + outerMargin)) / stringSpacing + 0.5);
@@ -331,20 +518,6 @@ namespace MinMax
             return VSTGUI::kMouseEventHandled;
         }
 
-        void beginEdit()
-        {
-            canEdit_ = true;
-            saveStringSet();
-            invalid();
-        }
-
-        void endEdit(bool isCancel)
-        {
-            canEdit_ = false;
-            if (isCancel) restoreStringSet();
-            invalid();
-        }
-
         // 現在の押弦情報
         StringSet getPressedFrets() const
         {
@@ -356,6 +529,45 @@ namespace MinMax
         {
             currentSet = set;
             invalid(); // 再描画
+        }
+
+        void setContext(FretBoardContext ctx)
+        {
+            if (context == ctx) return;
+
+            // --- exit ---
+            switch (context)
+            {
+            case FretBoardContext::Edit:
+                // Edit 終了時の後始末は View 側が判断する
+                break;
+            default:
+                break;
+            }
+
+            // --- enter ---
+            switch (ctx)
+            {
+            case FretBoardContext::Edit:
+                saveStringSet();
+                break;
+            default:
+                break;
+            }
+
+            context = ctx;
+            invalid();
+        }
+
+        FretBoardContext getContext() const
+        {
+            return context;
+        }
+
+        void cancelEdit()
+        {
+            restoreStringSet();
+            invalid();
         }
 
         CLASS_METHODS(CFretBoard, CControl)

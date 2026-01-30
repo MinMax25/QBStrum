@@ -80,7 +80,7 @@ namespace MinMax
         enum class ActionType
         {
             PlayMode,
-			SearchMode,
+			GuessMode,
 			EditMode
         };
 		ActionType currentAction = ActionType::PlayMode;
@@ -118,7 +118,7 @@ namespace MinMax
 
         void initLabelPreset()
         {
-            labelPreset = new VSTGUI::CTextLabel({ 221, 1, 400, 18 });
+            labelPreset = new VSTGUI::CTextLabel({ 1, 1, 100, 18 });
             labelPreset->setBackColor(VSTGUI::kGreyCColor);
             labelPreset->setFont(VSTGUI::kNormalFontSmall);
             labelPreset->setText(ChordMap::instance().getPresetName());
@@ -150,6 +150,7 @@ namespace MinMax
 
             if (type == MenuType::File)
             {
+                if (currentAction != ActionType::PlayMode) return;
                 auto* openMenu = createOpenPresetMenu();
                 menu->addEntry(new VSTGUI::CMenuItem("Open", openMenu));
                 openMenu->forget();
@@ -161,19 +162,19 @@ namespace MinMax
                 switch (currentAction)
 				{
 				case ActionType::PlayMode:
+                    addMenuCommand(menu, "Guess the Chord",
+                        [this](auto*)
+                        {
+                            setAction(ActionType::GuessMode);
+                        });
                     addMenuCommand(menu, "Enter Edit Mode",
                         [this](auto*)
                         {
                             setAction(ActionType::EditMode);
                         });
-                    addMenuCommand(menu, "Enter Search Mode",
-                        [this](auto*)
-                        {
-                            setAction(ActionType::SearchMode);
-                        });
                     break;
-                case ActionType::SearchMode:
-                    addMenuCommand(menu, "Cancel Search",
+                case ActionType::GuessMode:
+                    addMenuCommand(menu, "Cancel Guess",
                         [this](auto*)
                         {
                             setAction(ActionType::PlayMode);
@@ -213,15 +214,15 @@ namespace MinMax
             {
             case ActionType::EditMode:
             {
-                bool isCancel = !commitEdit;
-                fretBoard->endEdit(isCancel);
+                if (!commitEdit) fretBoard->cancelEdit();
+                fretBoard->setContext(FretBoardContext::View);
                 chordSelecter->endEdit();
                 labelPreset->setFontColor(VSTGUI::kWhiteCColor);
                 labelPreset->setBackColor(VSTGUI::kGreyCColor);
             }
             break;
 
-            case ActionType::SearchMode:
+            case ActionType::GuessMode:
                 // TODO: search cleanup
                 break;
 
@@ -235,14 +236,13 @@ namespace MinMax
             switch (currentAction)
             {
             case ActionType::EditMode:
-                fretBoard->beginEdit();
+                fretBoard->setContext(FretBoardContext::Edit);
                 chordSelecter->beginEdit();
-
                 labelPreset->setFontColor(VSTGUI::kRedCColor);
                 labelPreset->setBackColor(VSTGUI::kBlackCColor);
                 break;
 
-            case ActionType::SearchMode:
+            case ActionType::GuessMode:
                 // TODO: search init
                 break;
 

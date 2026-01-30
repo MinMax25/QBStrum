@@ -110,7 +110,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab2"
+				"SelectedTemplate": "tab3"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -126,7 +126,7 @@
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "27"
+				"SelectedRow": "9"
 			},
 			"UITagsDataSource": {
 				"SelectedRow": "19"
@@ -4535,6 +4535,43 @@
 							"size": "128, 128",
 							"transparent": "false",
 							"wants-focus": "false"
+						}
+					},
+					"CTextLabel": {
+						"attributes": {
+							"back-color": "~ TransparentCColor",
+							"background-offset": "0, 0",
+							"class": "CTextLabel",
+							"default-value": "0.5",
+							"font": "~ NormalFont",
+							"font-antialias": "true",
+							"font-color": "~ WhiteCColor",
+							"frame-color": "~ TransparentCColor",
+							"frame-width": "1",
+							"max-value": "1",
+							"min-value": "0",
+							"mouse-enabled": "true",
+							"opacity": "1",
+							"origin": "15, 10",
+							"round-rect-radius": "6",
+							"shadow-color": "~ RedCColor",
+							"size": "100, 20",
+							"style-3D-in": "false",
+							"style-3D-out": "false",
+							"style-no-draw": "false",
+							"style-no-frame": "false",
+							"style-no-text": "false",
+							"style-round-rect": "false",
+							"style-shadow-text": "false",
+							"text-alignment": "center",
+							"text-inset": "0, 0",
+							"text-rotation": "0",
+							"text-shadow-offset": "1, 1",
+							"title": "QBStrum 1.0.0",
+							"transparent": "false",
+							"value-precision": "2",
+							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
 						}
 					}
 				}
