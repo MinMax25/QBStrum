@@ -40,7 +40,9 @@ namespace MinMax
     {
     private:
         // 設定
-        const int lastFret = 19;                            // 最大フレット数
+        static constexpr int kMaxFret = 19;
+
+        const int lastFret = kMaxFret;                      // 最大フレット数
         const int firstFret = -1;                           // -1フレット（ナット外側）
         const int numFrets = (lastFret - firstFret + 1);
         const double outerMargin = 10.0;                    // 上部余白
@@ -65,7 +67,7 @@ namespace MinMax
         double fretSpacing;
 
         using BarreFlags = std::array<bool, STRING_COUNT>;
-        using BarreInfoMap = std::map<int, BarreFlags>;
+        using BarreInfoArray = std::array<BarreFlags, kMaxFret>;
 
         // 押さえているフレット
         StringSet currentSet{};
@@ -109,13 +111,13 @@ namespace MinMax
 
         FretBoardContext context{ FretBoardContext::View };
 
-        BarreInfoMap buildBarreInfo(const StringSet& pressed)
+        BarreInfoArray buildBarreInfo(const StringSet& pressed)
         {
-            BarreInfoMap info;
+            BarreInfoArray info{};
 
-            for (int fret = 0; fret < 19; ++fret)
+            // --- 第1段：フレットごとの初期バレー判定 ---
+            for (int fret = 0; fret < kMaxFret; ++fret)
             {
-                BarreFlags flags{};
                 bool barreSW = false;
 
                 // どこかの弦がこの fret を押しているか
@@ -134,28 +136,32 @@ namespace MinMax
                     if (pressed.data[s] == -1)
                         barreSW = false;
 
-                    flags[s] = barreSW;
+                    info[fret][s] = barreSW;
                 }
-
-                info[fret] = flags;
             }
 
-            // 弦ごとの後処理（C# の2段目ループ）
+            // --- 第2段：弦ごとの後処理（C# 版と同等） ---
             for (int s = 0; s < STRING_COUNT; ++s)
             {
-                std::vector<int> candidates;
-                for (auto& [f, flags] : info)
+                int minFret = -1;
+                int count = 0;
+
+                // 候補フレット探索
+                for (int f = 0; f < kMaxFret; ++f)
                 {
-                    if (flags[s])
-                        candidates.push_back(f);
+                    if (info[f][s])
+                    {
+                        if (minFret < 0)
+                            minFret = f;
+                        ++count;
+                    }
                 }
 
-                if (candidates.size() <= 1)
+                if (count <= 1)
                     continue;
 
-                int minFret = *std::min_element(candidates.begin(), candidates.end());
-
-                for (int f = minFret + 1; f < 19; ++f)
+                // minFret より上で「実際に押さえていない」ものを除外
+                for (int f = minFret + 1; f < kMaxFret; ++f)
                 {
                     if (pressed.data[s] != f)
                         info[f][s] = false;
@@ -171,13 +177,16 @@ namespace MinMax
             return info;
         }
 
-        std::vector<BarreSpan> extractBarreSpans(const BarreInfoMap& info)
+        std::vector<BarreSpan> extractBarreSpans(const BarreInfoArray& info)
         {
             std::vector<BarreSpan> result;
 
-            for (const auto& [fret, flags] : info)
+            for (int fret = 0; fret < kMaxFret; ++fret)
             {
-                if (fret <= 0) continue;
+                if (fret <= 0)
+                    continue;
+
+                const BarreFlags& flags = info[fret];
 
                 int start = -1;
 
@@ -192,6 +201,7 @@ namespace MinMax
                     {
                         if (start >= 0)
                         {
+                            // 2弦以上（＝1フレットで複数弦）ならバレー
                             if (s - start >= 2)
                             {
                                 result.push_back({ fret, start, s - 1 });
@@ -201,6 +211,7 @@ namespace MinMax
                     }
                 }
 
+                // 末尾まで続いていた場合
                 if (start >= 0 && STRING_COUNT - start >= 2)
                 {
                     result.push_back({ fret, start, STRING_COUNT - 1 });
@@ -327,17 +338,6 @@ namespace MinMax
                 auto barreSpans = extractBarreSpans(barreInfo);
 
                 DrawBarres(pContext, barreSpans, markerRadius);
-#if DEBUG
-                // デバッグ表示
-                for (const auto& s : currentSet.data)
-                {
-                    DLogWriteLine("Pressed Fret: %d", s);
-                }
-                for (const auto& span : barreSpans)
-                {
-                    DLogWriteLine("Barre Fret %d: Strings %d to %d", span.fret, span.stringFrom + 1, span.stringTo + 1);
-				}
-#endif
 
                 for (unsigned int stringindex = 0; stringindex < currentSet.size; ++stringindex)
                 {
@@ -427,16 +427,14 @@ namespace MinMax
             if (!ctx)
                 return;
 
+            ctx->setFillColor(kBarreColor);
+
             for (const auto& span : spans)
             {
-                // フレットX（押弦マーカーと同じ基準）
                 float x = GetFretX(span.fret);
-
-                // 弦Y
                 float y1 = GetStringY(span.stringFrom);
                 float y2 = GetStringY(span.stringTo);
 
-                // バレーは「太い横線」
                 VSTGUI::CRect barreRect(
                     x - markerRadius,
                     y1 - markerRadius * 0.6f,
@@ -444,8 +442,20 @@ namespace MinMax
                     y2 + markerRadius * 0.6f
                 );
 
-                ctx->setFillColor(kBarreColor);
-                ctx->drawRect(barreRect, VSTGUI::kDrawFilled);
+                auto path = ctx->createGraphicsPath();
+                if (path)
+                {
+                    path->addRoundRect(
+                        barreRect,
+                        markerRadius * 0.6f   // ← 半径は1つだけ
+                    );
+
+                    ctx->drawGraphicsPath(
+                        path,
+                        VSTGUI::CDrawContext::kPathFilled
+                    );
+                    path->forget();
+                }
             }
         }
 
