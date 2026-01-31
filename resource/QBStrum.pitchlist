@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<Music.PitchNameList title="QBStrum">
+	<Music.PitchName pitch="53" name="All Mute" color="FF2222D6" scorePitch="57" notehead="nhTr" technique="plus"/>
+	<Music.PitchName pitch="63" name="Brush Down" color="FFD68522" scorePitch="65" notehead="nhdX" technique="trm3"/>
+	<Music.PitchName pitch="61" name="Brush Up" color="FFD68522" scorePitch="72" notehead="nhdX" technique="trm3"/>
+	<Music.PitchName pitch="64" name="Up High" color="FF58D622" scorePitch="72" notehead="nhdX" technique="trm2"/>
+	<Music.PitchName pitch="62" name="Up" color="FF58D622" scorePitch="72" notehead="nhDi" technique="trm3"/>
+	<Music.PitchName pitch="60" name="Up Low" color="FF58D622" scorePitch="72" notehead="nhDi"/>
+	<Music.PitchName pitch="59" name="Down High" color="FF58D622" scorePitch="65" notehead="nhDi" technique="trm2"/>
+	<Music.PitchName pitch="57" name="Down" color="FF58D622" scorePitch="65" notehead="nhDi" technique="trm3"/>
+	<Music.PitchName pitch="55" name="Down Low" color="FF58D622" scorePitch="65" notehead="nhDi"/>
+	<Music.PitchName pitch="58" name="Mute 1" color="FF53F3DB" scorePitch="79" notehead="nhCX"/>
+	<Music.PitchName pitch="56" name="Mute 2" color="FF53F3DB" scorePitch="81" notehead="nhCX"/>
+	<Music.PitchName pitch="52" name="Arpeggio-String 1" color="FF22ACD6" scorePitch="79" notehead="nhDi"/>
+	<Music.PitchName pitch="50" name="Arpeggio-String 2" color="FF22ACD6" scorePitch="76" notehead="nhDi"/>
+	<Music.PitchName pitch="48" name="Arpeggio-String 3" color="FF22ACD6" scorePitch="72" notehead="nhDi"/>
+	<Music.PitchName pitch="47" name="Arpeggio-String 4" color="FF22ACD6" scorePitch="69" notehead="nhDi"/>
+	<Music.PitchName pitch="45" name="Arpeggio-String 5" color="FF22ACD6" scorePitch="65" notehead="nhDi"/>
+	<Music.PitchName pitch="43" name="Arpeggio-String 6" color="FF22ACD6" scorePitch="62" notehead="nhDi"/>
+</Music.PitchNameList>
