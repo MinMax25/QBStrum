@@ -10,6 +10,7 @@ namespace MinMax
 	// メッセージ識別子
 	inline constexpr char* MSG_SOUND_CHECK = "SoundCheck";
 	inline constexpr char* MSG_CHORD_CHANGED = "ChordChanged";
+	inline constexpr char* MSG_CHORD_EDIT = "ChordEdit";
 
 	// 音程名変換辞書
 	inline const std::array<char*, 128> NoteNames =

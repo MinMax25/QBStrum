@@ -748,6 +748,10 @@ namespace MinMax
 		{
 			return notifyStrumTrigger(message);
 		}
+		else if (strcmp(msgID, MSG_CHORD_EDIT) == 0)
+		{
+
+		}
 
 		return Steinberg::kResultFalse;
 	}

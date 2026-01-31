@@ -36,6 +36,7 @@
 #include "cmenubutton.h"
 #include "files.h"
 #include "myparameters.h"
+#include "plugdefine.h"
 
 #include "plugcontroller.h"
 
@@ -337,6 +338,19 @@ namespace MinMax
         {
             if (!editor) return;
             if (currentAction != ActionType::EditMode) return;
+
+            if (auto message = Steinberg::owned(editor->getController()->allocateMessage()))
+            {
+                // プラグインプロセッサにノートメッセージを送信
+                message->setMessageID(MSG_CHORD_EDIT);
+                if (auto attr = message->getAttributes())
+                {
+					auto& set = fretBoard->getPressedFrets();
+                    attr->setBinary(MSG_CHORD_EDIT, &set, sizeof(StringSet));
+                }
+                if (editor->getController() == nullptr) return;
+                editor->getController()->getPeer()->notify(message);
+            }
         }
 
         void saveChordMap()
