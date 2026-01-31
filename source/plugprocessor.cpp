@@ -453,7 +453,7 @@ namespace MinMax
 
 		trigFretNoise(event);
 
-		auto& voicing = chordMap.getChordVoicing(prm.get(CHORD_NUM));
+		auto& voicing = getChordVoicing(prm.get(CHORD_NUM));
 		auto& strnum = getTargetStrings(voicing, true, isDown, maxStrings);
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
@@ -489,7 +489,7 @@ namespace MinMax
 	{
 		trigFretNoise(event);
 
-		auto& voicing = chordMap.getChordVoicing(prm.getInt(CHORD_NUM));
+		auto& voicing = getChordVoicing(prm.getInt(CHORD_NUM));
 		auto& strnum = getTargetStrings(voicing, isAbove, isDown, maxStrings);
 		
 		double samplesPerMs = scheduler.getSamplesPerMs();
@@ -573,7 +573,7 @@ namespace MinMax
 	{
 		trigFretNoise(event);
 
-		auto& voicing = chordMap.getChordVoicing(prm.getInt(CHORD_NUM));
+		auto& voicing = getChordVoicing(prm.getInt(CHORD_NUM));
 
 		if (stringNumber < 0 || stringNumber >= STRING_COUNT || voicing.data[stringNumber] < 0)
 		{
@@ -676,6 +676,18 @@ namespace MinMax
 		return 0;
 	}
 
+	StringSet PLUGIN_API MyVSTProcessor::getChordVoicing(int flatIndex)
+	{
+		if (prm.getInt(CHORD_EDITING))
+		{
+			return editChordVoicing;
+		}
+		else
+		{
+			return chordMap.getChordVoicing(flatIndex);
+		}
+	}
+
 	StringSet MyVSTProcessor::getTargetStrings(StringSet voicing, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
 	{
 		StringSet result{};
@@ -750,7 +762,7 @@ namespace MinMax
 		}
 		else if (strcmp(msgID, MSG_CHORD_EDIT) == 0)
 		{
-
+			return notifyEditChord(message);
 		}
 
 		return Steinberg::kResultFalse;
@@ -793,6 +805,35 @@ namespace MinMax
 		}
 
 		InnerEvents.push(event);
+
+		return Steinberg::kResultOk;
+	}
+
+	Steinberg::tresult PLUGIN_API MyVSTProcessor::notifyEditChord(Steinberg::Vst::IMessage* message)
+	{
+		const void* msgData;
+		Steinberg::uint32 msgSize;
+
+		const auto attr = message->getAttributes();
+		if (attr == nullptr) return Steinberg::kResultFalse;
+
+		if (!(attr->getBinary(MSG_CHORD_EDIT, msgData, msgSize) == Steinberg::kResultTrue && msgSize == sizeof(StringSet)))
+		{
+			return Steinberg::kResultFalse;
+		}
+
+		const auto set = reinterpret_cast<const StringSet*>(msgData);
+
+		editChordVoicing.flatIndex = set->flatIndex;
+		editChordVoicing.state = set->state;
+
+		editChordVoicing.size = set->size;
+
+		for (int i = 0; i < set->size; i++)
+		{
+			editChordVoicing.data[i] = set->data[i];
+			editChordVoicing.setOffset(i, 0);
+		}
 
 		return Steinberg::kResultOk;
 	}

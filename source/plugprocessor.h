@@ -68,10 +68,12 @@ namespace MinMax
 		void PLUGIN_API trigArpeggio(int stringindex, Steinberg::Vst::Event event);
 		void PLUGIN_API trigFretNoise(Steinberg::Vst::Event event);
 		Steinberg::Vst::ParamID PLUGIN_API getParamIdByPitch(Steinberg::Vst::Event event);
+		StringSet PLUGIN_API getChordVoicing(int flatIndex);
 		StringSet PLUGIN_API getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings);
 		void PLUGIN_API notifyChordNumberChanged();
 		Steinberg::tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
 		Steinberg::tresult PLUGIN_API notifyStrumTrigger(Steinberg::Vst::IMessage* message);
+		Steinberg::tresult PLUGIN_API notifyEditChord(Steinberg::Vst::IMessage* message);
 		void PLUGIN_API processAudio(Steinberg::Vst::ProcessData& data);
 
 		// ストラムイベントスケジューラー
@@ -79,6 +81,8 @@ namespace MinMax
 
 		// コードマップ
 		ChordMap& chordMap = ChordMap::instance();
+
+		StringSet editChordVoicing{};
 
 		// プロセスデータの写し
 		Steinberg::Vst::ProcessData* processData{};
