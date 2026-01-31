@@ -41,7 +41,8 @@
 
 namespace MinMax
 {
-    class CFretBoardView : public VSTGUI::CViewContainer
+    class CFretBoardView
+        : public VSTGUI::CViewContainer
     {
     public:
         CFretBoardView(const VSTGUI::UIAttributes& attr, const VSTGUI::IUIDescription* desc, const VSTGUI::CRect& size)
