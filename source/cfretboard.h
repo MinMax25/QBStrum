@@ -36,6 +36,9 @@ namespace MinMax
     class CFretBoard
         : public VSTGUI::CControl
     {
+    public:
+        using EditChordChanged = std::function<void(CFretBoard*, StringSet)>;
+
     private:
         // 設定
         static constexpr int lastFret = 19;                 // 最大フレット数
@@ -239,9 +242,12 @@ namespace MinMax
                     );
         }
 
+		EditChordChanged editChordChangedCallback;
+
     public:
-        CFretBoard(const VSTGUI::CRect& size)
+        CFretBoard(const VSTGUI::CRect& size, EditChordChanged cb)
             : CControl(size)
+			, editChordChangedCallback(cb)
         {
             using namespace VSTGUI;
 
@@ -519,6 +525,11 @@ namespace MinMax
                     current = newValue;
                 }
             }
+
+            if (editChordChangedCallback)
+            {
+                editChordChangedCallback(this, currentSet);
+			}
 
             invalid();
             return VSTGUI::kMouseEventHandled;

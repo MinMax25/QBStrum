@@ -102,7 +102,7 @@ namespace MinMax
 
         void initFretBoard()
         {
-            fretBoard = new CFretBoard(getViewSize());
+            fretBoard = new CFretBoard(getViewSize(), [this](CFretBoard*, StringSet v) { onEditChordChanged(v); });
 			fretBoard->setWantsFocus(false);
             fretBoard->setPressedFrets(StringSet());
             addView(fretBoard);
@@ -331,6 +331,12 @@ namespace MinMax
                 c->performEdit(PARAM::CHORD_NUM, norm);
                 c->endEdit(PARAM::CHORD_NUM);
             }
+        }
+
+		void onEditChordChanged(StringSet set)
+        {
+            if (!editor) return;
+            if (currentAction != ActionType::EditMode) return;
         }
 
         void saveChordMap()
