@@ -251,6 +251,9 @@ namespace MinMax
                 // 特に何もしない（Playは基準状態）
                 break;
             }
+
+            //
+            actionParameterChange();
         }
 
         VSTGUI::COptionMenu* createOpenPresetMenu()
@@ -386,6 +389,18 @@ namespace MinMax
             auto* item = new VSTGUI::CCommandMenuItem(VSTGUI::CCommandMenuItem::Desc(title));
             item->setActions(std::forward<F>(cb));
             menu->addEntry(item);
+        }
+
+        void actionParameterChange()
+        {
+			auto* ctl = editor->getController();
+
+			Steinberg::Vst::ParamValue norm = currentAction == ActionType::PlayMode ? 0.0 : 1.0;
+
+			ctl->beginEdit(CHORD_EDITING);
+			ctl->setParamNormalized(CHORD_EDITING, norm);
+			ctl->performEdit(CHORD_EDITING, norm);
+            ctl->endEdit(CHORD_EDITING);
         }
     };
 

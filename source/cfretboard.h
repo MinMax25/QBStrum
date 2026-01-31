@@ -457,23 +457,23 @@ namespace MinMax
 
         float GetFretX(int fret)
         {
-            // fret: 押弦フレット番号（1,2,3...）
-            // 押弦マーカーと同じ計算基準に合わせる
             int internalFret = fret - 1;
 
-            return static_cast<float>(
-                boardSize.left
-                + fretSpacing * (internalFret - firstFret)
-                + fretSpacing * 0.5
+            return
+                static_cast<float>(
+                    boardSize.left
+                    + fretSpacing * (internalFret - firstFret)
+                    + fretSpacing * 0.5
                 );
         }
 
         float GetStringY(int stringIndex)
         {
-            return static_cast<float>(
-                boardSize.top
-                + outerMargin
-                + stringSpacing * stringIndex
+            return
+                static_cast<float>(
+                    boardSize.top
+                    + outerMargin
+                    + stringSpacing * stringIndex
                 );
         }
 

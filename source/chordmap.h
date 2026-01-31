@@ -126,15 +126,7 @@ namespace MinMax
 
         std::filesystem::path presetPath{};
 
-    public:
-        //==================================================================
-        // シングルトン
-        //==================================================================
-        static ChordMap& instance()
-        {
-            static ChordMap _instance;
-            return _instance;
-        }
+        ChordSpec spec;
 
         // Tunings
         StringSet Tunings{};
@@ -145,6 +137,16 @@ namespace MinMax
         std::array<std::string, (ChordSpec::defaultRootCount + ChordSpec::userRootCount)> RootNames{};
         std::array<std::string, ChordSpec::defaultTypeCount> DefaultTypeNames{};
         std::array<std::string, ChordSpec::userTypeCount> UserTypeNames{};
+
+    public:
+        //==================================================================
+        // シングルトン
+        //==================================================================
+        static ChordMap& instance()
+        {
+            static ChordMap _instance;
+            return _instance;
+        }
 
         StringSet getTunings() const 
         {
@@ -168,8 +170,6 @@ namespace MinMax
 
             return result;
         }
-
-        ChordSpec spec;
 
         float getPositionAverage(int flatIndex) const
         {
