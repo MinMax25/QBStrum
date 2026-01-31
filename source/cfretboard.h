@@ -217,6 +217,28 @@ namespace MinMax
             return result;
         }
 
+        float GetFretX(int fret)
+        {
+            int internalFret = fret - 1;
+
+            return
+                static_cast<float>(
+                    boardSize.left
+                    + fretSpacing * (internalFret - firstFret)
+                    + fretSpacing * 0.5
+                    );
+        }
+
+        float GetStringY(int stringIndex)
+        {
+            return
+                static_cast<float>(
+                    boardSize.top
+                    + outerMargin
+                    + stringSpacing * stringIndex
+                    );
+        }
+
     public:
         CFretBoard(const VSTGUI::CRect& size)
             : CControl(size)
@@ -455,28 +477,6 @@ namespace MinMax
             }
         }
 
-        float GetFretX(int fret)
-        {
-            int internalFret = fret - 1;
-
-            return
-                static_cast<float>(
-                    boardSize.left
-                    + fretSpacing * (internalFret - firstFret)
-                    + fretSpacing * 0.5
-                );
-        }
-
-        float GetStringY(int stringIndex)
-        {
-            return
-                static_cast<float>(
-                    boardSize.top
-                    + outerMargin
-                    + stringSpacing * stringIndex
-                );
-        }
-
         VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
         {
             if (context != FretBoardContext::Edit) return VSTGUI::kMouseEventNotHandled;
@@ -534,7 +534,7 @@ namespace MinMax
         void setPressedFrets(const StringSet& set)
         {
             currentSet = set;
-            invalid(); // 再描画
+            invalid();
         }
 
         void setContext(FretBoardContext ctx)
