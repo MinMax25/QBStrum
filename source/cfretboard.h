@@ -528,6 +528,7 @@ namespace MinMax
 
             if (editChordChangedCallback)
             {
+                currentSet.state = stringIndex;
                 editChordChangedCallback(this, currentSet);
 			}
 

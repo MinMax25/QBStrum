@@ -829,7 +829,7 @@ namespace MinMax
 
 		editChordVoicing.size = set->size;
 
-		for (int i = 0; i < set->size; i++)
+		for (int i = 0; i < (int)set->size; i++)
 		{
 			editChordVoicing.data[i] = set->data[i];
 			editChordVoicing.setOffset(i, 0);
