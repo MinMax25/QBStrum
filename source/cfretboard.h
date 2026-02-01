@@ -528,7 +528,6 @@ namespace MinMax
 
             if (editChordChangedCallback)
             {
-                currentSet.state = stringIndex;
                 editChordChangedCallback(this, currentSet);
 			}
 
@@ -568,6 +567,10 @@ namespace MinMax
             {
             case FretBoardContext::Edit:
                 saveStringSet();
+                if (editChordChangedCallback)
+                {
+                    editChordChangedCallback(this, currentSet);
+                }
                 break;
             default:
                 break;
