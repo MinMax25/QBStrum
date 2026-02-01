@@ -56,8 +56,8 @@ namespace MinMax
 
         static constexpr int TotalRootCount = defaultRootCount + userRootCount;
 
-        static constexpr int flatEntryCount = 
-            (defaultRootCount * defaultTypeCount * defaultVoicingCount) + 
+        static constexpr int flatEntryCount =
+            (defaultRootCount * defaultTypeCount * defaultVoicingCount) +
             (userRootCount * userTypeCount * userVoicingCount);
 
         static constexpr int defaultBlockSize = defaultRootCount * defaultTypeCount * defaultVoicingCount;
@@ -148,7 +148,7 @@ namespace MinMax
             return _instance;
         }
 
-        StringSet getTunings() const 
+        StringSet getTunings() const
         {
             return Tunings;
         }
@@ -190,7 +190,7 @@ namespace MinMax
 
             return count > 0 ? sum / float(count) : 0.0f;
         }
-  
+
         const int getFlatCount() const
         {
             return spec.flatEntryCount;
@@ -201,7 +201,7 @@ namespace MinMax
             return flatChords[flatIndex];
         }
 
-        const int getRootCount() const 
+        const int getRootCount() const
         {
             return (int)spec.TotalRootCount;
         }
@@ -267,85 +267,94 @@ namespace MinMax
             std::ifstream ifs(path);
             if (!ifs.is_open())
             {
-                throw std::runtime_error("Cannot open JSON file");
+                goto L_ERROR;
             }
 
-            rapidjson::IStreamWrapper isw(ifs);
-            rapidjson::Document doc;
-            doc.ParseStream(isw);
-
-            if (!doc.IsObject())
             {
-                throw std::runtime_error("Invalid JSON format");
-            }
+                rapidjson::IStreamWrapper isw(ifs);
+                rapidjson::Document doc;
+                doc.ParseStream(isw);
 
-            // Tunings
-            if (doc.HasMember("Tunings") && doc["Tunings"].IsArray())
-            {
-                auto& arr = doc["Tunings"].GetArray();
-                for (size_t i = 0; i < arr.Size() && i < MAX_STRINGS; i++)
+                if (!doc.IsObject())
                 {
-                    Tunings.data[(int)i] = arr[(int)i].GetInt();
+                    goto L_ERROR;
                 }
-                Tunings.size = arr.Size();
-            }
 
-            // ChordRoots
-            int flatIndex = 0;
-
-            if (doc.HasMember("ChordRoots") && doc["ChordRoots"].IsArray())
-            {
-                auto& roots = doc["ChordRoots"].GetArray();
-
-                for (int r = 0; r < (int)roots.Size(); r++)
+                // Tunings
+                if (doc.HasMember("Tunings") && doc["Tunings"].IsArray())
                 {
-                    auto& rootObj = roots[r];
-                    RootNames[r] = rootObj["Name"].GetString();
-
-                    auto& types = rootObj["ChordTypes"].GetArray();
-
-                    if (r > spec.TotalRootCount)
+                    auto& arr = doc["Tunings"].GetArray();
+                    for (size_t i = 0; i < arr.Size() && i < MAX_STRINGS; i++)
                     {
-                        throw "ChordMap Format Error";
+                        Tunings.data[(int)i] = arr[(int)i].GetInt();
                     }
+                    Tunings.size = arr.Size();
+                }
 
-                    if (r < spec.TotalRootCount)
+                // ChordRoots
+                int flatIndex = 0;
+
+                if (doc.HasMember("ChordRoots") && doc["ChordRoots"].IsArray())
+                {
+                    auto& roots = doc["ChordRoots"].GetArray();
+
+                    for (int r = 0; r < (int)roots.Size(); r++)
                     {
-                        for (int t = 0; t < (int)types.Size(); t++)
+                        auto& rootObj = roots[r];
+                        RootNames[r] = rootObj["Name"].GetString();
+
+                        auto& types = rootObj["ChordTypes"].GetArray();
+
+                        if (r > spec.TotalRootCount)
                         {
-                            auto typeName = types[t]["Name"].GetString();
-                            if (r < spec.defaultRootCount)
-                            {
-                                DefaultTypeNames[t] = typeName;
-                            }
-                            else if (r < spec.TotalRootCount)
-                            {
-                                UserTypeNames[t] = typeName;
-                            }
+                            goto L_ERROR;
+                        }
 
-                            auto& voicings = types[t]["Voicings"].GetArray();
-                            for (size_t v = 0; v < voicings.Size(); v++)
+                        if (r < spec.TotalRootCount)
+                        {
+                            for (int t = 0; t < (int)types.Size(); t++)
                             {
-                                auto& fc = flatChords[flatIndex++];
-                                fc.root = r;
-                                fc.type = t;
-                                fc.voicing = (int)v;
-                                fc.displayName = RootNames[r] + " " + typeName + " " + "(" + std::to_string(v + 1) + ")";
-
-                                int p = 0;
-                                for (auto& fp : voicings[(int)v]["FretPosition"].GetArray())
+                                auto typeName = types[t]["Name"].GetString();
+                                if (r < spec.defaultRootCount)
                                 {
-                                    fc.fretPosition[p] = fp.GetInt();
-                                    p++;
+                                    DefaultTypeNames[t] = typeName;
+                                }
+                                else if (r < spec.TotalRootCount)
+                                {
+                                    UserTypeNames[t] = typeName;
+                                }
+
+                                auto& voicings = types[t]["Voicings"].GetArray();
+                                for (size_t v = 0; v < voicings.Size(); v++)
+                                {
+                                    auto& fc = flatChords[flatIndex++];
+                                    fc.root = r;
+                                    fc.type = t;
+                                    fc.voicing = (int)v;
+                                    fc.displayName = RootNames[r] + " " + typeName + " " + "(" + std::to_string(v + 1) + ")";
+
+                                    int p = 0;
+                                    for (auto& fp : voicings[(int)v]["FretPosition"].GetArray())
+                                    {
+                                        fc.fretPosition[p] = fp.GetInt();
+                                        p++;
+                                    }
                                 }
                             }
                         }
                     }
                 }
-            }
 
-            presetPath.clear();
-            presetPath.replace_filename(path);
+                presetPath.clear();
+                presetPath.replace_filename(path);
+
+            }
+            return;
+
+        L_ERROR:
+            presetPath.replace_filename("## Not Find ##");
+
+            return;
         }
 
         //==================================================================
@@ -406,7 +415,7 @@ namespace MinMax
             for (int r = 0; r < spec.TotalRootCount; r++)
             {
                 bool isDefault = r < spec.defaultRootCount;
-                
+
                 rapidjson::Value rootObj(rapidjson::kObjectType);
                 rootObj.AddMember("Name", rapidjson::Value(RootNames[r].c_str(), allocator), allocator);
 
