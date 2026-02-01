@@ -28,7 +28,7 @@ namespace MinMax
         inline static const VSTGUI::UTF8String FILTER = "Chord Preset(.qbs)";
         inline static const VSTGUI::UTF8String FILE_EXT = "qbs";
 
-        inline static const std::string DEFAULT_PRESET = "Standard 6Strings.qbs";
+        inline static const std::string DEFAULT_PRESET = "default.qbs";
 
         // プラグインルートパスを取得する
         inline static std::filesystem::path getRootPath()
