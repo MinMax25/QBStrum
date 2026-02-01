@@ -284,7 +284,7 @@ namespace MinMax
 	{ HARMONICS, STR16("Harmonics"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,										U_ARTIC, 0, 1, 28, 0 },
 	{ SLIDE, STR16("Slide"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,												U_ARTIC, 0, 1, 33, 0 },	
 
-	{ CHORD_EDITING, STR16("Chord Editing"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_AUTOMATE,						U_GENERAL, 0, 1, 0, 0 },
+	{ CHORD_EDITING, STR16("Chord Editing"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_HIDDEN,						U_GENERAL, 0, 1, 0, 0 },
 	} };
 
 	// ユニット指定によるパラメータ定義取り出し
