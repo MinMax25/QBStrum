@@ -1,0 +1,1899 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Music.KeySwitchList name="Chord">
+	<Attributes folder="1" name="C" color="FF4040EC">
+		<Attributes folder="1" name="Maj" color="FF4040EC">
+			<Attributes name="C Maj (1)" color="FF4040EC" id="0" activation="cc98.0|cc99.0"/>
+			<Attributes name="C Maj (2)" color="FF4040EC" id="1" activation="cc98.1|cc99.0"/>
+			<Attributes name="C Maj (3)" color="FF4040EC" id="2" activation="cc98.2|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FF4040EC">
+			<Attributes name="C 6 (1)" color="FF4040EC" id="3" activation="cc98.3|cc99.0"/>
+			<Attributes name="C 6 (2)" color="FF4040EC" id="4" activation="cc98.4|cc99.0"/>
+			<Attributes name="C 6 (3)" color="FF4040EC" id="5" activation="cc98.5|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FF4040EC">
+			<Attributes name="C M7 (1)" color="FF4040EC" id="6" activation="cc98.6|cc99.0"/>
+			<Attributes name="C M7 (2)" color="FF4040EC" id="7" activation="cc98.7|cc99.0"/>
+			<Attributes name="C M7 (3)" color="FF4040EC" id="8" activation="cc98.8|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FF4040EC">
+			<Attributes name="C M7(9) (1)" color="FF4040EC" id="9" activation="cc98.9|cc99.0"/>
+			<Attributes name="C M7(9) (2)" color="FF4040EC" id="10" activation="cc98.10|cc99.0"/>
+			<Attributes name="C M7(9) (3)" color="FF4040EC" id="11" activation="cc98.11|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FF4040EC">
+			<Attributes name="C 6(9) (1)" color="FF4040EC" id="12" activation="cc98.12|cc99.0"/>
+			<Attributes name="C 6(9) (2)" color="FF4040EC" id="13" activation="cc98.13|cc99.0"/>
+			<Attributes name="C 6(9) (3)" color="FF4040EC" id="14" activation="cc98.14|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FF4040EC">
+			<Attributes name="C sus4 (1)" color="FF4040EC" id="15" activation="cc98.15|cc99.0"/>
+			<Attributes name="C sus4 (2)" color="FF4040EC" id="16" activation="cc98.16|cc99.0"/>
+			<Attributes name="C sus4 (3)" color="FF4040EC" id="17" activation="cc98.17|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FF4040EC">
+			<Attributes name="C min (1)" color="FF4040EC" id="18" activation="cc98.18|cc99.0"/>
+			<Attributes name="C min (2)" color="FF4040EC" id="19" activation="cc98.19|cc99.0"/>
+			<Attributes name="C min (3)" color="FF4040EC" id="20" activation="cc98.20|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FF4040EC">
+			<Attributes name="C min6 (1)" color="FF4040EC" id="21" activation="cc98.21|cc99.0"/>
+			<Attributes name="C min6 (2)" color="FF4040EC" id="22" activation="cc98.22|cc99.0"/>
+			<Attributes name="C min6 (3)" color="FF4040EC" id="23" activation="cc98.23|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FF4040EC">
+			<Attributes name="C min7 (1)" color="FF4040EC" id="24" activation="cc98.24|cc99.0"/>
+			<Attributes name="C min7 (2)" color="FF4040EC" id="25" activation="cc98.25|cc99.0"/>
+			<Attributes name="C min7 (3)" color="FF4040EC" id="26" activation="cc98.26|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FF4040EC">
+			<Attributes name="C minM7 (1)" color="FF4040EC" id="27" activation="cc98.27|cc99.0"/>
+			<Attributes name="C minM7 (2)" color="FF4040EC" id="28" activation="cc98.28|cc99.0"/>
+			<Attributes name="C minM7 (3)" color="FF4040EC" id="29" activation="cc98.29|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FF4040EC">
+			<Attributes name="C min7b5 (1)" color="FF4040EC" id="30" activation="cc98.30|cc99.0"/>
+			<Attributes name="C min7b5 (2)" color="FF4040EC" id="31" activation="cc98.31|cc99.0"/>
+			<Attributes name="C min7b5 (3)" color="FF4040EC" id="32" activation="cc98.32|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FF4040EC">
+			<Attributes name="C min6(9) (1)" color="FF4040EC" id="33" activation="cc98.33|cc99.0"/>
+			<Attributes name="C min6(9) (2)" color="FF4040EC" id="34" activation="cc98.34|cc99.0"/>
+			<Attributes name="C min6(9) (3)" color="FF4040EC" id="35" activation="cc98.35|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FF4040EC">
+			<Attributes name="C min7(9) (1)" color="FF4040EC" id="36" activation="cc98.36|cc99.0"/>
+			<Attributes name="C min7(9) (2)" color="FF4040EC" id="37" activation="cc98.37|cc99.0"/>
+			<Attributes name="C min7(9) (3)" color="FF4040EC" id="38" activation="cc98.38|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FF4040EC">
+			<Attributes name="C min7(9 11) (1)" color="FF4040EC" id="39" activation="cc98.39|cc99.0"/>
+			<Attributes name="C min7(9 11) (2)" color="FF4040EC" id="40" activation="cc98.40|cc99.0"/>
+			<Attributes name="C min7(9 11) (3)" color="FF4040EC" id="41" activation="cc98.41|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FF4040EC">
+			<Attributes name="C 7 (1)" color="FF4040EC" id="42" activation="cc98.42|cc99.0"/>
+			<Attributes name="C 7 (2)" color="FF4040EC" id="43" activation="cc98.43|cc99.0"/>
+			<Attributes name="C 7 (3)" color="FF4040EC" id="44" activation="cc98.44|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FF4040EC">
+			<Attributes name="C aug7 (1)" color="FF4040EC" id="45" activation="cc98.45|cc99.0"/>
+			<Attributes name="C aug7 (2)" color="FF4040EC" id="46" activation="cc98.46|cc99.0"/>
+			<Attributes name="C aug7 (3)" color="FF4040EC" id="47" activation="cc98.47|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FF4040EC">
+			<Attributes name="C 7b5 (1)" color="FF4040EC" id="48" activation="cc98.48|cc99.0"/>
+			<Attributes name="C 7b5 (2)" color="FF4040EC" id="49" activation="cc98.49|cc99.0"/>
+			<Attributes name="C 7b5 (3)" color="FF4040EC" id="50" activation="cc98.50|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FF4040EC">
+			<Attributes name="C 7(9) (1)" color="FF4040EC" id="51" activation="cc98.51|cc99.0"/>
+			<Attributes name="C 7(9) (2)" color="FF4040EC" id="52" activation="cc98.52|cc99.0"/>
+			<Attributes name="C 7(9) (3)" color="FF4040EC" id="53" activation="cc98.53|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FF4040EC">
+			<Attributes name="C 7(#9) (1)" color="FF4040EC" id="54" activation="cc98.54|cc99.0"/>
+			<Attributes name="C 7(#9) (2)" color="FF4040EC" id="55" activation="cc98.55|cc99.0"/>
+			<Attributes name="C 7(#9) (3)" color="FF4040EC" id="56" activation="cc98.56|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FF4040EC">
+			<Attributes name="C 7(b9) (1)" color="FF4040EC" id="57" activation="cc98.57|cc99.0"/>
+			<Attributes name="C 7(b9) (2)" color="FF4040EC" id="58" activation="cc98.58|cc99.0"/>
+			<Attributes name="C 7(b9) (3)" color="FF4040EC" id="59" activation="cc98.59|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FF4040EC">
+			<Attributes name="C 7(#11) (1)" color="FF4040EC" id="60" activation="cc98.60|cc99.0"/>
+			<Attributes name="C 7(#11) (2)" color="FF4040EC" id="61" activation="cc98.61|cc99.0"/>
+			<Attributes name="C 7(#11) (3)" color="FF4040EC" id="62" activation="cc98.62|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FF4040EC">
+			<Attributes name="C 7(13) (1)" color="FF4040EC" id="63" activation="cc98.63|cc99.0"/>
+			<Attributes name="C 7(13) (2)" color="FF4040EC" id="64" activation="cc98.64|cc99.0"/>
+			<Attributes name="C 7(13) (3)" color="FF4040EC" id="65" activation="cc98.65|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FF4040EC">
+			<Attributes name="C 7(b13) (1)" color="FF4040EC" id="66" activation="cc98.66|cc99.0"/>
+			<Attributes name="C 7(b13) (2)" color="FF4040EC" id="67" activation="cc98.67|cc99.0"/>
+			<Attributes name="C 7(b13) (3)" color="FF4040EC" id="68" activation="cc98.68|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FF4040EC">
+			<Attributes name="C 7(9 13) (1)" color="FF4040EC" id="69" activation="cc98.69|cc99.0"/>
+			<Attributes name="C 7(9 13) (2)" color="FF4040EC" id="70" activation="cc98.70|cc99.0"/>
+			<Attributes name="C 7(9 13) (3)" color="FF4040EC" id="71" activation="cc98.71|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FF4040EC">
+			<Attributes name="C 7(b9 13) (1)" color="FF4040EC" id="72" activation="cc98.72|cc99.0"/>
+			<Attributes name="C 7(b9 13) (2)" color="FF4040EC" id="73" activation="cc98.73|cc99.0"/>
+			<Attributes name="C 7(b9 13) (3)" color="FF4040EC" id="74" activation="cc98.74|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FF4040EC">
+			<Attributes name="C 7sus4 (1)" color="FF4040EC" id="75" activation="cc98.75|cc99.0"/>
+			<Attributes name="C 7sus4 (2)" color="FF4040EC" id="76" activation="cc98.76|cc99.0"/>
+			<Attributes name="C 7sus4 (3)" color="FF4040EC" id="77" activation="cc98.77|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FF4040EC">
+			<Attributes name="C add9 (1)" color="FF4040EC" id="78" activation="cc98.78|cc99.0"/>
+			<Attributes name="C add9 (2)" color="FF4040EC" id="79" activation="cc98.79|cc99.0"/>
+			<Attributes name="C add9 (3)" color="FF4040EC" id="80" activation="cc98.80|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FF4040EC">
+			<Attributes name="C aug (1)" color="FF4040EC" id="81" activation="cc98.81|cc99.0"/>
+			<Attributes name="C aug (2)" color="FF4040EC" id="82" activation="cc98.82|cc99.0"/>
+			<Attributes name="C aug (3)" color="FF4040EC" id="83" activation="cc98.83|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FF4040EC">
+			<Attributes name="C dim (1)" color="FF4040EC" id="84" activation="cc98.84|cc99.0"/>
+			<Attributes name="C dim (2)" color="FF4040EC" id="85" activation="cc98.85|cc99.0"/>
+			<Attributes name="C dim (3)" color="FF4040EC" id="86" activation="cc98.86|cc99.0"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="C#(Db)" color="FF4082EC">
+		<Attributes folder="1" name="Maj" color="FF4082EC">
+			<Attributes name="C#(Db) Maj (1)" color="FF4082EC" id="87" activation="cc98.87|cc99.0"/>
+			<Attributes name="C#(Db) Maj (2)" color="FF4082EC" id="88" activation="cc98.88|cc99.0"/>
+			<Attributes name="C#(Db) Maj (3)" color="FF4082EC" id="89" activation="cc98.89|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FF4082EC">
+			<Attributes name="C#(Db) 6 (1)" color="FF4082EC" id="90" activation="cc98.90|cc99.0"/>
+			<Attributes name="C#(Db) 6 (2)" color="FF4082EC" id="91" activation="cc98.91|cc99.0"/>
+			<Attributes name="C#(Db) 6 (3)" color="FF4082EC" id="92" activation="cc98.92|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FF4082EC">
+			<Attributes name="C#(Db) M7 (1)" color="FF4082EC" id="93" activation="cc98.93|cc99.0"/>
+			<Attributes name="C#(Db) M7 (2)" color="FF4082EC" id="94" activation="cc98.94|cc99.0"/>
+			<Attributes name="C#(Db) M7 (3)" color="FF4082EC" id="95" activation="cc98.95|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FF4082EC">
+			<Attributes name="C#(Db) M7(9) (1)" color="FF4082EC" id="96" activation="cc98.96|cc99.0"/>
+			<Attributes name="C#(Db) M7(9) (2)" color="FF4082EC" id="97" activation="cc98.97|cc99.0"/>
+			<Attributes name="C#(Db) M7(9) (3)" color="FF4082EC" id="98" activation="cc98.98|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FF4082EC">
+			<Attributes name="C#(Db) 6(9) (1)" color="FF4082EC" id="99" activation="cc98.99|cc99.0"/>
+			<Attributes name="C#(Db) 6(9) (2)" color="FF4082EC" id="100" activation="cc98.100|cc99.0"/>
+			<Attributes name="C#(Db) 6(9) (3)" color="FF4082EC" id="101" activation="cc98.101|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FF4082EC">
+			<Attributes name="C#(Db) sus4 (1)" color="FF4082EC" id="102" activation="cc98.102|cc99.0"/>
+			<Attributes name="C#(Db) sus4 (2)" color="FF4082EC" id="103" activation="cc98.103|cc99.0"/>
+			<Attributes name="C#(Db) sus4 (3)" color="FF4082EC" id="104" activation="cc98.104|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FF4082EC">
+			<Attributes name="C#(Db) min (1)" color="FF4082EC" id="105" activation="cc98.105|cc99.0"/>
+			<Attributes name="C#(Db) min (2)" color="FF4082EC" id="106" activation="cc98.106|cc99.0"/>
+			<Attributes name="C#(Db) min (3)" color="FF4082EC" id="107" activation="cc98.107|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FF4082EC">
+			<Attributes name="C#(Db) min6 (1)" color="FF4082EC" id="108" activation="cc98.108|cc99.0"/>
+			<Attributes name="C#(Db) min6 (2)" color="FF4082EC" id="109" activation="cc98.109|cc99.0"/>
+			<Attributes name="C#(Db) min6 (3)" color="FF4082EC" id="110" activation="cc98.110|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FF4082EC">
+			<Attributes name="C#(Db) min7 (1)" color="FF4082EC" id="111" activation="cc98.111|cc99.0"/>
+			<Attributes name="C#(Db) min7 (2)" color="FF4082EC" id="112" activation="cc98.112|cc99.0"/>
+			<Attributes name="C#(Db) min7 (3)" color="FF4082EC" id="113" activation="cc98.113|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FF4082EC">
+			<Attributes name="C#(Db) minM7 (1)" color="FF4082EC" id="114" activation="cc98.114|cc99.0"/>
+			<Attributes name="C#(Db) minM7 (2)" color="FF4082EC" id="115" activation="cc98.115|cc99.0"/>
+			<Attributes name="C#(Db) minM7 (3)" color="FF4082EC" id="116" activation="cc98.116|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FF4082EC">
+			<Attributes name="C#(Db) min7b5 (1)" color="FF4082EC" id="117" activation="cc98.117|cc99.0"/>
+			<Attributes name="C#(Db) min7b5 (2)" color="FF4082EC" id="118" activation="cc98.118|cc99.0"/>
+			<Attributes name="C#(Db) min7b5 (3)" color="FF4082EC" id="119" activation="cc98.119|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FF4082EC">
+			<Attributes name="C#(Db) min6(9) (1)" color="FF4082EC" id="120" activation="cc98.120|cc99.0"/>
+			<Attributes name="C#(Db) min6(9) (2)" color="FF4082EC" id="121" activation="cc98.121|cc99.0"/>
+			<Attributes name="C#(Db) min6(9) (3)" color="FF4082EC" id="122" activation="cc98.122|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FF4082EC">
+			<Attributes name="C#(Db) min7(9) (1)" color="FF4082EC" id="123" activation="cc98.123|cc99.0"/>
+			<Attributes name="C#(Db) min7(9) (2)" color="FF4082EC" id="124" activation="cc98.124|cc99.0"/>
+			<Attributes name="C#(Db) min7(9) (3)" color="FF4082EC" id="125" activation="cc98.125|cc99.0"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FF4082EC">
+			<Attributes name="C#(Db) min7(9 11) (1)" color="FF4082EC" id="126" activation="cc98.126|cc99.0"/>
+			<Attributes name="C#(Db) min7(9 11) (2)" color="FF4082EC" id="127" activation="cc98.127|cc99.0"/>
+			<Attributes name="C#(Db) min7(9 11) (3)" color="FF4082EC" id="128" activation="cc98.0|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FF4082EC">
+			<Attributes name="C#(Db) 7 (1)" color="FF4082EC" id="129" activation="cc98.1|cc99.1"/>
+			<Attributes name="C#(Db) 7 (2)" color="FF4082EC" id="130" activation="cc98.2|cc99.1"/>
+			<Attributes name="C#(Db) 7 (3)" color="FF4082EC" id="131" activation="cc98.3|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FF4082EC">
+			<Attributes name="C#(Db) aug7 (1)" color="FF4082EC" id="132" activation="cc98.4|cc99.1"/>
+			<Attributes name="C#(Db) aug7 (2)" color="FF4082EC" id="133" activation="cc98.5|cc99.1"/>
+			<Attributes name="C#(Db) aug7 (3)" color="FF4082EC" id="134" activation="cc98.6|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FF4082EC">
+			<Attributes name="C#(Db) 7b5 (1)" color="FF4082EC" id="135" activation="cc98.7|cc99.1"/>
+			<Attributes name="C#(Db) 7b5 (2)" color="FF4082EC" id="136" activation="cc98.8|cc99.1"/>
+			<Attributes name="C#(Db) 7b5 (3)" color="FF4082EC" id="137" activation="cc98.9|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FF4082EC">
+			<Attributes name="C#(Db) 7(9) (1)" color="FF4082EC" id="138" activation="cc98.10|cc99.1"/>
+			<Attributes name="C#(Db) 7(9) (2)" color="FF4082EC" id="139" activation="cc98.11|cc99.1"/>
+			<Attributes name="C#(Db) 7(9) (3)" color="FF4082EC" id="140" activation="cc98.12|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FF4082EC">
+			<Attributes name="C#(Db) 7(#9) (1)" color="FF4082EC" id="141" activation="cc98.13|cc99.1"/>
+			<Attributes name="C#(Db) 7(#9) (2)" color="FF4082EC" id="142" activation="cc98.14|cc99.1"/>
+			<Attributes name="C#(Db) 7(#9) (3)" color="FF4082EC" id="143" activation="cc98.15|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FF4082EC">
+			<Attributes name="C#(Db) 7(b9) (1)" color="FF4082EC" id="144" activation="cc98.16|cc99.1"/>
+			<Attributes name="C#(Db) 7(b9) (2)" color="FF4082EC" id="145" activation="cc98.17|cc99.1"/>
+			<Attributes name="C#(Db) 7(b9) (3)" color="FF4082EC" id="146" activation="cc98.18|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FF4082EC">
+			<Attributes name="C#(Db) 7(#11) (1)" color="FF4082EC" id="147" activation="cc98.19|cc99.1"/>
+			<Attributes name="C#(Db) 7(#11) (2)" color="FF4082EC" id="148" activation="cc98.20|cc99.1"/>
+			<Attributes name="C#(Db) 7(#11) (3)" color="FF4082EC" id="149" activation="cc98.21|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FF4082EC">
+			<Attributes name="C#(Db) 7(13) (1)" color="FF4082EC" id="150" activation="cc98.22|cc99.1"/>
+			<Attributes name="C#(Db) 7(13) (2)" color="FF4082EC" id="151" activation="cc98.23|cc99.1"/>
+			<Attributes name="C#(Db) 7(13) (3)" color="FF4082EC" id="152" activation="cc98.24|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FF4082EC">
+			<Attributes name="C#(Db) 7(b13) (1)" color="FF4082EC" id="153" activation="cc98.25|cc99.1"/>
+			<Attributes name="C#(Db) 7(b13) (2)" color="FF4082EC" id="154" activation="cc98.26|cc99.1"/>
+			<Attributes name="C#(Db) 7(b13) (3)" color="FF4082EC" id="155" activation="cc98.27|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FF4082EC">
+			<Attributes name="C#(Db) 7(9 13) (1)" color="FF4082EC" id="156" activation="cc98.28|cc99.1"/>
+			<Attributes name="C#(Db) 7(9 13) (2)" color="FF4082EC" id="157" activation="cc98.29|cc99.1"/>
+			<Attributes name="C#(Db) 7(9 13) (3)" color="FF4082EC" id="158" activation="cc98.30|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FF4082EC">
+			<Attributes name="C#(Db) 7(b9 13) (1)" color="FF4082EC" id="159" activation="cc98.31|cc99.1"/>
+			<Attributes name="C#(Db) 7(b9 13) (2)" color="FF4082EC" id="160" activation="cc98.32|cc99.1"/>
+			<Attributes name="C#(Db) 7(b9 13) (3)" color="FF4082EC" id="161" activation="cc98.33|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FF4082EC">
+			<Attributes name="C#(Db) 7sus4 (1)" color="FF4082EC" id="162" activation="cc98.34|cc99.1"/>
+			<Attributes name="C#(Db) 7sus4 (2)" color="FF4082EC" id="163" activation="cc98.35|cc99.1"/>
+			<Attributes name="C#(Db) 7sus4 (3)" color="FF4082EC" id="164" activation="cc98.36|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FF4082EC">
+			<Attributes name="C#(Db) add9 (1)" color="FF4082EC" id="165" activation="cc98.37|cc99.1"/>
+			<Attributes name="C#(Db) add9 (2)" color="FF4082EC" id="166" activation="cc98.38|cc99.1"/>
+			<Attributes name="C#(Db) add9 (3)" color="FF4082EC" id="167" activation="cc98.39|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FF4082EC">
+			<Attributes name="C#(Db) aug (1)" color="FF4082EC" id="168" activation="cc98.40|cc99.1"/>
+			<Attributes name="C#(Db) aug (2)" color="FF4082EC" id="169" activation="cc98.41|cc99.1"/>
+			<Attributes name="C#(Db) aug (3)" color="FF4082EC" id="170" activation="cc98.42|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FF4082EC">
+			<Attributes name="C#(Db) dim (1)" color="FF4082EC" id="171" activation="cc98.43|cc99.1"/>
+			<Attributes name="C#(Db) dim (2)" color="FF4082EC" id="172" activation="cc98.44|cc99.1"/>
+			<Attributes name="C#(Db) dim (3)" color="FF4082EC" id="173" activation="cc98.45|cc99.1"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="D" color="FF40C4EC">
+		<Attributes folder="1" name="Maj" color="FF40C4EC">
+			<Attributes name="D Maj (1)" color="FF40C4EC" id="174" activation="cc98.46|cc99.1"/>
+			<Attributes name="D Maj (2)" color="FF40C4EC" id="175" activation="cc98.47|cc99.1"/>
+			<Attributes name="D Maj (3)" color="FF40C4EC" id="176" activation="cc98.48|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FF40C4EC">
+			<Attributes name="D 6 (1)" color="FF40C4EC" id="177" activation="cc98.49|cc99.1"/>
+			<Attributes name="D 6 (2)" color="FF40C4EC" id="178" activation="cc98.50|cc99.1"/>
+			<Attributes name="D 6 (3)" color="FF40C4EC" id="179" activation="cc98.51|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FF40C4EC">
+			<Attributes name="D M7 (1)" color="FF40C4EC" id="180" activation="cc98.52|cc99.1"/>
+			<Attributes name="D M7 (2)" color="FF40C4EC" id="181" activation="cc98.53|cc99.1"/>
+			<Attributes name="D M7 (3)" color="FF40C4EC" id="182" activation="cc98.54|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FF40C4EC">
+			<Attributes name="D M7(9) (1)" color="FF40C4EC" id="183" activation="cc98.55|cc99.1"/>
+			<Attributes name="D M7(9) (2)" color="FF40C4EC" id="184" activation="cc98.56|cc99.1"/>
+			<Attributes name="D M7(9) (3)" color="FF40C4EC" id="185" activation="cc98.57|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FF40C4EC">
+			<Attributes name="D 6(9) (1)" color="FF40C4EC" id="186" activation="cc98.58|cc99.1"/>
+			<Attributes name="D 6(9) (2)" color="FF40C4EC" id="187" activation="cc98.59|cc99.1"/>
+			<Attributes name="D 6(9) (3)" color="FF40C4EC" id="188" activation="cc98.60|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FF40C4EC">
+			<Attributes name="D sus4 (1)" color="FF40C4EC" id="189" activation="cc98.61|cc99.1"/>
+			<Attributes name="D sus4 (2)" color="FF40C4EC" id="190" activation="cc98.62|cc99.1"/>
+			<Attributes name="D sus4 (3)" color="FF40C4EC" id="191" activation="cc98.63|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FF40C4EC">
+			<Attributes name="D min (1)" color="FF40C4EC" id="192" activation="cc98.64|cc99.1"/>
+			<Attributes name="D min (2)" color="FF40C4EC" id="193" activation="cc98.65|cc99.1"/>
+			<Attributes name="D min (3)" color="FF40C4EC" id="194" activation="cc98.66|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FF40C4EC">
+			<Attributes name="D min6 (1)" color="FF40C4EC" id="195" activation="cc98.67|cc99.1"/>
+			<Attributes name="D min6 (2)" color="FF40C4EC" id="196" activation="cc98.68|cc99.1"/>
+			<Attributes name="D min6 (3)" color="FF40C4EC" id="197" activation="cc98.69|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FF40C4EC">
+			<Attributes name="D min7 (1)" color="FF40C4EC" id="198" activation="cc98.70|cc99.1"/>
+			<Attributes name="D min7 (2)" color="FF40C4EC" id="199" activation="cc98.71|cc99.1"/>
+			<Attributes name="D min7 (3)" color="FF40C4EC" id="200" activation="cc98.72|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FF40C4EC">
+			<Attributes name="D minM7 (1)" color="FF40C4EC" id="201" activation="cc98.73|cc99.1"/>
+			<Attributes name="D minM7 (2)" color="FF40C4EC" id="202" activation="cc98.74|cc99.1"/>
+			<Attributes name="D minM7 (3)" color="FF40C4EC" id="203" activation="cc98.75|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FF40C4EC">
+			<Attributes name="D min7b5 (1)" color="FF40C4EC" id="204" activation="cc98.76|cc99.1"/>
+			<Attributes name="D min7b5 (2)" color="FF40C4EC" id="205" activation="cc98.77|cc99.1"/>
+			<Attributes name="D min7b5 (3)" color="FF40C4EC" id="206" activation="cc98.78|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FF40C4EC">
+			<Attributes name="D min6(9) (1)" color="FF40C4EC" id="207" activation="cc98.79|cc99.1"/>
+			<Attributes name="D min6(9) (2)" color="FF40C4EC" id="208" activation="cc98.80|cc99.1"/>
+			<Attributes name="D min6(9) (3)" color="FF40C4EC" id="209" activation="cc98.81|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FF40C4EC">
+			<Attributes name="D min7(9) (1)" color="FF40C4EC" id="210" activation="cc98.82|cc99.1"/>
+			<Attributes name="D min7(9) (2)" color="FF40C4EC" id="211" activation="cc98.83|cc99.1"/>
+			<Attributes name="D min7(9) (3)" color="FF40C4EC" id="212" activation="cc98.84|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FF40C4EC">
+			<Attributes name="D min7(9 11) (1)" color="FF40C4EC" id="213" activation="cc98.85|cc99.1"/>
+			<Attributes name="D min7(9 11) (2)" color="FF40C4EC" id="214" activation="cc98.86|cc99.1"/>
+			<Attributes name="D min7(9 11) (3)" color="FF40C4EC" id="215" activation="cc98.87|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FF40C4EC">
+			<Attributes name="D 7 (1)" color="FF40C4EC" id="216" activation="cc98.88|cc99.1"/>
+			<Attributes name="D 7 (2)" color="FF40C4EC" id="217" activation="cc98.89|cc99.1"/>
+			<Attributes name="D 7 (3)" color="FF40C4EC" id="218" activation="cc98.90|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FF40C4EC">
+			<Attributes name="D aug7 (1)" color="FF40C4EC" id="219" activation="cc98.91|cc99.1"/>
+			<Attributes name="D aug7 (2)" color="FF40C4EC" id="220" activation="cc98.92|cc99.1"/>
+			<Attributes name="D aug7 (3)" color="FF40C4EC" id="221" activation="cc98.93|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FF40C4EC">
+			<Attributes name="D 7b5 (1)" color="FF40C4EC" id="222" activation="cc98.94|cc99.1"/>
+			<Attributes name="D 7b5 (2)" color="FF40C4EC" id="223" activation="cc98.95|cc99.1"/>
+			<Attributes name="D 7b5 (3)" color="FF40C4EC" id="224" activation="cc98.96|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FF40C4EC">
+			<Attributes name="D 7(9) (1)" color="FF40C4EC" id="225" activation="cc98.97|cc99.1"/>
+			<Attributes name="D 7(9) (2)" color="FF40C4EC" id="226" activation="cc98.98|cc99.1"/>
+			<Attributes name="D 7(9) (3)" color="FF40C4EC" id="227" activation="cc98.99|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FF40C4EC">
+			<Attributes name="D 7(#9) (1)" color="FF40C4EC" id="228" activation="cc98.100|cc99.1"/>
+			<Attributes name="D 7(#9) (2)" color="FF40C4EC" id="229" activation="cc98.101|cc99.1"/>
+			<Attributes name="D 7(#9) (3)" color="FF40C4EC" id="230" activation="cc98.102|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FF40C4EC">
+			<Attributes name="D 7(b9) (1)" color="FF40C4EC" id="231" activation="cc98.103|cc99.1"/>
+			<Attributes name="D 7(b9) (2)" color="FF40C4EC" id="232" activation="cc98.104|cc99.1"/>
+			<Attributes name="D 7(b9) (3)" color="FF40C4EC" id="233" activation="cc98.105|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FF40C4EC">
+			<Attributes name="D 7(#11) (1)" color="FF40C4EC" id="234" activation="cc98.106|cc99.1"/>
+			<Attributes name="D 7(#11) (2)" color="FF40C4EC" id="235" activation="cc98.107|cc99.1"/>
+			<Attributes name="D 7(#11) (3)" color="FF40C4EC" id="236" activation="cc98.108|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FF40C4EC">
+			<Attributes name="D 7(13) (1)" color="FF40C4EC" id="237" activation="cc98.109|cc99.1"/>
+			<Attributes name="D 7(13) (2)" color="FF40C4EC" id="238" activation="cc98.110|cc99.1"/>
+			<Attributes name="D 7(13) (3)" color="FF40C4EC" id="239" activation="cc98.111|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FF40C4EC">
+			<Attributes name="D 7(b13) (1)" color="FF40C4EC" id="240" activation="cc98.112|cc99.1"/>
+			<Attributes name="D 7(b13) (2)" color="FF40C4EC" id="241" activation="cc98.113|cc99.1"/>
+			<Attributes name="D 7(b13) (3)" color="FF40C4EC" id="242" activation="cc98.114|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FF40C4EC">
+			<Attributes name="D 7(9 13) (1)" color="FF40C4EC" id="243" activation="cc98.115|cc99.1"/>
+			<Attributes name="D 7(9 13) (2)" color="FF40C4EC" id="244" activation="cc98.116|cc99.1"/>
+			<Attributes name="D 7(9 13) (3)" color="FF40C4EC" id="245" activation="cc98.117|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FF40C4EC">
+			<Attributes name="D 7(b9 13) (1)" color="FF40C4EC" id="246" activation="cc98.118|cc99.1"/>
+			<Attributes name="D 7(b9 13) (2)" color="FF40C4EC" id="247" activation="cc98.119|cc99.1"/>
+			<Attributes name="D 7(b9 13) (3)" color="FF40C4EC" id="248" activation="cc98.120|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FF40C4EC">
+			<Attributes name="D 7sus4 (1)" color="FF40C4EC" id="249" activation="cc98.121|cc99.1"/>
+			<Attributes name="D 7sus4 (2)" color="FF40C4EC" id="250" activation="cc98.122|cc99.1"/>
+			<Attributes name="D 7sus4 (3)" color="FF40C4EC" id="251" activation="cc98.123|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FF40C4EC">
+			<Attributes name="D add9 (1)" color="FF40C4EC" id="252" activation="cc98.124|cc99.1"/>
+			<Attributes name="D add9 (2)" color="FF40C4EC" id="253" activation="cc98.125|cc99.1"/>
+			<Attributes name="D add9 (3)" color="FF40C4EC" id="254" activation="cc98.126|cc99.1"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FF40C4EC">
+			<Attributes name="D aug (1)" color="FF40C4EC" id="255" activation="cc98.127|cc99.1"/>
+			<Attributes name="D aug (2)" color="FF40C4EC" id="256" activation="cc98.0|cc99.2"/>
+			<Attributes name="D aug (3)" color="FF40C4EC" id="257" activation="cc98.1|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FF40C4EC">
+			<Attributes name="D dim (1)" color="FF40C4EC" id="258" activation="cc98.2|cc99.2"/>
+			<Attributes name="D dim (2)" color="FF40C4EC" id="259" activation="cc98.3|cc99.2"/>
+			<Attributes name="D dim (3)" color="FF40C4EC" id="260" activation="cc98.4|cc99.2"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="D#(Eb)" color="FF40ECD2">
+		<Attributes folder="1" name="Maj" color="FF40ECD2">
+			<Attributes name="D#(Eb) Maj (1)" color="FF40ECD2" id="261" activation="cc98.5|cc99.2"/>
+			<Attributes name="D#(Eb) Maj (2)" color="FF40ECD2" id="262" activation="cc98.6|cc99.2"/>
+			<Attributes name="D#(Eb) Maj (3)" color="FF40ECD2" id="263" activation="cc98.7|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FF40ECD2">
+			<Attributes name="D#(Eb) 6 (1)" color="FF40ECD2" id="264" activation="cc98.8|cc99.2"/>
+			<Attributes name="D#(Eb) 6 (2)" color="FF40ECD2" id="265" activation="cc98.9|cc99.2"/>
+			<Attributes name="D#(Eb) 6 (3)" color="FF40ECD2" id="266" activation="cc98.10|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FF40ECD2">
+			<Attributes name="D#(Eb) M7 (1)" color="FF40ECD2" id="267" activation="cc98.11|cc99.2"/>
+			<Attributes name="D#(Eb) M7 (2)" color="FF40ECD2" id="268" activation="cc98.12|cc99.2"/>
+			<Attributes name="D#(Eb) M7 (3)" color="FF40ECD2" id="269" activation="cc98.13|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FF40ECD2">
+			<Attributes name="D#(Eb) M7(9) (1)" color="FF40ECD2" id="270" activation="cc98.14|cc99.2"/>
+			<Attributes name="D#(Eb) M7(9) (2)" color="FF40ECD2" id="271" activation="cc98.15|cc99.2"/>
+			<Attributes name="D#(Eb) M7(9) (3)" color="FF40ECD2" id="272" activation="cc98.16|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FF40ECD2">
+			<Attributes name="D#(Eb) 6(9) (1)" color="FF40ECD2" id="273" activation="cc98.17|cc99.2"/>
+			<Attributes name="D#(Eb) 6(9) (2)" color="FF40ECD2" id="274" activation="cc98.18|cc99.2"/>
+			<Attributes name="D#(Eb) 6(9) (3)" color="FF40ECD2" id="275" activation="cc98.19|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FF40ECD2">
+			<Attributes name="D#(Eb) sus4 (1)" color="FF40ECD2" id="276" activation="cc98.20|cc99.2"/>
+			<Attributes name="D#(Eb) sus4 (2)" color="FF40ECD2" id="277" activation="cc98.21|cc99.2"/>
+			<Attributes name="D#(Eb) sus4 (3)" color="FF40ECD2" id="278" activation="cc98.22|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FF40ECD2">
+			<Attributes name="D#(Eb) min (1)" color="FF40ECD2" id="279" activation="cc98.23|cc99.2"/>
+			<Attributes name="D#(Eb) min (2)" color="FF40ECD2" id="280" activation="cc98.24|cc99.2"/>
+			<Attributes name="D#(Eb) min (3)" color="FF40ECD2" id="281" activation="cc98.25|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FF40ECD2">
+			<Attributes name="D#(Eb) min6 (1)" color="FF40ECD2" id="282" activation="cc98.26|cc99.2"/>
+			<Attributes name="D#(Eb) min6 (2)" color="FF40ECD2" id="283" activation="cc98.27|cc99.2"/>
+			<Attributes name="D#(Eb) min6 (3)" color="FF40ECD2" id="284" activation="cc98.28|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FF40ECD2">
+			<Attributes name="D#(Eb) min7 (1)" color="FF40ECD2" id="285" activation="cc98.29|cc99.2"/>
+			<Attributes name="D#(Eb) min7 (2)" color="FF40ECD2" id="286" activation="cc98.30|cc99.2"/>
+			<Attributes name="D#(Eb) min7 (3)" color="FF40ECD2" id="287" activation="cc98.31|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FF40ECD2">
+			<Attributes name="D#(Eb) minM7 (1)" color="FF40ECD2" id="288" activation="cc98.32|cc99.2"/>
+			<Attributes name="D#(Eb) minM7 (2)" color="FF40ECD2" id="289" activation="cc98.33|cc99.2"/>
+			<Attributes name="D#(Eb) minM7 (3)" color="FF40ECD2" id="290" activation="cc98.34|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FF40ECD2">
+			<Attributes name="D#(Eb) min7b5 (1)" color="FF40ECD2" id="291" activation="cc98.35|cc99.2"/>
+			<Attributes name="D#(Eb) min7b5 (2)" color="FF40ECD2" id="292" activation="cc98.36|cc99.2"/>
+			<Attributes name="D#(Eb) min7b5 (3)" color="FF40ECD2" id="293" activation="cc98.37|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FF40ECD2">
+			<Attributes name="D#(Eb) min6(9) (1)" color="FF40ECD2" id="294" activation="cc98.38|cc99.2"/>
+			<Attributes name="D#(Eb) min6(9) (2)" color="FF40ECD2" id="295" activation="cc98.39|cc99.2"/>
+			<Attributes name="D#(Eb) min6(9) (3)" color="FF40ECD2" id="296" activation="cc98.40|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FF40ECD2">
+			<Attributes name="D#(Eb) min7(9) (1)" color="FF40ECD2" id="297" activation="cc98.41|cc99.2"/>
+			<Attributes name="D#(Eb) min7(9) (2)" color="FF40ECD2" id="298" activation="cc98.42|cc99.2"/>
+			<Attributes name="D#(Eb) min7(9) (3)" color="FF40ECD2" id="299" activation="cc98.43|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FF40ECD2">
+			<Attributes name="D#(Eb) min7(9 11) (1)" color="FF40ECD2" id="300" activation="cc98.44|cc99.2"/>
+			<Attributes name="D#(Eb) min7(9 11) (2)" color="FF40ECD2" id="301" activation="cc98.45|cc99.2"/>
+			<Attributes name="D#(Eb) min7(9 11) (3)" color="FF40ECD2" id="302" activation="cc98.46|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7 (1)" color="FF40ECD2" id="303" activation="cc98.47|cc99.2"/>
+			<Attributes name="D#(Eb) 7 (2)" color="FF40ECD2" id="304" activation="cc98.48|cc99.2"/>
+			<Attributes name="D#(Eb) 7 (3)" color="FF40ECD2" id="305" activation="cc98.49|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FF40ECD2">
+			<Attributes name="D#(Eb) aug7 (1)" color="FF40ECD2" id="306" activation="cc98.50|cc99.2"/>
+			<Attributes name="D#(Eb) aug7 (2)" color="FF40ECD2" id="307" activation="cc98.51|cc99.2"/>
+			<Attributes name="D#(Eb) aug7 (3)" color="FF40ECD2" id="308" activation="cc98.52|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7b5 (1)" color="FF40ECD2" id="309" activation="cc98.53|cc99.2"/>
+			<Attributes name="D#(Eb) 7b5 (2)" color="FF40ECD2" id="310" activation="cc98.54|cc99.2"/>
+			<Attributes name="D#(Eb) 7b5 (3)" color="FF40ECD2" id="311" activation="cc98.55|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7(9) (1)" color="FF40ECD2" id="312" activation="cc98.56|cc99.2"/>
+			<Attributes name="D#(Eb) 7(9) (2)" color="FF40ECD2" id="313" activation="cc98.57|cc99.2"/>
+			<Attributes name="D#(Eb) 7(9) (3)" color="FF40ECD2" id="314" activation="cc98.58|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7(#9) (1)" color="FF40ECD2" id="315" activation="cc98.59|cc99.2"/>
+			<Attributes name="D#(Eb) 7(#9) (2)" color="FF40ECD2" id="316" activation="cc98.60|cc99.2"/>
+			<Attributes name="D#(Eb) 7(#9) (3)" color="FF40ECD2" id="317" activation="cc98.61|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7(b9) (1)" color="FF40ECD2" id="318" activation="cc98.62|cc99.2"/>
+			<Attributes name="D#(Eb) 7(b9) (2)" color="FF40ECD2" id="319" activation="cc98.63|cc99.2"/>
+			<Attributes name="D#(Eb) 7(b9) (3)" color="FF40ECD2" id="320" activation="cc98.64|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7(#11) (1)" color="FF40ECD2" id="321" activation="cc98.65|cc99.2"/>
+			<Attributes name="D#(Eb) 7(#11) (2)" color="FF40ECD2" id="322" activation="cc98.66|cc99.2"/>
+			<Attributes name="D#(Eb) 7(#11) (3)" color="FF40ECD2" id="323" activation="cc98.67|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7(13) (1)" color="FF40ECD2" id="324" activation="cc98.68|cc99.2"/>
+			<Attributes name="D#(Eb) 7(13) (2)" color="FF40ECD2" id="325" activation="cc98.69|cc99.2"/>
+			<Attributes name="D#(Eb) 7(13) (3)" color="FF40ECD2" id="326" activation="cc98.70|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7(b13) (1)" color="FF40ECD2" id="327" activation="cc98.71|cc99.2"/>
+			<Attributes name="D#(Eb) 7(b13) (2)" color="FF40ECD2" id="328" activation="cc98.72|cc99.2"/>
+			<Attributes name="D#(Eb) 7(b13) (3)" color="FF40ECD2" id="329" activation="cc98.73|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7(9 13) (1)" color="FF40ECD2" id="330" activation="cc98.74|cc99.2"/>
+			<Attributes name="D#(Eb) 7(9 13) (2)" color="FF40ECD2" id="331" activation="cc98.75|cc99.2"/>
+			<Attributes name="D#(Eb) 7(9 13) (3)" color="FF40ECD2" id="332" activation="cc98.76|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7(b9 13) (1)" color="FF40ECD2" id="333" activation="cc98.77|cc99.2"/>
+			<Attributes name="D#(Eb) 7(b9 13) (2)" color="FF40ECD2" id="334" activation="cc98.78|cc99.2"/>
+			<Attributes name="D#(Eb) 7(b9 13) (3)" color="FF40ECD2" id="335" activation="cc98.79|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FF40ECD2">
+			<Attributes name="D#(Eb) 7sus4 (1)" color="FF40ECD2" id="336" activation="cc98.80|cc99.2"/>
+			<Attributes name="D#(Eb) 7sus4 (2)" color="FF40ECD2" id="337" activation="cc98.81|cc99.2"/>
+			<Attributes name="D#(Eb) 7sus4 (3)" color="FF40ECD2" id="338" activation="cc98.82|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FF40ECD2">
+			<Attributes name="D#(Eb) add9 (1)" color="FF40ECD2" id="339" activation="cc98.83|cc99.2"/>
+			<Attributes name="D#(Eb) add9 (2)" color="FF40ECD2" id="340" activation="cc98.84|cc99.2"/>
+			<Attributes name="D#(Eb) add9 (3)" color="FF40ECD2" id="341" activation="cc98.85|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FF40ECD2">
+			<Attributes name="D#(Eb) aug (1)" color="FF40ECD2" id="342" activation="cc98.86|cc99.2"/>
+			<Attributes name="D#(Eb) aug (2)" color="FF40ECD2" id="343" activation="cc98.87|cc99.2"/>
+			<Attributes name="D#(Eb) aug (3)" color="FF40ECD2" id="344" activation="cc98.88|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FF40ECD2">
+			<Attributes name="D#(Eb) dim (1)" color="FF40ECD2" id="345" activation="cc98.89|cc99.2"/>
+			<Attributes name="D#(Eb) dim (2)" color="FF40ECD2" id="346" activation="cc98.90|cc99.2"/>
+			<Attributes name="D#(Eb) dim (3)" color="FF40ECD2" id="347" activation="cc98.91|cc99.2"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="E" color="FF40EC90">
+		<Attributes folder="1" name="Maj" color="FF40EC90">
+			<Attributes name="E Maj (1)" color="FF40EC90" id="348" activation="cc98.92|cc99.2"/>
+			<Attributes name="E Maj (2)" color="FF40EC90" id="349" activation="cc98.93|cc99.2"/>
+			<Attributes name="E Maj (3)" color="FF40EC90" id="350" activation="cc98.94|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FF40EC90">
+			<Attributes name="E 6 (1)" color="FF40EC90" id="351" activation="cc98.95|cc99.2"/>
+			<Attributes name="E 6 (2)" color="FF40EC90" id="352" activation="cc98.96|cc99.2"/>
+			<Attributes name="E 6 (3)" color="FF40EC90" id="353" activation="cc98.97|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FF40EC90">
+			<Attributes name="E M7 (1)" color="FF40EC90" id="354" activation="cc98.98|cc99.2"/>
+			<Attributes name="E M7 (2)" color="FF40EC90" id="355" activation="cc98.99|cc99.2"/>
+			<Attributes name="E M7 (3)" color="FF40EC90" id="356" activation="cc98.100|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FF40EC90">
+			<Attributes name="E M7(9) (1)" color="FF40EC90" id="357" activation="cc98.101|cc99.2"/>
+			<Attributes name="E M7(9) (2)" color="FF40EC90" id="358" activation="cc98.102|cc99.2"/>
+			<Attributes name="E M7(9) (3)" color="FF40EC90" id="359" activation="cc98.103|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FF40EC90">
+			<Attributes name="E 6(9) (1)" color="FF40EC90" id="360" activation="cc98.104|cc99.2"/>
+			<Attributes name="E 6(9) (2)" color="FF40EC90" id="361" activation="cc98.105|cc99.2"/>
+			<Attributes name="E 6(9) (3)" color="FF40EC90" id="362" activation="cc98.106|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FF40EC90">
+			<Attributes name="E sus4 (1)" color="FF40EC90" id="363" activation="cc98.107|cc99.2"/>
+			<Attributes name="E sus4 (2)" color="FF40EC90" id="364" activation="cc98.108|cc99.2"/>
+			<Attributes name="E sus4 (3)" color="FF40EC90" id="365" activation="cc98.109|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FF40EC90">
+			<Attributes name="E min (1)" color="FF40EC90" id="366" activation="cc98.110|cc99.2"/>
+			<Attributes name="E min (2)" color="FF40EC90" id="367" activation="cc98.111|cc99.2"/>
+			<Attributes name="E min (3)" color="FF40EC90" id="368" activation="cc98.112|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FF40EC90">
+			<Attributes name="E min6 (1)" color="FF40EC90" id="369" activation="cc98.113|cc99.2"/>
+			<Attributes name="E min6 (2)" color="FF40EC90" id="370" activation="cc98.114|cc99.2"/>
+			<Attributes name="E min6 (3)" color="FF40EC90" id="371" activation="cc98.115|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FF40EC90">
+			<Attributes name="E min7 (1)" color="FF40EC90" id="372" activation="cc98.116|cc99.2"/>
+			<Attributes name="E min7 (2)" color="FF40EC90" id="373" activation="cc98.117|cc99.2"/>
+			<Attributes name="E min7 (3)" color="FF40EC90" id="374" activation="cc98.118|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FF40EC90">
+			<Attributes name="E minM7 (1)" color="FF40EC90" id="375" activation="cc98.119|cc99.2"/>
+			<Attributes name="E minM7 (2)" color="FF40EC90" id="376" activation="cc98.120|cc99.2"/>
+			<Attributes name="E minM7 (3)" color="FF40EC90" id="377" activation="cc98.121|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FF40EC90">
+			<Attributes name="E min7b5 (1)" color="FF40EC90" id="378" activation="cc98.122|cc99.2"/>
+			<Attributes name="E min7b5 (2)" color="FF40EC90" id="379" activation="cc98.123|cc99.2"/>
+			<Attributes name="E min7b5 (3)" color="FF40EC90" id="380" activation="cc98.124|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FF40EC90">
+			<Attributes name="E min6(9) (1)" color="FF40EC90" id="381" activation="cc98.125|cc99.2"/>
+			<Attributes name="E min6(9) (2)" color="FF40EC90" id="382" activation="cc98.126|cc99.2"/>
+			<Attributes name="E min6(9) (3)" color="FF40EC90" id="383" activation="cc98.127|cc99.2"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FF40EC90">
+			<Attributes name="E min7(9) (1)" color="FF40EC90" id="384" activation="cc98.0|cc99.3"/>
+			<Attributes name="E min7(9) (2)" color="FF40EC90" id="385" activation="cc98.1|cc99.3"/>
+			<Attributes name="E min7(9) (3)" color="FF40EC90" id="386" activation="cc98.2|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FF40EC90">
+			<Attributes name="E min7(9 11) (1)" color="FF40EC90" id="387" activation="cc98.3|cc99.3"/>
+			<Attributes name="E min7(9 11) (2)" color="FF40EC90" id="388" activation="cc98.4|cc99.3"/>
+			<Attributes name="E min7(9 11) (3)" color="FF40EC90" id="389" activation="cc98.5|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FF40EC90">
+			<Attributes name="E 7 (1)" color="FF40EC90" id="390" activation="cc98.6|cc99.3"/>
+			<Attributes name="E 7 (2)" color="FF40EC90" id="391" activation="cc98.7|cc99.3"/>
+			<Attributes name="E 7 (3)" color="FF40EC90" id="392" activation="cc98.8|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FF40EC90">
+			<Attributes name="E aug7 (1)" color="FF40EC90" id="393" activation="cc98.9|cc99.3"/>
+			<Attributes name="E aug7 (2)" color="FF40EC90" id="394" activation="cc98.10|cc99.3"/>
+			<Attributes name="E aug7 (3)" color="FF40EC90" id="395" activation="cc98.11|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FF40EC90">
+			<Attributes name="E 7b5 (1)" color="FF40EC90" id="396" activation="cc98.12|cc99.3"/>
+			<Attributes name="E 7b5 (2)" color="FF40EC90" id="397" activation="cc98.13|cc99.3"/>
+			<Attributes name="E 7b5 (3)" color="FF40EC90" id="398" activation="cc98.14|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FF40EC90">
+			<Attributes name="E 7(9) (1)" color="FF40EC90" id="399" activation="cc98.15|cc99.3"/>
+			<Attributes name="E 7(9) (2)" color="FF40EC90" id="400" activation="cc98.16|cc99.3"/>
+			<Attributes name="E 7(9) (3)" color="FF40EC90" id="401" activation="cc98.17|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FF40EC90">
+			<Attributes name="E 7(#9) (1)" color="FF40EC90" id="402" activation="cc98.18|cc99.3"/>
+			<Attributes name="E 7(#9) (2)" color="FF40EC90" id="403" activation="cc98.19|cc99.3"/>
+			<Attributes name="E 7(#9) (3)" color="FF40EC90" id="404" activation="cc98.20|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FF40EC90">
+			<Attributes name="E 7(b9) (1)" color="FF40EC90" id="405" activation="cc98.21|cc99.3"/>
+			<Attributes name="E 7(b9) (2)" color="FF40EC90" id="406" activation="cc98.22|cc99.3"/>
+			<Attributes name="E 7(b9) (3)" color="FF40EC90" id="407" activation="cc98.23|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FF40EC90">
+			<Attributes name="E 7(#11) (1)" color="FF40EC90" id="408" activation="cc98.24|cc99.3"/>
+			<Attributes name="E 7(#11) (2)" color="FF40EC90" id="409" activation="cc98.25|cc99.3"/>
+			<Attributes name="E 7(#11) (3)" color="FF40EC90" id="410" activation="cc98.26|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FF40EC90">
+			<Attributes name="E 7(13) (1)" color="FF40EC90" id="411" activation="cc98.27|cc99.3"/>
+			<Attributes name="E 7(13) (2)" color="FF40EC90" id="412" activation="cc98.28|cc99.3"/>
+			<Attributes name="E 7(13) (3)" color="FF40EC90" id="413" activation="cc98.29|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FF40EC90">
+			<Attributes name="E 7(b13) (1)" color="FF40EC90" id="414" activation="cc98.30|cc99.3"/>
+			<Attributes name="E 7(b13) (2)" color="FF40EC90" id="415" activation="cc98.31|cc99.3"/>
+			<Attributes name="E 7(b13) (3)" color="FF40EC90" id="416" activation="cc98.32|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FF40EC90">
+			<Attributes name="E 7(9 13) (1)" color="FF40EC90" id="417" activation="cc98.33|cc99.3"/>
+			<Attributes name="E 7(9 13) (2)" color="FF40EC90" id="418" activation="cc98.34|cc99.3"/>
+			<Attributes name="E 7(9 13) (3)" color="FF40EC90" id="419" activation="cc98.35|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FF40EC90">
+			<Attributes name="E 7(b9 13) (1)" color="FF40EC90" id="420" activation="cc98.36|cc99.3"/>
+			<Attributes name="E 7(b9 13) (2)" color="FF40EC90" id="421" activation="cc98.37|cc99.3"/>
+			<Attributes name="E 7(b9 13) (3)" color="FF40EC90" id="422" activation="cc98.38|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FF40EC90">
+			<Attributes name="E 7sus4 (1)" color="FF40EC90" id="423" activation="cc98.39|cc99.3"/>
+			<Attributes name="E 7sus4 (2)" color="FF40EC90" id="424" activation="cc98.40|cc99.3"/>
+			<Attributes name="E 7sus4 (3)" color="FF40EC90" id="425" activation="cc98.41|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FF40EC90">
+			<Attributes name="E add9 (1)" color="FF40EC90" id="426" activation="cc98.42|cc99.3"/>
+			<Attributes name="E add9 (2)" color="FF40EC90" id="427" activation="cc98.43|cc99.3"/>
+			<Attributes name="E add9 (3)" color="FF40EC90" id="428" activation="cc98.44|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FF40EC90">
+			<Attributes name="E aug (1)" color="FF40EC90" id="429" activation="cc98.45|cc99.3"/>
+			<Attributes name="E aug (2)" color="FF40EC90" id="430" activation="cc98.46|cc99.3"/>
+			<Attributes name="E aug (3)" color="FF40EC90" id="431" activation="cc98.47|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FF40EC90">
+			<Attributes name="E dim (1)" color="FF40EC90" id="432" activation="cc98.48|cc99.3"/>
+			<Attributes name="E dim (2)" color="FF40EC90" id="433" activation="cc98.49|cc99.3"/>
+			<Attributes name="E dim (3)" color="FF40EC90" id="434" activation="cc98.50|cc99.3"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="F" color="FF40EC4F">
+		<Attributes folder="1" name="Maj" color="FF40EC4F">
+			<Attributes name="F Maj (1)" color="FF40EC4F" id="435" activation="cc98.51|cc99.3"/>
+			<Attributes name="F Maj (2)" color="FF40EC4F" id="436" activation="cc98.52|cc99.3"/>
+			<Attributes name="F Maj (3)" color="FF40EC4F" id="437" activation="cc98.53|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FF40EC4F">
+			<Attributes name="F 6 (1)" color="FF40EC4F" id="438" activation="cc98.54|cc99.3"/>
+			<Attributes name="F 6 (2)" color="FF40EC4F" id="439" activation="cc98.55|cc99.3"/>
+			<Attributes name="F 6 (3)" color="FF40EC4F" id="440" activation="cc98.56|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FF40EC4F">
+			<Attributes name="F M7 (1)" color="FF40EC4F" id="441" activation="cc98.57|cc99.3"/>
+			<Attributes name="F M7 (2)" color="FF40EC4F" id="442" activation="cc98.58|cc99.3"/>
+			<Attributes name="F M7 (3)" color="FF40EC4F" id="443" activation="cc98.59|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FF40EC4F">
+			<Attributes name="F M7(9) (1)" color="FF40EC4F" id="444" activation="cc98.60|cc99.3"/>
+			<Attributes name="F M7(9) (2)" color="FF40EC4F" id="445" activation="cc98.61|cc99.3"/>
+			<Attributes name="F M7(9) (3)" color="FF40EC4F" id="446" activation="cc98.62|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FF40EC4F">
+			<Attributes name="F 6(9) (1)" color="FF40EC4F" id="447" activation="cc98.63|cc99.3"/>
+			<Attributes name="F 6(9) (2)" color="FF40EC4F" id="448" activation="cc98.64|cc99.3"/>
+			<Attributes name="F 6(9) (3)" color="FF40EC4F" id="449" activation="cc98.65|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FF40EC4F">
+			<Attributes name="F sus4 (1)" color="FF40EC4F" id="450" activation="cc98.66|cc99.3"/>
+			<Attributes name="F sus4 (2)" color="FF40EC4F" id="451" activation="cc98.67|cc99.3"/>
+			<Attributes name="F sus4 (3)" color="FF40EC4F" id="452" activation="cc98.68|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FF40EC4F">
+			<Attributes name="F min (1)" color="FF40EC4F" id="453" activation="cc98.69|cc99.3"/>
+			<Attributes name="F min (2)" color="FF40EC4F" id="454" activation="cc98.70|cc99.3"/>
+			<Attributes name="F min (3)" color="FF40EC4F" id="455" activation="cc98.71|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FF40EC4F">
+			<Attributes name="F min6 (1)" color="FF40EC4F" id="456" activation="cc98.72|cc99.3"/>
+			<Attributes name="F min6 (2)" color="FF40EC4F" id="457" activation="cc98.73|cc99.3"/>
+			<Attributes name="F min6 (3)" color="FF40EC4F" id="458" activation="cc98.74|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FF40EC4F">
+			<Attributes name="F min7 (1)" color="FF40EC4F" id="459" activation="cc98.75|cc99.3"/>
+			<Attributes name="F min7 (2)" color="FF40EC4F" id="460" activation="cc98.76|cc99.3"/>
+			<Attributes name="F min7 (3)" color="FF40EC4F" id="461" activation="cc98.77|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FF40EC4F">
+			<Attributes name="F minM7 (1)" color="FF40EC4F" id="462" activation="cc98.78|cc99.3"/>
+			<Attributes name="F minM7 (2)" color="FF40EC4F" id="463" activation="cc98.79|cc99.3"/>
+			<Attributes name="F minM7 (3)" color="FF40EC4F" id="464" activation="cc98.80|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FF40EC4F">
+			<Attributes name="F min7b5 (1)" color="FF40EC4F" id="465" activation="cc98.81|cc99.3"/>
+			<Attributes name="F min7b5 (2)" color="FF40EC4F" id="466" activation="cc98.82|cc99.3"/>
+			<Attributes name="F min7b5 (3)" color="FF40EC4F" id="467" activation="cc98.83|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FF40EC4F">
+			<Attributes name="F min6(9) (1)" color="FF40EC4F" id="468" activation="cc98.84|cc99.3"/>
+			<Attributes name="F min6(9) (2)" color="FF40EC4F" id="469" activation="cc98.85|cc99.3"/>
+			<Attributes name="F min6(9) (3)" color="FF40EC4F" id="470" activation="cc98.86|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FF40EC4F">
+			<Attributes name="F min7(9) (1)" color="FF40EC4F" id="471" activation="cc98.87|cc99.3"/>
+			<Attributes name="F min7(9) (2)" color="FF40EC4F" id="472" activation="cc98.88|cc99.3"/>
+			<Attributes name="F min7(9) (3)" color="FF40EC4F" id="473" activation="cc98.89|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FF40EC4F">
+			<Attributes name="F min7(9 11) (1)" color="FF40EC4F" id="474" activation="cc98.90|cc99.3"/>
+			<Attributes name="F min7(9 11) (2)" color="FF40EC4F" id="475" activation="cc98.91|cc99.3"/>
+			<Attributes name="F min7(9 11) (3)" color="FF40EC4F" id="476" activation="cc98.92|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FF40EC4F">
+			<Attributes name="F 7 (1)" color="FF40EC4F" id="477" activation="cc98.93|cc99.3"/>
+			<Attributes name="F 7 (2)" color="FF40EC4F" id="478" activation="cc98.94|cc99.3"/>
+			<Attributes name="F 7 (3)" color="FF40EC4F" id="479" activation="cc98.95|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FF40EC4F">
+			<Attributes name="F aug7 (1)" color="FF40EC4F" id="480" activation="cc98.96|cc99.3"/>
+			<Attributes name="F aug7 (2)" color="FF40EC4F" id="481" activation="cc98.97|cc99.3"/>
+			<Attributes name="F aug7 (3)" color="FF40EC4F" id="482" activation="cc98.98|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FF40EC4F">
+			<Attributes name="F 7b5 (1)" color="FF40EC4F" id="483" activation="cc98.99|cc99.3"/>
+			<Attributes name="F 7b5 (2)" color="FF40EC4F" id="484" activation="cc98.100|cc99.3"/>
+			<Attributes name="F 7b5 (3)" color="FF40EC4F" id="485" activation="cc98.101|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FF40EC4F">
+			<Attributes name="F 7(9) (1)" color="FF40EC4F" id="486" activation="cc98.102|cc99.3"/>
+			<Attributes name="F 7(9) (2)" color="FF40EC4F" id="487" activation="cc98.103|cc99.3"/>
+			<Attributes name="F 7(9) (3)" color="FF40EC4F" id="488" activation="cc98.104|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FF40EC4F">
+			<Attributes name="F 7(#9) (1)" color="FF40EC4F" id="489" activation="cc98.105|cc99.3"/>
+			<Attributes name="F 7(#9) (2)" color="FF40EC4F" id="490" activation="cc98.106|cc99.3"/>
+			<Attributes name="F 7(#9) (3)" color="FF40EC4F" id="491" activation="cc98.107|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FF40EC4F">
+			<Attributes name="F 7(b9) (1)" color="FF40EC4F" id="492" activation="cc98.108|cc99.3"/>
+			<Attributes name="F 7(b9) (2)" color="FF40EC4F" id="493" activation="cc98.109|cc99.3"/>
+			<Attributes name="F 7(b9) (3)" color="FF40EC4F" id="494" activation="cc98.110|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FF40EC4F">
+			<Attributes name="F 7(#11) (1)" color="FF40EC4F" id="495" activation="cc98.111|cc99.3"/>
+			<Attributes name="F 7(#11) (2)" color="FF40EC4F" id="496" activation="cc98.112|cc99.3"/>
+			<Attributes name="F 7(#11) (3)" color="FF40EC4F" id="497" activation="cc98.113|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FF40EC4F">
+			<Attributes name="F 7(13) (1)" color="FF40EC4F" id="498" activation="cc98.114|cc99.3"/>
+			<Attributes name="F 7(13) (2)" color="FF40EC4F" id="499" activation="cc98.115|cc99.3"/>
+			<Attributes name="F 7(13) (3)" color="FF40EC4F" id="500" activation="cc98.116|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FF40EC4F">
+			<Attributes name="F 7(b13) (1)" color="FF40EC4F" id="501" activation="cc98.117|cc99.3"/>
+			<Attributes name="F 7(b13) (2)" color="FF40EC4F" id="502" activation="cc98.118|cc99.3"/>
+			<Attributes name="F 7(b13) (3)" color="FF40EC4F" id="503" activation="cc98.119|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FF40EC4F">
+			<Attributes name="F 7(9 13) (1)" color="FF40EC4F" id="504" activation="cc98.120|cc99.3"/>
+			<Attributes name="F 7(9 13) (2)" color="FF40EC4F" id="505" activation="cc98.121|cc99.3"/>
+			<Attributes name="F 7(9 13) (3)" color="FF40EC4F" id="506" activation="cc98.122|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FF40EC4F">
+			<Attributes name="F 7(b9 13) (1)" color="FF40EC4F" id="507" activation="cc98.123|cc99.3"/>
+			<Attributes name="F 7(b9 13) (2)" color="FF40EC4F" id="508" activation="cc98.124|cc99.3"/>
+			<Attributes name="F 7(b9 13) (3)" color="FF40EC4F" id="509" activation="cc98.125|cc99.3"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FF40EC4F">
+			<Attributes name="F 7sus4 (1)" color="FF40EC4F" id="510" activation="cc98.126|cc99.3"/>
+			<Attributes name="F 7sus4 (2)" color="FF40EC4F" id="511" activation="cc98.127|cc99.3"/>
+			<Attributes name="F 7sus4 (3)" color="FF40EC4F" id="512" activation="cc98.0|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FF40EC4F">
+			<Attributes name="F add9 (1)" color="FF40EC4F" id="513" activation="cc98.1|cc99.4"/>
+			<Attributes name="F add9 (2)" color="FF40EC4F" id="514" activation="cc98.2|cc99.4"/>
+			<Attributes name="F add9 (3)" color="FF40EC4F" id="515" activation="cc98.3|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FF40EC4F">
+			<Attributes name="F aug (1)" color="FF40EC4F" id="516" activation="cc98.4|cc99.4"/>
+			<Attributes name="F aug (2)" color="FF40EC4F" id="517" activation="cc98.5|cc99.4"/>
+			<Attributes name="F aug (3)" color="FF40EC4F" id="518" activation="cc98.6|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FF40EC4F">
+			<Attributes name="F dim (1)" color="FF40EC4F" id="519" activation="cc98.7|cc99.4"/>
+			<Attributes name="F dim (2)" color="FF40EC4F" id="520" activation="cc98.8|cc99.4"/>
+			<Attributes name="F dim (3)" color="FF40EC4F" id="521" activation="cc98.9|cc99.4"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="F#(Gb)" color="FFB5EC40">
+		<Attributes folder="1" name="Maj" color="FFB5EC40">
+			<Attributes name="F#(Gb) Maj (1)" color="FFB5EC40" id="522" activation="cc98.10|cc99.4"/>
+			<Attributes name="F#(Gb) Maj (2)" color="FFB5EC40" id="523" activation="cc98.11|cc99.4"/>
+			<Attributes name="F#(Gb) Maj (3)" color="FFB5EC40" id="524" activation="cc98.12|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FFB5EC40">
+			<Attributes name="F#(Gb) 6 (1)" color="FFB5EC40" id="525" activation="cc98.13|cc99.4"/>
+			<Attributes name="F#(Gb) 6 (2)" color="FFB5EC40" id="526" activation="cc98.14|cc99.4"/>
+			<Attributes name="F#(Gb) 6 (3)" color="FFB5EC40" id="527" activation="cc98.15|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FFB5EC40">
+			<Attributes name="F#(Gb) M7 (1)" color="FFB5EC40" id="528" activation="cc98.16|cc99.4"/>
+			<Attributes name="F#(Gb) M7 (2)" color="FFB5EC40" id="529" activation="cc98.17|cc99.4"/>
+			<Attributes name="F#(Gb) M7 (3)" color="FFB5EC40" id="530" activation="cc98.18|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FFB5EC40">
+			<Attributes name="F#(Gb) M7(9) (1)" color="FFB5EC40" id="531" activation="cc98.19|cc99.4"/>
+			<Attributes name="F#(Gb) M7(9) (2)" color="FFB5EC40" id="532" activation="cc98.20|cc99.4"/>
+			<Attributes name="F#(Gb) M7(9) (3)" color="FFB5EC40" id="533" activation="cc98.21|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FFB5EC40">
+			<Attributes name="F#(Gb) 6(9) (1)" color="FFB5EC40" id="534" activation="cc98.22|cc99.4"/>
+			<Attributes name="F#(Gb) 6(9) (2)" color="FFB5EC40" id="535" activation="cc98.23|cc99.4"/>
+			<Attributes name="F#(Gb) 6(9) (3)" color="FFB5EC40" id="536" activation="cc98.24|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FFB5EC40">
+			<Attributes name="F#(Gb) sus4 (1)" color="FFB5EC40" id="537" activation="cc98.25|cc99.4"/>
+			<Attributes name="F#(Gb) sus4 (2)" color="FFB5EC40" id="538" activation="cc98.26|cc99.4"/>
+			<Attributes name="F#(Gb) sus4 (3)" color="FFB5EC40" id="539" activation="cc98.27|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FFB5EC40">
+			<Attributes name="F#(Gb) min (1)" color="FFB5EC40" id="540" activation="cc98.28|cc99.4"/>
+			<Attributes name="F#(Gb) min (2)" color="FFB5EC40" id="541" activation="cc98.29|cc99.4"/>
+			<Attributes name="F#(Gb) min (3)" color="FFB5EC40" id="542" activation="cc98.30|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FFB5EC40">
+			<Attributes name="F#(Gb) min6 (1)" color="FFB5EC40" id="543" activation="cc98.31|cc99.4"/>
+			<Attributes name="F#(Gb) min6 (2)" color="FFB5EC40" id="544" activation="cc98.32|cc99.4"/>
+			<Attributes name="F#(Gb) min6 (3)" color="FFB5EC40" id="545" activation="cc98.33|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FFB5EC40">
+			<Attributes name="F#(Gb) min7 (1)" color="FFB5EC40" id="546" activation="cc98.34|cc99.4"/>
+			<Attributes name="F#(Gb) min7 (2)" color="FFB5EC40" id="547" activation="cc98.35|cc99.4"/>
+			<Attributes name="F#(Gb) min7 (3)" color="FFB5EC40" id="548" activation="cc98.36|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FFB5EC40">
+			<Attributes name="F#(Gb) minM7 (1)" color="FFB5EC40" id="549" activation="cc98.37|cc99.4"/>
+			<Attributes name="F#(Gb) minM7 (2)" color="FFB5EC40" id="550" activation="cc98.38|cc99.4"/>
+			<Attributes name="F#(Gb) minM7 (3)" color="FFB5EC40" id="551" activation="cc98.39|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FFB5EC40">
+			<Attributes name="F#(Gb) min7b5 (1)" color="FFB5EC40" id="552" activation="cc98.40|cc99.4"/>
+			<Attributes name="F#(Gb) min7b5 (2)" color="FFB5EC40" id="553" activation="cc98.41|cc99.4"/>
+			<Attributes name="F#(Gb) min7b5 (3)" color="FFB5EC40" id="554" activation="cc98.42|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FFB5EC40">
+			<Attributes name="F#(Gb) min6(9) (1)" color="FFB5EC40" id="555" activation="cc98.43|cc99.4"/>
+			<Attributes name="F#(Gb) min6(9) (2)" color="FFB5EC40" id="556" activation="cc98.44|cc99.4"/>
+			<Attributes name="F#(Gb) min6(9) (3)" color="FFB5EC40" id="557" activation="cc98.45|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FFB5EC40">
+			<Attributes name="F#(Gb) min7(9) (1)" color="FFB5EC40" id="558" activation="cc98.46|cc99.4"/>
+			<Attributes name="F#(Gb) min7(9) (2)" color="FFB5EC40" id="559" activation="cc98.47|cc99.4"/>
+			<Attributes name="F#(Gb) min7(9) (3)" color="FFB5EC40" id="560" activation="cc98.48|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FFB5EC40">
+			<Attributes name="F#(Gb) min7(9 11) (1)" color="FFB5EC40" id="561" activation="cc98.49|cc99.4"/>
+			<Attributes name="F#(Gb) min7(9 11) (2)" color="FFB5EC40" id="562" activation="cc98.50|cc99.4"/>
+			<Attributes name="F#(Gb) min7(9 11) (3)" color="FFB5EC40" id="563" activation="cc98.51|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7 (1)" color="FFB5EC40" id="564" activation="cc98.52|cc99.4"/>
+			<Attributes name="F#(Gb) 7 (2)" color="FFB5EC40" id="565" activation="cc98.53|cc99.4"/>
+			<Attributes name="F#(Gb) 7 (3)" color="FFB5EC40" id="566" activation="cc98.54|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FFB5EC40">
+			<Attributes name="F#(Gb) aug7 (1)" color="FFB5EC40" id="567" activation="cc98.55|cc99.4"/>
+			<Attributes name="F#(Gb) aug7 (2)" color="FFB5EC40" id="568" activation="cc98.56|cc99.4"/>
+			<Attributes name="F#(Gb) aug7 (3)" color="FFB5EC40" id="569" activation="cc98.57|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7b5 (1)" color="FFB5EC40" id="570" activation="cc98.58|cc99.4"/>
+			<Attributes name="F#(Gb) 7b5 (2)" color="FFB5EC40" id="571" activation="cc98.59|cc99.4"/>
+			<Attributes name="F#(Gb) 7b5 (3)" color="FFB5EC40" id="572" activation="cc98.60|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7(9) (1)" color="FFB5EC40" id="573" activation="cc98.61|cc99.4"/>
+			<Attributes name="F#(Gb) 7(9) (2)" color="FFB5EC40" id="574" activation="cc98.62|cc99.4"/>
+			<Attributes name="F#(Gb) 7(9) (3)" color="FFB5EC40" id="575" activation="cc98.63|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7(#9) (1)" color="FFB5EC40" id="576" activation="cc98.64|cc99.4"/>
+			<Attributes name="F#(Gb) 7(#9) (2)" color="FFB5EC40" id="577" activation="cc98.65|cc99.4"/>
+			<Attributes name="F#(Gb) 7(#9) (3)" color="FFB5EC40" id="578" activation="cc98.66|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7(b9) (1)" color="FFB5EC40" id="579" activation="cc98.67|cc99.4"/>
+			<Attributes name="F#(Gb) 7(b9) (2)" color="FFB5EC40" id="580" activation="cc98.68|cc99.4"/>
+			<Attributes name="F#(Gb) 7(b9) (3)" color="FFB5EC40" id="581" activation="cc98.69|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7(#11) (1)" color="FFB5EC40" id="582" activation="cc98.70|cc99.4"/>
+			<Attributes name="F#(Gb) 7(#11) (2)" color="FFB5EC40" id="583" activation="cc98.71|cc99.4"/>
+			<Attributes name="F#(Gb) 7(#11) (3)" color="FFB5EC40" id="584" activation="cc98.72|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7(13) (1)" color="FFB5EC40" id="585" activation="cc98.73|cc99.4"/>
+			<Attributes name="F#(Gb) 7(13) (2)" color="FFB5EC40" id="586" activation="cc98.74|cc99.4"/>
+			<Attributes name="F#(Gb) 7(13) (3)" color="FFB5EC40" id="587" activation="cc98.75|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7(b13) (1)" color="FFB5EC40" id="588" activation="cc98.76|cc99.4"/>
+			<Attributes name="F#(Gb) 7(b13) (2)" color="FFB5EC40" id="589" activation="cc98.77|cc99.4"/>
+			<Attributes name="F#(Gb) 7(b13) (3)" color="FFB5EC40" id="590" activation="cc98.78|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7(9 13) (1)" color="FFB5EC40" id="591" activation="cc98.79|cc99.4"/>
+			<Attributes name="F#(Gb) 7(9 13) (2)" color="FFB5EC40" id="592" activation="cc98.80|cc99.4"/>
+			<Attributes name="F#(Gb) 7(9 13) (3)" color="FFB5EC40" id="593" activation="cc98.81|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7(b9 13) (1)" color="FFB5EC40" id="594" activation="cc98.82|cc99.4"/>
+			<Attributes name="F#(Gb) 7(b9 13) (2)" color="FFB5EC40" id="595" activation="cc98.83|cc99.4"/>
+			<Attributes name="F#(Gb) 7(b9 13) (3)" color="FFB5EC40" id="596" activation="cc98.84|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FFB5EC40">
+			<Attributes name="F#(Gb) 7sus4 (1)" color="FFB5EC40" id="597" activation="cc98.85|cc99.4"/>
+			<Attributes name="F#(Gb) 7sus4 (2)" color="FFB5EC40" id="598" activation="cc98.86|cc99.4"/>
+			<Attributes name="F#(Gb) 7sus4 (3)" color="FFB5EC40" id="599" activation="cc98.87|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FFB5EC40">
+			<Attributes name="F#(Gb) add9 (1)" color="FFB5EC40" id="600" activation="cc98.88|cc99.4"/>
+			<Attributes name="F#(Gb) add9 (2)" color="FFB5EC40" id="601" activation="cc98.89|cc99.4"/>
+			<Attributes name="F#(Gb) add9 (3)" color="FFB5EC40" id="602" activation="cc98.90|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FFB5EC40">
+			<Attributes name="F#(Gb) aug (1)" color="FFB5EC40" id="603" activation="cc98.91|cc99.4"/>
+			<Attributes name="F#(Gb) aug (2)" color="FFB5EC40" id="604" activation="cc98.92|cc99.4"/>
+			<Attributes name="F#(Gb) aug (3)" color="FFB5EC40" id="605" activation="cc98.93|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FFB5EC40">
+			<Attributes name="F#(Gb) dim (1)" color="FFB5EC40" id="606" activation="cc98.94|cc99.4"/>
+			<Attributes name="F#(Gb) dim (2)" color="FFB5EC40" id="607" activation="cc98.95|cc99.4"/>
+			<Attributes name="F#(Gb) dim (3)" color="FFB5EC40" id="608" activation="cc98.96|cc99.4"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="G" color="FFECE040">
+		<Attributes folder="1" name="Maj" color="FFECE040">
+			<Attributes name="G Maj (1)" color="FFECE040" id="609" activation="cc98.97|cc99.4"/>
+			<Attributes name="G Maj (2)" color="FFECE040" id="610" activation="cc98.98|cc99.4"/>
+			<Attributes name="G Maj (3)" color="FFECE040" id="611" activation="cc98.99|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FFECE040">
+			<Attributes name="G 6 (1)" color="FFECE040" id="612" activation="cc98.100|cc99.4"/>
+			<Attributes name="G 6 (2)" color="FFECE040" id="613" activation="cc98.101|cc99.4"/>
+			<Attributes name="G 6 (3)" color="FFECE040" id="614" activation="cc98.102|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FFECE040">
+			<Attributes name="G M7 (1)" color="FFECE040" id="615" activation="cc98.103|cc99.4"/>
+			<Attributes name="G M7 (2)" color="FFECE040" id="616" activation="cc98.104|cc99.4"/>
+			<Attributes name="G M7 (3)" color="FFECE040" id="617" activation="cc98.105|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FFECE040">
+			<Attributes name="G M7(9) (1)" color="FFECE040" id="618" activation="cc98.106|cc99.4"/>
+			<Attributes name="G M7(9) (2)" color="FFECE040" id="619" activation="cc98.107|cc99.4"/>
+			<Attributes name="G M7(9) (3)" color="FFECE040" id="620" activation="cc98.108|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FFECE040">
+			<Attributes name="G 6(9) (1)" color="FFECE040" id="621" activation="cc98.109|cc99.4"/>
+			<Attributes name="G 6(9) (2)" color="FFECE040" id="622" activation="cc98.110|cc99.4"/>
+			<Attributes name="G 6(9) (3)" color="FFECE040" id="623" activation="cc98.111|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FFECE040">
+			<Attributes name="G sus4 (1)" color="FFECE040" id="624" activation="cc98.112|cc99.4"/>
+			<Attributes name="G sus4 (2)" color="FFECE040" id="625" activation="cc98.113|cc99.4"/>
+			<Attributes name="G sus4 (3)" color="FFECE040" id="626" activation="cc98.114|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FFECE040">
+			<Attributes name="G min (1)" color="FFECE040" id="627" activation="cc98.115|cc99.4"/>
+			<Attributes name="G min (2)" color="FFECE040" id="628" activation="cc98.116|cc99.4"/>
+			<Attributes name="G min (3)" color="FFECE040" id="629" activation="cc98.117|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FFECE040">
+			<Attributes name="G min6 (1)" color="FFECE040" id="630" activation="cc98.118|cc99.4"/>
+			<Attributes name="G min6 (2)" color="FFECE040" id="631" activation="cc98.119|cc99.4"/>
+			<Attributes name="G min6 (3)" color="FFECE040" id="632" activation="cc98.120|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FFECE040">
+			<Attributes name="G min7 (1)" color="FFECE040" id="633" activation="cc98.121|cc99.4"/>
+			<Attributes name="G min7 (2)" color="FFECE040" id="634" activation="cc98.122|cc99.4"/>
+			<Attributes name="G min7 (3)" color="FFECE040" id="635" activation="cc98.123|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FFECE040">
+			<Attributes name="G minM7 (1)" color="FFECE040" id="636" activation="cc98.124|cc99.4"/>
+			<Attributes name="G minM7 (2)" color="FFECE040" id="637" activation="cc98.125|cc99.4"/>
+			<Attributes name="G minM7 (3)" color="FFECE040" id="638" activation="cc98.126|cc99.4"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FFECE040">
+			<Attributes name="G min7b5 (1)" color="FFECE040" id="639" activation="cc98.127|cc99.4"/>
+			<Attributes name="G min7b5 (2)" color="FFECE040" id="640" activation="cc98.0|cc99.5"/>
+			<Attributes name="G min7b5 (3)" color="FFECE040" id="641" activation="cc98.1|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FFECE040">
+			<Attributes name="G min6(9) (1)" color="FFECE040" id="642" activation="cc98.2|cc99.5"/>
+			<Attributes name="G min6(9) (2)" color="FFECE040" id="643" activation="cc98.3|cc99.5"/>
+			<Attributes name="G min6(9) (3)" color="FFECE040" id="644" activation="cc98.4|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FFECE040">
+			<Attributes name="G min7(9) (1)" color="FFECE040" id="645" activation="cc98.5|cc99.5"/>
+			<Attributes name="G min7(9) (2)" color="FFECE040" id="646" activation="cc98.6|cc99.5"/>
+			<Attributes name="G min7(9) (3)" color="FFECE040" id="647" activation="cc98.7|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FFECE040">
+			<Attributes name="G min7(9 11) (1)" color="FFECE040" id="648" activation="cc98.8|cc99.5"/>
+			<Attributes name="G min7(9 11) (2)" color="FFECE040" id="649" activation="cc98.9|cc99.5"/>
+			<Attributes name="G min7(9 11) (3)" color="FFECE040" id="650" activation="cc98.10|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FFECE040">
+			<Attributes name="G 7 (1)" color="FFECE040" id="651" activation="cc98.11|cc99.5"/>
+			<Attributes name="G 7 (2)" color="FFECE040" id="652" activation="cc98.12|cc99.5"/>
+			<Attributes name="G 7 (3)" color="FFECE040" id="653" activation="cc98.13|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FFECE040">
+			<Attributes name="G aug7 (1)" color="FFECE040" id="654" activation="cc98.14|cc99.5"/>
+			<Attributes name="G aug7 (2)" color="FFECE040" id="655" activation="cc98.15|cc99.5"/>
+			<Attributes name="G aug7 (3)" color="FFECE040" id="656" activation="cc98.16|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FFECE040">
+			<Attributes name="G 7b5 (1)" color="FFECE040" id="657" activation="cc98.17|cc99.5"/>
+			<Attributes name="G 7b5 (2)" color="FFECE040" id="658" activation="cc98.18|cc99.5"/>
+			<Attributes name="G 7b5 (3)" color="FFECE040" id="659" activation="cc98.19|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FFECE040">
+			<Attributes name="G 7(9) (1)" color="FFECE040" id="660" activation="cc98.20|cc99.5"/>
+			<Attributes name="G 7(9) (2)" color="FFECE040" id="661" activation="cc98.21|cc99.5"/>
+			<Attributes name="G 7(9) (3)" color="FFECE040" id="662" activation="cc98.22|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FFECE040">
+			<Attributes name="G 7(#9) (1)" color="FFECE040" id="663" activation="cc98.23|cc99.5"/>
+			<Attributes name="G 7(#9) (2)" color="FFECE040" id="664" activation="cc98.24|cc99.5"/>
+			<Attributes name="G 7(#9) (3)" color="FFECE040" id="665" activation="cc98.25|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FFECE040">
+			<Attributes name="G 7(b9) (1)" color="FFECE040" id="666" activation="cc98.26|cc99.5"/>
+			<Attributes name="G 7(b9) (2)" color="FFECE040" id="667" activation="cc98.27|cc99.5"/>
+			<Attributes name="G 7(b9) (3)" color="FFECE040" id="668" activation="cc98.28|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FFECE040">
+			<Attributes name="G 7(#11) (1)" color="FFECE040" id="669" activation="cc98.29|cc99.5"/>
+			<Attributes name="G 7(#11) (2)" color="FFECE040" id="670" activation="cc98.30|cc99.5"/>
+			<Attributes name="G 7(#11) (3)" color="FFECE040" id="671" activation="cc98.31|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FFECE040">
+			<Attributes name="G 7(13) (1)" color="FFECE040" id="672" activation="cc98.32|cc99.5"/>
+			<Attributes name="G 7(13) (2)" color="FFECE040" id="673" activation="cc98.33|cc99.5"/>
+			<Attributes name="G 7(13) (3)" color="FFECE040" id="674" activation="cc98.34|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FFECE040">
+			<Attributes name="G 7(b13) (1)" color="FFECE040" id="675" activation="cc98.35|cc99.5"/>
+			<Attributes name="G 7(b13) (2)" color="FFECE040" id="676" activation="cc98.36|cc99.5"/>
+			<Attributes name="G 7(b13) (3)" color="FFECE040" id="677" activation="cc98.37|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FFECE040">
+			<Attributes name="G 7(9 13) (1)" color="FFECE040" id="678" activation="cc98.38|cc99.5"/>
+			<Attributes name="G 7(9 13) (2)" color="FFECE040" id="679" activation="cc98.39|cc99.5"/>
+			<Attributes name="G 7(9 13) (3)" color="FFECE040" id="680" activation="cc98.40|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FFECE040">
+			<Attributes name="G 7(b9 13) (1)" color="FFECE040" id="681" activation="cc98.41|cc99.5"/>
+			<Attributes name="G 7(b9 13) (2)" color="FFECE040" id="682" activation="cc98.42|cc99.5"/>
+			<Attributes name="G 7(b9 13) (3)" color="FFECE040" id="683" activation="cc98.43|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FFECE040">
+			<Attributes name="G 7sus4 (1)" color="FFECE040" id="684" activation="cc98.44|cc99.5"/>
+			<Attributes name="G 7sus4 (2)" color="FFECE040" id="685" activation="cc98.45|cc99.5"/>
+			<Attributes name="G 7sus4 (3)" color="FFECE040" id="686" activation="cc98.46|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FFECE040">
+			<Attributes name="G add9 (1)" color="FFECE040" id="687" activation="cc98.47|cc99.5"/>
+			<Attributes name="G add9 (2)" color="FFECE040" id="688" activation="cc98.48|cc99.5"/>
+			<Attributes name="G add9 (3)" color="FFECE040" id="689" activation="cc98.49|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FFECE040">
+			<Attributes name="G aug (1)" color="FFECE040" id="690" activation="cc98.50|cc99.5"/>
+			<Attributes name="G aug (2)" color="FFECE040" id="691" activation="cc98.51|cc99.5"/>
+			<Attributes name="G aug (3)" color="FFECE040" id="692" activation="cc98.52|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FFECE040">
+			<Attributes name="G dim (1)" color="FFECE040" id="693" activation="cc98.53|cc99.5"/>
+			<Attributes name="G dim (2)" color="FFECE040" id="694" activation="cc98.54|cc99.5"/>
+			<Attributes name="G dim (3)" color="FFECE040" id="695" activation="cc98.55|cc99.5"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="G#(Ab)" color="FFEC9F40">
+		<Attributes folder="1" name="Maj" color="FFEC9F40">
+			<Attributes name="G#(Ab) Maj (1)" color="FFEC9F40" id="696" activation="cc98.56|cc99.5"/>
+			<Attributes name="G#(Ab) Maj (2)" color="FFEC9F40" id="697" activation="cc98.57|cc99.5"/>
+			<Attributes name="G#(Ab) Maj (3)" color="FFEC9F40" id="698" activation="cc98.58|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FFEC9F40">
+			<Attributes name="G#(Ab) 6 (1)" color="FFEC9F40" id="699" activation="cc98.59|cc99.5"/>
+			<Attributes name="G#(Ab) 6 (2)" color="FFEC9F40" id="700" activation="cc98.60|cc99.5"/>
+			<Attributes name="G#(Ab) 6 (3)" color="FFEC9F40" id="701" activation="cc98.61|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FFEC9F40">
+			<Attributes name="G#(Ab) M7 (1)" color="FFEC9F40" id="702" activation="cc98.62|cc99.5"/>
+			<Attributes name="G#(Ab) M7 (2)" color="FFEC9F40" id="703" activation="cc98.63|cc99.5"/>
+			<Attributes name="G#(Ab) M7 (3)" color="FFEC9F40" id="704" activation="cc98.64|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FFEC9F40">
+			<Attributes name="G#(Ab) M7(9) (1)" color="FFEC9F40" id="705" activation="cc98.65|cc99.5"/>
+			<Attributes name="G#(Ab) M7(9) (2)" color="FFEC9F40" id="706" activation="cc98.66|cc99.5"/>
+			<Attributes name="G#(Ab) M7(9) (3)" color="FFEC9F40" id="707" activation="cc98.67|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FFEC9F40">
+			<Attributes name="G#(Ab) 6(9) (1)" color="FFEC9F40" id="708" activation="cc98.68|cc99.5"/>
+			<Attributes name="G#(Ab) 6(9) (2)" color="FFEC9F40" id="709" activation="cc98.69|cc99.5"/>
+			<Attributes name="G#(Ab) 6(9) (3)" color="FFEC9F40" id="710" activation="cc98.70|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FFEC9F40">
+			<Attributes name="G#(Ab) sus4 (1)" color="FFEC9F40" id="711" activation="cc98.71|cc99.5"/>
+			<Attributes name="G#(Ab) sus4 (2)" color="FFEC9F40" id="712" activation="cc98.72|cc99.5"/>
+			<Attributes name="G#(Ab) sus4 (3)" color="FFEC9F40" id="713" activation="cc98.73|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FFEC9F40">
+			<Attributes name="G#(Ab) min (1)" color="FFEC9F40" id="714" activation="cc98.74|cc99.5"/>
+			<Attributes name="G#(Ab) min (2)" color="FFEC9F40" id="715" activation="cc98.75|cc99.5"/>
+			<Attributes name="G#(Ab) min (3)" color="FFEC9F40" id="716" activation="cc98.76|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FFEC9F40">
+			<Attributes name="G#(Ab) min6 (1)" color="FFEC9F40" id="717" activation="cc98.77|cc99.5"/>
+			<Attributes name="G#(Ab) min6 (2)" color="FFEC9F40" id="718" activation="cc98.78|cc99.5"/>
+			<Attributes name="G#(Ab) min6 (3)" color="FFEC9F40" id="719" activation="cc98.79|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FFEC9F40">
+			<Attributes name="G#(Ab) min7 (1)" color="FFEC9F40" id="720" activation="cc98.80|cc99.5"/>
+			<Attributes name="G#(Ab) min7 (2)" color="FFEC9F40" id="721" activation="cc98.81|cc99.5"/>
+			<Attributes name="G#(Ab) min7 (3)" color="FFEC9F40" id="722" activation="cc98.82|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FFEC9F40">
+			<Attributes name="G#(Ab) minM7 (1)" color="FFEC9F40" id="723" activation="cc98.83|cc99.5"/>
+			<Attributes name="G#(Ab) minM7 (2)" color="FFEC9F40" id="724" activation="cc98.84|cc99.5"/>
+			<Attributes name="G#(Ab) minM7 (3)" color="FFEC9F40" id="725" activation="cc98.85|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FFEC9F40">
+			<Attributes name="G#(Ab) min7b5 (1)" color="FFEC9F40" id="726" activation="cc98.86|cc99.5"/>
+			<Attributes name="G#(Ab) min7b5 (2)" color="FFEC9F40" id="727" activation="cc98.87|cc99.5"/>
+			<Attributes name="G#(Ab) min7b5 (3)" color="FFEC9F40" id="728" activation="cc98.88|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FFEC9F40">
+			<Attributes name="G#(Ab) min6(9) (1)" color="FFEC9F40" id="729" activation="cc98.89|cc99.5"/>
+			<Attributes name="G#(Ab) min6(9) (2)" color="FFEC9F40" id="730" activation="cc98.90|cc99.5"/>
+			<Attributes name="G#(Ab) min6(9) (3)" color="FFEC9F40" id="731" activation="cc98.91|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FFEC9F40">
+			<Attributes name="G#(Ab) min7(9) (1)" color="FFEC9F40" id="732" activation="cc98.92|cc99.5"/>
+			<Attributes name="G#(Ab) min7(9) (2)" color="FFEC9F40" id="733" activation="cc98.93|cc99.5"/>
+			<Attributes name="G#(Ab) min7(9) (3)" color="FFEC9F40" id="734" activation="cc98.94|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FFEC9F40">
+			<Attributes name="G#(Ab) min7(9 11) (1)" color="FFEC9F40" id="735" activation="cc98.95|cc99.5"/>
+			<Attributes name="G#(Ab) min7(9 11) (2)" color="FFEC9F40" id="736" activation="cc98.96|cc99.5"/>
+			<Attributes name="G#(Ab) min7(9 11) (3)" color="FFEC9F40" id="737" activation="cc98.97|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7 (1)" color="FFEC9F40" id="738" activation="cc98.98|cc99.5"/>
+			<Attributes name="G#(Ab) 7 (2)" color="FFEC9F40" id="739" activation="cc98.99|cc99.5"/>
+			<Attributes name="G#(Ab) 7 (3)" color="FFEC9F40" id="740" activation="cc98.100|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FFEC9F40">
+			<Attributes name="G#(Ab) aug7 (1)" color="FFEC9F40" id="741" activation="cc98.101|cc99.5"/>
+			<Attributes name="G#(Ab) aug7 (2)" color="FFEC9F40" id="742" activation="cc98.102|cc99.5"/>
+			<Attributes name="G#(Ab) aug7 (3)" color="FFEC9F40" id="743" activation="cc98.103|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7b5 (1)" color="FFEC9F40" id="744" activation="cc98.104|cc99.5"/>
+			<Attributes name="G#(Ab) 7b5 (2)" color="FFEC9F40" id="745" activation="cc98.105|cc99.5"/>
+			<Attributes name="G#(Ab) 7b5 (3)" color="FFEC9F40" id="746" activation="cc98.106|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7(9) (1)" color="FFEC9F40" id="747" activation="cc98.107|cc99.5"/>
+			<Attributes name="G#(Ab) 7(9) (2)" color="FFEC9F40" id="748" activation="cc98.108|cc99.5"/>
+			<Attributes name="G#(Ab) 7(9) (3)" color="FFEC9F40" id="749" activation="cc98.109|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7(#9) (1)" color="FFEC9F40" id="750" activation="cc98.110|cc99.5"/>
+			<Attributes name="G#(Ab) 7(#9) (2)" color="FFEC9F40" id="751" activation="cc98.111|cc99.5"/>
+			<Attributes name="G#(Ab) 7(#9) (3)" color="FFEC9F40" id="752" activation="cc98.112|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7(b9) (1)" color="FFEC9F40" id="753" activation="cc98.113|cc99.5"/>
+			<Attributes name="G#(Ab) 7(b9) (2)" color="FFEC9F40" id="754" activation="cc98.114|cc99.5"/>
+			<Attributes name="G#(Ab) 7(b9) (3)" color="FFEC9F40" id="755" activation="cc98.115|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7(#11) (1)" color="FFEC9F40" id="756" activation="cc98.116|cc99.5"/>
+			<Attributes name="G#(Ab) 7(#11) (2)" color="FFEC9F40" id="757" activation="cc98.117|cc99.5"/>
+			<Attributes name="G#(Ab) 7(#11) (3)" color="FFEC9F40" id="758" activation="cc98.118|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7(13) (1)" color="FFEC9F40" id="759" activation="cc98.119|cc99.5"/>
+			<Attributes name="G#(Ab) 7(13) (2)" color="FFEC9F40" id="760" activation="cc98.120|cc99.5"/>
+			<Attributes name="G#(Ab) 7(13) (3)" color="FFEC9F40" id="761" activation="cc98.121|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7(b13) (1)" color="FFEC9F40" id="762" activation="cc98.122|cc99.5"/>
+			<Attributes name="G#(Ab) 7(b13) (2)" color="FFEC9F40" id="763" activation="cc98.123|cc99.5"/>
+			<Attributes name="G#(Ab) 7(b13) (3)" color="FFEC9F40" id="764" activation="cc98.124|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7(9 13) (1)" color="FFEC9F40" id="765" activation="cc98.125|cc99.5"/>
+			<Attributes name="G#(Ab) 7(9 13) (2)" color="FFEC9F40" id="766" activation="cc98.126|cc99.5"/>
+			<Attributes name="G#(Ab) 7(9 13) (3)" color="FFEC9F40" id="767" activation="cc98.127|cc99.5"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7(b9 13) (1)" color="FFEC9F40" id="768" activation="cc98.0|cc99.6"/>
+			<Attributes name="G#(Ab) 7(b9 13) (2)" color="FFEC9F40" id="769" activation="cc98.1|cc99.6"/>
+			<Attributes name="G#(Ab) 7(b9 13) (3)" color="FFEC9F40" id="770" activation="cc98.2|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FFEC9F40">
+			<Attributes name="G#(Ab) 7sus4 (1)" color="FFEC9F40" id="771" activation="cc98.3|cc99.6"/>
+			<Attributes name="G#(Ab) 7sus4 (2)" color="FFEC9F40" id="772" activation="cc98.4|cc99.6"/>
+			<Attributes name="G#(Ab) 7sus4 (3)" color="FFEC9F40" id="773" activation="cc98.5|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FFEC9F40">
+			<Attributes name="G#(Ab) add9 (1)" color="FFEC9F40" id="774" activation="cc98.6|cc99.6"/>
+			<Attributes name="G#(Ab) add9 (2)" color="FFEC9F40" id="775" activation="cc98.7|cc99.6"/>
+			<Attributes name="G#(Ab) add9 (3)" color="FFEC9F40" id="776" activation="cc98.8|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FFEC9F40">
+			<Attributes name="G#(Ab) aug (1)" color="FFEC9F40" id="777" activation="cc98.9|cc99.6"/>
+			<Attributes name="G#(Ab) aug (2)" color="FFEC9F40" id="778" activation="cc98.10|cc99.6"/>
+			<Attributes name="G#(Ab) aug (3)" color="FFEC9F40" id="779" activation="cc98.11|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FFEC9F40">
+			<Attributes name="G#(Ab) dim (1)" color="FFEC9F40" id="780" activation="cc98.12|cc99.6"/>
+			<Attributes name="G#(Ab) dim (2)" color="FFEC9F40" id="781" activation="cc98.13|cc99.6"/>
+			<Attributes name="G#(Ab) dim (3)" color="FFEC9F40" id="782" activation="cc98.14|cc99.6"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="A" color="FFE44D2F">
+		<Attributes folder="1" name="Maj" color="FFE44D2F">
+			<Attributes name="A Maj (1)" color="FFE44D2F" id="783" activation="cc98.15|cc99.6"/>
+			<Attributes name="A Maj (2)" color="FFE44D2F" id="784" activation="cc98.16|cc99.6"/>
+			<Attributes name="A Maj (3)" color="FFE44D2F" id="785" activation="cc98.17|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FFE44D2F">
+			<Attributes name="A 6 (1)" color="FFE44D2F" id="786" activation="cc98.18|cc99.6"/>
+			<Attributes name="A 6 (2)" color="FFE44D2F" id="787" activation="cc98.19|cc99.6"/>
+			<Attributes name="A 6 (3)" color="FFE44D2F" id="788" activation="cc98.20|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FFE44D2F">
+			<Attributes name="A M7 (1)" color="FFE44D2F" id="789" activation="cc98.21|cc99.6"/>
+			<Attributes name="A M7 (2)" color="FFE44D2F" id="790" activation="cc98.22|cc99.6"/>
+			<Attributes name="A M7 (3)" color="FFE44D2F" id="791" activation="cc98.23|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FFE44D2F">
+			<Attributes name="A M7(9) (1)" color="FFE44D2F" id="792" activation="cc98.24|cc99.6"/>
+			<Attributes name="A M7(9) (2)" color="FFE44D2F" id="793" activation="cc98.25|cc99.6"/>
+			<Attributes name="A M7(9) (3)" color="FFE44D2F" id="794" activation="cc98.26|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FFE44D2F">
+			<Attributes name="A 6(9) (1)" color="FFE44D2F" id="795" activation="cc98.27|cc99.6"/>
+			<Attributes name="A 6(9) (2)" color="FFE44D2F" id="796" activation="cc98.28|cc99.6"/>
+			<Attributes name="A 6(9) (3)" color="FFE44D2F" id="797" activation="cc98.29|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FFE44D2F">
+			<Attributes name="A sus4 (1)" color="FFE44D2F" id="798" activation="cc98.30|cc99.6"/>
+			<Attributes name="A sus4 (2)" color="FFE44D2F" id="799" activation="cc98.31|cc99.6"/>
+			<Attributes name="A sus4 (3)" color="FFE44D2F" id="800" activation="cc98.32|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FFE44D2F">
+			<Attributes name="A min (1)" color="FFE44D2F" id="801" activation="cc98.33|cc99.6"/>
+			<Attributes name="A min (2)" color="FFE44D2F" id="802" activation="cc98.34|cc99.6"/>
+			<Attributes name="A min (3)" color="FFE44D2F" id="803" activation="cc98.35|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FFE44D2F">
+			<Attributes name="A min6 (1)" color="FFE44D2F" id="804" activation="cc98.36|cc99.6"/>
+			<Attributes name="A min6 (2)" color="FFE44D2F" id="805" activation="cc98.37|cc99.6"/>
+			<Attributes name="A min6 (3)" color="FFE44D2F" id="806" activation="cc98.38|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FFE44D2F">
+			<Attributes name="A min7 (1)" color="FFE44D2F" id="807" activation="cc98.39|cc99.6"/>
+			<Attributes name="A min7 (2)" color="FFE44D2F" id="808" activation="cc98.40|cc99.6"/>
+			<Attributes name="A min7 (3)" color="FFE44D2F" id="809" activation="cc98.41|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FFE44D2F">
+			<Attributes name="A minM7 (1)" color="FFE44D2F" id="810" activation="cc98.42|cc99.6"/>
+			<Attributes name="A minM7 (2)" color="FFE44D2F" id="811" activation="cc98.43|cc99.6"/>
+			<Attributes name="A minM7 (3)" color="FFE44D2F" id="812" activation="cc98.44|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FFE44D2F">
+			<Attributes name="A min7b5 (1)" color="FFE44D2F" id="813" activation="cc98.45|cc99.6"/>
+			<Attributes name="A min7b5 (2)" color="FFE44D2F" id="814" activation="cc98.46|cc99.6"/>
+			<Attributes name="A min7b5 (3)" color="FFE44D2F" id="815" activation="cc98.47|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FFE44D2F">
+			<Attributes name="A min6(9) (1)" color="FFE44D2F" id="816" activation="cc98.48|cc99.6"/>
+			<Attributes name="A min6(9) (2)" color="FFE44D2F" id="817" activation="cc98.49|cc99.6"/>
+			<Attributes name="A min6(9) (3)" color="FFE44D2F" id="818" activation="cc98.50|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FFE44D2F">
+			<Attributes name="A min7(9) (1)" color="FFE44D2F" id="819" activation="cc98.51|cc99.6"/>
+			<Attributes name="A min7(9) (2)" color="FFE44D2F" id="820" activation="cc98.52|cc99.6"/>
+			<Attributes name="A min7(9) (3)" color="FFE44D2F" id="821" activation="cc98.53|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FFE44D2F">
+			<Attributes name="A min7(9 11) (1)" color="FFE44D2F" id="822" activation="cc98.54|cc99.6"/>
+			<Attributes name="A min7(9 11) (2)" color="FFE44D2F" id="823" activation="cc98.55|cc99.6"/>
+			<Attributes name="A min7(9 11) (3)" color="FFE44D2F" id="824" activation="cc98.56|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FFE44D2F">
+			<Attributes name="A 7 (1)" color="FFE44D2F" id="825" activation="cc98.57|cc99.6"/>
+			<Attributes name="A 7 (2)" color="FFE44D2F" id="826" activation="cc98.58|cc99.6"/>
+			<Attributes name="A 7 (3)" color="FFE44D2F" id="827" activation="cc98.59|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FFE44D2F">
+			<Attributes name="A aug7 (1)" color="FFE44D2F" id="828" activation="cc98.60|cc99.6"/>
+			<Attributes name="A aug7 (2)" color="FFE44D2F" id="829" activation="cc98.61|cc99.6"/>
+			<Attributes name="A aug7 (3)" color="FFE44D2F" id="830" activation="cc98.62|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FFE44D2F">
+			<Attributes name="A 7b5 (1)" color="FFE44D2F" id="831" activation="cc98.63|cc99.6"/>
+			<Attributes name="A 7b5 (2)" color="FFE44D2F" id="832" activation="cc98.64|cc99.6"/>
+			<Attributes name="A 7b5 (3)" color="FFE44D2F" id="833" activation="cc98.65|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FFE44D2F">
+			<Attributes name="A 7(9) (1)" color="FFE44D2F" id="834" activation="cc98.66|cc99.6"/>
+			<Attributes name="A 7(9) (2)" color="FFE44D2F" id="835" activation="cc98.67|cc99.6"/>
+			<Attributes name="A 7(9) (3)" color="FFE44D2F" id="836" activation="cc98.68|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FFE44D2F">
+			<Attributes name="A 7(#9) (1)" color="FFE44D2F" id="837" activation="cc98.69|cc99.6"/>
+			<Attributes name="A 7(#9) (2)" color="FFE44D2F" id="838" activation="cc98.70|cc99.6"/>
+			<Attributes name="A 7(#9) (3)" color="FFE44D2F" id="839" activation="cc98.71|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FFE44D2F">
+			<Attributes name="A 7(b9) (1)" color="FFE44D2F" id="840" activation="cc98.72|cc99.6"/>
+			<Attributes name="A 7(b9) (2)" color="FFE44D2F" id="841" activation="cc98.73|cc99.6"/>
+			<Attributes name="A 7(b9) (3)" color="FFE44D2F" id="842" activation="cc98.74|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FFE44D2F">
+			<Attributes name="A 7(#11) (1)" color="FFE44D2F" id="843" activation="cc98.75|cc99.6"/>
+			<Attributes name="A 7(#11) (2)" color="FFE44D2F" id="844" activation="cc98.76|cc99.6"/>
+			<Attributes name="A 7(#11) (3)" color="FFE44D2F" id="845" activation="cc98.77|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FFE44D2F">
+			<Attributes name="A 7(13) (1)" color="FFE44D2F" id="846" activation="cc98.78|cc99.6"/>
+			<Attributes name="A 7(13) (2)" color="FFE44D2F" id="847" activation="cc98.79|cc99.6"/>
+			<Attributes name="A 7(13) (3)" color="FFE44D2F" id="848" activation="cc98.80|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FFE44D2F">
+			<Attributes name="A 7(b13) (1)" color="FFE44D2F" id="849" activation="cc98.81|cc99.6"/>
+			<Attributes name="A 7(b13) (2)" color="FFE44D2F" id="850" activation="cc98.82|cc99.6"/>
+			<Attributes name="A 7(b13) (3)" color="FFE44D2F" id="851" activation="cc98.83|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FFE44D2F">
+			<Attributes name="A 7(9 13) (1)" color="FFE44D2F" id="852" activation="cc98.84|cc99.6"/>
+			<Attributes name="A 7(9 13) (2)" color="FFE44D2F" id="853" activation="cc98.85|cc99.6"/>
+			<Attributes name="A 7(9 13) (3)" color="FFE44D2F" id="854" activation="cc98.86|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FFE44D2F">
+			<Attributes name="A 7(b9 13) (1)" color="FFE44D2F" id="855" activation="cc98.87|cc99.6"/>
+			<Attributes name="A 7(b9 13) (2)" color="FFE44D2F" id="856" activation="cc98.88|cc99.6"/>
+			<Attributes name="A 7(b9 13) (3)" color="FFE44D2F" id="857" activation="cc98.89|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FFE44D2F">
+			<Attributes name="A 7sus4 (1)" color="FFE44D2F" id="858" activation="cc98.90|cc99.6"/>
+			<Attributes name="A 7sus4 (2)" color="FFE44D2F" id="859" activation="cc98.91|cc99.6"/>
+			<Attributes name="A 7sus4 (3)" color="FFE44D2F" id="860" activation="cc98.92|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FFE44D2F">
+			<Attributes name="A add9 (1)" color="FFE44D2F" id="861" activation="cc98.93|cc99.6"/>
+			<Attributes name="A add9 (2)" color="FFE44D2F" id="862" activation="cc98.94|cc99.6"/>
+			<Attributes name="A add9 (3)" color="FFE44D2F" id="863" activation="cc98.95|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FFE44D2F">
+			<Attributes name="A aug (1)" color="FFE44D2F" id="864" activation="cc98.96|cc99.6"/>
+			<Attributes name="A aug (2)" color="FFE44D2F" id="865" activation="cc98.97|cc99.6"/>
+			<Attributes name="A aug (3)" color="FFE44D2F" id="866" activation="cc98.98|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FFE44D2F">
+			<Attributes name="A dim (1)" color="FFE44D2F" id="867" activation="cc98.99|cc99.6"/>
+			<Attributes name="A dim (2)" color="FFE44D2F" id="868" activation="cc98.100|cc99.6"/>
+			<Attributes name="A dim (3)" color="FFE44D2F" id="869" activation="cc98.101|cc99.6"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="A#(Bb)" color="FFE42F56">
+		<Attributes folder="1" name="Maj" color="FFE42F56">
+			<Attributes name="A#(Bb) Maj (1)" color="FFE42F56" id="870" activation="cc98.102|cc99.6"/>
+			<Attributes name="A#(Bb) Maj (2)" color="FFE42F56" id="871" activation="cc98.103|cc99.6"/>
+			<Attributes name="A#(Bb) Maj (3)" color="FFE42F56" id="872" activation="cc98.104|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FFE42F56">
+			<Attributes name="A#(Bb) 6 (1)" color="FFE42F56" id="873" activation="cc98.105|cc99.6"/>
+			<Attributes name="A#(Bb) 6 (2)" color="FFE42F56" id="874" activation="cc98.106|cc99.6"/>
+			<Attributes name="A#(Bb) 6 (3)" color="FFE42F56" id="875" activation="cc98.107|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FFE42F56">
+			<Attributes name="A#(Bb) M7 (1)" color="FFE42F56" id="876" activation="cc98.108|cc99.6"/>
+			<Attributes name="A#(Bb) M7 (2)" color="FFE42F56" id="877" activation="cc98.109|cc99.6"/>
+			<Attributes name="A#(Bb) M7 (3)" color="FFE42F56" id="878" activation="cc98.110|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FFE42F56">
+			<Attributes name="A#(Bb) M7(9) (1)" color="FFE42F56" id="879" activation="cc98.111|cc99.6"/>
+			<Attributes name="A#(Bb) M7(9) (2)" color="FFE42F56" id="880" activation="cc98.112|cc99.6"/>
+			<Attributes name="A#(Bb) M7(9) (3)" color="FFE42F56" id="881" activation="cc98.113|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FFE42F56">
+			<Attributes name="A#(Bb) 6(9) (1)" color="FFE42F56" id="882" activation="cc98.114|cc99.6"/>
+			<Attributes name="A#(Bb) 6(9) (2)" color="FFE42F56" id="883" activation="cc98.115|cc99.6"/>
+			<Attributes name="A#(Bb) 6(9) (3)" color="FFE42F56" id="884" activation="cc98.116|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FFE42F56">
+			<Attributes name="A#(Bb) sus4 (1)" color="FFE42F56" id="885" activation="cc98.117|cc99.6"/>
+			<Attributes name="A#(Bb) sus4 (2)" color="FFE42F56" id="886" activation="cc98.118|cc99.6"/>
+			<Attributes name="A#(Bb) sus4 (3)" color="FFE42F56" id="887" activation="cc98.119|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FFE42F56">
+			<Attributes name="A#(Bb) min (1)" color="FFE42F56" id="888" activation="cc98.120|cc99.6"/>
+			<Attributes name="A#(Bb) min (2)" color="FFE42F56" id="889" activation="cc98.121|cc99.6"/>
+			<Attributes name="A#(Bb) min (3)" color="FFE42F56" id="890" activation="cc98.122|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FFE42F56">
+			<Attributes name="A#(Bb) min6 (1)" color="FFE42F56" id="891" activation="cc98.123|cc99.6"/>
+			<Attributes name="A#(Bb) min6 (2)" color="FFE42F56" id="892" activation="cc98.124|cc99.6"/>
+			<Attributes name="A#(Bb) min6 (3)" color="FFE42F56" id="893" activation="cc98.125|cc99.6"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FFE42F56">
+			<Attributes name="A#(Bb) min7 (1)" color="FFE42F56" id="894" activation="cc98.126|cc99.6"/>
+			<Attributes name="A#(Bb) min7 (2)" color="FFE42F56" id="895" activation="cc98.127|cc99.6"/>
+			<Attributes name="A#(Bb) min7 (3)" color="FFE42F56" id="896" activation="cc98.0|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FFE42F56">
+			<Attributes name="A#(Bb) minM7 (1)" color="FFE42F56" id="897" activation="cc98.1|cc99.7"/>
+			<Attributes name="A#(Bb) minM7 (2)" color="FFE42F56" id="898" activation="cc98.2|cc99.7"/>
+			<Attributes name="A#(Bb) minM7 (3)" color="FFE42F56" id="899" activation="cc98.3|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FFE42F56">
+			<Attributes name="A#(Bb) min7b5 (1)" color="FFE42F56" id="900" activation="cc98.4|cc99.7"/>
+			<Attributes name="A#(Bb) min7b5 (2)" color="FFE42F56" id="901" activation="cc98.5|cc99.7"/>
+			<Attributes name="A#(Bb) min7b5 (3)" color="FFE42F56" id="902" activation="cc98.6|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FFE42F56">
+			<Attributes name="A#(Bb) min6(9) (1)" color="FFE42F56" id="903" activation="cc98.7|cc99.7"/>
+			<Attributes name="A#(Bb) min6(9) (2)" color="FFE42F56" id="904" activation="cc98.8|cc99.7"/>
+			<Attributes name="A#(Bb) min6(9) (3)" color="FFE42F56" id="905" activation="cc98.9|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FFE42F56">
+			<Attributes name="A#(Bb) min7(9) (1)" color="FFE42F56" id="906" activation="cc98.10|cc99.7"/>
+			<Attributes name="A#(Bb) min7(9) (2)" color="FFE42F56" id="907" activation="cc98.11|cc99.7"/>
+			<Attributes name="A#(Bb) min7(9) (3)" color="FFE42F56" id="908" activation="cc98.12|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FFE42F56">
+			<Attributes name="A#(Bb) min7(9 11) (1)" color="FFE42F56" id="909" activation="cc98.13|cc99.7"/>
+			<Attributes name="A#(Bb) min7(9 11) (2)" color="FFE42F56" id="910" activation="cc98.14|cc99.7"/>
+			<Attributes name="A#(Bb) min7(9 11) (3)" color="FFE42F56" id="911" activation="cc98.15|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FFE42F56">
+			<Attributes name="A#(Bb) 7 (1)" color="FFE42F56" id="912" activation="cc98.16|cc99.7"/>
+			<Attributes name="A#(Bb) 7 (2)" color="FFE42F56" id="913" activation="cc98.17|cc99.7"/>
+			<Attributes name="A#(Bb) 7 (3)" color="FFE42F56" id="914" activation="cc98.18|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FFE42F56">
+			<Attributes name="A#(Bb) aug7 (1)" color="FFE42F56" id="915" activation="cc98.19|cc99.7"/>
+			<Attributes name="A#(Bb) aug7 (2)" color="FFE42F56" id="916" activation="cc98.20|cc99.7"/>
+			<Attributes name="A#(Bb) aug7 (3)" color="FFE42F56" id="917" activation="cc98.21|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FFE42F56">
+			<Attributes name="A#(Bb) 7b5 (1)" color="FFE42F56" id="918" activation="cc98.22|cc99.7"/>
+			<Attributes name="A#(Bb) 7b5 (2)" color="FFE42F56" id="919" activation="cc98.23|cc99.7"/>
+			<Attributes name="A#(Bb) 7b5 (3)" color="FFE42F56" id="920" activation="cc98.24|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FFE42F56">
+			<Attributes name="A#(Bb) 7(9) (1)" color="FFE42F56" id="921" activation="cc98.25|cc99.7"/>
+			<Attributes name="A#(Bb) 7(9) (2)" color="FFE42F56" id="922" activation="cc98.26|cc99.7"/>
+			<Attributes name="A#(Bb) 7(9) (3)" color="FFE42F56" id="923" activation="cc98.27|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FFE42F56">
+			<Attributes name="A#(Bb) 7(#9) (1)" color="FFE42F56" id="924" activation="cc98.28|cc99.7"/>
+			<Attributes name="A#(Bb) 7(#9) (2)" color="FFE42F56" id="925" activation="cc98.29|cc99.7"/>
+			<Attributes name="A#(Bb) 7(#9) (3)" color="FFE42F56" id="926" activation="cc98.30|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FFE42F56">
+			<Attributes name="A#(Bb) 7(b9) (1)" color="FFE42F56" id="927" activation="cc98.31|cc99.7"/>
+			<Attributes name="A#(Bb) 7(b9) (2)" color="FFE42F56" id="928" activation="cc98.32|cc99.7"/>
+			<Attributes name="A#(Bb) 7(b9) (3)" color="FFE42F56" id="929" activation="cc98.33|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FFE42F56">
+			<Attributes name="A#(Bb) 7(#11) (1)" color="FFE42F56" id="930" activation="cc98.34|cc99.7"/>
+			<Attributes name="A#(Bb) 7(#11) (2)" color="FFE42F56" id="931" activation="cc98.35|cc99.7"/>
+			<Attributes name="A#(Bb) 7(#11) (3)" color="FFE42F56" id="932" activation="cc98.36|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FFE42F56">
+			<Attributes name="A#(Bb) 7(13) (1)" color="FFE42F56" id="933" activation="cc98.37|cc99.7"/>
+			<Attributes name="A#(Bb) 7(13) (2)" color="FFE42F56" id="934" activation="cc98.38|cc99.7"/>
+			<Attributes name="A#(Bb) 7(13) (3)" color="FFE42F56" id="935" activation="cc98.39|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FFE42F56">
+			<Attributes name="A#(Bb) 7(b13) (1)" color="FFE42F56" id="936" activation="cc98.40|cc99.7"/>
+			<Attributes name="A#(Bb) 7(b13) (2)" color="FFE42F56" id="937" activation="cc98.41|cc99.7"/>
+			<Attributes name="A#(Bb) 7(b13) (3)" color="FFE42F56" id="938" activation="cc98.42|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FFE42F56">
+			<Attributes name="A#(Bb) 7(9 13) (1)" color="FFE42F56" id="939" activation="cc98.43|cc99.7"/>
+			<Attributes name="A#(Bb) 7(9 13) (2)" color="FFE42F56" id="940" activation="cc98.44|cc99.7"/>
+			<Attributes name="A#(Bb) 7(9 13) (3)" color="FFE42F56" id="941" activation="cc98.45|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FFE42F56">
+			<Attributes name="A#(Bb) 7(b9 13) (1)" color="FFE42F56" id="942" activation="cc98.46|cc99.7"/>
+			<Attributes name="A#(Bb) 7(b9 13) (2)" color="FFE42F56" id="943" activation="cc98.47|cc99.7"/>
+			<Attributes name="A#(Bb) 7(b9 13) (3)" color="FFE42F56" id="944" activation="cc98.48|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FFE42F56">
+			<Attributes name="A#(Bb) 7sus4 (1)" color="FFE42F56" id="945" activation="cc98.49|cc99.7"/>
+			<Attributes name="A#(Bb) 7sus4 (2)" color="FFE42F56" id="946" activation="cc98.50|cc99.7"/>
+			<Attributes name="A#(Bb) 7sus4 (3)" color="FFE42F56" id="947" activation="cc98.51|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FFE42F56">
+			<Attributes name="A#(Bb) add9 (1)" color="FFE42F56" id="948" activation="cc98.52|cc99.7"/>
+			<Attributes name="A#(Bb) add9 (2)" color="FFE42F56" id="949" activation="cc98.53|cc99.7"/>
+			<Attributes name="A#(Bb) add9 (3)" color="FFE42F56" id="950" activation="cc98.54|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FFE42F56">
+			<Attributes name="A#(Bb) aug (1)" color="FFE42F56" id="951" activation="cc98.55|cc99.7"/>
+			<Attributes name="A#(Bb) aug (2)" color="FFE42F56" id="952" activation="cc98.56|cc99.7"/>
+			<Attributes name="A#(Bb) aug (3)" color="FFE42F56" id="953" activation="cc98.57|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FFE42F56">
+			<Attributes name="A#(Bb) dim (1)" color="FFE42F56" id="954" activation="cc98.58|cc99.7"/>
+			<Attributes name="A#(Bb) dim (2)" color="FFE42F56" id="955" activation="cc98.59|cc99.7"/>
+			<Attributes name="A#(Bb) dim (3)" color="FFE42F56" id="956" activation="cc98.60|cc99.7"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="B" color="FFE42F9B">
+		<Attributes folder="1" name="Maj" color="FFE42F9B">
+			<Attributes name="B Maj (1)" color="FFE42F9B" id="957" activation="cc98.61|cc99.7"/>
+			<Attributes name="B Maj (2)" color="FFE42F9B" id="958" activation="cc98.62|cc99.7"/>
+			<Attributes name="B Maj (3)" color="FFE42F9B" id="959" activation="cc98.63|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="6" color="FFE42F9B">
+			<Attributes name="B 6 (1)" color="FFE42F9B" id="960" activation="cc98.64|cc99.7"/>
+			<Attributes name="B 6 (2)" color="FFE42F9B" id="961" activation="cc98.65|cc99.7"/>
+			<Attributes name="B 6 (3)" color="FFE42F9B" id="962" activation="cc98.66|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="M7" color="FFE42F9B">
+			<Attributes name="B M7 (1)" color="FFE42F9B" id="963" activation="cc98.67|cc99.7"/>
+			<Attributes name="B M7 (2)" color="FFE42F9B" id="964" activation="cc98.68|cc99.7"/>
+			<Attributes name="B M7 (3)" color="FFE42F9B" id="965" activation="cc98.69|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="M7(9)" color="FFE42F9B">
+			<Attributes name="B M7(9) (1)" color="FFE42F9B" id="966" activation="cc98.70|cc99.7"/>
+			<Attributes name="B M7(9) (2)" color="FFE42F9B" id="967" activation="cc98.71|cc99.7"/>
+			<Attributes name="B M7(9) (3)" color="FFE42F9B" id="968" activation="cc98.72|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="6(9)" color="FFE42F9B">
+			<Attributes name="B 6(9) (1)" color="FFE42F9B" id="969" activation="cc98.73|cc99.7"/>
+			<Attributes name="B 6(9) (2)" color="FFE42F9B" id="970" activation="cc98.74|cc99.7"/>
+			<Attributes name="B 6(9) (3)" color="FFE42F9B" id="971" activation="cc98.75|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="sus4" color="FFE42F9B">
+			<Attributes name="B sus4 (1)" color="FFE42F9B" id="972" activation="cc98.76|cc99.7"/>
+			<Attributes name="B sus4 (2)" color="FFE42F9B" id="973" activation="cc98.77|cc99.7"/>
+			<Attributes name="B sus4 (3)" color="FFE42F9B" id="974" activation="cc98.78|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min" color="FFE42F9B">
+			<Attributes name="B min (1)" color="FFE42F9B" id="975" activation="cc98.79|cc99.7"/>
+			<Attributes name="B min (2)" color="FFE42F9B" id="976" activation="cc98.80|cc99.7"/>
+			<Attributes name="B min (3)" color="FFE42F9B" id="977" activation="cc98.81|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min6" color="FFE42F9B">
+			<Attributes name="B min6 (1)" color="FFE42F9B" id="978" activation="cc98.82|cc99.7"/>
+			<Attributes name="B min6 (2)" color="FFE42F9B" id="979" activation="cc98.83|cc99.7"/>
+			<Attributes name="B min6 (3)" color="FFE42F9B" id="980" activation="cc98.84|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min7" color="FFE42F9B">
+			<Attributes name="B min7 (1)" color="FFE42F9B" id="981" activation="cc98.85|cc99.7"/>
+			<Attributes name="B min7 (2)" color="FFE42F9B" id="982" activation="cc98.86|cc99.7"/>
+			<Attributes name="B min7 (3)" color="FFE42F9B" id="983" activation="cc98.87|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="minM7" color="FFE42F9B">
+			<Attributes name="B minM7 (1)" color="FFE42F9B" id="984" activation="cc98.88|cc99.7"/>
+			<Attributes name="B minM7 (2)" color="FFE42F9B" id="985" activation="cc98.89|cc99.7"/>
+			<Attributes name="B minM7 (3)" color="FFE42F9B" id="986" activation="cc98.90|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min7b5" color="FFE42F9B">
+			<Attributes name="B min7b5 (1)" color="FFE42F9B" id="987" activation="cc98.91|cc99.7"/>
+			<Attributes name="B min7b5 (2)" color="FFE42F9B" id="988" activation="cc98.92|cc99.7"/>
+			<Attributes name="B min7b5 (3)" color="FFE42F9B" id="989" activation="cc98.93|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min6(9)" color="FFE42F9B">
+			<Attributes name="B min6(9) (1)" color="FFE42F9B" id="990" activation="cc98.94|cc99.7"/>
+			<Attributes name="B min6(9) (2)" color="FFE42F9B" id="991" activation="cc98.95|cc99.7"/>
+			<Attributes name="B min6(9) (3)" color="FFE42F9B" id="992" activation="cc98.96|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9)" color="FFE42F9B">
+			<Attributes name="B min7(9) (1)" color="FFE42F9B" id="993" activation="cc98.97|cc99.7"/>
+			<Attributes name="B min7(9) (2)" color="FFE42F9B" id="994" activation="cc98.98|cc99.7"/>
+			<Attributes name="B min7(9) (3)" color="FFE42F9B" id="995" activation="cc98.99|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="min7(9 11)" color="FFE42F9B">
+			<Attributes name="B min7(9 11) (1)" color="FFE42F9B" id="996" activation="cc98.100|cc99.7"/>
+			<Attributes name="B min7(9 11) (2)" color="FFE42F9B" id="997" activation="cc98.101|cc99.7"/>
+			<Attributes name="B min7(9 11) (3)" color="FFE42F9B" id="998" activation="cc98.102|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7" color="FFE42F9B">
+			<Attributes name="B 7 (1)" color="FFE42F9B" id="999" activation="cc98.103|cc99.7"/>
+			<Attributes name="B 7 (2)" color="FFE42F9B" id="1000" activation="cc98.104|cc99.7"/>
+			<Attributes name="B 7 (3)" color="FFE42F9B" id="1001" activation="cc98.105|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="aug7" color="FFE42F9B">
+			<Attributes name="B aug7 (1)" color="FFE42F9B" id="1002" activation="cc98.106|cc99.7"/>
+			<Attributes name="B aug7 (2)" color="FFE42F9B" id="1003" activation="cc98.107|cc99.7"/>
+			<Attributes name="B aug7 (3)" color="FFE42F9B" id="1004" activation="cc98.108|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7b5" color="FFE42F9B">
+			<Attributes name="B 7b5 (1)" color="FFE42F9B" id="1005" activation="cc98.109|cc99.7"/>
+			<Attributes name="B 7b5 (2)" color="FFE42F9B" id="1006" activation="cc98.110|cc99.7"/>
+			<Attributes name="B 7b5 (3)" color="FFE42F9B" id="1007" activation="cc98.111|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9)" color="FFE42F9B">
+			<Attributes name="B 7(9) (1)" color="FFE42F9B" id="1008" activation="cc98.112|cc99.7"/>
+			<Attributes name="B 7(9) (2)" color="FFE42F9B" id="1009" activation="cc98.113|cc99.7"/>
+			<Attributes name="B 7(9) (3)" color="FFE42F9B" id="1010" activation="cc98.114|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#9)" color="FFE42F9B">
+			<Attributes name="B 7(#9) (1)" color="FFE42F9B" id="1011" activation="cc98.115|cc99.7"/>
+			<Attributes name="B 7(#9) (2)" color="FFE42F9B" id="1012" activation="cc98.116|cc99.7"/>
+			<Attributes name="B 7(#9) (3)" color="FFE42F9B" id="1013" activation="cc98.117|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9)" color="FFE42F9B">
+			<Attributes name="B 7(b9) (1)" color="FFE42F9B" id="1014" activation="cc98.118|cc99.7"/>
+			<Attributes name="B 7(b9) (2)" color="FFE42F9B" id="1015" activation="cc98.119|cc99.7"/>
+			<Attributes name="B 7(b9) (3)" color="FFE42F9B" id="1016" activation="cc98.120|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(#11)" color="FFE42F9B">
+			<Attributes name="B 7(#11) (1)" color="FFE42F9B" id="1017" activation="cc98.121|cc99.7"/>
+			<Attributes name="B 7(#11) (2)" color="FFE42F9B" id="1018" activation="cc98.122|cc99.7"/>
+			<Attributes name="B 7(#11) (3)" color="FFE42F9B" id="1019" activation="cc98.123|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(13)" color="FFE42F9B">
+			<Attributes name="B 7(13) (1)" color="FFE42F9B" id="1020" activation="cc98.124|cc99.7"/>
+			<Attributes name="B 7(13) (2)" color="FFE42F9B" id="1021" activation="cc98.125|cc99.7"/>
+			<Attributes name="B 7(13) (3)" color="FFE42F9B" id="1022" activation="cc98.126|cc99.7"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b13)" color="FFE42F9B">
+			<Attributes name="B 7(b13) (1)" color="FFE42F9B" id="1023" activation="cc98.127|cc99.7"/>
+			<Attributes name="B 7(b13) (2)" color="FFE42F9B" id="1024" activation="cc98.0|cc99.8"/>
+			<Attributes name="B 7(b13) (3)" color="FFE42F9B" id="1025" activation="cc98.1|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="7(9 13)" color="FFE42F9B">
+			<Attributes name="B 7(9 13) (1)" color="FFE42F9B" id="1026" activation="cc98.2|cc99.8"/>
+			<Attributes name="B 7(9 13) (2)" color="FFE42F9B" id="1027" activation="cc98.3|cc99.8"/>
+			<Attributes name="B 7(9 13) (3)" color="FFE42F9B" id="1028" activation="cc98.4|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="7(b9 13)" color="FFE42F9B">
+			<Attributes name="B 7(b9 13) (1)" color="FFE42F9B" id="1029" activation="cc98.5|cc99.8"/>
+			<Attributes name="B 7(b9 13) (2)" color="FFE42F9B" id="1030" activation="cc98.6|cc99.8"/>
+			<Attributes name="B 7(b9 13) (3)" color="FFE42F9B" id="1031" activation="cc98.7|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="7sus4" color="FFE42F9B">
+			<Attributes name="B 7sus4 (1)" color="FFE42F9B" id="1032" activation="cc98.8|cc99.8"/>
+			<Attributes name="B 7sus4 (2)" color="FFE42F9B" id="1033" activation="cc98.9|cc99.8"/>
+			<Attributes name="B 7sus4 (3)" color="FFE42F9B" id="1034" activation="cc98.10|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="add9" color="FFE42F9B">
+			<Attributes name="B add9 (1)" color="FFE42F9B" id="1035" activation="cc98.11|cc99.8"/>
+			<Attributes name="B add9 (2)" color="FFE42F9B" id="1036" activation="cc98.12|cc99.8"/>
+			<Attributes name="B add9 (3)" color="FFE42F9B" id="1037" activation="cc98.13|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="aug" color="FFE42F9B">
+			<Attributes name="B aug (1)" color="FFE42F9B" id="1038" activation="cc98.14|cc99.8"/>
+			<Attributes name="B aug (2)" color="FFE42F9B" id="1039" activation="cc98.15|cc99.8"/>
+			<Attributes name="B aug (3)" color="FFE42F9B" id="1040" activation="cc98.16|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="dim" color="FFE42F9B">
+			<Attributes name="B dim (1)" color="FFE42F9B" id="1041" activation="cc98.17|cc99.8"/>
+			<Attributes name="B dim (2)" color="FFE42F9B" id="1042" activation="cc98.18|cc99.8"/>
+			<Attributes name="B dim (3)" color="FFE42F9B" id="1043" activation="cc98.19|cc99.8"/>
+		</Attributes>
+	</Attributes>
+	<Attributes folder="1" name="User" color="FFCCCCCC">
+		<Attributes folder="1" name="Page 1" color="FFCCCCCC">
+			<Attributes name="User Page 1 (1)" color="FFCCCCCC" id="1044" activation="cc98.20|cc99.8"/>
+			<Attributes name="User Page 1 (2)" color="FFCCCCCC" id="1045" activation="cc98.21|cc99.8"/>
+			<Attributes name="User Page 1 (3)" color="FFCCCCCC" id="1046" activation="cc98.22|cc99.8"/>
+			<Attributes name="User Page 1 (4)" color="FFCCCCCC" id="1047" activation="cc98.23|cc99.8"/>
+			<Attributes name="User Page 1 (5)" color="FFCCCCCC" id="1048" activation="cc98.24|cc99.8"/>
+			<Attributes name="User Page 1 (6)" color="FFCCCCCC" id="1049" activation="cc98.25|cc99.8"/>
+			<Attributes name="User Page 1 (7)" color="FFCCCCCC" id="1050" activation="cc98.26|cc99.8"/>
+			<Attributes name="User Page 1 (8)" color="FFCCCCCC" id="1051" activation="cc98.27|cc99.8"/>
+			<Attributes name="User Page 1 (9)" color="FFCCCCCC" id="1052" activation="cc98.28|cc99.8"/>
+			<Attributes name="User Page 1 (10)" color="FFCCCCCC" id="1053" activation="cc98.29|cc99.8"/>
+			<Attributes name="User Page 1 (11)" color="FFCCCCCC" id="1054" activation="cc98.30|cc99.8"/>
+			<Attributes name="User Page 1 (12)" color="FFCCCCCC" id="1055" activation="cc98.31|cc99.8"/>
+			<Attributes name="User Page 1 (13)" color="FFCCCCCC" id="1056" activation="cc98.32|cc99.8"/>
+			<Attributes name="User Page 1 (14)" color="FFCCCCCC" id="1057" activation="cc98.33|cc99.8"/>
+			<Attributes name="User Page 1 (15)" color="FFCCCCCC" id="1058" activation="cc98.34|cc99.8"/>
+			<Attributes name="User Page 1 (16)" color="FFCCCCCC" id="1059" activation="cc98.35|cc99.8"/>
+			<Attributes name="User Page 1 (17)" color="FFCCCCCC" id="1060" activation="cc98.36|cc99.8"/>
+			<Attributes name="User Page 1 (18)" color="FFCCCCCC" id="1061" activation="cc98.37|cc99.8"/>
+			<Attributes name="User Page 1 (19)" color="FFCCCCCC" id="1062" activation="cc98.38|cc99.8"/>
+			<Attributes name="User Page 1 (20)" color="FFCCCCCC" id="1063" activation="cc98.39|cc99.8"/>
+			<Attributes name="User Page 1 (21)" color="FFCCCCCC" id="1064" activation="cc98.40|cc99.8"/>
+			<Attributes name="User Page 1 (22)" color="FFCCCCCC" id="1065" activation="cc98.41|cc99.8"/>
+			<Attributes name="User Page 1 (23)" color="FFCCCCCC" id="1066" activation="cc98.42|cc99.8"/>
+			<Attributes name="User Page 1 (24)" color="FFCCCCCC" id="1067" activation="cc98.43|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="Page 2" color="FFCCCCCC">
+			<Attributes name="User Page 2 (1)" color="FFCCCCCC" id="1068" activation="cc98.44|cc99.8"/>
+			<Attributes name="User Page 2 (2)" color="FFCCCCCC" id="1069" activation="cc98.45|cc99.8"/>
+			<Attributes name="User Page 2 (3)" color="FFCCCCCC" id="1070" activation="cc98.46|cc99.8"/>
+			<Attributes name="User Page 2 (4)" color="FFCCCCCC" id="1071" activation="cc98.47|cc99.8"/>
+			<Attributes name="User Page 2 (5)" color="FFCCCCCC" id="1072" activation="cc98.48|cc99.8"/>
+			<Attributes name="User Page 2 (6)" color="FFCCCCCC" id="1073" activation="cc98.49|cc99.8"/>
+			<Attributes name="User Page 2 (7)" color="FFCCCCCC" id="1074" activation="cc98.50|cc99.8"/>
+			<Attributes name="User Page 2 (8)" color="FFCCCCCC" id="1075" activation="cc98.51|cc99.8"/>
+			<Attributes name="User Page 2 (9)" color="FFCCCCCC" id="1076" activation="cc98.52|cc99.8"/>
+			<Attributes name="User Page 2 (10)" color="FFCCCCCC" id="1077" activation="cc98.53|cc99.8"/>
+			<Attributes name="User Page 2 (11)" color="FFCCCCCC" id="1078" activation="cc98.54|cc99.8"/>
+			<Attributes name="User Page 2 (12)" color="FFCCCCCC" id="1079" activation="cc98.55|cc99.8"/>
+			<Attributes name="User Page 2 (13)" color="FFCCCCCC" id="1080" activation="cc98.56|cc99.8"/>
+			<Attributes name="User Page 2 (14)" color="FFCCCCCC" id="1081" activation="cc98.57|cc99.8"/>
+			<Attributes name="User Page 2 (15)" color="FFCCCCCC" id="1082" activation="cc98.58|cc99.8"/>
+			<Attributes name="User Page 2 (16)" color="FFCCCCCC" id="1083" activation="cc98.59|cc99.8"/>
+			<Attributes name="User Page 2 (17)" color="FFCCCCCC" id="1084" activation="cc98.60|cc99.8"/>
+			<Attributes name="User Page 2 (18)" color="FFCCCCCC" id="1085" activation="cc98.61|cc99.8"/>
+			<Attributes name="User Page 2 (19)" color="FFCCCCCC" id="1086" activation="cc98.62|cc99.8"/>
+			<Attributes name="User Page 2 (20)" color="FFCCCCCC" id="1087" activation="cc98.63|cc99.8"/>
+			<Attributes name="User Page 2 (21)" color="FFCCCCCC" id="1088" activation="cc98.64|cc99.8"/>
+			<Attributes name="User Page 2 (22)" color="FFCCCCCC" id="1089" activation="cc98.65|cc99.8"/>
+			<Attributes name="User Page 2 (23)" color="FFCCCCCC" id="1090" activation="cc98.66|cc99.8"/>
+			<Attributes name="User Page 2 (24)" color="FFCCCCCC" id="1091" activation="cc98.67|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="Page 3" color="FFCCCCCC">
+			<Attributes name="User Page 3 (1)" color="FFCCCCCC" id="1092" activation="cc98.68|cc99.8"/>
+			<Attributes name="User Page 3 (2)" color="FFCCCCCC" id="1093" activation="cc98.69|cc99.8"/>
+			<Attributes name="User Page 3 (3)" color="FFCCCCCC" id="1094" activation="cc98.70|cc99.8"/>
+			<Attributes name="User Page 3 (4)" color="FFCCCCCC" id="1095" activation="cc98.71|cc99.8"/>
+			<Attributes name="User Page 3 (5)" color="FFCCCCCC" id="1096" activation="cc98.72|cc99.8"/>
+			<Attributes name="User Page 3 (6)" color="FFCCCCCC" id="1097" activation="cc98.73|cc99.8"/>
+			<Attributes name="User Page 3 (7)" color="FFCCCCCC" id="1098" activation="cc98.74|cc99.8"/>
+			<Attributes name="User Page 3 (8)" color="FFCCCCCC" id="1099" activation="cc98.75|cc99.8"/>
+			<Attributes name="User Page 3 (9)" color="FFCCCCCC" id="1100" activation="cc98.76|cc99.8"/>
+			<Attributes name="User Page 3 (10)" color="FFCCCCCC" id="1101" activation="cc98.77|cc99.8"/>
+			<Attributes name="User Page 3 (11)" color="FFCCCCCC" id="1102" activation="cc98.78|cc99.8"/>
+			<Attributes name="User Page 3 (12)" color="FFCCCCCC" id="1103" activation="cc98.79|cc99.8"/>
+			<Attributes name="User Page 3 (13)" color="FFCCCCCC" id="1104" activation="cc98.80|cc99.8"/>
+			<Attributes name="User Page 3 (14)" color="FFCCCCCC" id="1105" activation="cc98.81|cc99.8"/>
+			<Attributes name="User Page 3 (15)" color="FFCCCCCC" id="1106" activation="cc98.82|cc99.8"/>
+			<Attributes name="User Page 3 (16)" color="FFCCCCCC" id="1107" activation="cc98.83|cc99.8"/>
+			<Attributes name="User Page 3 (17)" color="FFCCCCCC" id="1108" activation="cc98.84|cc99.8"/>
+			<Attributes name="User Page 3 (18)" color="FFCCCCCC" id="1109" activation="cc98.85|cc99.8"/>
+			<Attributes name="User Page 3 (19)" color="FFCCCCCC" id="1110" activation="cc98.86|cc99.8"/>
+			<Attributes name="User Page 3 (20)" color="FFCCCCCC" id="1111" activation="cc98.87|cc99.8"/>
+			<Attributes name="User Page 3 (21)" color="FFCCCCCC" id="1112" activation="cc98.88|cc99.8"/>
+			<Attributes name="User Page 3 (22)" color="FFCCCCCC" id="1113" activation="cc98.89|cc99.8"/>
+			<Attributes name="User Page 3 (23)" color="FFCCCCCC" id="1114" activation="cc98.90|cc99.8"/>
+			<Attributes name="User Page 3 (24)" color="FFCCCCCC" id="1115" activation="cc98.91|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="Page 4" color="FFCCCCCC">
+			<Attributes name="User Page 4 (1)" color="FFCCCCCC" id="1116" activation="cc98.92|cc99.8"/>
+			<Attributes name="User Page 4 (2)" color="FFCCCCCC" id="1117" activation="cc98.93|cc99.8"/>
+			<Attributes name="User Page 4 (3)" color="FFCCCCCC" id="1118" activation="cc98.94|cc99.8"/>
+			<Attributes name="User Page 4 (4)" color="FFCCCCCC" id="1119" activation="cc98.95|cc99.8"/>
+			<Attributes name="User Page 4 (5)" color="FFCCCCCC" id="1120" activation="cc98.96|cc99.8"/>
+			<Attributes name="User Page 4 (6)" color="FFCCCCCC" id="1121" activation="cc98.97|cc99.8"/>
+			<Attributes name="User Page 4 (7)" color="FFCCCCCC" id="1122" activation="cc98.98|cc99.8"/>
+			<Attributes name="User Page 4 (8)" color="FFCCCCCC" id="1123" activation="cc98.99|cc99.8"/>
+			<Attributes name="User Page 4 (9)" color="FFCCCCCC" id="1124" activation="cc98.100|cc99.8"/>
+			<Attributes name="User Page 4 (10)" color="FFCCCCCC" id="1125" activation="cc98.101|cc99.8"/>
+			<Attributes name="User Page 4 (11)" color="FFCCCCCC" id="1126" activation="cc98.102|cc99.8"/>
+			<Attributes name="User Page 4 (12)" color="FFCCCCCC" id="1127" activation="cc98.103|cc99.8"/>
+			<Attributes name="User Page 4 (13)" color="FFCCCCCC" id="1128" activation="cc98.104|cc99.8"/>
+			<Attributes name="User Page 4 (14)" color="FFCCCCCC" id="1129" activation="cc98.105|cc99.8"/>
+			<Attributes name="User Page 4 (15)" color="FFCCCCCC" id="1130" activation="cc98.106|cc99.8"/>
+			<Attributes name="User Page 4 (16)" color="FFCCCCCC" id="1131" activation="cc98.107|cc99.8"/>
+			<Attributes name="User Page 4 (17)" color="FFCCCCCC" id="1132" activation="cc98.108|cc99.8"/>
+			<Attributes name="User Page 4 (18)" color="FFCCCCCC" id="1133" activation="cc98.109|cc99.8"/>
+			<Attributes name="User Page 4 (19)" color="FFCCCCCC" id="1134" activation="cc98.110|cc99.8"/>
+			<Attributes name="User Page 4 (20)" color="FFCCCCCC" id="1135" activation="cc98.111|cc99.8"/>
+			<Attributes name="User Page 4 (21)" color="FFCCCCCC" id="1136" activation="cc98.112|cc99.8"/>
+			<Attributes name="User Page 4 (22)" color="FFCCCCCC" id="1137" activation="cc98.113|cc99.8"/>
+			<Attributes name="User Page 4 (23)" color="FFCCCCCC" id="1138" activation="cc98.114|cc99.8"/>
+			<Attributes name="User Page 4 (24)" color="FFCCCCCC" id="1139" activation="cc98.115|cc99.8"/>
+		</Attributes>
+		<Attributes folder="1" name="Page 5" color="FFCCCCCC">
+			<Attributes name="User Page 5 (1)" color="FFCCCCCC" id="1140" activation="cc98.116|cc99.8"/>
+			<Attributes name="User Page 5 (2)" color="FFCCCCCC" id="1141" activation="cc98.117|cc99.8"/>
+			<Attributes name="User Page 5 (3)" color="FFCCCCCC" id="1142" activation="cc98.118|cc99.8"/>
+			<Attributes name="User Page 5 (4)" color="FFCCCCCC" id="1143" activation="cc98.119|cc99.8"/>
+			<Attributes name="User Page 5 (5)" color="FFCCCCCC" id="1144" activation="cc98.120|cc99.8"/>
+			<Attributes name="User Page 5 (6)" color="FFCCCCCC" id="1145" activation="cc98.121|cc99.8"/>
+			<Attributes name="User Page 5 (7)" color="FFCCCCCC" id="1146" activation="cc98.122|cc99.8"/>
+			<Attributes name="User Page 5 (8)" color="FFCCCCCC" id="1147" activation="cc98.123|cc99.8"/>
+			<Attributes name="User Page 5 (9)" color="FFCCCCCC" id="1148" activation="cc98.124|cc99.8"/>
+			<Attributes name="User Page 5 (10)" color="FFCCCCCC" id="1149" activation="cc98.125|cc99.8"/>
+			<Attributes name="User Page 5 (11)" color="FFCCCCCC" id="1150" activation="cc98.126|cc99.8"/>
+			<Attributes name="User Page 5 (12)" color="FFCCCCCC" id="1151" activation="cc98.127|cc99.8"/>
+			<Attributes name="User Page 5 (13)" color="FFCCCCCC" id="1152" activation="cc98.0|cc99.9"/>
+			<Attributes name="User Page 5 (14)" color="FFCCCCCC" id="1153" activation="cc98.1|cc99.9"/>
+			<Attributes name="User Page 5 (15)" color="FFCCCCCC" id="1154" activation="cc98.2|cc99.9"/>
+			<Attributes name="User Page 5 (16)" color="FFCCCCCC" id="1155" activation="cc98.3|cc99.9"/>
+			<Attributes name="User Page 5 (17)" color="FFCCCCCC" id="1156" activation="cc98.4|cc99.9"/>
+			<Attributes name="User Page 5 (18)" color="FFCCCCCC" id="1157" activation="cc98.5|cc99.9"/>
+			<Attributes name="User Page 5 (19)" color="FFCCCCCC" id="1158" activation="cc98.6|cc99.9"/>
+			<Attributes name="User Page 5 (20)" color="FFCCCCCC" id="1159" activation="cc98.7|cc99.9"/>
+			<Attributes name="User Page 5 (21)" color="FFCCCCCC" id="1160" activation="cc98.8|cc99.9"/>
+			<Attributes name="User Page 5 (22)" color="FFCCCCCC" id="1161" activation="cc98.9|cc99.9"/>
+			<Attributes name="User Page 5 (23)" color="FFCCCCCC" id="1162" activation="cc98.10|cc99.9"/>
+			<Attributes name="User Page 5 (24)" color="FFCCCCCC" id="1163" activation="cc98.11|cc99.9"/>
+		</Attributes>
+	</Attributes>
+</Music.KeySwitchList>
