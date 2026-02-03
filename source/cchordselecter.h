@@ -231,7 +231,7 @@ namespace MinMax
 
             // 4. コードボイシング取得
             auto v = ChordMap::instance().getChordVoicing(currentChordNumber);
-            for (int i = 0; i < (int)v.size; i++)
+            for (int i = 0; i < STRING_COUNT; i++)
             {
                 if (v.data[i] >= 0)
                     v.data[i] += ChordMap::instance().getTunings().data[i];
@@ -250,7 +250,7 @@ namespace MinMax
 
             uint32_t fullNoteLength = 480 * 4; // 全音符 = 1小節
 
-            for (int i = 0; i < (int)chord.size; ++i)
+            for (int i = 0; i < STRING_COUNT; ++i)
             {
                 int note = chord.data[i];
                 if (note >= 0)

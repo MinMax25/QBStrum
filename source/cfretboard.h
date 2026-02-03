@@ -157,7 +157,7 @@ namespace MinMax
             if (context != FretBoardContext::Edit) return VSTGUI::kMouseEventNotHandled;
 
             int sIdx = int((where.y - (boardSize.top + style.outerMargin)) / stringSpacing + 0.5);
-            if (sIdx < 0 || sIdx >= (int)currentSet.size) return VSTGUI::kMouseEventNotHandled;
+            if (sIdx < 0 || sIdx >= STRING_COUNT) return VSTGUI::kMouseEventNotHandled;
 
             int fret = int((where.x - boardSize.left) / fretSpacing) - 1;
             if (fret < kFirstFret || fret > kLastFret - 1) return VSTGUI::kMouseEventNotHandled;
@@ -255,7 +255,7 @@ namespace MinMax
             for (int fret = 0; fret < kLastFret; ++fret)
             {
                 bool hasAnyNote = false;
-                for (int s = 0; s < (int)currentSet.size; ++s)
+                for (int s = 0; s < STRING_COUNT; ++s)
                 {
                     if (currentSet.data[s] == fret)
                     {
@@ -263,7 +263,7 @@ namespace MinMax
                         break;
                     }
                 }
-                for (int s = 0; s < (int)currentSet.size; ++s)
+                for (int s = 0; s < STRING_COUNT; ++s)
                 {
                     if (currentSet.data[s] == -1)
                     {
@@ -273,7 +273,7 @@ namespace MinMax
                 }
             }
 
-            for (int s = 0; s < (int)currentSet.size; ++s)
+            for (int s = 0; s < STRING_COUNT; ++s)
             {
                 int minFret = -1;
                 int count = 0;
@@ -297,7 +297,7 @@ namespace MinMax
             for (int fret = 1; fret < kLastFret; ++fret)
             {
                 int start = -1;
-                for (int s = 0; s < (int)currentSet.size; ++s)
+                for (int s = 0; s < STRING_COUNT; ++s)
                 {
                     if (info[fret][s])
                     {
@@ -315,9 +315,9 @@ namespace MinMax
                         }
                     }
                 }
-                if (start >= 0 && (int)currentSet.size - start >= 2)
+                if (start >= 0 && STRING_COUNT - start >= 2)
                 {
-                    cachedBarreSpans.push_back({ fret, start, (int)currentSet.size - 1 });
+                    cachedBarreSpans.push_back({ fret, start, STRING_COUNT - 1 });
                 }
             }
         }
@@ -325,7 +325,7 @@ namespace MinMax
         // --- 描画ヘルパー ---
         void drawNotes(VSTGUI::CDrawContext* pContext)
         {
-            for (unsigned int i = 0; i < currentSet.size; ++i)
+            for (unsigned int i = 0; i < STRING_COUNT; ++i)
             {
                 int fret = currentSet.data[i];
                 int offset = currentSet.getOffset(i);

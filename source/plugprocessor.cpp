@@ -276,7 +276,7 @@ namespace MinMax
 			case NEED_SAMPLEBLOCK_ADJUST:
 			{
 				bool state = prm.get(tag) > 0.5;
-				EventScheduler::Instance().setNeedSampleblockAdust(state);
+				scheduler.setNeedSampleblockAdust(state);
 				break;
 			}
 			default:
@@ -465,7 +465,7 @@ namespace MinMax
 
 		Steinberg::uint64 offTime = baseOnTime + samplesPerMs * time;
 
-		for (size_t s = 0; s < strnum.size; s++)
+		for (size_t s = 0; s < STRING_COUNT; s++)
 		{
 			int i = strnum.data[s];
 
@@ -503,14 +503,15 @@ namespace MinMax
 
 		int strcnt = 0;
 
-		for (size_t s = 0; s < strnum.size; s++)
+		for (size_t s = 0; s < STRING_COUNT; s++)
 		{
 			int i = strnum.data[s];
 
-			double delayMs =
-				(strnum.size > 1)
-				? (prm.get(STRUM_SPEED) / double(STRING_COUNT)) * strcnt
-				: 0.0;
+			double delayMs = (prm.get(STRUM_SPEED) / double(STRING_COUNT)) * strcnt;
+			//double delayMs =
+			//	(strnum.size > 1)
+			//	? (prm.get(STRUM_SPEED) / double(STRING_COUNT)) * strcnt
+			//	: 0.0;
 
 			Steinberg::uint64 onTime = baseOnTime + static_cast<Steinberg::uint64>(delayMs * samplesPerMs);
 
@@ -715,7 +716,6 @@ namespace MinMax
 		for (size_t i = 0; i < values.size(); i++)
 		{
 			result.data[i] = values[i];
-			result.size++;
 		}
 
 		return result;
@@ -735,8 +735,7 @@ namespace MinMax
 
 		auto v = chordMap.getChordVoicing(set.flatIndex);
 
-		set.size = v.size;
-		for (int i = 0; i < (int)v.size; i++)
+		for (int i = 0; i < STRING_COUNT; i++)
 		{
 			int o = (int)prm.getInt(STR1_OFFSET + i);
 			set.data[i] += v.data[i];
@@ -827,9 +826,7 @@ namespace MinMax
 		editChordVoicing.flatIndex = set->flatIndex;
 		editChordVoicing.state = set->state;
 
-		editChordVoicing.size = set->size;
-
-		for (int i = 0; i < (int)set->size; i++)
+		for (int i = 0; i < STRING_COUNT; i++)
 		{
 			editChordVoicing.data[i] = set->data[i];
 			editChordVoicing.setOffset(i, 0);

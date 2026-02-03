@@ -47,7 +47,6 @@ namespace MinMax
         int flatIndex = 0;
         uint32_t state = 0;
         std::array<int, STRING_COUNT> data{};
-        size_t size = STRING_COUNT;
 
         int getOffset(int stringNumber) const
         {
@@ -107,7 +106,6 @@ namespace MinMax
             const auto& v = flatChords[flatIndex];
             StringSet result{};
             result.flatIndex = flatIndex;
-            result.size = STRING_COUNT;
 
             for (int i = 0; i < STRING_COUNT; ++i)
             {
@@ -148,8 +146,7 @@ namespace MinMax
             if (doc.HasMember("Tunings") && doc["Tunings"].IsArray())
             {
                 const auto& arr = doc["Tunings"].GetArray();
-                tunings.size = std::min<size_t>(arr.Size(), STRING_COUNT);
-                for (size_t i = 0; i < tunings.size; ++i)
+                for (size_t i = 0; i < STRING_COUNT; ++i)
                 {
                     tunings.data[i] = arr[(int)i].GetInt();
                 }
@@ -270,7 +267,7 @@ namespace MinMax
             int sum = 0;
             int count = 0;
 
-            for (size_t i = 0; i < v.size; i++)
+            for (size_t i = 0; i < STRING_COUNT; i++)
             {
                 if (v.data[i] < 0) continue;
                 sum += v.data[i];

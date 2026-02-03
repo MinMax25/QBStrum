@@ -82,7 +82,6 @@ namespace MinMax
 			if (def.tag == CHORD_NUM)
 			{
 				auto c = ChordMap::instance().getChordVoicing((int)plain);
-				ChordInfo.size = c.size;
 				ChordInfo.flatIndex = c.flatIndex;
 				for (int i = 0; i < STRING_COUNT; i++)
 				{
@@ -167,9 +166,8 @@ namespace MinMax
 
 		ChordInfo.state = set->state;
 		ChordInfo.flatIndex = set->flatIndex;
-		ChordInfo.size = set->size;
 
-		for (int i = 0; i < (int)set->size; i++)
+		for (int i = 0; i < STRING_COUNT; i++)
 		{
 			ChordInfo.data[i] = set->data[i];
 			ChordInfo.setOffset(i, set->getOffset(i));

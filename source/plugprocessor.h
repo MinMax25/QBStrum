@@ -77,7 +77,7 @@ namespace MinMax
 		void PLUGIN_API processAudio(Steinberg::Vst::ProcessData& data);
 
 		// ストラムイベントスケジューラー
-		EventScheduler& scheduler = EventScheduler::Instance();
+		EventScheduler scheduler;
 
 		// コードマップ
 		ChordMap& chordMap = ChordMap::instance();

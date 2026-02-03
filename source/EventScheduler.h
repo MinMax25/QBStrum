@@ -42,11 +42,12 @@ namespace MinMax
 
 	struct EventScheduler
 	{
-		static EventScheduler& Instance()
-		{
-			static EventScheduler instance;
-			return instance;
-		}
+		//static EventScheduler& Instance()
+		//{
+		//	static EventScheduler instance;
+		//	return instance;
+		//}
+		EventScheduler() = default;
 
 		void setListener(IScheduledEventListener* l)
 		{
@@ -229,11 +230,11 @@ namespace MinMax
 		}
 
 	private:
-		EventScheduler() = default;
-		EventScheduler(const EventScheduler&) = delete;
-		EventScheduler& operator=(const EventScheduler&) = delete;
-		EventScheduler(EventScheduler&&) = default;
-		EventScheduler& operator=(EventScheduler&&) = default;
+		//EventScheduler() = default;
+		//EventScheduler(const EventScheduler&) = delete;
+		//EventScheduler& operator=(const EventScheduler&) = delete;
+		//EventScheduler(EventScheduler&&) = default;
+		//EventScheduler& operator=(EventScheduler&&) = default;
 
 		bool isBlockAdust = false;
 
