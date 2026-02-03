@@ -465,7 +465,7 @@ namespace MinMax
 
 		Steinberg::uint64 offTime = baseOnTime + samplesPerMs * time;
 
-		for (size_t s = 0; s < STRING_COUNT; s++)
+		for (size_t s = 0; s < strnum.state; s++)
 		{
 			int i = strnum.data[s];
 
@@ -503,7 +503,7 @@ namespace MinMax
 
 		int strcnt = 0;
 
-		for (size_t s = 0; s < STRING_COUNT; s++)
+		for (size_t s = 0; s < strnum.state; s++)
 		{
 			int i = strnum.data[s];
 
@@ -713,6 +713,8 @@ namespace MinMax
 		{
 			result.data[i] = values[i];
 		}
+
+		result.state = cnt;
 
 		return result;
 	}
