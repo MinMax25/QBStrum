@@ -5,6 +5,8 @@
 
 #include <base/source/fstring.h>
 #include <vector>
+#include <array>
+#include <functional>
 #include <vstgui/lib/cbuttonstate.h>
 #include <vstgui/lib/ccolor.h>
 #include <vstgui/lib/cdrawcontext.h>
@@ -18,302 +20,93 @@
 
 namespace MinMax
 {
-    enum class FretBoardContext
-    {
-        View,   // 通常時
-        Edit,   // コード編集
-        Guess   // コード推定
-    };
+    enum class FretBoardContext { View, Edit, Guess };
 
     struct BarreSpan
     {
         int fret;
-        int stringFrom; // inclusive
-        int stringTo;   // inclusive
+        int stringFrom;
+        int stringTo;
     };
 
-    // ギターフレット表示コントロール
-    class CFretBoard
-        : public VSTGUI::CControl
+    struct FretBoardStyle
+    {
+        VSTGUI::CColor bg{ 55, 35, 18, 255 };
+        VSTGUI::CColor stringColor{ 230, 230, 230, 255 };
+        VSTGUI::CColor fretColor{ 180, 180, 180, 255 };
+        VSTGUI::CColor nutColor{ 255, 255, 255, 255 };
+        VSTGUI::CColor markerColor{ 200, 200, 200, 255 };
+        VSTGUI::CColor fretNumberColor{ 220, 220, 220, 255 };
+        VSTGUI::CColor pressedColor{ 255, 140, 0, 255 };
+        VSTGUI::CColor pressedOffsetColor{ 255, 0, 255, 255 };
+        VSTGUI::CColor muteColor{ 255, 0, 0, 255 };
+        VSTGUI::CColor barreColor{ 255, 140, 0, 80 };
+
+        float markerRadius = 8.0f;
+        double outerMargin = 10.0;
+    };
+
+    class CFretBoard : public VSTGUI::CControl
     {
     public:
         using EditChordChanged = std::function<void(CFretBoard*, StringSet)>;
 
-    private:
-        // 設定
-        static constexpr int lastFret = 19;                 // 最大フレット数
-        const int firstFret = -1;                           // -1フレット（ナット外側）
-        const int numFrets = (lastFret - firstFret + 1);
-        const double outerMargin = 10.0;                    // 上部余白
-        const float markerRadius = 8.0f;
-
-        const VSTGUI::CColor bg = VSTGUI::CColor(55, 35, 18, 255);
-        const VSTGUI::CColor stringColor = VSTGUI::CColor(230, 230, 230, 255);
-        const VSTGUI::CColor fretColor = VSTGUI::CColor(180, 180, 180, 255);
-        const VSTGUI::CColor nutColor = VSTGUI::CColor(255, 255, 255, 255);
-        const VSTGUI::CColor markerColor = VSTGUI::CColor(200, 200, 200, 255);
-        const VSTGUI::CColor fretNumberColor = VSTGUI::CColor(220, 220, 220, 255);
-        const VSTGUI::CColor pressedColor = VSTGUI::CColor(255, 140, 0, 255);
-        const VSTGUI::CColor pressedOffsetColor = VSTGUI::CColor(255, 0, 255, 255);
-        const VSTGUI::CColor muteColor = VSTGUI::CColor(255, 0, 0, 255);
-        const VSTGUI::CColor kBarreColor = VSTGUI::CColor(255, 140, 0, 80);
-
-        VSTGUI::CRect frameSize;
-        VSTGUI::CRect boardSize;
-
-        double usableHeight;
-        double stringSpacing;
-        double fretSpacing;
-
-        using BarreFlags = std::array<bool, STRING_COUNT>;
-        using BarreInfoArray = std::array<BarreFlags, lastFret>;
-
-        // 押さえているフレット
-        StringSet currentSet{};
-
-        StringSet workingSet{};
-
-        bool isMarkerFret(int f)
-        {
-            return (
-                f == 2 ||
-                f == 4 ||
-                f == 6 ||
-                f == 8 ||
-                f == 11 ||
-                f == 14 ||
-                f == 16 ||
-                f == 18
-                );
-        }
-
-        void saveStringSet()
-        {
-            workingSet.size = currentSet.size;
-            for (int i = 0; i < (int)currentSet.size; i++)
-            {
-                workingSet.data[i] = currentSet.data[i];
-                workingSet.setOffset(i, currentSet.getOffset(i));
-                currentSet.setOffset(i, 0);
-            }
-        }
-
-        void restoreStringSet()
-        {
-            currentSet.size = workingSet.size;
-            for (int i = 0; i < (int)workingSet.size; i++)
-            {
-                currentSet.data[i] = workingSet.data[i];
-                currentSet.setOffset(i, workingSet.getOffset(i));
-            }
-        }
-
-        FretBoardContext context{ FretBoardContext::View };
-
-        BarreInfoArray buildBarreInfo(const StringSet& pressed)
-        {
-            BarreInfoArray info{};
-
-            // --- 第1段：フレットごとの初期バレー判定 ---
-            for (int fret = 0; fret < lastFret; ++fret)
-            {
-                bool barreSW = false;
-
-                // どこかの弦がこの fret を押しているか
-                for (int s = 0; s < STRING_COUNT; ++s)
-                {
-                    if (pressed.data[s] == fret)
-                    {
-                        barreSW = true;
-                        break;
-                    }
-                }
-
-                for (int s = 0; s < STRING_COUNT; ++s)
-                {
-                    // ミュート弦があれば以降不可
-                    if (pressed.data[s] == -1)
-                        barreSW = false;
-
-                    info[fret][s] = barreSW;
-                }
-            }
-
-            // --- 第2段：弦ごとの後処理（C# 版と同等） ---
-            for (int s = 0; s < STRING_COUNT; ++s)
-            {
-                int minFret = -1;
-                int count = 0;
-
-                // 候補フレット探索
-                for (int f = 0; f < lastFret; ++f)
-                {
-                    if (info[f][s])
-                    {
-                        if (minFret < 0)
-                            minFret = f;
-                        ++count;
-                    }
-                }
-
-                if (count <= 1)
-                    continue;
-
-                // minFret より上で「実際に押さえていない」ものを除外
-                for (int f = minFret + 1; f < lastFret; ++f)
-                {
-                    if (pressed.data[s] != f)
-                        info[f][s] = false;
-                }
-
-                // 開放弦との矛盾除去
-                if (info[0][s] && pressed.data[s] != 0)
-                {
-                    info[0][s] = false;
-                }
-            }
-
-            return info;
-        }
-
-        std::vector<BarreSpan> extractBarreSpans(const BarreInfoArray& info)
-        {
-            std::vector<BarreSpan> result;
-
-            for (int fret = 0; fret < lastFret; ++fret)
-            {
-                if (fret <= 0)
-                    continue;
-
-                const BarreFlags& flags = info[fret];
-
-                int start = -1;
-
-                for (int s = 0; s < STRING_COUNT; ++s)
-                {
-                    if (flags[s])
-                    {
-                        if (start < 0)
-                            start = s;
-                    }
-                    else
-                    {
-                        if (start >= 0)
-                        {
-                            // 2弦以上（＝1フレットで複数弦）ならバレー
-                            if (s - start >= 2)
-                            {
-                                result.push_back({ fret, start, s - 1 });
-                            }
-                            start = -1;
-                        }
-                    }
-                }
-
-                // 末尾まで続いていた場合
-                if (start >= 0 && STRING_COUNT - start >= 2)
-                {
-                    result.push_back({ fret, start, STRING_COUNT - 1 });
-                }
-            }
-
-            return result;
-        }
-
-        float GetFretX(int fret)
-        {
-            int internalFret = fret - 1;
-
-            return
-                static_cast<float>(
-                    boardSize.left
-                    + fretSpacing * (internalFret - firstFret)
-                    + fretSpacing * 0.5
-                    );
-        }
-
-        float GetStringY(int stringIndex)
-        {
-            return
-                static_cast<float>(
-                    boardSize.top
-                    + outerMargin
-                    + stringSpacing * stringIndex
-                    );
-        }
-
-		EditChordChanged editChordChangedCallback;
-
-    public:
         CFretBoard(const VSTGUI::CRect& size, EditChordChanged cb)
-            : CControl(size)
-			, editChordChangedCallback(cb)
+            : CControl(size), editChordChangedCallback(cb)
         {
-            using namespace VSTGUI;
+            updateLayout();
+        }
 
-            // 初期値設定
-            frameSize = size;
-            boardSize = VSTGUI::CRect(frameSize.left + 65, frameSize.top + 20, frameSize.right, frameSize.bottom - 15);
-            usableHeight = boardSize.getHeight() - outerMargin * 2;
+        void updateLayout()
+        {
+            const auto& frame = getViewSize();
+            boardSize = VSTGUI::CRect(frame.left + 65, frame.top + 20, frame.right, frame.bottom - 15);
+            double usableHeight = boardSize.getHeight() - style.outerMargin * 2;
             stringSpacing = usableHeight / (STRING_COUNT - 1);
-            fretSpacing = boardSize.getWidth() / numFrets;
+            fretSpacing = boardSize.getWidth() / kNumFrets;
         }
 
         void draw(VSTGUI::CDrawContext* pContext) override
         {
             using namespace VSTGUI;
 
-            // 背景
-            pContext->setFillColor(bg);
+            pContext->setFillColor(style.bg);
             pContext->drawRect(boardSize, kDrawFilled);
 
-            // ------------------------
-            // 弦の描画（上下10px以内に収める）
-            // ------------------------
-            pContext->setFrameColor(stringColor);
+            pContext->setFrameColor(style.stringColor);
             pContext->setLineWidth(2.0);
             for (int i = 0; i < STRING_COUNT; ++i)
             {
-                double y = boardSize.top + outerMargin + stringSpacing * i;
-                pContext->drawLine(CPoint(boardSize.left, y), CPoint(boardSize.right, y));
+                float y = getStringY(i);
+                pContext->drawLine({ (float)boardSize.left, y }, { (float)boardSize.right, y });
             }
 
-            // ------------------------
-            // フレット（–1 → ）
-            // ------------------------
-            for (int fret = firstFret; fret <= lastFret; ++fret)
+            for (int f = kFirstFret; f <= kLastFret; ++f)
             {
-                double x = boardSize.left + fretSpacing * (fret - firstFret);
-
-                if (fret == 0)
+                double x = boardSize.left + fretSpacing * (f - kFirstFret);
+                if (f == 0)
                 {
-                    // ナット
-                    pContext->setFrameColor(nutColor);
+                    pContext->setFrameColor(style.nutColor);
                     pContext->setLineWidth(5.0);
-                    pContext->drawLine(CPoint(x - 3, boardSize.top), CPoint(x - 3, boardSize.bottom));
-                    continue;
+                    pContext->drawLine({ (float)x - 3, (float)boardSize.top }, { (float)x - 3, (float)boardSize.bottom });
                 }
-
-                // 通常フレット
-                pContext->setFrameColor(fretColor);
-                pContext->setLineWidth(2.0);
-
-                pContext->drawLine(CPoint(x, boardSize.top), CPoint(x, boardSize.bottom));
+                else
+                {
+                    pContext->setFrameColor(style.fretColor);
+                    pContext->setLineWidth(2.0);
+                    pContext->drawLine({ (float)x, (float)boardSize.top }, { (float)x, (float)boardSize.bottom });
+                }
             }
 
-            pContext->setFillColor(markerColor);
-
-            for (int fret = 1; fret <= lastFret; ++fret)
+            pContext->setFillColor(style.markerColor);
+            for (int f = 1; f <= kLastFret; ++f)
             {
-                if (!isMarkerFret(fret)) continue;
-
-                double x = boardSize.left + fretSpacing * (fret - firstFret + 0.5);
-
-                if (fret == 11 || fret == 22)
+                if (!isMarkerFret(f)) continue;
+                double x = getFretCenterX(f);
+                if (f == 11 || f == 22)
                 {
                     double y1 = boardSize.top + boardSize.getHeight() * 0.33;
                     double y2 = boardSize.top + boardSize.getHeight() * 0.66;
-
                     pContext->drawEllipse(CRect(x - 6, y1 - 6, x + 6, y1 + 6), kDrawFilled);
                     pContext->drawEllipse(CRect(x - 6, y2 - 6, x + 6, y2 + 6), kDrawFilled);
                 }
@@ -324,160 +117,36 @@ namespace MinMax
                 }
             }
 
-            // ------------------------
-            // フレット番号（0〜  ）
-            // ------------------------
-            pContext->setFontColor(fretNumberColor);
-
-            // フォント（VSTGUI既定）
-            auto font = kNormalFontVerySmall; // or kNormalFontSmall
-            pContext->setFont(font, 10);
-
-            // 表示Y位置（指板の下）
-            double numberY = frameSize.bottom - 8; // 下端から少し上
-
-            for (int fret = 0; fret <= lastFret; ++fret)
+            pContext->setFontColor(style.fretNumberColor);
+            pContext->setFont(kNormalFontVerySmall, 10);
+            for (int f = 0; f <= kLastFret; ++f)
             {
-                // フレット中央の X 座標
-                double x =
-                    boardSize.left
-                    + fretSpacing * fret //(fret - firstFret)
-                    + fretSpacing * 0.5;
-
-                // 文字列化
+                double x = getFretCenterX(f);
                 Steinberg::String text;
-                text.printf("%d", fret);
-
-                // 文字の矩形（中央揃え）
-                CRect textRect(x - 10, numberY - 5, x + 10, numberY + 2);
-
+                text.printf("%d", f);
+                CRect textRect(x - 10, boardSize.bottom + 2, x + 10, boardSize.bottom + 12);
                 pContext->drawString(text, textRect, kCenterText, true);
             }
 
-            // ------------------------
-            // 押さえているフレットのマーカー表示（🔶）
-            // ------------------------
-            {
-                auto barreInfo = buildBarreInfo(currentSet);
-                auto barreSpans = extractBarreSpans(barreInfo);
-
-                DrawBarres(pContext, barreSpans, markerRadius);
-
-                for (unsigned int stringindex = 0; stringindex < currentSet.size; ++stringindex)
-                {
-                    int fret = currentSet.data[stringindex];
-                    int offset = currentSet.getOffset(stringindex);
-                    bool hasOffset = offset != 0;
-
-                    switch (offset + StringSet::CENTER_OFFSET)
-                    {
-                    case 0: // mute
-						fret = -1;
-                        hasOffset = false;
-                        break;
-                    case 1: // open
-                        fret = 0;
-                        hasOffset = false;
-                        break;
-                    default:
-                        fret += offset;
-                        break;
-                    }
-
-                    bool outOfRange = hasOffset && (fret < 0 || fret > lastFret);
-
-                    double y = boardSize.top + outerMargin + stringSpacing * stringindex;
-
-                    if (hasOffset)
-                    {
-                        pContext->setFillColor(pressedOffsetColor);
-                        pContext->setFrameColor(pressedOffsetColor);
-                    }
-                    else
-                    {
-                        pContext->setFillColor(pressedColor);
-                        pContext->setFrameColor(pressedColor);
-                    }
-
-                    // --- (1) ミュート (-1) は X を描画 ---
-                    if (fret == -1 || outOfRange)
-                    {
-                        double x = boardSize.left + fretSpacing * 0.5;
-                        const double s = 6.0;
-                        if (!hasOffset)
-                        {
-                            pContext->setFrameColor(muteColor);
-                        }
-                        pContext->drawLine(CPoint(x - s, y - s), CPoint(x + s, y + s));
-                        pContext->drawLine(CPoint(x - s, y + s), CPoint(x + s, y - s));
-                        continue;
-                    }
-
-                    // --- (2) 開放弦 (0) は何も描かない ---
-                    if (fret == 0 && !hasOffset)
-                    {
-                        continue;
-                    }
-
-                    // --- (3) 通常の押弦は (fret-1) を内部計算に使う ---
-                    int internalFret = fret - 1;
-
-                    if (internalFret < firstFret || internalFret > lastFret)
-                    {
-                        continue;
-                    }
-
-                    double x =
-                        boardSize.left
-                        + fretSpacing * (internalFret - firstFret)
-                        + fretSpacing * 0.5;
-
-                    const double s = 8.0;
-
-                    std::vector<CPoint> pts;
-
-                    pts.emplace_back(x, y - s);
-                    pts.emplace_back(x + s, y);
-                    pts.emplace_back(x, y + s);
-                    pts.emplace_back(x - s, y);
-
-                    pContext->drawPolygon(pts, VSTGUI::kDrawFilled);
-                }
-            }
+            drawBarres(pContext);
+            drawNotes(pContext);
         }
 
-        void DrawBarres(VSTGUI::CDrawContext* ctx, const std::vector<BarreSpan>& spans, float markerRadius)
+        void drawBarres(VSTGUI::CDrawContext* ctx)
         {
-            if (!ctx)
-                return;
-
-            ctx->setFillColor(kBarreColor);
-
-            for (const auto& span : spans)
+            ctx->setFillColor(style.barreColor);
+            for (const auto& span : cachedBarreSpans)
             {
-                float x = GetFretX(span.fret);
-                float y1 = GetStringY(span.stringFrom);
-                float y2 = GetStringY(span.stringTo);
-
-                VSTGUI::CRect barreRect(
-                    x - markerRadius,
-                    y1 - markerRadius * 0.6f,
-                    x + markerRadius,
-                    y2 + markerRadius * 0.6f
-                );
-
+                float x = getFretCenterX(span.fret);
+                float y1 = getStringY(span.stringFrom);
+                float y2 = getStringY(span.stringTo);
+                float r = style.markerRadius;
+                VSTGUI::CRect barreRect(x - r, y1 - r * 0.6f, x + r, y2 + r * 0.6f);
                 auto path = ctx->createGraphicsPath();
                 if (path)
                 {
-                    path->addRoundRect(
-                        barreRect,
-                        markerRadius * 0.6f   // ← 半径は1つだけ
-                    );
-
-                    ctx->drawGraphicsPath(
-                        path,
-                        VSTGUI::CDrawContext::kPathFilled
-                    );
+                    path->addRoundRect(barreRect, r * 0.6f);
+                    ctx->drawGraphicsPath(path, VSTGUI::CDrawContext::kPathFilled);
                     path->forget();
                 }
             }
@@ -487,110 +156,224 @@ namespace MinMax
         {
             if (context != FretBoardContext::Edit) return VSTGUI::kMouseEventNotHandled;
 
-            int stringIndex =
-                int((where.y - (boardSize.top + outerMargin)) / stringSpacing + 0.5);
-
-            if (stringIndex < 0 || stringIndex >= STRING_COUNT)
-                return VSTGUI::kMouseEventNotHandled;
+            int sIdx = int((where.y - (boardSize.top + style.outerMargin)) / stringSpacing + 0.5);
+            if (sIdx < 0 || sIdx >= (int)currentSet.size) return VSTGUI::kMouseEventNotHandled;
 
             int fret = int((where.x - boardSize.left) / fretSpacing) - 1;
+            if (fret < kFirstFret || fret > kLastFret - 1) return VSTGUI::kMouseEventNotHandled;
 
-            if (fret < firstFret || fret > lastFret - 1)
-                return VSTGUI::kMouseEventNotHandled;
-
-            int& current = currentSet.data[stringIndex];
-
-            // ---- ナット左 ----
+            int& cur = currentSet.data[sIdx];
             if (fret < 0)
             {
-                current = (current == -1) ? 0 : -1;
+                cur = (cur == -1) ? 0 : -1;
             }
             else
             {
-                int newValue = fret + 1;
-
-                if (current == newValue)
+                int newVal = fret + 1;
+                if (cur == newVal)
                 {
-                    // 押弦 → 開放 → ミュート → 押弦
-                    if (current > 0)
-                        current = 0;
-                    else if (current == 0)
-                        current = -1;
-                    else
-                        current = newValue;
+                    cur = (cur > 0) ? 0 : (cur == 0 ? -1 : newVal);
                 }
                 else
                 {
-                    // 別フレットをクリック
-                    current = newValue;
+                    cur = newVal;
                 }
             }
 
-            if (editChordChangedCallback)
-            {
-                editChordChangedCallback(this, currentSet);
-			}
-
+            updateBarreCache();
+            if (editChordChangedCallback) editChordChangedCallback(this, currentSet);
             invalid();
             return VSTGUI::kMouseEventHandled;
         }
 
-        // 現在の押弦情報
-        StringSet getPressedFrets() const
-        {
-            return currentSet;
-        }
-
-        // 押弦情報を上書きして再描画
         void setPressedFrets(const StringSet& set)
         {
             currentSet = set;
+            updateBarreCache();
             invalid();
         }
 
         void setContext(FretBoardContext ctx)
         {
             if (context == ctx) return;
-
-            // --- exit ---
-            switch (context)
+            if (ctx == FretBoardContext::Edit)
             {
-            case FretBoardContext::Edit:
-                // Edit 終了時の後始末は View 側が判断する
-                break;
-            default:
-                break;
-            }
-
-            // --- enter ---
-            switch (ctx)
-            {
-            case FretBoardContext::Edit:
                 saveStringSet();
-                if (editChordChangedCallback)
-                {
-                    editChordChangedCallback(this, currentSet);
-                }
-                break;
-            default:
-                break;
+                if (editChordChangedCallback) editChordChangedCallback(this, currentSet);
             }
-
             context = ctx;
             invalid();
         }
 
-        FretBoardContext getContext() const
-        {
-            return context;
-        }
-
-        void cancelEdit()
-        {
-            restoreStringSet();
-            invalid();
-        }
+        void saveStringSet() { workingSet = currentSet; }
+        void restoreStringSet() { currentSet = workingSet; updateBarreCache(); }
+        void cancelEdit() { restoreStringSet(); invalid(); }
+        FretBoardContext getContext() const { return context; }
+        StringSet getPressedFrets() const { return currentSet; }
 
         CLASS_METHODS(CFretBoard, CControl)
+
+    private:
+        static constexpr int kLastFret = 19;
+        static constexpr int kFirstFret = -1;
+        static constexpr int kNumFrets = (kLastFret - kFirstFret + 1);
+
+        FretBoardStyle style;
+        VSTGUI::CRect boardSize;
+        double stringSpacing = 0.0;
+        double fretSpacing = 0.0;
+
+        StringSet currentSet{};
+        StringSet workingSet{};
+        std::vector<BarreSpan> cachedBarreSpans;
+        FretBoardContext context{ FretBoardContext::View };
+        EditChordChanged editChordChangedCallback;
+
+        // --- 内部ロジック：座標計算 ---
+        float getFretCenterX(int fret) const
+        {
+            return static_cast<float>(boardSize.left + fretSpacing * (fret - kFirstFret - 1) + fretSpacing * 0.5);
+        }
+
+        float getStringY(int stringIndex) const
+        {
+            return static_cast<float>(boardSize.top + style.outerMargin + stringSpacing * stringIndex);
+        }
+
+        bool isMarkerFret(int f) const
+        {
+            static const std::vector<int> markers = { 2, 4, 6, 8, 11, 14, 16, 18 };
+            return std::find(markers.begin(), markers.end(), f) != markers.end();
+        }
+
+        // --- 内部ロジック：バレーコード判定 ---
+        void updateBarreCache()
+        {
+            using BarreFlags = std::array<bool, MAX_STRINGS>;
+            std::array<BarreFlags, kLastFret> info{};
+
+            for (int fret = 0; fret < kLastFret; ++fret)
+            {
+                bool hasAnyNote = false;
+                for (int s = 0; s < (int)currentSet.size; ++s)
+                {
+                    if (currentSet.data[s] == fret)
+                    {
+                        hasAnyNote = true;
+                        break;
+                    }
+                }
+                for (int s = 0; s < (int)currentSet.size; ++s)
+                {
+                    if (currentSet.data[s] == -1)
+                    {
+                        hasAnyNote = false;
+                    }
+                    info[fret][s] = hasAnyNote;
+                }
+            }
+
+            for (int s = 0; s < (int)currentSet.size; ++s)
+            {
+                int minFret = -1;
+                int count = 0;
+                for (int f = 0; f < kLastFret; ++f)
+                {
+                    if (info[f][s])
+                    {
+                        if (minFret < 0) minFret = f;
+                        ++count;
+                    }
+                }
+                if (count <= 1) continue;
+                for (int f = minFret + 1; f < kLastFret; ++f)
+                {
+                    if (currentSet.data[s] != f) info[f][s] = false;
+                }
+                if (info[0][s] && currentSet.data[s] != 0) info[0][s] = false;
+            }
+
+            cachedBarreSpans.clear();
+            for (int fret = 1; fret < kLastFret; ++fret)
+            {
+                int start = -1;
+                for (int s = 0; s < (int)currentSet.size; ++s)
+                {
+                    if (info[fret][s])
+                    {
+                        if (start < 0) start = s;
+                    }
+                    else
+                    {
+                        if (start >= 0)
+                        {
+                            if (s - start >= 2)
+                            {
+                                cachedBarreSpans.push_back({ fret, start, s - 1 });
+                            }
+                            start = -1;
+                        }
+                    }
+                }
+                if (start >= 0 && (int)currentSet.size - start >= 2)
+                {
+                    cachedBarreSpans.push_back({ fret, start, (int)currentSet.size - 1 });
+                }
+            }
+        }
+
+        // --- 描画ヘルパー ---
+        void drawNotes(VSTGUI::CDrawContext* pContext)
+        {
+            for (unsigned int i = 0; i < currentSet.size; ++i)
+            {
+                int fret = currentSet.data[i];
+                int offset = currentSet.getOffset(i);
+                bool hasOffset = (offset != 0);
+
+                int effectiveFret = fret;
+                int rawType = offset + StringSet::CENTER_OFFSET;
+
+                if (rawType == 0) effectiveFret = -1;      // Mute
+                else if (rawType == 1) effectiveFret = 0; // Open
+                else effectiveFret += offset;
+
+                bool outOfRange = hasOffset && (effectiveFret < -1 || effectiveFret > kLastFret);
+                double y = getStringY(i);
+
+                if (hasOffset)
+                {
+                    pContext->setFillColor(style.pressedOffsetColor);
+                }
+                else
+                {
+                    pContext->setFillColor(style.pressedColor);
+                }
+                pContext->setFrameColor(pContext->getFillColor());
+
+                if (effectiveFret == -1 || outOfRange)
+                {
+                    double x = boardSize.left + fretSpacing * 0.5;
+                    const double s = 6.0;
+                    if (!hasOffset) pContext->setFrameColor(style.muteColor);
+                    pContext->drawLine({ (float)(x - s), (float)(y - s) }, { (float)(x + s), (float)(y + s) });
+                    pContext->drawLine({ (float)(x - s), (float)(y + s) }, { (float)(x + s), (float)(y - s) });
+                    continue;
+                }
+
+                if (effectiveFret == 0 && !hasOffset) continue;
+
+                int internalFret = effectiveFret - 1;
+                if (internalFret < kFirstFret || internalFret >= kLastFret) continue;
+
+                double x = getFretCenterX(effectiveFret);
+                const double s = 8.0;
+                std::vector<VSTGUI::CPoint> pts = {
+                    {(float)x, (float)(y - s)}, {(float)(x + s), (float)y},
+                    {(float)x, (float)(y + s)}, {(float)(x - s), (float)y}
+                };
+                pContext->drawPolygon(pts, VSTGUI::kDrawFilled);
+            }
+        }
     };
 }
