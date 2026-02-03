@@ -1,7 +1,4 @@
-﻿//------------------------------------------------------------------------
-// ChordMap.h
-//------------------------------------------------------------------------
-#pragma once
+﻿#pragma once
 
 #include <algorithm>
 #include <array>
@@ -24,12 +21,8 @@
 
 namespace MinMax
 {
-    // 6弦固定
     inline constexpr int STRING_COUNT = 6;
 
-    //======================================================================
-    // ChordMap Spec
-    //======================================================================
     struct ChordSpec
     {
         static constexpr int defaultRootCount = 12;
@@ -47,17 +40,12 @@ namespace MinMax
             (userRootCount * userTypeCount * userVoicingCount);
     };
 
-    //======================================================================
-    // StringSet (6弦分のデータを保持)
-    //======================================================================
     struct StringSet
     {
         static const int CENTER_OFFSET = 6;
 
         int flatIndex = 0;
         uint32_t state = 0;
-
-        // 6固定
         std::array<int, STRING_COUNT> data{};
         size_t size = STRING_COUNT;
 
@@ -75,9 +63,6 @@ namespace MinMax
         std::array<int, STRING_COUNT> offset{};
     };
 
-    //======================================================================
-    // ChordMap (Singleton)
-    //======================================================================
     class ChordMap
     {
     private:
@@ -92,8 +77,6 @@ namespace MinMax
 
         ChordMap() = default;
         ~ChordMap() = default;
-
-        // コピー・ムーブ禁止
         ChordMap(const ChordMap&) = delete;
         ChordMap& operator=(const ChordMap&) = delete;
 
@@ -134,21 +117,12 @@ namespace MinMax
             return result;
         }
 
-        // --- JSONデータアクセス ---
         int getFlatCount() const { return ChordSpec::flatEntryCount; }
         const FlatChordEntry& getChordInfoByIndex(int flatIndex) const { return flatChords[flatIndex]; }
         int getRootCount() const { return ChordSpec::TotalRootCount; }
         const std::string& getRootName(int r) const { return rootNames[r]; }
         bool isDefaultRoot(int r) const { return r < ChordSpec::defaultRootCount; }
 
-        std::string getTypeName(int r, int t) const
-        {
-            return isDefaultRoot(r) ? defaultTypeNames[t] : userTypeNames[t];
-        }
-
-        //==================================================================
-        // ロード処理 (goto を廃止し、早期リターンへ)
-        //==================================================================
         void loadChordPreset()
         {
             loadChordPreset(Files::getPresetPath().append(Files::DEFAULT_PRESET));
@@ -171,7 +145,6 @@ namespace MinMax
                 return;
             }
 
-            // 1. Tunings
             if (doc.HasMember("Tunings") && doc["Tunings"].IsArray())
             {
                 const auto& arr = doc["Tunings"].GetArray();
@@ -182,7 +155,6 @@ namespace MinMax
                 }
             }
 
-            // 2. ChordRoots
             if (doc.HasMember("ChordRoots") && doc["ChordRoots"].IsArray())
             {
                 const auto& roots = doc["ChordRoots"].GetArray();
@@ -221,16 +193,12 @@ namespace MinMax
             presetPath = path;
         }
 
-        //==================================================================
-        // 保存処理
-        //==================================================================
         void saveChordPreset(const std::filesystem::path& path)
         {
             namespace fs = std::filesystem;
             fs::path filePath = path;
             filePath.replace_extension(std::string(Files::FILE_EXT));
 
-            // 既存ファイルがある場合はバックアップを作成
             if (fs::exists(filePath))
             {
                 createBackup(filePath);
@@ -240,7 +208,6 @@ namespace MinMax
             doc.SetObject();
             auto& allocator = doc.GetAllocator();
 
-            // Tunings
             rapidjson::Value tuningsArr(rapidjson::kArrayType);
             for (size_t i = 0; i < STRING_COUNT; ++i)
             {
@@ -248,7 +215,6 @@ namespace MinMax
             }
             doc.AddMember("Tunings", tuningsArr, allocator);
 
-            // ChordRoots
             int flatIdx = 0;
             rapidjson::Value rootList(rapidjson::kArrayType);
 
@@ -297,17 +263,15 @@ namespace MinMax
                 presetPath = filePath;
             }
         }
-        // --- 復元: 平均フレット位置の取得 ---
+
         float getPositionAverage(int flatIndex) const
         {
             StringSet v = getChordVoicing(flatIndex);
-
             int sum = 0;
             int count = 0;
 
             for (size_t i = 0; i < v.size; i++)
             {
-                // ミュート(-1)以外を計算対象にする
                 if (v.data[i] < 0) continue;
                 sum += v.data[i];
                 ++count;
@@ -316,30 +280,24 @@ namespace MinMax
             return (count > 0) ? static_cast<float>(sum) / count : 0.0f;
         }
 
-        // --- 復元: 特定のボイシングを更新 (Edit用) ---
         void setVoicing(int flatIndex, const StringSet& frets)
         {
             if (flatIndex < 0 || flatIndex >= ChordSpec::flatEntryCount) return;
 
             auto& v = flatChords[flatIndex].fretPosition;
-
-            // 6弦固定で安全にコピー
             for (size_t i = 0; i < STRING_COUNT; ++i)
             {
                 v[i] = frets.data[i];
             }
         }
 
-        // 文字列変換 UTF8 -> UTF16
         static inline std::wstring convertUtf8ToUtf16(char const* str)
         {
 #pragma warning(suppress : 4996)
             std::wstring_convert<std::codecvt_utf8<wchar_t>, wchar_t> converter;
-#pragma warning(suppress : 4996)
             return converter.from_bytes(str);
         }
 
-        // --- 復元: パス・プリセット名取得 ---
         std::string getPresetName() const
         {
             return presetPath.stem().u8string();
@@ -349,48 +307,42 @@ namespace MinMax
         {
             return presetPath;
         }
-        
-        // --- 復元: ルートごとのタイプ数取得 ---
+
         int getTypeCount(int r) const
         {
             return isDefault(r) ? ChordSpec::defaultTypeCount : ChordSpec::userTypeCount;
         }
 
-        // --- 復元: デフォルトルートかどうかの判定 (以前の名前に復元) ---
         bool isDefault(int r) const
         {
             return r < ChordSpec::defaultRootCount;
         }
 
-        // --- 復元: タイプ名の取得 (以前のシグネチャに合わせる) ---
         std::string& getTypeName(int r, int t)
         {
             return isDefault(r) ? defaultTypeNames[t] : userTypeNames[t];
         }
 
-        // --- 復元: ボイシング数取得 (UIのループなどで使用) ---
         int getVoicingCount(int r, int t) const
         {
             return isDefaultRoot(r) ? ChordSpec::defaultVoicingCount : ChordSpec::userVoicingCount;
         }
 
-        // --- 復元: 型名の非const参照（修正: 安全のため getter/setter に分けるのが理想ですが、互換性優先） ---
         std::string& getTypeNameRef(int r, int t)
         {
             return isDefaultRoot(r) ? defaultTypeNames[t] : userTypeNames[t];
         }
 
-        // --- 復元: 設定のバックアップ/リストア用 (StringSet操作) ---
         void restoreStringSet(StringSet& target, const StringSet& source)
         {
             target = source;
         }
 
-        // --- その他、以前のソースで使われていたロジックの補完 ---
         void saveStringSet(const StringSet& source, StringSet& backup)
         {
             backup = source;
         }
+
     private:
         void createBackup(const std::filesystem::path& filePath)
         {

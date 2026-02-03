@@ -10,7 +10,6 @@
 #include <string>
 #include <system_error>
 #include <vector>
-#include <sstream>
 #include <vstgui/lib/cstring.h>
 
 #pragma warning(disable : 4996)
@@ -26,9 +25,8 @@ namespace MinMax
 
         inline static const VSTGUI::UTF8String TITLE = "QBStrum";
         inline static const VSTGUI::UTF8String FILTER = "Chord Preset(.qbs)";
-
-        // ファイル操作で使いやすいよう std::string で定義
         inline static const VSTGUI::UTF8String FILE_EXT = "qbs";
+
         inline static const std::string DEFAULT_PRESET = "default.qbs";
 
     private:
