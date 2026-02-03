@@ -249,7 +249,7 @@ namespace MinMax
         // --- 内部ロジック：バレーコード判定 ---
         void updateBarreCache()
         {
-            using BarreFlags = std::array<bool, MAX_STRINGS>;
+            using BarreFlags = std::array<bool, STRING_COUNT>;
             std::array<BarreFlags, kLastFret> info{};
 
             for (int fret = 0; fret < kLastFret; ++fret)

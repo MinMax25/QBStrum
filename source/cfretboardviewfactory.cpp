@@ -315,7 +315,7 @@ namespace MinMax
 
             auto* c = editor->getController();
 
-            for (int i = 0; i < MAX_STRINGS; i++)
+            for (int i = 0; i < STRING_COUNT; i++)
             {
                 Steinberg::Vst::ParamID tag = PARAM::STR1_OFFSET + i;
                 c->beginEdit(tag);

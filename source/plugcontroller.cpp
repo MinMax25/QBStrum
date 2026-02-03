@@ -84,7 +84,7 @@ namespace MinMax
 				auto c = ChordMap::instance().getChordVoicing((int)plain);
 				ChordInfo.size = c.size;
 				ChordInfo.flatIndex = c.flatIndex;
-				for (int i = 0; i < MAX_STRINGS; i++)
+				for (int i = 0; i < STRING_COUNT; i++)
 				{
 					ChordInfo.data[i] = c.data[i];
 					ChordInfo.setOffset(i, c.getOffset(i));
