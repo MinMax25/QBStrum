@@ -508,10 +508,6 @@ namespace MinMax
 			int i = strnum.data[s];
 
 			double delayMs = (prm.get(STRUM_SPEED) / double(STRING_COUNT)) * strcnt;
-			//double delayMs =
-			//	(strnum.size > 1)
-			//	? (prm.get(STRUM_SPEED) / double(STRING_COUNT)) * strcnt
-			//	: 0.0;
 
 			Steinberg::uint64 onTime = baseOnTime + static_cast<Steinberg::uint64>(delayMs * samplesPerMs);
 
