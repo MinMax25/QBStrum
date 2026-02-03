@@ -77,9 +77,9 @@ namespace MinMax
         // valid strings
         size_t size = 0;
 
-        int getOffset(int stringNubmer) const
+        int getOffset(int stringNumber) const
         {
-            return offset[stringNubmer];
+            return offset[stringNumber];
         }
 
         void setOffset(int stringNumber, int value)
