@@ -299,6 +299,8 @@ namespace MinMax
 	{
 		constexpr int SPECIAL_NOTES_SAMPLES = 3;
 
+		prm.clearChangedFlags(SELECTED_ARTICULATION);
+
 		if (!prm.getInt(ENABLED_ARTICULATION)) return;
 
 		int newArtic = prm.getInt(SELECTED_ARTICULATION);
@@ -328,8 +330,6 @@ namespace MinMax
 		{
 			scheduler.addNoteOn(onTime, offTime, SPECIAL_NOTES, keySW, 127, i);
 		}
-
-		prm.clearChangedFlags(SELECTED_ARTICULATION);
 	}
 
 	void PLUGIN_API MyVSTProcessor::processEvent()

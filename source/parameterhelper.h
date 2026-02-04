@@ -456,7 +456,7 @@ namespace PF
 
             val = std::clamp(val, 0.0, 1.0);
 
-            if (std::abs(it->second.current - val) > 1e-6)
+            if (std::abs(it->second.current - val) >= 0.0)
             {
                 it->second.previous = it->second.current;
                 it->second.current = val;
