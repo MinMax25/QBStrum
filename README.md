@@ -1,122 +1,50 @@
 # QBStrum
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](Resources/license.txt)
-[![VST3](https://img.shields.io/badge/VST3-MIDI%20Effect-green)](https://steinbergmedia.github.io/vst3_dev_portal/)
-[![Windows](https://img.shields.io/badge/Platform-Windows-blue)](#)
-[![DAW](https://img.shields.io/badge/Tested%20DAW-Studio%20One-informational)](#)
+[![VST3](https://img.shields.io/badge/VST3-Steinberg-blueviolet)](https://www.steinberg.net/developers/)
+[![Windows](https://img.shields.io/badge/OS-Windows-blue)](#)
 
-DAWで使用する **ギター演奏特化型 MIDI エフェクトプラグイン** です。  
+DAW（主に **Studio One**）で使用する  
+**ギター用ストラム／コード演奏支援 VST3 プラグイン**です。
 
-A **guitar-oriented MIDI effect plugin** for use in DAWs.
-
-<img width="1300" height="800" alt="Image" src="Resources/Document/image/intro_pic_1.png" />
-
----
-
-## 🎥 Demo Video
-
-QBStrumの基本コンセプト、  
-コード指定からストラム／アルペジオ演奏までの流れを動画で確認できます。
-
-This video demonstrates the basic concept of QBStrum,  
-including chord input and guitar-style performance generation.
-
-[![QBStrum Demo Video](https://img.youtube.com/vi/XXXXXXXXXXX/0.jpg)](https://youtu.be/XXXXXXXXXXX)
-
----
-
-## システム要件 | System Requirements
-
-- **OS** : Windows  
-- **Plugin Format** : VST3（MIDI Effect）  
-- **DAW** : VST3 MIDI Effect に対応した DAW  
-
-※ 音源は別途ギター音源が必要です。
-
----
-
-- **OS** : Windows  
-- **Plugin Format** : VST3 (MIDI Effect)  
-- **DAW** : A DAW that supports VST3 MIDI effects  
-
-※ A guitar instrument plugin is required separately.
+A **VST3 plugin** for guitar strumming and chord-based performance,  
+designed primarily for **Studio One**.
 
 ---
 
 ## 概要 | Overview
 
 QBStrum は、  
-**コード指定を元にギターらしい演奏情報を生成する MIDI エフェクト**です。
+**コード指定 + ストラム／ブラッシング操作**を MIDI レベルで制御する  
+ギター演奏支援プラグインです。
 
-ストローク、ブラッシング、アルペジオ、ミュート、  
-アーティキュレーションといった  
-**ギター奏法そのものを MIDI で制御**することを目的としています。
-
-QBStrum 自体は音を出しません。  
-演奏結果は **接続されたギター音源へ MIDI として送信**されます。
+コード、ボイシング、ストラム方向、ブラシ、ミュート、  
+アルペジオ、アーティキュレーションなどを  
+**KeySwitch とパラメータ操作**で統合的に扱えます。
 
 ---
 
-QBStrum is a **MIDI effect plugin that generates guitar-style performance data**  
-based on chord input.
+QBStrum is a guitar performance helper plugin that combines  
+**chord specification and strumming control** at the MIDI level.
 
-It focuses on controlling **playing techniques**, such as strumming, brushing,  
-arpeggios, muting, and articulations, rather than sound generation.
-
-QBStrum does not produce audio by itself.  
-All generated MIDI data is sent to the connected guitar instrument plugin.
+It supports chord voicings, strum directions, brushing, muting,  
+arpeggios, and articulations via **KeySwitches and parameters**.
 
 ---
 
-## 主な機能 | Features
+## 対応環境 | System Requirements
 
-- 🎸 **ギター奏法特化 MIDI 生成**
-  - Up / Down ストラム
-  - ブラシ奏法
-  - アルペジオ（弦単位）
-  - ミュート、デッドノート、ハンマリング等
-
-- 🎼 **コード指定前提の設計**
-  - DAW 側のコードトラックやイベントと連携
-  - コードを直接 MIDI ノートで入力する必要なし
-
-- 🎛 **弦・フレットを意識した制御**
-  - 弦ごとの発音順・本数
-  - 弦ごとのフレットオフセット
-  - フレットノイズ生成（別 MIDI チャンネル）
-
-- 🔌 **音源非依存**
-  - 任意のギター音源で使用可能
-  - KeySwitch / MIDI Note ベースの制御
+- OS: **Windows**
+- DAW: **VST3 対応 DAW**
+  - 動作確認：Studio One 7
+- ギター音源（別途必要）
+  - Ample Guitar などの MIDI 入力対応音源
 
 ---
 
-- 🎸 **Guitar-oriented MIDI generation**
-- 🎼 **Chord-based workflow**
-- 🎛 **String- and fret-aware control**
-- 🔌 **Instrument-independent design**
-
----
-
-## コード指定について | About Chord Input
-
-QBStrum は **DAW 側でのコード指定**を前提としています。
-
-- コードトラック
-- コードイベント
-- Sound Variation / Expression 系機能
-
-これらを通じて渡されたコード情報を内部で管理し、  
-演奏生成に利用します。
-
-QBStrum には独自のコード入力 UI はありません。  
-これは制限ではなく、**DAW ごとのワークフローを尊重するための設計**です。
-
----
-
-QBStrum relies on **chord input provided by the DAW**.
-
-It does not include its own chord editor UI,  
-allowing it to integrate naturally with each DAW’s workflow.
+- OS: **Windows**
+- DAW: **VST3 compatible DAW**
+  - Tested with Studio One 7
+- Guitar instrument plugin required (not included)
 
 ---
 
@@ -124,40 +52,112 @@ allowing it to integrate naturally with each DAW’s workflow.
 
 ### 手順 | Steps
 
-1. このページ右側の **Releases** から最新版をダウンロード  
-2. zip を任意のフォルダに展開  
-3. 展開したフォルダ内の **VST3 プラグイン**を  
-   DAW の VST3 プラグインフォルダへ配置
+1. このページ右側の **Releases** から最新版をダウンロードします。  
+2. ダウンロードした zip を任意の場所に展開します。  
+3. 展開されたフォルダ内の **VST3 プラグイン**を  
+   DAW の VST3 プラグインフォルダへ配置します。
 
 ---
 
-1. Download the latest version from **Releases**  
-2. Extract the zip file  
-3. Copy the **VST3 plugin** to your DAW’s VST3 plugin directory
+1. Download the latest release from **Releases** on this page.  
+2. Extract the downloaded zip file to any location.  
+3. Copy the **VST3 plugin** to your DAW’s VST3 plugin directory.
 
 ---
 
-## 対応・検証状況 | Compatibility Notes
+## 付属リソースファイル | Resource Files
 
-QBStrum は **Studio One** を主な検証環境として開発されています。
+Release 用 zip には、`Resources` フォルダ内に  
+以下の **3 つのリソースファイル**が含まれています。
 
-ただし、  
-特定の DAW 専用・推奨を目的としたものではありません。
+These three resource files are included in the `Resources` folder.
 
-DAW ごとの  
-- コード指定方法  
-- MIDI エフェクトの扱い  
-- UI の思想  
-
-によって挙動や使い勝手が異なる場合があります。
+| ファイル名 | 内容 |
+|-----------|------|
+| `default.qbs` | デフォルトでロードされる **コードマップ**（JSON 形式） |
+| `QBStrum.pitchlist` | ピッチ名定義ファイル（ドラムマップ／ノート名表示用） |
+| `QBStrum.keyswitch` | **コード指定用 KeySwitch 定義ファイル** |
 
 ---
 
-QBStrum is primarily tested with **Studio One**,  
-but it is not intended to be DAW-exclusive.
+| File | Description |
+|------|-------------|
+| `default.qbs` | Default chord map (JSON format) |
+| `QBStrum.pitchlist` | Pitch name definition (for note naming / drum maps) |
+| `QBStrum.keyswitch` | KeySwitch definition for chord input |
 
-Behavior may vary depending on how each DAW handles  
-chord input and MIDI effects.
+---
+
+## リソース配置先 | Resource Installation
+
+これらのファイルは、  
+**QBStrum が参照する所定のフォルダ**へ配置する必要があります。
+
+以下は一般的な配置例です。
+
+---
+
+These files must be placed in the **designated folder used by QBStrum**.  
+A typical example is shown below.
+
+### 例 | Example (Windows)
+
+Documents/  
+　└─ QBStrum/  
+　　├─ default.qbs  
+　　├─ QBStrum.pitchlist  
+　　└─ QBStrum.keyswitch  
+
+
+※ フォルダが存在しない場合は、手動で作成してください。
+
+If the folder does not exist, please create it manually.
+
+---
+
+## リソースファイルの役割 | Notes
+
+- `default.qbs`  
+  - 初回起動時に **自動ロード**されるコードマップ  
+  - ユーザー編集・差し替え可能  
+
+- `QBStrum.pitchlist`  
+  - DAW 側の **ノート名／ドラムマップ表示**に使用  
+
+- `QBStrum.keyswitch`  
+  - **コード指定・切り替え操作**用の KeySwitch 定義  
+
+これらのファイルはすべて  
+**ユーザーが自由に編集・拡張可能**です。
+
+---
+
+- `default.qbs`  
+  - Automatically loaded on startup  
+  - Fully user-editable  
+
+- `QBStrum.pitchlist`  
+  - Used for DAW note naming / drum maps  
+
+- `QBStrum.keyswitch`  
+  - Defines chord selection via KeySwitch  
+
+All resource files can be freely edited or replaced.
+
+---
+
+## 注意事項 | Notes
+
+- QBStrum は **特定 DAW 専用設計ではありません**が、  
+  DAW ごとに KeySwitch やコード指定の扱いが異なる場合があります。
+- 本プラグインは **MIDI 処理を主目的**としており、  
+  オーディオ信号は生成しません。
+
+---
+
+- QBStrum is not strictly DAW-specific,  
+  but behavior may vary depending on DAW implementation.
+- This plugin processes **MIDI only** and does not generate audio.
 
 ---
 
