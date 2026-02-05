@@ -454,7 +454,7 @@ namespace MinMax
 		trigFretNoise(event);
 
 		auto& voicing = getChordVoicing(prm.get(CHORD_NUM));
-		auto& strnum = getTargetStrings(voicing, true, isDown, maxStrings);
+		auto& strnum = getTargetStrings(voicing, !isDown, isDown, maxStrings);
 
 		double samplesPerMs = scheduler.getSamplesPerMs();
 		Steinberg::uint64 baseOnTime = scheduler.getCurrentSampleTime() + event.sampleOffset;
