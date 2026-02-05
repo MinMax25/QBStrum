@@ -334,8 +334,8 @@ namespace MinMax
                 int effectiveFret = fret;
                 int rawType = offset + StringSet::CENTER_OFFSET;
 
-                if (rawType == 0) effectiveFret = -1;      // Mute
-                else if (rawType == 1) effectiveFret = 0; // Open
+                if (rawType == 0) effectiveFret = -1;       // Mute
+                else if (rawType == 1) effectiveFret = 0;   // Open
                 else effectiveFret += offset;
 
                 bool outOfRange = hasOffset && (effectiveFret < -1 || effectiveFret > kLastFret);

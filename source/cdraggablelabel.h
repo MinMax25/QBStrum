@@ -21,30 +21,21 @@ namespace MinMax
         // ドラッグ開始時に「D&D するファイルパス」を返す
         using DragPathCallback = std::function<std::wstring(CDraggableLabel*)>;
 
-        CDraggableLabel(
-            const VSTGUI::CRect& size,
-            DragPathCallback cb = nullptr
-        )
+        CDraggableLabel(const VSTGUI::CRect& size, DragPathCallback cb = nullptr)
             : CTextLabel(size)
             , dragPathCallback(cb)
         {
         }
 
     protected:
-        VSTGUI::CMouseEventResult onMouseDown(
-            VSTGUI::CPoint& where,
-            const VSTGUI::CButtonState&
-        ) override
+        VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
         {
             dragStart = where;
             dragging = false;
             return VSTGUI::kMouseEventHandled;
         }
 
-        VSTGUI::CMouseEventResult onMouseMoved(
-            VSTGUI::CPoint& where,
-            const VSTGUI::CButtonState& buttons
-        ) override
+        VSTGUI::CMouseEventResult onMouseMoved(VSTGUI::CPoint& where, const VSTGUI::CButtonState& buttons) override
         {
             if ((buttons & VSTGUI::kLButton) &&
                 !dragging &&

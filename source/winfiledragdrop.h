@@ -11,7 +11,7 @@
 namespace WinDND
 {
     // ------------------------------------------------------------
-    // IDropSource（最小実装）
+    // IDropSource
     // ------------------------------------------------------------
     class DropSource : public IDropSource
     {
@@ -44,7 +44,7 @@ namespace WinDND
     };
 
     // ------------------------------------------------------------
-    // IDataObject（CF_HDROP 専用・最小実装）
+    // IDataObject（CF_HDROP 専用）
     // ------------------------------------------------------------
     class FileDataObject : public IDataObject
     {
@@ -160,7 +160,7 @@ namespace WinDND
     };
 
     // ------------------------------------------------------------
-    // ファイル D&D 実行関数（これを呼ぶだけ）
+    // ファイル D&D 実行関数
     // ------------------------------------------------------------
     inline void startFileDrag(const std::wstring& path)
     {

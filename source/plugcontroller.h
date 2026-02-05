@@ -40,19 +40,12 @@ namespace MinMax
 		Steinberg::tresult PLUGIN_API getState(Steinberg::IBStream* state) SMTG_OVERRIDE;
 		Steinberg::tresult PLUGIN_API setParamNormalized(Steinberg::Vst::ParamID tag, Steinberg::Vst::ParamValue value) SMTG_OVERRIDE;
 
-		// -- 追加部分 --
-
 		Steinberg::tresult PLUGIN_API getMidiControllerAssignment(Steinberg::int32 busIndex, Steinberg::int16 channel, Steinberg::Vst::CtrlNumber midiControllerNumber, Steinberg::Vst::ParamID& value) SMTG_OVERRIDE;
-
 		Steinberg::tresult PLUGIN_API getUnitByBus(Steinberg::Vst::MediaType valueType, Steinberg::Vst::BusDirection dir, Steinberg::int32 busIndex, Steinberg::int32 channel, Steinberg::Vst::UnitID& unitId) SMTG_OVERRIDE;
-		
 		Steinberg::tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
 
 		MyVST3Editor* view = nullptr;
-
 		StringSet ChordInfo{};
-
-		// --------------
 
 		DEFINE_INTERFACES
 			DEF_INTERFACE(IMidiMapping)

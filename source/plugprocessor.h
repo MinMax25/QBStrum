@@ -53,7 +53,6 @@ namespace MinMax
 		void PLUGIN_API sendNoteEvent(const NoteEvent& ev) override;
 		void PLUGIN_API chordChanged(const Steinberg::Vst::Chord chord) override;
 
-		// 追加メソッド
 		void PLUGIN_API processContext();
 		void PLUGIN_API processParameter();
 		void PLUGIN_API articulationChanged(int sampleOffset);
@@ -63,17 +62,17 @@ namespace MinMax
 		void PLUGIN_API trigAllNotesOff();
 		void PLUGIN_API trigBrush(Steinberg::Vst::Event event, bool isDown, int maxStrings, Steinberg::Vst::ParamValue time);
 		void PLUGIN_API trigStrum(Steinberg::Vst::Event event, bool isAbove, bool isDown, int maxStrings);
-		int getStringPitch(const StringSet& set, int stringNumber);
 		void PLUGIN_API trigMute(PARAM trigger, Steinberg::Vst::Event event);
 		void PLUGIN_API trigArpeggio(int stringindex, Steinberg::Vst::Event event);
 		void PLUGIN_API trigFretNoise(Steinberg::Vst::Event event);
+		int getStringPitch(const StringSet& set, int stringNumber);
 		Steinberg::Vst::ParamID PLUGIN_API getParamIdByPitch(Steinberg::Vst::Event event);
 		StringSet PLUGIN_API getChordVoicing(int flatIndex);
 		StringSet PLUGIN_API getTargetStrings(StringSet fretPos, bool isAbove, bool isDown, int maxStrings);
-		void PLUGIN_API notifyChordNumberChanged();
 		Steinberg::tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
 		Steinberg::tresult PLUGIN_API notifyStrumTrigger(Steinberg::Vst::IMessage* message);
 		Steinberg::tresult PLUGIN_API notifyEditChord(Steinberg::Vst::IMessage* message);
+		void PLUGIN_API notifyChordNumberChanged();
 		void PLUGIN_API processAudio(Steinberg::Vst::ProcessData& data);
 
 		// ストラムイベントスケジューラー
@@ -102,8 +101,10 @@ namespace MinMax
 		// 内部MIDIイベントバッファ
 		RingBuff InnerEvents{ 64 };
 
+		// コード変更イベントシーケンス番号
 		uint32_t chordseq = 0;
 
+		// パラメータヘルパー
 		const RangeResolver rangeResolver;
 		const OptionProvider optionProvider;
 	};

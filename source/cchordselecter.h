@@ -212,17 +212,20 @@ namespace MinMax
             std::wstring filename;
             int counter = 0;
 
-            // 3. 衝突回避ループ
+            // 3. 一時ファイル名衝突回避ループ
             while (true)
             {
                 if (counter == 0)
+                {
                     filename = baseName + L".mid";
+                }
                 else
+                {
                     filename = baseName + L"_" + std::to_wstring(counter) + L".mid";
+                }
 
                 auto fullpath = tempPath / std::filesystem::path(filename.begin(), filename.end());
-                if (!std::filesystem::exists(fullpath))
-                    break; // 存在しなければ使用可能
+                if (!std::filesystem::exists(fullpath)) break;
 
                 ++counter;
             }
@@ -234,10 +237,12 @@ namespace MinMax
             for (int i = 0; i < STRING_COUNT; i++)
             {
                 if (v.data[i] >= 0)
+                {
                     v.data[i] += ChordMap::instance().getTunings().data[i];
+                }
             }
 
-            // 5. MIDI出力
+            // 5. MIDIデータ出力
             writeChordToMidi(v, fullpath.wstring());
 
             return fullpath.wstring();

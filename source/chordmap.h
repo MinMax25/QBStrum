@@ -116,9 +116,13 @@ namespace MinMax
         }
 
         int getFlatCount() const { return ChordSpec::flatEntryCount; }
+
         const FlatChordEntry& getChordInfoByIndex(int flatIndex) const { return flatChords[flatIndex]; }
+
         int getRootCount() const { return ChordSpec::TotalRootCount; }
+
         const std::string& getRootName(int r) const { return rootNames[r]; }
+
         bool isDefaultRoot(int r) const { return r < ChordSpec::defaultRootCount; }
 
         void loadChordPreset()

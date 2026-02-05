@@ -42,11 +42,6 @@ namespace MinMax
 
 	struct EventScheduler
 	{
-		//static EventScheduler& Instance()
-		//{
-		//	static EventScheduler instance;
-		//	return instance;
-		//}
 		EventScheduler() = default;
 
 		void setListener(IScheduledEventListener* l)
@@ -167,7 +162,7 @@ namespace MinMax
 
 			while (!outQueue.empty())
 			{
- 				auto& note = outQueue.current();
+				auto& note = outQueue.current();
 				int sampleOffset = static_cast<int>((note.isSendNoteOn ? note.offTime : note.onTime) - currentSampleTime);
 				onSendNoteEvent(!note.isSendNoteOn, sampleOffset, note, note.velocity);
 				outQueue.eraseCurrent();
@@ -215,12 +210,12 @@ namespace MinMax
 		}
 
 		bool isPlaying() const
-		{ 
+		{
 			return state & Steinberg::Vst::ProcessContext::kPlaying;
 		}
 
 		Steinberg::uint64 getCurrentSampleTime() const
-		{ 
+		{
 			return currentSampleTime;
 		}
 
@@ -230,11 +225,6 @@ namespace MinMax
 		}
 
 	private:
-		//EventScheduler() = default;
-		//EventScheduler(const EventScheduler&) = delete;
-		//EventScheduler& operator=(const EventScheduler&) = delete;
-		//EventScheduler(EventScheduler&&) = default;
-		//EventScheduler& operator=(EventScheduler&&) = default;
 
 		bool isBlockAdust = false;
 
@@ -286,7 +276,7 @@ namespace MinMax
 				projectTimeSamples = ctx->projectTimeSamples;
 			}
 
-			if (systemTime != ctx->systemTime) 
+			if (systemTime != ctx->systemTime)
 			{
 				systemTime = ctx->systemTime;
 			}
@@ -341,7 +331,7 @@ namespace MinMax
 				chord.keyNote != ctx->chord.keyNote ||
 				chord.chordMask != ctx->chord.chordMask ||
 				chord.rootNote != ctx->chord.rootNote
-			)
+				)
 			{
 				chord.keyNote = ctx->chord.keyNote;
 				chord.chordMask = ctx->chord.chordMask;
