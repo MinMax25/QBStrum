@@ -686,6 +686,8 @@ namespace MinMax
 
 	StringSet MyVSTProcessor::getTargetStrings(StringSet voicing, bool isAbove, bool isDown, int maxStrings = STRING_COUNT)
 	{
+		//
+		// 対象弦の本数と順番を決定する
 		StringSet result{};
 
 		std::vector<int> values{};
@@ -703,8 +705,10 @@ namespace MinMax
 			if (cnt >= maxStrings) break;
 		}
 
-		if (isAbove && isDown)
-		{
+		// ストロークが下向きで上側弦を弾く場合、もしくはストロークが上向きで下側弦を弾く場合
+		// 抽出結果を逆順にする
+		if (isAbove == isDown)
+		{	
 			std::reverse(values.begin(), values.end());
 		}
 
