@@ -15,7 +15,8 @@
 
 namespace MinMax
 {
-    class CDraggableLabel : public VSTGUI::CTextLabel
+    class CDraggableLabel 
+        : public VSTGUI::CTextLabel
     {
     public:
         // ドラッグ開始時に「D&D するファイルパス」を返す

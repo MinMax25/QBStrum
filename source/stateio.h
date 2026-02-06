@@ -15,7 +15,8 @@ namespace MinMax {
 	struct StateIO
 	{
 		explicit StateIO(Steinberg::IBStream* state)
-			: streamer(state, kLittleEndian) {
+			: streamer(state, kLittleEndian)
+		{
 		}
 
 		// ---- primitive ----
@@ -70,5 +71,4 @@ namespace MinMax {
 	private:
 		Steinberg::IBStreamer streamer;
 	};
-
 }

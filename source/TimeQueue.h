@@ -127,9 +127,13 @@ namespace MinMax
             for (size_t i = 0; i < count_; ++i)
             {
                 if (buf_[i].onTime < onTime)
+                {
                     result = &buf_[i];
+                }
                 else
+                {
                     break;
+                }
             }
             return result;
         }

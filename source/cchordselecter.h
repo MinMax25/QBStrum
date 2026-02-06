@@ -22,7 +22,7 @@
 
 namespace MinMax
 {
-    // コード選択
+    // コード選択ビュー
     class CChordSelecter
         : public VSTGUI::CViewContainer
     {

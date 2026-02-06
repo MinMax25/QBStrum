@@ -46,7 +46,8 @@ namespace MinMax
         double outerMargin = 10.0;
     };
 
-    class CFretBoard : public VSTGUI::CControl
+    class CFretBoard 
+        : public VSTGUI::CControl
     {
     public:
         using EditChordChanged = std::function<void(CFretBoard*, StringSet)>;

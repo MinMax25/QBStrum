@@ -79,8 +79,7 @@ namespace WinDND
         // IDataObject
         HRESULT __stdcall GetData(FORMATETC* fmt, STGMEDIUM* med)
         {
-            if (fmt->cfFormat != CF_HDROP)
-                return DV_E_FORMATETC;
+            if (fmt->cfFormat != CF_HDROP) return DV_E_FORMATETC;
 
             const std::wstring& path = files[0];
 
@@ -136,8 +135,7 @@ namespace WinDND
             DWORD dwDirection,
             IEnumFORMATETC** ppenumFormatEtc) override
         {
-            if (dwDirection != DATADIR_GET)
-                return E_NOTIMPL;
+            if (dwDirection != DATADIR_GET) return E_NOTIMPL;
 
             FORMATETC fmt = {};
             fmt.cfFormat = CF_HDROP;
