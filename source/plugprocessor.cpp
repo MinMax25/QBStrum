@@ -597,8 +597,6 @@ namespace MinMax
 	{
 		constexpr double FRET_NOISE_LENGTH = 40.0;
 
-		if (!prm.getInt(ENABLED_NOIZE)) return;
-
 		float distance = 0.0f;
 
 		if (lastChordNum != prm.getInt(CHORD_NUM))
@@ -613,6 +611,7 @@ namespace MinMax
 			lastChordNum = prm.getInt(CHORD_NUM);
 		}
 
+		if (!prm.getInt(ENABLED_NOIZE)) return;
 		if (prm.get(NOISE_NOTE_NEAR) == 0 && prm.get(NOISE_NOTE_FAR) == 0) return;
 
 		int pitch = 0;
