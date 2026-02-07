@@ -3,10 +3,10 @@
 [![VST3](https://img.shields.io/badge/VST3-Steinberg-blueviolet)](https://www.steinberg.net/developers/)
 [![Windows](https://img.shields.io/badge/OS-Windows-blue)](#)
 
-![QBStrum 操作画面](images/qbstrum_main.png)
-
 Studio One(Fender Studio Pro)で使用する  
 **ギター用ストラム／コード演奏支援 VST3 プラグイン**です。
+
+![QBStrum 操作画面](images/QBStrum_Main_1.png)
 
 ---
 
