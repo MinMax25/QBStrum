@@ -54,11 +54,8 @@ Release 用 zip には、`Presets` フォルダ内に
 
 ---
 
-## リソース配置先 | Preset Installation
-
----
-
 ## リソースファイルの役割 | Notes
+## リソース配置先 | Preset Installation
 
 - `default.qbs`  
   - 初回起動時に **自動ロード**されるコードマップ  
