@@ -64,11 +64,11 @@ Release 用 zip には、`Presets` フォルダ内に
   - 初回起動時に **自動ロード**されるコードマップ  
   - ユーザー編集・差し替え可能  
 
-- `QBStrum.pitchlist`  
-  - DAW 側の **ノート名／ドラムマップ表示**に使用  
-
 - `QBStrum.keyswitch`  
   - **コード指定・切り替え操作**用の KeySwitch 定義  
+
+- `QBStrum.pitchlist`  
+  - DAW 側の **ノート名／ドラムマップ表示**に使用  
 
 ---
 
