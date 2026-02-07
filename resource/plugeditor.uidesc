@@ -104,7 +104,7 @@
 		"custom": {
 			"FocusDrawing": {},
 			"VST3Editor": {
-				"Path": "F:\\projects\\QB\\QBStrum\\resource\\plugeditor.uidesc"
+				"Path": "resource\\plugeditor.uidesc"
 			},
 			"UIGridController": {
 				"Grids": "1x 1,5x 5,10x 10,12x 12,15x 15",
