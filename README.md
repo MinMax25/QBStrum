@@ -74,7 +74,7 @@ Release 用 zip には、`Presets` フォルダ内に
 
 ## 注意事項 | Notes
 
-- QBStrum は **特定 DAW 専用設計ではありません**が、  
+- QBStrum は **Studio One(Fender Studio Pro) 専用ではありません**が、  
   DAW ごとに KeySwitch やコード指定の扱いが異なる場合があります。
 - 本プラグインは **MIDI 処理を主目的**としており、  
   オーディオ信号は生成しません。
