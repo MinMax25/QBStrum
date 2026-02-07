@@ -45,38 +45,38 @@ QBStrum は、
 
 ## 付属プリセットファイル | Preset Files
 
-Release 用 zip には、`Presets` フォルダ内に  
+zip には、`presets` フォルダ内に  
 以下の **3 つのリソースファイル**が含まれています。
 
 | ファイル名 | 内容 |
 |-----------|------|
-| `default.qbs` | デフォルトでロードされる **コードマップ**（JSON 形式） |
+| `default.qbs` | デフォルトでロードされるコードマップ（JSON 形式） |
 | `QBStrum.pitchlist` | ピッチ名定義ファイル（ドラムマップ／ノート名表示用） |
-| `QBStrum.keyswitch` | **コード指定用 KeySwitch 定義ファイル** |
+| `QBStrum.keyswitch` | コード指定用 KeySwitch 定義ファイル |
 
 ---
 
 ## リソースファイルの役割と配置先 | Notes & Preset Installation
 
 - `default.qbs`  
-  - 初回起動時に **自動ロード**されるコードマップ  
+  - 初回起動時に自動ロードされるコードマップ  
   - ユーザー編集・差し替え可能
   - 配置：ユーザーフォルダ\Documents\VST3 Presets
 
 - `QBStrum.keyswitch`  
-  - **コード指定・切り替え操作**用の KeySwitch 定義
+  - コード指定・切り替え操作用の KeySwitch 定義
   - 配置：Studio Oneのユーザープリセットフォルダ内Key Switches
 
 - `QBStrum.pitchlist`  
-  - DAW 側の **ノート名／ドラムマップ表示**に使用  
+  - DAW 側のノート名／ドラムマップ表示に使用  
   - 配置：Studio Oneのユーザープリセットフォルダ内Pitch Names
 
 ---
 
 ## 注意事項 | Notes
 
-- QBStrum は **Studio One(Fender Studio Pro) 専用です、  
-- 本プラグインは **MIDI 処理を主目的**としており、  
+- QBStrumはStudio One(Fender Studio Pro) で使用することで最大のパフォーマンスを発揮します、  
+- 本プラグインはMIDI 処理を主目的としており、  
   オーディオ信号は生成しません。
 
 ---
