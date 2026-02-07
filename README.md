@@ -61,7 +61,10 @@ zipファイルには"presets"フォルダ内に
 - `default.qbs`  
   - 初回起動時に自動ロードされるコードマップ  
   - ユーザー編集・差し替え可能
-  - 配置：ユーザーフォルダ\Documents\VST3 Presets
+  - 配置：%USERPROFILE%\Documents\VST3 Presets
+
+※ %USERPROFILE% はユーザーごとに異なります   
+(e.g. C:\Users\YourName)
 
 - `QBStrum.keyswitch`  
   - コード指定・切り替え操作用の KeySwitch 定義
@@ -70,7 +73,6 @@ zipファイルには"presets"フォルダ内に
 - `QBStrum.pitchlist`  
   - DAW 側のノート名／ドラムマップ表示に使用  
   - 配置：Studio Oneのユーザープリセットフォルダ内Pitch Names
-
 ---
 
 ## 注意事項 | Notes
