@@ -4,47 +4,100 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>設定</title>
+    <title>Settings</title>
     <link rel="stylesheet" href="content.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>設定</h1>
-        <p>設定ページはハンバーガーメニュー最下部の歯車アイコンクリックで表示されます。</p>
+        <h1>Settings</h1>
+        <p>各機能の有効・無効設定などを行います</p>
         <div class="image-wrapper">
-            <img src="image/setting_pic_1.png" alt="QB DrumMapの画面イメージ" width="650" height="400" />
+            <div class="image-area">
+                <img src="image/Settings.png" alt="QBStrumの画面イメージ" />
+            </div>
+
+            <div class="table-area">
+                <table class="grid-table">
+                    <thead>
+                        <tr>
+                            <th>カテゴリ</th>
+                            <th>項目</th>
+                            <th>値 / 状態</th>
+                            <th>説明</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- General -->
+                        <tr>
+                            <td rowspan="5">General</td>
+                            <td>Articulation</td>
+                            <td>On/Off</td>
+                            <td>奏法切り替え（Articulation）機能を有効にします</td>
+                        </tr>
+                        <tr>
+                            <td>Enabled Mute</td>
+                            <td>On/Off</td>
+                            <td>ミュートノートによる発音を有効にします</td>
+                        </tr>
+                        <tr>
+                            <td>Enabled Fret Noise</td>
+                            <td>On/Off</td>
+                            <td>フレットノイズの発音を有効にします</td>
+                        </tr>
+                        <tr>
+                            <td>Separate Channel</td>
+                            <td>On/Off</td>
+                            <td>特定ノートを別MIDIチャンネルで処理します</td>
+                        </tr>
+                        <tr>
+                            <td>Sampleblock Adjust</td>
+                            <td>On/Off</td>
+                            <td>
+                                サンプル再生タイミングを内部的に補正します<br />
+                                一部の音源で発音タイミングがずれる場合に有効にします
+                            </td>
+                        </tr>
+
+                        <!-- Fret Noise -->
+                        <tr>
+                            <td rowspan="5">Fret Noise</td>
+                            <td>Channel</td>
+                            <td>Ch 1</td>
+                            <td>フレットノイズのMIDIチャンネル</td>
+                        </tr>
+                        <tr>
+                            <td>Near Note</td>
+                            <td>0(対象外)､1～127</td>
+                            <td>近距離フレットノイズを指定するノート</td>
+                        </tr>
+                        <tr>
+                            <td>Near Frets</td>
+                            <td>1～6 fret</td>
+                            <td>近距離として扱うフレット数</td>
+                        </tr>
+                        <tr>
+                            <td>Far Note</td>
+                            <td>0(対象外)､1～127</td>
+                            <td>遠距離フレットノイズを指定するノート</td>
+                        </tr>
+                        <tr>
+                            <td>Far Frets</td>
+                            <td>1～6 fret</td>
+                            <td>遠距離として扱うフレット数</td>
+                        </tr>
+
+                        <!-- Velocity -->
+                        <tr>
+                            <td>Velocity</td>
+                            <td>Fret Noise Velocity</td>
+                            <td>100</td>
+                            <td>フレットノイズ発音時のベロシティ値</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
-
-        <h2 id="theme">テーマを設定する</h2>
-        <p>次のテーマを選択できます:</p>
-        <ul>
-            <li>Light</li>
-            <li>Dark</li>
-        </ul>
-        <p>さらにアクセントカラーを指定することも可能です。</p>
-
-        <h2 id="language">言語を設定する</h2>
-        <p>Languageコンボボックスより以下を指定できます:</p>
-        <ul>
-            <li>英語</li>
-            <li>日本語</li>
-        </ul>
-        <p>変更内容は次回プログラム起動時に反映されます。</p>
-
-        <h2 id="startup-page">スタートアップページを設定する</h2>
-        <p>Start Up Pageコンボボックスより、起動時に初期表示されるページを指定できます。</p>
-        <p>変更内容は次回プログラム起動時に反映されます。</p>
-
-        <h2 id="load-on-startup">起動時読み込み設定をする</h2>
-        <ul>
-            <li>チェックあり: 最後に開いたファイルが次回起動時に自動で開かれる。</li>
-            <li>チェックなし: 新規画面が表示される。</li>
-        </ul>
-
-        <h2 id="cubase-path">Cubaseのインストール先を設定する</h2>
-        <p>Cubaseのスコア機能を使用する場合はインストール先を指定してください。</p>
-        <p class="note">※ Cubase(ver14以降)をお持ちでない方、またはドラムスコア表示が不要の方は未設定のままで問題ありません。</p>
     </div>
 </body>
 

@@ -56,44 +56,54 @@
                     </tr>
                     <tr>
                         <td>Down</td>
-                        <td>80.0 %</td>
-                        <td>下方向ブラッシングの強さを調整します</td>
+                        <td>5～300 ms</td>
+                        <td>ブラッシングダウン時の長さを指定します</td>
                     </tr>
                     <tr>
                         <td>Up</td>
-                        <td>2.00 beat</td>
-                        <td>上方向ブラッシングの長さを指定します</td>
+                        <td>5～300 ms</td>
+                        <td>ブラッシングアップ時の長さを指定します</td>
                     </tr>
 
                     <!-- Arpeggio -->
                     <tr>
                         <td>Arpeggio</td>
                         <td>Length</td>
-                        <td>2.00 beat</td>
-                        <td>アルペジオ再生の長さを指定します</td>
+                        <td>0.25～8.00 beat</td>
+                        <td>アルペジオの長さを指定します</td>
                     </tr>
 
-                    <!-- Speed Detail -->
+                    <!-- Strings -->
                     <tr>
-                        <td rowspan="4">Speed Detail</td>
+                        <td rowspan="6">Strings</td>
                         <td>Down High</td>
-                        <td>3</td>
-                        <td>高音弦側ダウン時のストローク分解数</td>
+                        <td>１～6(Max)</td>
+                        <td>高音弦側ダウン時のストローク弾弦数</td>
                     </tr>
                     <tr>
                         <td>Down Low</td>
-                        <td>1</td>
-                        <td>低音弦側ダウン時のストローク分解数</td>
+                        <td>１～6(Max)</td>
+                        <td>低音弦側ダウン時のストローク弾弦数</td>
                     </tr>
                     <tr>
                         <td>Up High</td>
-                        <td>3</td>
-                        <td>高音弦側アップ時のストローク分解数</td>
+                        <td>１～6(Max)</td>
+                        <td>高音弦側アップ時のストローク弾弦数</td>
                     </tr>
                     <tr>
                         <td>Up Low</td>
-                        <td>2</td>
-                        <td>低音弦側アップ時のストローク分解数</td>
+                        <td>１～6(Max)</td>
+                        <td>低音弦側アップ時のストローク弾弦数</td>
+                    </tr>
+                    <tr>
+                        <td>Brush Down</td>
+                        <td>１～6(Max)</td>
+                        <td>ブラッシングダウン時のストローク弾弦数</td>
+                    </tr>
+                    <tr>
+                        <td>Brush Up</td>
+                        <td>１～6(Max)</td>
+                        <td>ブラッシングアップ時のストローク弾弦数</td>
                     </tr>
 
                     <!-- Mute Notes -->
@@ -101,69 +111,74 @@
                         <td rowspan="3">Mute Notes</td>
                         <td>Channel</td>
                         <td>Ch 11</td>
-                        <td>ミュート制御専用のMIDIチャンネル</td>
+                        <td>ミュート音のMIDIチャンネル</td>
                     </tr>
                     <tr>
                         <td>Mute 1</td>
-                        <td>103 (G6)</td>
-                        <td>軽いミュートを指定するノート</td>
+                        <td>0(対象外)､1～127</td>
+                        <td>音源のミュートを指定するノート</td>
                     </tr>
                     <tr>
                         <td>Mute 2</td>
-                        <td>102 (F#6)</td>
-                        <td>強いミュートを指定するノート</td>
+                        <td>0(対象外)､1～127</td>
+                        <td>音源のミュートを指定するノート</td>
                     </tr>
 
                     <!-- Transpose -->
                     <tr>
                         <td rowspan="2">Transpose</td>
-                        <td>Semitone</td>
-                        <td>0</td>
+                        <td></td>
+                        <td>-6～6</td>
                         <td>半音単位での全体トランスポーズ</td>
                     </tr>
                     <tr>
                         <td>Octave+</td>
-                        <td>Off</td>
+                        <td>On/Off</td>
                         <td>オクターブ単位でのシフト</td>
                     </tr>
 
                     <!-- Articulations -->
                     <tr>
-                        <td rowspan="6">Articulations</td>
+                        <td rowspan="7">Articulations</td>
                         <td>Open 1</td>
-                        <td>24 (C0)</td>
+                        <td>0(対象外)､1～127</td>
                         <td>通常のオープン奏法</td>
                     </tr>
                     <tr>
                         <td>Open 2</td>
-                        <td>26 (D0)</td>
+                        <td>0(対象外)､1～127</td>
                         <td>別バリエーションのオープン奏法</td>
                     </tr>
                     <tr>
                         <td>Ham / Leg</td>
-                        <td>25 (C#0)</td>
+                        <td>0(対象外)､1～127</td>
                         <td>ハンマリング／レガート奏法</td>
                     </tr>
                     <tr>
                         <td>Mute</td>
-                        <td>28 (E0)</td>
+                        <td>0(対象外)､1～127</td>
                         <td>完全ミュート奏法</td>
                     </tr>
                     <tr>
                         <td>Dead</td>
-                        <td>27 (D#0)</td>
+                        <td>0(対象外)､1～127</td>
                         <td>デッドノート奏法</td>
                     </tr>
                     <tr>
                         <td>Harmonics</td>
-                        <td>33 (A0)</td>
+                        <td>0(対象外)､1～127</td>
                         <td>ハーモニクス奏法</td>
+                    </tr>
+                    <tr>
+                        <td>Slide</td>
+                        <td>0(対象外)､1～127</td>
+                        <td>スライド奏法</td>
                     </tr>
 
                     <!-- Selected -->
                     <tr>
-                        <td>Selected</td>
-                        <td colspan="2">Open 1</td>
+                        <td>Selected Articulation</td>
+                        <td colspan="2">Open 1～Slide</td>
                         <td>現在選択されている奏法</td>
                     </tr>
                 </tbody>
