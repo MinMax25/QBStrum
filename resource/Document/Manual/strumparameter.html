@@ -4,142 +4,170 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Strum Keys</title>
+    <title>Strum Parameter</title>
     <link rel="stylesheet" href="content.css">
 </head>
 
 <body>
     <div class="container">
-        <h1>Strum Keys</h1>
-        <p>ストラム操作に割り当てているキースイッチを設定します</p>
+        <h1>Strum Parameter</h1>
+        <p>ストラム操作に関連するパラメータを設定します</p>
         <div class="image-wrapper">
             <div class="image-area">
-                <img src="image/StrumKeys.png" alt="QB DrumMapの画面イメージ" />
-            </div>
-
-            <div class="table-area">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>機能</th>
-                            <th>Pitch</th>
-                            <th>Note</th>
-                            <th>説明</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>All Notes Off</td>
-                            <td>53</td>
-                            <td>F2</td>
-                            <td>すべての発音中ノートを強制的に停止します</td>
-                        </tr>
-                        <tr>
-                            <td>Brush Down</td>
-                            <td>63</td>
-                            <td>D#3</td>
-                            <td>全弦を下方向にブラッシングします</td>
-                        </tr>
-                        <tr>
-                            <td>Brush Up</td>
-                            <td>61</td>
-                            <td>C#3</td>
-                            <td>全弦を上方向にブラッシングします</td>
-                        </tr>
-                        <tr>
-                            <td>Up High</td>
-                            <td>64</td>
-                            <td>E3</td>
-                            <td>高音弦のアップストローク</td>
-                        </tr>
-                        <tr>
-                            <td>Up</td>
-                            <td>62</td>
-                            <td>D3</td>
-                            <td>通常のアップストローク</td>
-                        </tr>
-                        <tr>
-                            <td>Up Low</td>
-                            <td>60</td>
-                            <td>C3</td>
-                            <td>低音弦のアップストローク</td>
-                        </tr>
-                        <tr>
-                            <td>Down High</td>
-                            <td>59</td>
-                            <td>B2</td>
-                            <td>高音弦のダウンストローク</td>
-                        </tr>
-                        <tr>
-                            <td>Down</td>
-                            <td>57</td>
-                            <td>A2</td>
-                            <td>通常のダウンストローク</td>
-                        </tr>
-                        <tr>
-                            <td>Down Low</td>
-                            <td>55</td>
-                            <td>G2</td>
-                            <td>低音弦のダウンストローク</td>
-                        </tr>
-                        <tr>
-                            <td>Mute 1</td>
-                            <td>58</td>
-                            <td>A#2</td>
-                            <td>音源のミュート音を発音します</td>
-                        </tr>
-                        <tr>
-                            <td>Mute 2</td>
-                            <td>56</td>
-                            <td>G#2</td>
-                            <td>音源のミュート音を発音します</td>
-                        </tr>
-                        <tr>
-                            <td>String 1</td>
-                            <td>52</td>
-                            <td>E2</td>
-                            <td>1弦のみを指定して発音させます</td>
-                        </tr>
-                        <tr>
-                            <td>String 2</td>
-                            <td>50</td>
-                            <td>D2</td>
-                            <td>2弦のみを指定して発音させます</td>
-                        </tr>
-                        <tr>
-                            <td>String 3</td>
-                            <td>48</td>
-                            <td>C2</td>
-                            <td>3弦のみを指定して発音させます</td>
-                        </tr>
-                        <tr>
-                            <td>String 4</td>
-                            <td>47</td>
-                            <td>B1</td>
-                            <td>4弦のみを指定して発音させます</td>
-                        </tr>
-                        <tr>
-                            <td>String 5</td>
-                            <td>45</td>
-                            <td>A1</td>
-                            <td>5弦のみを指定して発音させます</td>
-                        </tr>
-                        <tr>
-                            <td>String 6</td>
-                            <td>43</td>
-                            <td>G1</td>
-                            <td>6弦のみを指定して発音させます</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <img src="image/StrumParameters.png" alt="QBStrumの画面イメージ" />
             </div>
         </div>
 
-        <div>
-            <ul>
-                <li>ノートの右に配置してあるボタンでDAWにストラムトリガーを送信します。左側＞右側でヴェロシティ値が大きくなります。</li>
-                <li>割り当てられているピッチは変更可ですが、その場合はDAWに取り込むピッチリストも併せて修正する必要があります。</li>
-            </ul>
+        <div class="table-area">
+            <table class="grid-table">
+                <thead>
+                    <tr>
+                        <th>カテゴリ</th>
+                        <th>パラメータ</th>
+                        <th>値</th>
+                        <th>説明</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Up / Down -->
+                    <tr>
+                        <td rowspan="3">Up / Down</td>
+                        <td>Speed</td>
+                        <td>1～1000 ms</td>
+                        <td>ストローク間隔（１～６弦）をミリ秒単位で指定します</td>
+                    </tr>
+                    <tr>
+                        <td>Decay</td>
+                        <td>85～100 %</td>
+                        <td>発音後の減衰量を指定します</td>
+                    </tr>
+                    <tr>
+                        <td>Length</td>
+                        <td>0.25～8.00 beat</td>
+                        <td>ストローク全体の長さを拍単位で指定します</td>
+                    </tr>
+
+                    <!-- Brush -->
+                    <tr>
+                        <td rowspan="3">Brush</td>
+                        <td>Decay</td>
+                        <td>85～100 %</td>
+                        <td>ブラッシング時の減衰量を指定します</td>
+                    </tr>
+                    <tr>
+                        <td>Down</td>
+                        <td>80.0 %</td>
+                        <td>下方向ブラッシングの強さを調整します</td>
+                    </tr>
+                    <tr>
+                        <td>Up</td>
+                        <td>2.00 beat</td>
+                        <td>上方向ブラッシングの長さを指定します</td>
+                    </tr>
+
+                    <!-- Arpeggio -->
+                    <tr>
+                        <td>Arpeggio</td>
+                        <td>Length</td>
+                        <td>2.00 beat</td>
+                        <td>アルペジオ再生の長さを指定します</td>
+                    </tr>
+
+                    <!-- Speed Detail -->
+                    <tr>
+                        <td rowspan="4">Speed Detail</td>
+                        <td>Down High</td>
+                        <td>3</td>
+                        <td>高音弦側ダウン時のストローク分解数</td>
+                    </tr>
+                    <tr>
+                        <td>Down Low</td>
+                        <td>1</td>
+                        <td>低音弦側ダウン時のストローク分解数</td>
+                    </tr>
+                    <tr>
+                        <td>Up High</td>
+                        <td>3</td>
+                        <td>高音弦側アップ時のストローク分解数</td>
+                    </tr>
+                    <tr>
+                        <td>Up Low</td>
+                        <td>2</td>
+                        <td>低音弦側アップ時のストローク分解数</td>
+                    </tr>
+
+                    <!-- Mute Notes -->
+                    <tr>
+                        <td rowspan="3">Mute Notes</td>
+                        <td>Channel</td>
+                        <td>Ch 11</td>
+                        <td>ミュート制御専用のMIDIチャンネル</td>
+                    </tr>
+                    <tr>
+                        <td>Mute 1</td>
+                        <td>103 (G6)</td>
+                        <td>軽いミュートを指定するノート</td>
+                    </tr>
+                    <tr>
+                        <td>Mute 2</td>
+                        <td>102 (F#6)</td>
+                        <td>強いミュートを指定するノート</td>
+                    </tr>
+
+                    <!-- Transpose -->
+                    <tr>
+                        <td rowspan="2">Transpose</td>
+                        <td>Semitone</td>
+                        <td>0</td>
+                        <td>半音単位での全体トランスポーズ</td>
+                    </tr>
+                    <tr>
+                        <td>Octave+</td>
+                        <td>Off</td>
+                        <td>オクターブ単位でのシフト</td>
+                    </tr>
+
+                    <!-- Articulations -->
+                    <tr>
+                        <td rowspan="6">Articulations</td>
+                        <td>Open 1</td>
+                        <td>24 (C0)</td>
+                        <td>通常のオープン奏法</td>
+                    </tr>
+                    <tr>
+                        <td>Open 2</td>
+                        <td>26 (D0)</td>
+                        <td>別バリエーションのオープン奏法</td>
+                    </tr>
+                    <tr>
+                        <td>Ham / Leg</td>
+                        <td>25 (C#0)</td>
+                        <td>ハンマリング／レガート奏法</td>
+                    </tr>
+                    <tr>
+                        <td>Mute</td>
+                        <td>28 (E0)</td>
+                        <td>完全ミュート奏法</td>
+                    </tr>
+                    <tr>
+                        <td>Dead</td>
+                        <td>27 (D#0)</td>
+                        <td>デッドノート奏法</td>
+                    </tr>
+                    <tr>
+                        <td>Harmonics</td>
+                        <td>33 (A0)</td>
+                        <td>ハーモニクス奏法</td>
+                    </tr>
+
+                    <!-- Selected -->
+                    <tr>
+                        <td>Selected</td>
+                        <td colspan="2">Open 1</td>
+                        <td>現在選択されている奏法</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

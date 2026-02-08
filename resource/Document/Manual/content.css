@@ -117,17 +117,28 @@ ul li li {
    テーブル
 ====================================================== */
 .table-area table {
+    border-collapse: collapse;
+    width: 100%;
     font-size: 0.9em;
 }
 
+/* 罫線を明確に */
 .table-area th,
 .table-area td {
-    padding: 2px 4px;
+    border: 1px solid #777;
+    padding: 6px 10px;
 }
 
+/* ヘッダ */
 .table-area th {
     background-color: #444444;
     color: #ffffff;
+    text-align: left;
+}
+
+/* 行の視認性アップ（うっすら） */
+.table-area tbody tr:nth-child(even) {
+    background-color: #3a3a3a;
 }
 
 /* ======================================================
