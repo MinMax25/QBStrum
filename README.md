@@ -9,7 +9,7 @@ Studio One（Fender Studio Pro）で使用する
 A **MIDI-based guitar strumming / chord performance helper VST3 plugin**  
 designed primarily for **Studio One / Fender Studio Pro**.
 
-![QBStrum UI](images/QBStrum_Main_1.png)
+![QBStrum UI](resource/Document/Manual/image/QBStrum_Main_1.png)
 
 ---
 
