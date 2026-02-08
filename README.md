@@ -4,7 +4,7 @@
 [![Windows](https://img.shields.io/badge/OS-Windows-blue)](#)
 
 Studio One（Fender Studio Pro）で使用する  
-**ギター用ストラム／コード演奏支援 VST3 プラグイン**
+ギター用ストラム／コード演奏支援 VST3 プラグインです
 
 A **MIDI-based guitar strumming / chord performance helper VST3 plugin**  
 designed primarily for **Studio One / Fender Studio Pro**.
