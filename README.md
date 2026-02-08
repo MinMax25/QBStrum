@@ -89,7 +89,7 @@ The zip file includes the following files in the `presets` folder:
 
 ---
 
-## リソースファイルの役割と配置先 | Resource Files & Locations
+## プリセットファイルの役割と配置先 | Resource Files & Locations
 
 ### `default.qbs`
 - 初回起動時に自動ロードされるコードマップ  
