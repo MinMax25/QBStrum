@@ -12,15 +12,38 @@
         <h1>インストール・アンインストール手順</h1>
         <p>以下の手順でインストールおよびアンインストールを行ってください。</p>
         <ul>
-            <li>インストール
-                <ul>
-                    <li>ダウンロードしたzipファイルを展開し、フォルダを任意の場所に置いてください。</li>
-                    <li>フォルダ内の'QB DrumMap.exe'が本体です。適宜スタートにピン止め等の登録をしてください。</li>
-                </ul>
+            <li><a href="https://github.com/MinMax25/QBStrum/releases/tag/v1.0.0">https://github.com/MinMax25/QBStrum/releases/tag/v1.0.0</a></li>
+            <li>
+                インストール
+                <ol>
+                    <li>上記のリンクより最新のリリース版ZIPファイルをダウンロードします</li>
+                    <li>ダウンロードした zip を任意の場所に展開します</li>
+                    <li>
+                        展開されたフォルダ内の QBStrum.vst3 をフォルダごと VST3 プラグインフォルダへ配置します<br />
+                        → C:\Program Files\Common Files\VST3
+                    </li>
+                    <li>展開されたフォルダ内の preset フォルダ内のファイルをそれぞれのフォルダへ配置します
+                        <ol>
+                            <li>
+                                default.qbs<br />
+                                → C:\Users\（ユーザー名）\Documents\QBStrum\Presets\
+                            </li>
+                            <li>
+                                QBStrum.pitchlist<br />
+                                → Studio One ユーザープリセットフォルダ\Pitch Names\
+                            </li>
+                            <li>
+                                QBStrum.keyswitch<br />
+                                → Studio One ユーザープリセットフォルダ\Key Switches\
+                            </li>
+                        </ol>
+                    </li>
+                </ol>
             </li>
-            <li>アンインストール
+            <li>
+                アンインストール
                 <ul>
-                    <li>不要になった場合はフォルダごと削除する（レジストリは使用していません）</li>
+                    <li>不要になった場合はフォルダごと削除してください（レジストリは使用していません）</li>
                 </ul>
             </li>
         </ul>
