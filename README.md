@@ -99,8 +99,7 @@ The zip file includes the following files in the `presets` folder:
 - User-editable
 
 **配置先 | Location**
-%USERPROFILE%\Documents\VST3 Presets
-
+%USERPROFILE%\Documents\VST3 Presets\MinMax\QBStrum\ChordPreset
 
 ※ `%USERPROFILE%` はユーザーごとに異なります  
 (e.g. `C:\Users\YourName`)
