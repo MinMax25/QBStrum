@@ -11,6 +11,8 @@ designed primarily for **Studio One / Fender Studio Pro**.
 
 ![QBStrum UI](resource/Document/Manual/image/QBStrum_Main_1.png)
 
+📘 [操作ガイド（HTML版）を見る](https://ユーザー名.github.io/リポジトリ名/)
+
 ---
 
 ## 概要 | Overview
