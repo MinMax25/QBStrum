@@ -156,7 +156,7 @@ arising from the use or inability to use this software.
 The software may be discontinued without notice.
 
 ---
-[QBStrum Document Page](https://MinMax25.github.io/QBStrum/)
+[![GitHub Pages](https://img.shields.io/badge/GitHub-Pages-blue)](https://MinMax25.github.io/QBStrum/)
 ---
 
 ## 📄 ライセンス | License
