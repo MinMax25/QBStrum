@@ -12,8 +12,6 @@ designed primarily for **Studio One / Fender Studio Pro**.
 ![QBStrum UI](docs/image/QBStrum_Main_1.png)
 
 ---
-[QBStrum Document Page](https://MinMax25.github.io/QBStrum/)
----
 
 ## 概要 | Overview
 
@@ -157,6 +155,8 @@ The author assumes no responsibility for any damages
 arising from the use or inability to use this software.  
 The software may be discontinued without notice.
 
+---
+[QBStrum Document Page](https://MinMax25.github.io/QBStrum/)
 ---
 
 ## 📄 ライセンス | License
