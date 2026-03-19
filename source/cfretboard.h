@@ -243,7 +243,7 @@ namespace MinMax
 
         bool isMarkerFret(int f) const
         {
-            static const std::vector<int> markers = { 2, 4, 6, 8, 11, 14, 16, 18 };
+            static const std::vector<int> markers = { 3, 5, 7, 9, 12, 15, 17, 19 };
             return std::find(markers.begin(), markers.end(), f) != markers.end();
         }
 
