@@ -92,9 +92,6 @@ namespace MinMax
 		// コード変更監視用
 		double lastChordNum = 0;
 
-		// コード変更時の平均フレットポジションの移動距離
-		float distance = 0.0f;
-
 		// DAWの再生ステータス
 		bool isPlaying = false;
 
