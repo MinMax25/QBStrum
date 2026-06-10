@@ -27,27 +27,30 @@
 
 namespace MinMax
 {
-	Steinberg::tresult PLUGIN_API MyVSTController::initialize(FUnknown* context)
-	{
-		Steinberg::tresult result = EditControllerEx1::initialize(context);
+	using namespace Steinberg;
+	using namespace Steinberg::Vst;
 
-		if (result != Steinberg::kResultOk)
+	tresult PLUGIN_API MyVSTController::initialize(FUnknown* context)
+	{
+		tresult result = EditControllerEx1::initialize(context);
+
+		if (result != kResultOk)
 		{
 			return result;
 		}
 
 		// ユニット登録
-		addUnit(new Steinberg::Vst::Unit(STR16("General"), U_GENERAL));
-		addUnit(new Steinberg::Vst::Unit(STR16("Chord"), U_CHORD));
-		addUnit(new Steinberg::Vst::Unit(STR16("Strum"), U_STRUM));
-		addUnit(new Steinberg::Vst::Unit(STR16("Brush"), U_BRUSH));
-		addUnit(new Steinberg::Vst::Unit(STR16("Arpeggio"), U_ARP));
-		addUnit(new Steinberg::Vst::Unit(STR16("Strings"), U_STRINGS));
-		addUnit(new Steinberg::Vst::Unit(STR16("Mute"), U_MUTE));
-		addUnit(new Steinberg::Vst::Unit(STR16("Fret Noize"), U_NOIZE));
-		addUnit(new Steinberg::Vst::Unit(STR16("String Offset"), U_OFFSET));
-		addUnit(new Steinberg::Vst::Unit(STR16("Trigger"), U_TRIGGER));
-		addUnit(new Steinberg::Vst::Unit(STR16("Articulation"), U_ARTIC));
+		addUnit(new Unit(STR16("General"), U_GENERAL));
+		addUnit(new Unit(STR16("Chord"), U_CHORD));
+		addUnit(new Unit(STR16("Strum"), U_STRUM));
+		addUnit(new Unit(STR16("Brush"), U_BRUSH));
+		addUnit(new Unit(STR16("Arpeggio"), U_ARP));
+		addUnit(new Unit(STR16("Strings"), U_STRINGS));
+		addUnit(new Unit(STR16("Mute"), U_MUTE));
+		addUnit(new Unit(STR16("Fret Noize"), U_NOIZE));
+		addUnit(new Unit(STR16("String Offset"), U_OFFSET));
+		addUnit(new Unit(STR16("Trigger"), U_TRIGGER));
+		addUnit(new Unit(STR16("Articulation"), U_ARTIC));
 
 		// パラメータ登録
 		for (auto& def : paramTable)
@@ -62,22 +65,22 @@ namespace MinMax
 		return result;
 	}
 
-	Steinberg::tresult PLUGIN_API MyVSTController::terminate()
+	tresult PLUGIN_API MyVSTController::terminate()
 	{
 		return EditControllerEx1::terminate();
 	}
 
-	Steinberg::tresult PLUGIN_API MyVSTController::setComponentState(Steinberg::IBStream* state)
+	tresult PLUGIN_API MyVSTController::setComponentState(IBStream* state)
 	{
-		if (!state) return Steinberg::kInvalidArgument;
+		if (!state) return kInvalidArgument;
 		StateIO io(state);
 
 		for (const auto& def : paramTable)
 		{
 			double plain = 0.0;
 
-			if (!io.readDouble(plain)) return Steinberg::kResultFalse;
-			Steinberg::Vst::ParamValue normalized = plainParamToNormalized(def.tag, plain);
+			if (!io.readDouble(plain)) return kResultFalse;
+			ParamValue normalized = plainParamToNormalized(def.tag, plain);
 			setParamNormalized(def.tag, normalized);
 			if (def.tag == CHORD_NUM)
 			{
@@ -91,22 +94,22 @@ namespace MinMax
 			}
 		}
 
-		return Steinberg::kResultOk;
+		return kResultOk;
 	}
 
-	Steinberg::tresult PLUGIN_API MyVSTController::setState(Steinberg::IBStream* state)
+	tresult PLUGIN_API MyVSTController::setState(IBStream* state)
 	{
-		return Steinberg::kResultTrue;
+		return kResultTrue;
 	}
 
-	Steinberg::tresult PLUGIN_API MyVSTController::getState(Steinberg::IBStream* state)
+	tresult PLUGIN_API MyVSTController::getState(IBStream* state)
 	{
-		return Steinberg::kResultTrue;
+		return kResultTrue;
 	}
 
-	Steinberg::IPlugView* PLUGIN_API MyVSTController::createView(Steinberg::FIDString name)
+	IPlugView* PLUGIN_API MyVSTController::createView(FIDString name)
 	{
-		if (Steinberg::FIDStringsEqual(name, Steinberg::Vst::ViewType::kEditor))
+		if (FIDStringsEqual(name, ViewType::kEditor))
 		{
 			view = new MyVST3Editor(this, "view", "plugeditor.uidesc");
 			return view;
@@ -114,52 +117,52 @@ namespace MinMax
 		return nullptr;
 	}
 
-	Steinberg::tresult PLUGIN_API MyVSTController::setParamNormalized(Steinberg::Vst::ParamID tag, Steinberg::Vst::ParamValue value)
+	tresult PLUGIN_API MyVSTController::setParamNormalized(ParamID tag, ParamValue value)
 	{
-		Steinberg::tresult result = EditControllerEx1::setParamNormalized(tag, value);
+		tresult result = EditControllerEx1::setParamNormalized(tag, value);
 		return result;
 	}
 
-	Steinberg::tresult PLUGIN_API MyVSTController::getMidiControllerAssignment(Steinberg::int32 busIndex, Steinberg::int16 channel, Steinberg::Vst::CtrlNumber midiControllerNumber, Steinberg::Vst::ParamID& value)
+	tresult PLUGIN_API MyVSTController::getMidiControllerAssignment(int32 busIndex, int16 channel, CtrlNumber midiControllerNumber, ParamID& value)
 	{
 		switch (midiControllerNumber)
 		{
-		case Steinberg::Vst::kCtrlNRPNSelectLSB:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(CHORD_LSB);
-			return Steinberg::kResultTrue;
+		case kCtrlNRPNSelectLSB:
+			value = static_cast<CtrlNumber>(CHORD_LSB);
+			return kResultTrue;
 
-		case Steinberg::Vst::kCtrlNRPNSelectMSB:
-			value = static_cast<Steinberg::Vst::CtrlNumber>(CHORD_MSB);
-			return Steinberg::kResultTrue;
+		case kCtrlNRPNSelectMSB:
+			value = static_cast<CtrlNumber>(CHORD_MSB);
+			return kResultTrue;
 		}
 
-		return Steinberg::kResultFalse;
+		return kResultFalse;
 	}
 
-	Steinberg::tresult PLUGIN_API MyVSTController::getUnitByBus(Steinberg::Vst::MediaType valueType, Steinberg::Vst::BusDirection dir, Steinberg::int32 busIndex, Steinberg::int32 channel, Steinberg::Vst::UnitID& unitId)
+	tresult PLUGIN_API MyVSTController::getUnitByBus(MediaType valueType, BusDirection dir, int32 busIndex, int32 channel, UnitID& unitId)
 	{
-		if (valueType == Steinberg::Vst::kEvent && dir == Steinberg::Vst::kInput)
+		if (valueType == kEvent && dir == kInput)
 		{
 			if (busIndex == 0 && channel == 0)
 			{
-				unitId = Steinberg::Vst::kRootUnitId;
-				return Steinberg::kResultTrue;
+				unitId = kRootUnitId;
+				return kResultTrue;
 			}
 		}
-		return Steinberg::kResultFalse;
+		return kResultFalse;
 	}
 
-	Steinberg::tresult PLUGIN_API MyVSTController::notify(Steinberg::Vst::IMessage* message)
+	tresult PLUGIN_API MyVSTController::notify(IMessage* message)
 	{
 		const void* msgData;
-		Steinberg::uint32 msgSize;
+		uint32 msgSize;
 
 		const auto attr = message->getAttributes();
-		if (attr == nullptr) return Steinberg::kResultFalse;
+		if (attr == nullptr) return kResultFalse;
 
-		if (!(attr->getBinary(MSG_CHORD_CHANGED, msgData, msgSize) == Steinberg::kResultTrue && msgSize == sizeof(StringSet)))
+		if (!(attr->getBinary(MSG_CHORD_CHANGED, msgData, msgSize) == kResultTrue && msgSize == sizeof(StringSet)))
 		{
-			return Steinberg::kResultFalse;
+			return kResultFalse;
 		}
 
 		const auto set = reinterpret_cast<const StringSet*>(msgData);
@@ -175,7 +178,7 @@ namespace MinMax
 
 		{
 			beginEdit(static_cast<int>(CHORD_NUM));
-			Steinberg::Vst::ParamValue norm = plainParamToNormalized(CHORD_NUM, set->flatIndex);
+			ParamValue norm = plainParamToNormalized(CHORD_NUM, set->flatIndex);
 			setParamNormalized(static_cast<int>(CHORD_NUM), norm);
 			performEdit(static_cast<int>(CHORD_NUM), norm);
 			endEdit(static_cast<int>(CHORD_NUM));
@@ -183,12 +186,12 @@ namespace MinMax
 
 		{
 			beginEdit(static_cast<int>(CHORD_STATE_REVISION));
-			Steinberg::Vst::ParamValue norm = plainParamToNormalized(CHORD_STATE_REVISION, set->state);
+			ParamValue norm = plainParamToNormalized(CHORD_STATE_REVISION, set->state);
 			setParamNormalized(static_cast<int>(CHORD_STATE_REVISION), norm);
 			performEdit(static_cast<int>(CHORD_STATE_REVISION), norm);
 			endEdit(static_cast<int>(CHORD_STATE_REVISION));
 		}
 
-		return Steinberg::kResultOk;
+		return kResultOk;
 	}
 }

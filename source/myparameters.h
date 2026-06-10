@@ -31,6 +31,7 @@ namespace MinMax
 		U_OFFSET,
 		U_TRIGGER,
 		U_ARTIC,
+		U_MIDI_CC,
 	};
 
 	// ‹¤’ÊƒŒƒ“ƒWŽ¯•ÊŽq
