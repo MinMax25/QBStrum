@@ -197,6 +197,7 @@ namespace MinMax
 		processParameter();
 		processEvent();
 		processInnerEvent();
+		processFretPreview();
 		processAudio(data);
 
 		scheduler.dispatch();
@@ -767,6 +768,10 @@ namespace MinMax
 		{
 			return notifyEditChord(message);
 		}
+		else if (strcmp(msgID, MSG_FRET_NOTE) == 0)
+		{
+			return notifyFretNote(message);
+		}
 
 		return kResultFalse;
 	}
@@ -837,6 +842,60 @@ namespace MinMax
 		}
 
 		return kResultOk;
+	}
+
+	tresult PLUGIN_API MyVSTProcessor::notifyFretNote(IMessage* message)
+	{
+		const void* msgData;
+		uint32 msgSize;
+
+		const auto attr = message->getAttributes();
+		if (attr == nullptr) return kResultFalse;
+
+		if (!(attr->getBinary(MSG_FRET_NOTE, msgData, msgSize) == kResultTrue && msgSize == sizeof(CFretNoteMsg)))
+		{
+			return kResultFalse;
+		}
+
+		const auto note = reinterpret_cast<const CFretNoteMsg*>(msgData);
+
+		if (note->stringIndex < 0 || note->stringIndex >= STRING_COUNT) return kResultFalse;
+
+		int pitch = getPreviewPitch(note->stringIndex, note->fret);
+		if (pitch < 0 || pitch > 127) return kResultOk;
+
+		FretPreviewEvent ev{};
+		ev.stringIndex = note->stringIndex;
+		ev.pitch = pitch;
+		ev.isOn = note->isOn;
+		ev.velocity = std::clamp(note->velocity / 127.0f, 0.0f, 1.0f);
+
+		fretPreviewEvents.push(ev);
+
+		return kResultOk;
+	}
+
+	int MyVSTProcessor::getPreviewPitch(int stringIndex, int fret)
+	{
+		return chordMap.getTunings().data[stringIndex] + (prm.getInt(TRANSPOSE) - 6) + (prm.getInt(OCTAVE) ? 12 : 0) + fret;
+	}
+
+	void PLUGIN_API MyVSTProcessor::processFretPreview()
+	{
+		FretPreviewEvent ev{};
+
+		while (fretPreviewEvents.pop(ev))
+		{
+			NoteEvent ne{};
+			ne.eventType = ev.isOn ? NoteEventType::On : NoteEventType::Off;
+			ne.channel = 0;
+			ne.noteId = -1;
+			ne.sampleOffset = 0;
+			ne.pitch = ev.pitch;
+			ne.velocity = ev.velocity;
+
+			sendNoteEvent(ne);
+		}
 	}
 
 	void PLUGIN_API MyVSTProcessor::processAudio(ProcessData& data)

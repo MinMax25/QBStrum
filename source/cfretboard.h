@@ -41,6 +41,7 @@ namespace MinMax
         VSTGUI::CColor pressedOffsetColor{ 255, 0, 255, 255 };
         VSTGUI::CColor muteColor{ 255, 0, 0, 255 };
         VSTGUI::CColor barreColor{ 255, 140, 0, 80 };
+        VSTGUI::CColor hoverColor{ 255, 255, 255, 100 };
 
         float markerRadius = 8.0f;
         double outerMargin = 10.0;
@@ -51,9 +52,12 @@ namespace MinMax
     {
     public:
         using EditChordChanged = std::function<void(CFretBoard*, StringSet)>;
+        using NoteTriggerCallback = std::function<void(CFretBoard*, int stringIndex, int fret, bool isOn, int velocity)>;
 
-        CFretBoard(const VSTGUI::CRect& size, EditChordChanged cb)
-            : CControl(size), editChordChangedCallback(cb)
+        static constexpr int kPreviewVelocity = 100;
+
+        CFretBoard(const VSTGUI::CRect& size, EditChordChanged cb, NoteTriggerCallback noteCb = nullptr)
+            : CControl(size), editChordChangedCallback(cb), noteTriggerCallback(noteCb)
         {
             updateLayout();
         }
@@ -131,6 +135,19 @@ namespace MinMax
 
             drawBarres(pContext);
             drawNotes(pContext);
+            drawHover(pContext);
+        }
+
+        void drawHover(VSTGUI::CDrawContext* ctx)
+        {
+            if (!hasHover) return;
+
+            float x = getFretCenterX(hoverFret);
+            float y = getStringY(hoverString);
+            float r = style.markerRadius;
+
+            ctx->setFillColor(style.hoverColor);
+            ctx->drawEllipse(VSTGUI::CRect(x - r, y - r, x + r, y + r), VSTGUI::kDrawFilled);
         }
 
         void drawBarres(VSTGUI::CDrawContext* ctx)
@@ -155,35 +172,93 @@ namespace MinMax
 
         VSTGUI::CMouseEventResult onMouseDown(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
         {
-            if (context != FretBoardContext::Edit) return VSTGUI::kMouseEventNotHandled;
-
-            int sIdx = int((where.y - (boardSize.top + style.outerMargin)) / stringSpacing + 0.5);
-            if (sIdx < 0 || sIdx >= STRING_COUNT) return VSTGUI::kMouseEventNotHandled;
-
-            int fret = int((where.x - boardSize.left) / fretSpacing) - 1;
-            if (fret < kFirstFret || fret > kLastFret - 1) return VSTGUI::kMouseEventNotHandled;
-
-            int& cur = currentSet.data[sIdx];
-            if (fret < 0)
+            if (context == FretBoardContext::Edit)
             {
-                cur = (cur == -1) ? 0 : -1;
-            }
-            else
-            {
-                int newVal = fret + 1;
-                if (cur == newVal)
+                int sIdx = int((where.y - (boardSize.top + style.outerMargin)) / stringSpacing + 0.5);
+                if (sIdx < 0 || sIdx >= STRING_COUNT) return VSTGUI::kMouseEventNotHandled;
+
+                int fret = int((where.x - boardSize.left) / fretSpacing) - 1;
+                if (fret < kFirstFret || fret > kLastFret - 1) return VSTGUI::kMouseEventNotHandled;
+
+                int& cur = currentSet.data[sIdx];
+                if (fret < 0)
                 {
-                    cur = (cur > 0) ? 0 : (cur == 0 ? -1 : newVal);
+                    cur = (cur == -1) ? 0 : -1;
                 }
                 else
                 {
-                    cur = newVal;
+                    int newVal = fret + 1;
+                    if (cur == newVal)
+                    {
+                        cur = (cur > 0) ? 0 : (cur == 0 ? -1 : newVal);
+                    }
+                    else
+                    {
+                        cur = newVal;
+                    }
                 }
+
+                updateBarreCache();
+                if (editChordChangedCallback) editChordChangedCallback(this, currentSet);
+
+                if (cur >= 0)
+                {
+                    notePlaying = true;
+                    activeString = sIdx;
+                    activeFret = cur;
+                    if (noteTriggerCallback) noteTriggerCallback(this, activeString, activeFret, true, kPreviewVelocity);
+                }
+
+                invalid();
+                return VSTGUI::kMouseEventHandled;
             }
 
-            updateBarreCache();
-            if (editChordChangedCallback) editChordChangedCallback(this, currentSet);
-            invalid();
+            int sIdx, fretVal;
+            if (!pointToFret(where, sIdx, fretVal)) return VSTGUI::kMouseEventNotHandled;
+
+            notePlaying = true;
+            activeString = sIdx;
+            activeFret = fretVal;
+
+            if (noteTriggerCallback) noteTriggerCallback(this, activeString, activeFret, true, kPreviewVelocity);
+
+            return VSTGUI::kMouseEventHandled;
+        }
+
+        VSTGUI::CMouseEventResult onMouseUp(VSTGUI::CPoint&, const VSTGUI::CButtonState&) override
+        {
+            return releaseActiveNote();
+        }
+
+        VSTGUI::CMouseEventResult onMouseCancel() override
+        {
+            return releaseActiveNote();
+        }
+
+        VSTGUI::CMouseEventResult onMouseMoved(VSTGUI::CPoint& where, const VSTGUI::CButtonState&) override
+        {
+            int sIdx = -1, fretVal = 0;
+            bool hit = pointToFret(where, sIdx, fretVal);
+
+            bool changed = (hit != hasHover) || (hit && (sIdx != hoverString || fretVal != hoverFret));
+            if (changed)
+            {
+                hasHover = hit;
+                hoverString = sIdx;
+                hoverFret = fretVal;
+                invalid();
+            }
+
+            return hit ? VSTGUI::kMouseEventHandled : VSTGUI::kMouseEventNotHandled;
+        }
+
+        VSTGUI::CMouseEventResult onMouseExited(VSTGUI::CPoint&, const VSTGUI::CButtonState&) override
+        {
+            if (hasHover)
+            {
+                hasHover = false;
+                invalid();
+            }
             return VSTGUI::kMouseEventHandled;
         }
 
@@ -229,6 +304,38 @@ namespace MinMax
         std::vector<BarreSpan> cachedBarreSpans;
         FretBoardContext context{ FretBoardContext::View };
         EditChordChanged editChordChangedCallback;
+        NoteTriggerCallback noteTriggerCallback;
+
+        bool notePlaying = false;
+        int activeString = -1;
+        int activeFret = 0;
+
+        bool hasHover = false;
+        int hoverString = -1;
+        int hoverFret = 0;
+
+        // --- 内部ロジック：クリック位置 -> 弦・フレット変換 ---
+        bool pointToFret(const VSTGUI::CPoint& where, int& outString, int& outFret) const
+        {
+            int sIdx = int((where.y - (boardSize.top + style.outerMargin)) / stringSpacing + 0.5);
+            if (sIdx < 0 || sIdx >= STRING_COUNT) return false;
+
+            int fret = int((where.x - boardSize.left) / fretSpacing) - 1;
+            if (fret < kFirstFret || fret > kLastFret - 1) return false;
+
+            outString = sIdx;
+            outFret = (fret < 0) ? 0 : fret + 1;
+            return true;
+        }
+
+        VSTGUI::CMouseEventResult releaseActiveNote()
+        {
+            if (!notePlaying) return VSTGUI::kMouseEventNotHandled;
+
+            notePlaying = false;
+            if (noteTriggerCallback) noteTriggerCallback(this, activeString, activeFret, false, 0);
+            return VSTGUI::kMouseEventHandled;
+        }
 
         // --- 内部ロジック：座標計算 ---
         float getFretCenterX(int fret) const

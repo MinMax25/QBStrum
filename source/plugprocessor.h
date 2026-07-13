@@ -21,11 +21,21 @@
 
 namespace MinMax
 {
-	class MyVSTProcessor 
+	// フレットボードクリックによるノートプレビュー要求
+	struct FretPreviewEvent
+	{
+		int stringIndex;
+		int pitch;
+		bool isOn;
+		float velocity;
+	};
+
+	class MyVSTProcessor
 		: public Steinberg::Vst::AudioEffect
 		, public IScheduledEventListener
 	{
 		using RingBuff = Steinberg::OneReaderOneWriter::RingBuffer<Steinberg::Vst::Event>;
+		using FretPreviewRing = Steinberg::OneReaderOneWriter::RingBuffer<FretPreviewEvent>;
 		using ProcessorParamStorage = PF::ProcessorParamStorage;
 
 	public:
@@ -72,8 +82,11 @@ namespace MinMax
 		Steinberg::tresult PLUGIN_API notify(Steinberg::Vst::IMessage* message) SMTG_OVERRIDE;
 		Steinberg::tresult PLUGIN_API notifyStrumTrigger(Steinberg::Vst::IMessage* message);
 		Steinberg::tresult PLUGIN_API notifyEditChord(Steinberg::Vst::IMessage* message);
+		Steinberg::tresult PLUGIN_API notifyFretNote(Steinberg::Vst::IMessage* message);
 		void PLUGIN_API notifyChordNumberChanged();
 		void PLUGIN_API processAudio(Steinberg::Vst::ProcessData& data);
+		void PLUGIN_API processFretPreview();
+		int getPreviewPitch(int stringIndex, int fret);
 
 		// ストラムイベントスケジューラー
 		EventScheduler scheduler;
@@ -97,6 +110,9 @@ namespace MinMax
 
 		// 内部MIDIイベントバッファ
 		RingBuff InnerEvents{ 64 };
+
+		// フレットボードクリックによるノートプレビュー要求バッファ
+		FretPreviewRing fretPreviewEvents{ 32 };
 
 		// コード変更イベントシーケンス番号
 		uint32_t chordseq = 0;

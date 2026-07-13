@@ -14,4 +14,13 @@ namespace MinMax
 		bool isOn;
 		int velocity;
 	};
+
+	// フレットボードクリックによるノートプレビューメッセージ値
+	struct CFretNoteMsg
+	{
+		int stringIndex;
+		int fret;
+		bool isOn;
+		int velocity;
+	};
 }

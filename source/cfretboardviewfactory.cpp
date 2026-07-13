@@ -34,6 +34,7 @@
 #include "cfretboard.h"
 #include "chordmap.h"
 #include "cmenubutton.h"
+#include "cnotemsg.h"
 #include "files.h"
 #include "myparameters.h"
 #include "plugdefine.h"
@@ -103,7 +104,11 @@ namespace MinMax
 
         void initFretBoard()
         {
-            fretBoard = new CFretBoard(getViewSize(), [this](CFretBoard*, StringSet v) { onEditChordChanged(v); });
+            fretBoard = new CFretBoard(
+                getViewSize(),
+                [this](CFretBoard*, StringSet v) { onEditChordChanged(v); },
+                [this](CFretBoard*, int stringIndex, int fret, bool isOn, int velocity) { onFretNoteTriggered(stringIndex, fret, isOn, velocity); }
+            );
 			fretBoard->setWantsFocus(false);
             fretBoard->setPressedFrets(StringSet());
             addView(fretBoard);
@@ -347,6 +352,24 @@ namespace MinMax
                 {
 					auto& set = fretBoard->getPressedFrets();
                     attr->setBinary(MSG_CHORD_EDIT, &set, sizeof(StringSet));
+                }
+                if (editor->getController() == nullptr) return;
+                editor->getController()->getPeer()->notify(message);
+            }
+        }
+
+        void onFretNoteTriggered(int stringIndex, int fret, bool isOn, int velocity)
+        {
+            if (!editor) return;
+
+            if (auto message = Steinberg::owned(editor->getController()->allocateMessage()))
+            {
+                CFretNoteMsg note{ stringIndex, fret, isOn, velocity };
+
+                message->setMessageID(MSG_FRET_NOTE);
+                if (auto attr = message->getAttributes())
+                {
+                    attr->setBinary(MSG_FRET_NOTE, &note, sizeof(CFretNoteMsg));
                 }
                 if (editor->getController() == nullptr) return;
                 editor->getController()->getPeer()->notify(message);
