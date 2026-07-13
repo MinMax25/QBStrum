@@ -52,14 +52,14 @@
 			]
 		},
 		"control-tags": {
-			"P1001_CHANNEL_SEPALATE": "1001",
+			"P1001_CHANNEL_SEPARATE": "1001",
 			"P1002_TRANSPOSE": "1002",
 			"P1003_SELECTED_ARTICULATION": "1003",
 			"P1004_NEED_SAMPLEBLOCK_ADUST": "1004",
 			"P1005_TABINDEX1": "1005",
 			"P1006_OCTAVE": "1006",
 			"P1007_ENSBLED_MUTE": "1007",
-			"P1008_ENSBLED_NOIZE": "1008",
+			"P1008_ENSBLED_NOISE": "1008",
 			"P1009_ENSBLED_ARTICULATION": "1009",
 			"P1101_CHORD_LSB": "1101",
 			"P1102_CHORD_MSB": "1102",
@@ -99,19 +99,20 @@
 			"P1404_ARTICULATION_MUTE": "1404",
 			"P1405_ARTICULATION_DEAD": "1405",
 			"P1406_ARTICULATION_HARMONICS": "1406",
-			"P1407_ARTICULATION_SLIDE": "1407"
+			"P1407_ARTICULATION_SLIDE": "1407",
+			"P9001_IS_PLAYING": "9101"
 		},
 		"custom": {
 			"FocusDrawing": {},
 			"VST3Editor": {
-				"Path": "resource\\plugeditor.uidesc"
+				"Path": "F:\\projects\\QB\\QBStrum\\resource\\plugeditor.uidesc"
 			},
 			"UIGridController": {
 				"Grids": "1x 1,5x 5,10x 10,12x 12,15x 15",
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab1"
+				"SelectedTemplate": "tab2"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -123,15 +124,15 @@
 				"SplitViewSize_1_1": "0.6092089728453364827487348520662635564804",
 				"SplitViewSize_2_0": "0.6565295169946332443089431762928143143654",
 				"SplitViewSize_2_1": "0.3404889683959451129879880681983195245266",
-				"TabSwitchValue": "4",
+				"TabSwitchValue": "1",
 				"Version": "1"
 			},
 			"UIAttributesController": {},
 			"UIViewCreatorDataSource": {
-				"SelectedRow": "9"
+				"SelectedRow": "16"
 			},
 			"UITagsDataSource": {
-				"SelectedRow": "33"
+				"SelectedRow": "0"
 			},
 			"UIColorsDataSource": {
 				"SelectedRow": "0"
@@ -699,6 +700,39 @@
 							"wants-focus": "false",
 							"wheel-inc-value": "0.1"
 						}
+					},
+					"CParamDisplay": {
+						"attributes": {
+							"back-color": "~ BlackCColor",
+							"background-offset": "0, 0",
+							"class": "CParamDisplay",
+							"control-tag": "P9001_IS_PLAYING",
+							"font": "~ NormalFont",
+							"font-antialias": "true",
+							"font-color": "~ WhiteCColor",
+							"frame-color": "~ BlackCColor",
+							"frame-width": "1",
+							"opacity": "1",
+							"origin": "10, 560",
+							"round-rect-radius": "6",
+							"shadow-color": "~ RedCColor",
+							"size": "100, 20",
+							"style-3D-in": "false",
+							"style-3D-out": "false",
+							"style-no-draw": "false",
+							"style-no-frame": "false",
+							"style-no-text": "false",
+							"style-round-rect": "false",
+							"style-shadow-text": "false",
+							"text-alignment": "center",
+							"text-inset": "0, 0",
+							"text-rotation": "0",
+							"text-shadow-offset": "1, 1",
+							"transparent": "false",
+							"value-precision": "2",
+							"wants-focus": "false",
+							"wheel-inc-value": "0.1"
+						}
 					}
 				}
 			},
@@ -722,7 +756,7 @@
 							"boxframe-color": "~ BlackCColor",
 							"checkmark-color": "~ RedCColor",
 							"class": "CCheckBox",
-							"control-tag": "P1001_CHANNEL_SEPALATE",
+							"control-tag": "P1001_CHANNEL_SEPARATE",
 							"draw-crossbox": "false",
 							"font": "~ NormalFontSmall",
 							"font-color": "~ WhiteCColor",
@@ -731,7 +765,7 @@
 							"origin": "20, 75",
 							"round-rect-radius": "0",
 							"size": "125, 15",
-							"title": "Sepalate Channel",
+							"title": "Separate Channel",
 							"transparent": "false",
 							"wants-focus": "false",
 							"wheel-inc-value": "0.1"
@@ -753,7 +787,7 @@
 							"origin": "20, 95",
 							"round-rect-radius": "0",
 							"size": "125, 15",
-							"title": "Sampleblock Adust",
+							"title": "Sampleblock Adjust",
 							"transparent": "false",
 							"wants-focus": "false",
 							"wheel-inc-value": "0.1"
@@ -810,7 +844,7 @@
 							"boxframe-color": "~ BlackCColor",
 							"checkmark-color": "~ RedCColor",
 							"class": "CCheckBox",
-							"control-tag": "P1008_ENSBLED_NOIZE",
+							"control-tag": "P1008_ENSBLED_NOISE",
 							"draw-crossbox": "false",
 							"font": "~ NormalFontSmall",
 							"font-color": "~ WhiteCColor",
@@ -819,7 +853,7 @@
 							"origin": "20, 50",
 							"round-rect-radius": "0",
 							"size": "160, 15",
-							"title": "Enabled Fret Noize",
+							"title": "Enabled Fret Noise",
 							"transparent": "false",
 							"wants-focus": "false",
 							"wheel-inc-value": "0.1"

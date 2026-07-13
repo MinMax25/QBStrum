@@ -47,6 +47,7 @@ namespace MinMax
 		BEAT_LENGTH,
 		ARTICULATION_RANGE,
 		CTL_TABINDEX1_RANGE,
+		IS_PLAYING_RANGE,
 	};
 
 	// パラメータ識別子
@@ -141,6 +142,8 @@ namespace MinMax
 
 		// コード変更通知用特殊パラメータ
 		CHORD_STATE_REVISION = 9002,
+
+		IS_PLAYING = 9101,
 	};
 
 	// レンジ定義
@@ -162,6 +165,7 @@ namespace MinMax
 			case BEAT_LENGTH:         out = { 0.25,   8, false }; return true;
 			case ARTICULATION_RANGE:  out = {    0,   1, true  }; return true;
 			case CTL_TABINDEX1_RANGE: out = {    0,   1, true  }; return true;
+			case IS_PLAYING_RANGE:	  out = {    0,   1, true  }; return true;
 			default: return false;
 			}
 		}
@@ -190,6 +194,8 @@ namespace MinMax
 				return { "Open 1", "Open 2", "Hammer/Legato", "Mute", "Dead", "Harmonics", "Slide" };
 			case CTL_TABINDEX1_RANGE:
 				return { "Strum Parameters", "Settings", "Plugin Info" };
+			case IS_PLAYING_RANGE:
+				return { "Stop", "Play" };
 			default:
 				return { };
 			}
@@ -201,7 +207,7 @@ namespace MinMax
 	*/
 	
 	// 全パラメータ数
-	inline constexpr size_t PARAM_MAX = 68;
+	inline constexpr size_t PARAM_MAX = 69;
 
 	// 全パラメータ定義
 	inline const std::array<PF::ParamDef, PARAM_MAX> paramTable =
@@ -286,6 +292,8 @@ namespace MinMax
 	{ SLIDE, STR16("Slide"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, PITCH, PF::FLAG::FLAG_HIDDEN,												U_ARTIC, 0, 1, 33, 0 },	
 
 	{ CHORD_EDITING, STR16("Chord Editing"), STR16(""), PF::VALUE::Bool, PF::SCALE::Linear, std::nullopt, PF::FLAG::FLAG_HIDDEN,						U_GENERAL, 0, 1, 0, 0 },
+
+	{ IS_PLAYING, STR16("Is Playing"), STR16(""), PF::VALUE::Int, PF::SCALE::Linear, IS_PLAYING_RANGE, PF::FLAG::FLAG_HIDDEN,							U_GENERAL, 0, 1, 0, 0 },
 	} };
 
 	// ユニット指定によるパラメータ定義取り出し
