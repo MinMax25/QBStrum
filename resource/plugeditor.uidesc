@@ -112,7 +112,7 @@
 				"Size": "5, 5"
 			},
 			"UITemplateController": {
-				"SelectedTemplate": "tab2"
+				"SelectedTemplate": "view"
 			},
 			"UIEditController": {
 				"EditViewScale": "1",
@@ -684,39 +684,6 @@
 							"round-rect-radius": "6",
 							"shadow-color": "~ RedCColor",
 							"size": "795, 5",
-							"style-3D-in": "false",
-							"style-3D-out": "false",
-							"style-no-draw": "false",
-							"style-no-frame": "false",
-							"style-no-text": "false",
-							"style-round-rect": "false",
-							"style-shadow-text": "false",
-							"text-alignment": "center",
-							"text-inset": "0, 0",
-							"text-rotation": "0",
-							"text-shadow-offset": "1, 1",
-							"transparent": "false",
-							"value-precision": "2",
-							"wants-focus": "false",
-							"wheel-inc-value": "0.1"
-						}
-					},
-					"CParamDisplay": {
-						"attributes": {
-							"back-color": "~ BlackCColor",
-							"background-offset": "0, 0",
-							"class": "CParamDisplay",
-							"control-tag": "P9001_IS_PLAYING",
-							"font": "~ NormalFont",
-							"font-antialias": "true",
-							"font-color": "~ WhiteCColor",
-							"frame-color": "~ BlackCColor",
-							"frame-width": "1",
-							"opacity": "1",
-							"origin": "10, 560",
-							"round-rect-radius": "6",
-							"shadow-color": "~ RedCColor",
-							"size": "100, 20",
 							"style-3D-in": "false",
 							"style-3D-out": "false",
 							"style-no-draw": "false",
