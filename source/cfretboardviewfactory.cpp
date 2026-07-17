@@ -188,6 +188,11 @@ namespace MinMax
                         });
                     break;
 				case ActionType::EditMode:
+                {
+                    auto* refMenu = createReferenceChordMenu();
+                    menu->addEntry(new VSTGUI::CMenuItem("Copy Reference Chord", refMenu));
+                    refMenu->forget();
+
                     addMenuCommand(menu, "Commit Changes",
                         [this](auto*)
                         {
@@ -201,7 +206,8 @@ namespace MinMax
                         {
                             setAction(ActionType::PlayMode, false);
                         });
-                    break;
+                }
+                break;
                 }
             }
 
@@ -302,6 +308,55 @@ namespace MinMax
                 menu->addEntry(item);
             }
             return menu;
+        }
+
+        VSTGUI::COptionMenu* createReferenceChordMenu()
+        {
+            auto& chordMap = ChordMap::instance();
+            auto* rootMenu = new VSTGUI::COptionMenu();
+
+            int flatIndex = 0;
+            for (int r = 0; r < chordMap.getRootCount(); ++r)
+            {
+                auto* rootItem = new VSTGUI::CMenuItem(chordMap.getRootName(r).c_str());
+                auto* typeMenu = new VSTGUI::COptionMenu();
+
+                for (int t = 0; t < chordMap.getTypeCount(r); ++t)
+                {
+                    auto* typeItem = new VSTGUI::CMenuItem(chordMap.getTypeName(r, t).c_str());
+                    auto* voicingMenu = new VSTGUI::COptionMenu();
+
+                    for (int v = 0; v < chordMap.getVoicingCount(r, t); ++v)
+                    {
+                        int idx = flatIndex++;
+                        addMenuCommand(voicingMenu, std::to_string(v + 1),
+                            [this, idx](VSTGUI::CCommandMenuItem*)
+                            {
+                                copyReferenceChord(idx);
+                            });
+                    }
+
+                    typeItem->setSubmenu(voicingMenu);
+                    voicingMenu->forget();
+                    typeMenu->addEntry(typeItem);
+                }
+
+                rootItem->setSubmenu(typeMenu);
+                typeMenu->forget();
+                rootMenu->addEntry(rootItem);
+            }
+
+            return rootMenu;
+        }
+
+        // 参照コード(プリセット)の押弦位置を編集中のフレットボードにコピーする
+        void copyReferenceChord(int flatIndex)
+        {
+            if (currentAction != ActionType::EditMode) return;
+
+            auto voicing = ChordMap::instance().getChordVoicing(flatIndex);
+            fretBoard->setPressedFrets(voicing);
+            onEditChordChanged(voicing);
         }
 
         void onParameterChordChanged(int value)

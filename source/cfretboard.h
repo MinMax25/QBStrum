@@ -174,6 +174,8 @@ namespace MinMax
         {
             if (context == FretBoardContext::Edit)
             {
+                if (!boardSize.pointInside(where)) return VSTGUI::kMouseEventNotHandled;
+
                 int sIdx = int((where.y - (boardSize.top + style.outerMargin)) / stringSpacing + 0.5);
                 if (sIdx < 0 || sIdx >= STRING_COUNT) return VSTGUI::kMouseEventNotHandled;
 
@@ -317,6 +319,8 @@ namespace MinMax
         // --- 内部ロジック：クリック位置 -> 弦・フレット変換 ---
         bool pointToFret(const VSTGUI::CPoint& where, int& outString, int& outFret) const
         {
+            if (!boardSize.pointInside(where)) return false;
+
             int sIdx = int((where.y - (boardSize.top + style.outerMargin)) / stringSpacing + 0.5);
             if (sIdx < 0 || sIdx >= STRING_COUNT) return false;
 
