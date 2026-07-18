@@ -14,7 +14,7 @@ project(QBStrum
     # This is your plug-in version number. Change it here only.
     # Version number symbols usable in C++ can be found in
     # source/version.h and ${PROJECT_BINARY_DIR}/projectversion.h.
-    VERSION 1.0.2.0
+    VERSION 1.0.3.0
     DESCRIPTION "QBStrum VST 3 Plug-in"
 )
 
